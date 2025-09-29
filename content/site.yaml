@@ -25,6 +25,11 @@ socials:
 booking:
   provider: "Calendly"
   embedUrl: "https://calendly.com/your-business/consultation"
+media:
+  videoUrl: "" # External video URL (e.g., YouTube, Vimeo)
+  localVideo: "/media/mainloop.mp4"
+  posterUrl: ""
+  caption: "A quick look at how we support neighbors every step of the way."
 colors:
   primary: "#2563eb"
   secondary: "#0f172a"

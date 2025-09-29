@@ -1,10 +1,8 @@
 ---
-import type { ServicesContent } from '../types/content';
-import servicesSource from '../../content/services.yaml';
+import { getServices } from '../config/content';
 
-const services = servicesSource as ServicesContent;
 const { title = 'Our Services', intro = 'Support tailored to your needs.' } = Astro.props;
-const items = Array.isArray(services.items) ? services.items : [];
+const items = getServices();
 ---
 <section id="services" class="py-16 sm:py-20">
   <div class="mx-auto max-w-5xl px-6">

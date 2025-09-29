@@ -1,8 +1,5 @@
 ---
-import type { SiteContent } from '../types/content';
-import siteSource from '../../content/site.yaml';
-
-const site = siteSource as SiteContent;
+import { site } from '../config/content';
 
 const {
   title = site.name,

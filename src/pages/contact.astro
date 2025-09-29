@@ -1,10 +1,7 @@
 ---
-import type { SiteContent } from '../types/content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ContactForm from '../components/ContactForm.astro';
-import siteSource from '../../content/site.yaml';
-
-const site = siteSource as SiteContent;
+import { site } from '../config/content';
 const hours = Array.isArray(site.hours) ? site.hours : [];
 const phoneHref = site.phone ? `tel:${site.phone.replace(/[^\d+]/g, '')}` : '';
 const emailHref = site.email ? `mailto:${site.email}` : '';

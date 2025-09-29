@@ -1,17 +1,14 @@
 ---
 
-import type { SiteContent } from '../types/content';
-import siteSource from '../../content/site.yaml';
+import { site, getSocialLinks } from '../config/content';
 import '../styles/globals.css';
 
-const site = siteSource as SiteContent;
-const { title, description } = Astro.props;
+const { title, description, showTagline = true } = Astro.props;
 const pageTitle = title ? `${title} | ${site.name}` : site.name;
 const metaDescription = description ?? site.tagline;
 const primaryColor = site.colors?.primary ?? '#2563eb';
 const secondaryColor = site.colors?.secondary ?? '#0f172a';
 const accentColor = site.colors?.accent ?? '#f59e0b';
-const showTagline = Astro.props.showTagline ?? true;
 const shouldRenderTagline = Boolean(showTagline && site.tagline?.trim());
 const bodyStyle = `
   font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -83,7 +80,7 @@ const bodyStyle = `
         <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <p>&copy; {new Date().getFullYear()} {site.name}. All rights reserved.</p>
           <div class="flex flex-wrap gap-4">
-            {Object.entries(site.socials ?? {}).map(([key, url]) => (
+            {getSocialLinks().map(([key, url]) => (
               <a
                 href={url}
                 class="capitalize transition-colors hover:text-[color:var(--color-primary)]"

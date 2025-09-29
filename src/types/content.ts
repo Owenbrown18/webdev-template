@@ -20,6 +20,12 @@ export type SiteContent = {
     provider?: string;
     embedUrl?: string;
   };
+  media?: {
+    videoUrl?: string;
+    localVideo?: string;
+    posterUrl?: string;
+    caption?: string;
+  };
   colors?: {
     primary?: string;
     secondary?: string;

@@ -1,20 +1,18 @@
 ---
-import type { SiteContent, TestimonialsContent } from '../types/content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/Hero.astro';
 import ServicesGrid from '../components/ServicesGrid.astro';
+import VideoSpotlight from '../components/VideoSpotlight.astro';
 import BookingEmbed from '../components/BookingEmbed.astro';
-import siteSource from '../../content/site.yaml';
-import testimonialsSource from '../../content/testimonials.yaml';
+import { site, getTestimonials } from '../config/content';
 
-const site = siteSource as SiteContent;
-const testimonials = testimonialsSource as TestimonialsContent;
-const quotes = Array.isArray(testimonials.items) ? testimonials.items : [];
+const quotes = getTestimonials();
 ---
 <BaseLayout description={site.tagline}>
   <div class="space-y-16 sm:space-y-20">
     <Hero />
     <ServicesGrid />
+    <VideoSpotlight />
     {quotes.length > 0 && (
       <section class="py-16 sm:py-20">
         <div class="mx-auto max-w-5xl px-6">

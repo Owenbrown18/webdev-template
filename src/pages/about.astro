@@ -1,9 +1,6 @@
 ---
-import type { SiteContent } from '../types/content';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import siteSource from '../../content/site.yaml';
-
-const site = siteSource as SiteContent;
+import { site } from '../config/content';
 ---
 <BaseLayout title="About" description={`Learn more about ${site.name}`} showTagline={false}>
   <section class="py-16 sm:py-20">
