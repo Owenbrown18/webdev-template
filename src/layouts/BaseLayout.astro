@@ -1,0 +1,99 @@
+---
+
+import type { SiteContent } from '../types/content';
+import siteSource from '../../content/site.yaml';
+import '../styles/globals.css';
+
+const site = siteSource as SiteContent;
+const { title, description } = Astro.props;
+const pageTitle = title ? `${title} | ${site.name}` : site.name;
+const metaDescription = description ?? site.tagline;
+const primaryColor = site.colors?.primary ?? '#2563eb';
+const secondaryColor = site.colors?.secondary ?? '#0f172a';
+const accentColor = site.colors?.accent ?? '#f59e0b';
+const showTagline = Astro.props.showTagline ?? true;
+const shouldRenderTagline = Boolean(showTagline && site.tagline?.trim());
+const bodyStyle = `
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --color-primary: ${primaryColor};
+  --color-secondary: ${secondaryColor};
+  --color-accent: ${accentColor};
+`;
+---
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={metaDescription} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="bg-slate-50 text-slate-900 antialiased" style={bodyStyle}>
+    <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:rounded focus:bg-white focus:px-4 focus:py-2 focus:text-sm focus:font-medium focus:text-slate-900">
+      Skip to content
+    </a>
+    <header class="sticky top-0 z-40 w-full bg-white/90 backdrop-blur supports-[backdrop-filter]:bg-white/80">
+      <div class="mx-auto flex h-20 w-full max-w-6xl items-center justify-between border-b border-slate-200/80 px-6">
+        <a
+          href="/"
+          class="text-[1.6rem] font-semibold text-slate-900 transition hover:text-[color:var(--color-primary)]"
+        >
+          {site.name}
+        </a>
+        <nav class="flex items-center gap-2 text-sm font-medium text-slate-600">
+          {[
+            { href: '/', label: 'Home' },
+            { href: '/about', label: 'About' },
+            { href: '/contact', label: 'Contact' },
+          ].map(({ href, label }) => (
+            <a
+              href={href}
+              class="rounded-full px-4 py-2 transition-colors hover:bg-slate-100 hover:text-[color:var(--color-primary)]"
+            >
+              {label}
+            </a>
+          ))}
+        </nav>
+      </div>
+    </header>
+    <div class="mx-auto flex min-h-screen w-full max-w-6xl flex-col px-6">
+      {shouldRenderTagline && (
+        <p class="pt-12 text-sm font-medium uppercase tracking-[0.2em] text-slate-500">
+          {site.tagline}
+        </p>
+      )}
+      <main
+        id="main"
+        class:list={{
+          'flex-1': true,
+          'pb-16': true,
+          'pt-6': shouldRenderTagline,
+          'pt-12': !shouldRenderTagline,
+        }}
+      >
+        <slot />
+      </main>
+      <footer class="border-t border-slate-200 py-8 text-sm text-slate-500">
+        <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <p>&copy; {new Date().getFullYear()} {site.name}. All rights reserved.</p>
+          <div class="flex flex-wrap gap-4">
+            {Object.entries(site.socials ?? {}).map(([key, url]) => (
+              <a
+                href={url}
+                class="capitalize transition-colors hover:text-[color:var(--color-primary)]"
+              >
+                {key}
+              </a>
+            ))}
+          </div>
+        </div>
+      </footer>
+    </div>
+  </body>
+</html>

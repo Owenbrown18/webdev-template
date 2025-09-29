@@ -1,0 +1,24 @@
+---
+import type { ServicesContent } from '../types/content';
+import servicesSource from '../../content/services.yaml';
+
+const services = servicesSource as ServicesContent;
+const { title = 'Our Services', intro = 'Support tailored to your needs.' } = Astro.props;
+const items = Array.isArray(services.items) ? services.items : [];
+---
+<section id="services" class="py-16 sm:py-20">
+  <div class="mx-auto max-w-5xl px-6">
+    <div class="mx-auto max-w-2xl text-center">
+      <h2 class="text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl">{title}</h2>
+      <p class="mt-4 text-base text-slate-600">{intro}</p>
+    </div>
+    <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {items.map(({ title, blurb }) => (
+        <article class="flex h-full flex-col rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-md">
+          <h3 class="text-lg font-semibold text-slate-900">{title}</h3>
+          <p class="mt-3 text-sm leading-relaxed text-slate-600">{blurb}</p>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

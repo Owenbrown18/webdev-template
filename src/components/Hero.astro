@@ -1,0 +1,50 @@
+---
+import type { SiteContent } from '../types/content';
+import siteSource from '../../content/site.yaml';
+
+const site = siteSource as SiteContent;
+
+const {
+  title = site.name,
+  tagline = site.tagline,
+  contactHref = '/contact',
+  showBooking = Boolean(site.booking?.embedUrl),
+  bookingHref = '#booking',
+} = Astro.props;
+
+const bookingLabel = site.booking?.provider
+  ? `Book with ${site.booking.provider}`
+  : 'Book Now';
+---
+<section class="relative isolate overflow-hidden rounded-3xl bg-slate-900 text-white shadow-xl">
+  <img
+    src="/images/hero.jpg"
+    alt=""
+    class="absolute inset-0 h-full w-full object-cover"
+    loading="lazy"
+    decoding="async"
+  />
+  <div class="absolute inset-0 bg-slate-900/70" aria-hidden="true"></div>
+  <div class="relative mx-auto max-w-5xl px-6 py-24 sm:py-28">
+    <div class="max-w-xl space-y-6">
+      <h1 class="text-4xl font-semibold tracking-tight sm:text-5xl">{title}</h1>
+      <p class="text-lg text-slate-100/80">{tagline}</p>
+      <div class="flex flex-wrap gap-4">
+        <a
+          href={contactHref}
+          class="inline-flex items-center justify-center rounded-full bg-[color:var(--color-primary)] px-6 py-3 text-base font-semibold text-white shadow-lg shadow-[color:var(--color-primary)]/30 transition hover:brightness-110"
+        >
+          Contact Us
+        </a>
+        {showBooking && (
+          <a
+            href={bookingHref}
+            class="inline-flex items-center justify-center rounded-full border border-white/60 px-6 py-3 text-base font-semibold text-white transition hover:border-white hover:bg-white/10"
+          >
+            {bookingLabel}
+          </a>
+        )}
+      </div>
+    </div>
+  </div>
+</section>
