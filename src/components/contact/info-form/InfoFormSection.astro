@@ -1,5 +1,5 @@
 ---
-import { site, getContactInfoVariant } from '../../../config/content';
+import { site, contact, getContactInfoVariant } from '../../../config/content';
 import type { SiteContent } from '../../../types/content';
 import InfoFormStandard from './InfoFormStandard.astro';
 import InfoFormStacked from './InfoFormStacked.astro';
@@ -11,6 +11,16 @@ const variants: Record<string, any> = {
 
 const variantKey = getContactInfoVariant();
 const Component = variantKey === 'none' ? null : variants[variantKey] ?? variants.standard;
+const settings = contact.info ?? {};
 const props = Astro.props;
 ---
-{Component ? <Component site={site as SiteContent} {...props} /> : null}
+{Component ? (
+  <Component
+    site={site as SiteContent}
+    title={settings.title ?? "Let's work together"}
+    intro={settings.intro ?? "Reach us by phone or email, or send details through the form. We're quick to respond."}
+    phoneLabel={settings.phoneLabel ?? undefined}
+    emailLabel={settings.emailLabel ?? undefined}
+    {...props}
+  />
+) : null}

@@ -2,15 +2,21 @@
 import type { SiteContent } from '../../../types/content';
 import ContactForm from './ContactForm.astro';
 
+interface Props {
+  site: SiteContent;
+  title?: string;
+  intro?: string;
+  phoneLabel?: string | null;
+  emailLabel?: string | null;
+}
+
 const {
   site,
   title = "Let's work together",
   intro = "Reach us by phone or email, or send details through the form. We're quick to respond.",
-}: {
-  site: SiteContent;
-  title?: string;
-  intro?: string;
-} = Astro.props as any;
+  phoneLabel,
+  emailLabel,
+}: Props = Astro.props as Props;
 
 const hours = Array.isArray(site.hours) ? site.hours : [];
 const phoneDigits = site.phone ? site.phone.replace(/[^\d+]/g, '') : '';
@@ -37,7 +43,7 @@ const addressDisplay = addressParts.join('\n');
             <dt class="font-semibold text-slate-900">Phone</dt>
             <dd class="mt-1">
               <a href={phoneHref} class="text-[color:var(--color-primary)] hover:underline">
-                {site.phone}
+                {phoneLabel ?? site.phone}
               </a>
             </dd>
           </div>
@@ -47,7 +53,7 @@ const addressDisplay = addressParts.join('\n');
             <dt class="font-semibold text-slate-900">Email</dt>
             <dd class="mt-1">
               <a href={emailHref} class="text-[color:var(--color-primary)] hover:underline">
-                {site.email}
+                {emailLabel ?? site.email}
               </a>
             </dd>
           </div>

@@ -20,24 +20,59 @@ export type SiteContent = {
     provider?: string;
     embedUrl?: string;
   };
-  media?: {
-    videoUrl?: string;
-    localVideo?: string;
-    posterUrl?: string;
-    caption?: string;
-  };
-  layout?: {
-    hero?: string;
-    services?: string;
-    video?: string;
-    testimonials?: string;
-    booking?: string;
-    contactInfo?: string;
-  };
   colors?: {
     primary?: string;
     secondary?: string;
     accent?: string;
+  };
+};
+
+export type HomeContent = {
+  hero?: {
+    variant?: string;
+    title?: string | null;
+    subtitle?: string | null;
+    primaryCtaLabel?: string | null;
+    primaryCtaHref?: string | null;
+    secondaryCtaLabel?: string | null;
+    secondaryCtaHref?: string | null;
+    image?: string | null;
+    stats?: Array<{
+      label?: string;
+      value?: string;
+    }>;
+  };
+  services?: {
+    variant?: string;
+    title?: string | null;
+    intro?: string | null;
+  };
+  video?: {
+    variant?: string;
+    videoUrl?: string | null;
+    localVideo?: string | null;
+    posterUrl?: string | null;
+    caption?: string | null;
+  };
+  testimonials?: {
+    variant?: string;
+    title?: string | null;
+    intro?: string | null;
+  };
+  booking?: {
+    variant?: string;
+    heading?: string | null;
+    description?: string | null;
+  };
+};
+
+export type ContactContent = {
+  info?: {
+    variant?: string;
+    title?: string | null;
+    intro?: string | null;
+    phoneLabel?: string | null;
+    emailLabel?: string | null;
   };
 };
 

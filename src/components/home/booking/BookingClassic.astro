@@ -1,10 +1,17 @@
 ---
-import { site } from '../../../config/content';
+import type { SiteContent } from '../../../types/content';
+
+interface Props {
+  site: SiteContent;
+  heading?: string;
+  description?: string;
+}
 
 const {
+  site,
   heading = 'Book an Appointment',
   description = 'Reserve a time that works best for you.',
-} = Astro.props;
+}: Props = Astro.props as Props;
 
 const embedUrl = site.booking?.embedUrl;
 const provider = site.booking?.provider;

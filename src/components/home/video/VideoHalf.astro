@@ -3,14 +3,19 @@ import type { SiteContent } from '../../../types/content';
 
 interface Props {
   site: SiteContent;
+  video?: {
+    videoUrl?: string | null;
+    localVideo?: string | null;
+    posterUrl?: string | null;
+    caption?: string | null;
+  };
 }
 
-const { site }: Props = Astro.props as Props;
-const media = site.media ?? {};
-const videoUrl = media.videoUrl ?? '';
-const localVideo = media.localVideo ?? '';
-const caption = media.caption ?? 'See our team in action.';
-const posterUrl = media.posterUrl ?? '';
+const { site, video = {} }: Props = Astro.props as Props;
+const videoUrl = video.videoUrl ?? '';
+const localVideo = video.localVideo ?? '';
+const caption = video.caption ?? 'See our team in action.';
+const posterUrl = video.posterUrl ?? '';
 const useLocalVideo = Boolean(localVideo);
 const hasEmbed = Boolean(videoUrl);
 const shouldRender = useLocalVideo || hasEmbed;

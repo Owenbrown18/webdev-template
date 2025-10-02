@@ -4,21 +4,25 @@ import type { SiteContent, TestimonialsContent } from '../../../types/content';
 interface Props {
   quotes: TestimonialsContent['items'];
   site: SiteContent;
+  title?: string;
+  intro?: string;
 }
 
 const {
   quotes = [],
   site,
+  title = `Why people choose ${site.name}`,
+  intro = 'Stories from neighbors',
 }: Props = Astro.props as Props;
 ---
 <section class="py-16 sm:py-20">
   <div class="mx-auto flex max-w-5xl flex-col gap-12 px-6">
     <div class="text-center">
       <p class="text-sm font-semibold uppercase tracking-[0.28em] text-[color:var(--color-primary)]/90">
-        Stories from neighbors
+        {intro}
       </p>
       <h2 class="mt-2 text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl">
-        Why people choose {site.name}
+        {title}
       </h2>
     </div>
     <div class="space-y-6">

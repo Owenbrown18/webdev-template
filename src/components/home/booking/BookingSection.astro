@@ -1,5 +1,5 @@
 ---
-import { site, getBookingVariant } from '../../../config/content';
+import { site, home, getBookingVariant } from '../../../config/content';
 import BookingClassic from './BookingClassic.astro';
 
 const variants: Record<string, any> = {
@@ -8,5 +8,12 @@ const variants: Record<string, any> = {
 
 const variantKey = getBookingVariant();
 const Component = variantKey === 'none' ? null : variants[variantKey] ?? variants.classic;
+const settings = home.booking ?? {};
 ---
-{Component ? <Component /> : null}
+{Component ? (
+  <Component
+    site={site}
+    heading={settings.heading ?? 'Book an Appointment'}
+    description={settings.description ?? 'Reserve a time that works best for you.'}
+  />
+) : null}

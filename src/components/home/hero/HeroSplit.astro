@@ -3,25 +3,28 @@ import type { SiteContent } from '../../../types/content';
 
 interface Props {
   site: SiteContent;
-  title?: string;
-  tagline?: string;
-  contactHref?: string;
-  showBooking?: boolean;
-  bookingHref?: string;
+  hero?: {
+    title?: string | null;
+    subtitle?: string | null;
+    primaryCtaLabel?: string | null;
+    primaryCtaHref?: string | null;
+    secondaryCtaLabel?: string | null;
+    secondaryCtaHref?: string | null;
+    image?: string | null;
+  };
 }
 
-const {
-  site,
-  title = site.name,
-  tagline = site.tagline,
-  contactHref = '/contact',
-  showBooking = Boolean(site.booking?.embedUrl),
-  bookingHref = '#booking',
-}: Props = Astro.props as Props;
+const { site, hero = {} }: Props = Astro.props as Props;
 
-const bookingLabel = site.booking?.provider
-  ? `Book with ${site.booking.provider}`
-  : 'Book Now';
+const title = hero.title ?? site.name;
+const tagline = hero.subtitle ?? site.tagline;
+const primaryLabel = hero.primaryCtaLabel ?? 'Contact Us';
+const primaryHref = hero.primaryCtaHref ?? '/contact';
+const showSecondary = Boolean(hero.secondaryCtaLabel && hero.secondaryCtaHref);
+const secondaryLabel = hero.secondaryCtaLabel ?? 'Book now';
+const secondaryHref = hero.secondaryCtaHref ?? '#booking';
+const image = hero.image ?? '/images/hero.jpg';
+const showBookingCta = Boolean(site.booking?.embedUrl) && !showSecondary;
 ---
 <section class="rounded-3xl border border-slate-200 bg-white shadow-sm">
   <div class="grid gap-10 overflow-hidden px-6 py-16 sm:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)] sm:px-12">
@@ -33,24 +36,33 @@ const bookingLabel = site.booking?.provider
       <p class="text-base leading-relaxed text-slate-600">{tagline}</p>
       <div class="flex flex-wrap gap-3">
         <a
-          href={contactHref}
+          href={primaryHref}
           class="inline-flex items-center justify-center rounded-full bg-[color:var(--color-primary)] px-6 py-3 text-base font-semibold text-white shadow-sm transition hover:brightness-110"
         >
-          Contact Us
+          {primaryLabel}
         </a>
-        {showBooking && (
+        {showSecondary ? (
           <a
-            href={bookingHref}
+            href={secondaryHref}
             class="inline-flex items-center justify-center rounded-full border border-slate-200 px-6 py-3 text-base font-semibold text-slate-900 transition hover:border-[color:var(--color-primary)] hover:text-[color:var(--color-primary)]"
           >
-            {bookingLabel}
+            {secondaryLabel}
           </a>
+        ) : (
+          showBookingCta && (
+            <a
+              href="#booking"
+              class="inline-flex items-center justify-center rounded-full border border-slate-200 px-6 py-3 text-base font-semibold text-slate-900 transition hover:border-[color:var(--color-primary)] hover:text-[color:var(--color-primary)]"
+            >
+              Book with {site.booking?.provider ?? 'us'}
+            </a>
+          )
         )}
       </div>
     </div>
     <div class="relative h-full w-full overflow-hidden rounded-2xl bg-slate-900">
       <img
-        src="/images/hero.jpg"
+        src={image}
         alt=""
         class="h-full w-full object-cover"
         loading="lazy"

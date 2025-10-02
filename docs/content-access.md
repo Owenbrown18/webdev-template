@@ -1,117 +1,95 @@
 # Content Access Overview
 
-This template now exposes a single module for working with structured content. Import from `src/config/content` rather than referencing YAML files directly.
+This template exposes a central module for working with structured content. Import from `src/config/content` instead of referencing YAML files directly.
 
 ```ts
 import {
   site,
+  home,
+  contact,
+  about,
+  services,
+  testimonials,
+  getSocialLinks,
   getServices,
   getTestimonials,
-  getSocialLinks,
   getHeroVariant,
   getServicesVariant,
   getVideoVariant,
   getTestimonialsVariant,
   getBookingVariant,
   getContactInfoVariant,
-  about,
   getAboutHeroVariant,
 } from '../config/content';
 ```
 
-- `site` – strongly typed data from `content/site.yaml`.
-- `services` – raw services payload from `content/services.yaml` (rarely needed directly).
-- `testimonials` – raw testimonials payload from `content/testimonials.yaml`.
-- `getServices()` – returns an array of service entries ready for iteration.
-- `getTestimonials()` – returns an array of testimonials ready for iteration.
+- `site` – global business data from `content/general.yaml` (name, phone, address, colors, booking provider).
+- `home` – homepage section settings from `content/home.yaml`.
+- `contact` – contact page settings from `content/contact.yaml`.
+- `about` – About page content from `content/about.yaml`.
+- `services`, `testimonials` – raw YAML payloads for the service/testimonial entries.
+- `getServices()` / `getTestimonials()` – safe helpers that always return arrays for iteration.
 - `getSocialLinks()` – returns `[key, url]` tuples for headers/footers.
-- `getHeroVariant()` – resolves the hero layout key (defaults to `classic`).
-- `getServicesVariant()` – resolves the services layout key (defaults to `grid`).
-- `getVideoVariant()` – resolves the homepage video block layout key (defaults to `half`).
-- `getTestimonialsVariant()` – resolves the testimonials layout key (defaults to `grid`).
-- `getBookingVariant()` – resolves the booking embed layout key (defaults to `classic`).
-- `getContactInfoVariant()` – resolves the contact info/form layout key (defaults to `standard`).
-- `about` – structured data from `content/about.yaml`.
-- `getAboutHeroVariant()` – resolves the about hero layout key (defaults to `classic`).
-- `getContactInfoVariant()` – resolves the contact info/form layout key (defaults to `standard`).
+- `getHeroVariant()` / `getServicesVariant()` / `getVideoVariant()` / `getTestimonialsVariant()` / `getBookingVariant()` – resolve the active homepage section variant.
+- `getContactInfoVariant()` – resolves the contact page section variant.
+- `getAboutHeroVariant()` – resolves the About hero variant.
 
-### Adding New Content
+## Content Files
 
-1. Update the relevant YAML file in the `content/` directory.
-2. If you add new fields, extend the type in `src/types/content.ts`.
-3. Expose helpers in `src/config/content.ts` if components need derived data.
-
-### Choosing Section Variants
-
-Sections can be swapped by editing `content/site.yaml` under the `layout` block. Example:
-
-```yaml
-layout:
-  hero: split
-  services: list
-  video: half
-  testimonials: stack
-  booking: none
-  contactInfo: stacked
-
-about:
-  hero:
-    variant: showcase
+```
+content/
+├── general.yaml     # global business info (name, contact, address, colors, booking)
+├── home.yaml        # homepage section settings & variant choices
+├── about.yaml       # about page sections (hero, story, etc.)
+├── contact.yaml     # contact page section settings
+├── services.yaml    # reusable services list
+└── testimonials.yaml# reusable testimonials list
 ```
 
-Available hero variants:
+Whenever you add new fields:
+1. Update the relevant YAML file.
+2. Extend the matching type in `src/types/content.ts`.
+3. Expose helpers in `src/config/content.ts` if components need derived data.
 
-- `classic` – full-bleed background image with overlay CTA
-- `split` – light card with image panel and address highlight
-
-Add new variants by creating components in `src/components/home/hero/` and updating the registry inside `src/components/home/hero/HeroSection.astro`.
-
-Available services variants:
-
-- `grid` – card grid (default)
-- `list` – vertical list cards
-- `none` – omit the section entirely
-
-Add services variants via `src/components/home/services/` and register them in `src/components/home/services/ServicesSection.astro`.
-
-Available video variants:
-
-- `half` – compact spotlight (default)
-- `full` – larger showcase video
-- `none` – remove the video section
-
-Add video variants through `src/components/home/video/` and register them in `src/components/home/video/VideoSection.astro`.
-
-Available testimonials variants:
-
-- `grid` – two-column cards (default)
-- `stack` – offset stacked testimonials
-- `none` – remove the testimonials section
-
-Add testimonials variants through `src/components/home/testimonials/` and register them in `src/components/home/testimonials/TestimonialsSection.astro`.
-
-Available booking variants:
-
-- `classic` – iframe embed with heading/description (default)
-- `none` – remove the booking section
-
-Add booking variants in `src/components/home/booking/` and register them inside `src/components/home/booking/BookingSection.astro`.
-
-Available contact info variants (contact page):
-
-- `standard` – two-column layout with info card and form (default)
-- `stacked` – summary card above the form
-- `none` – remove the info/form block (renders nothing)
-
-Add contact variants in `src/components/contact/info-form/` and register them in `src/components/contact/info-form/InfoFormSection.astro`.
-
-## About Page Content
-
-Edit `content/about.yaml` to configure About page sections. Example:
+## Homepage Variants (`content/home.yaml`)
 
 ```yaml
 hero:
-  variant: classic
+  variant: classic # Options: classic, split, none
+services:
+  variant: grid    # Options: grid, list, none
+video:
+  variant: full    # Options: half, full, none
+testimonials:
+  variant: stack   # Options: grid, stack, none
+booking:
+  variant: none    # Options: classic, none
+```
+
+Variant implementations live under `src/components/home/<section>/`. Each folder holds:
+- a dispatcher (e.g., `HeroSection.astro`) that reads the variant key
+- one file per variant (e.g., `HeroClassic.astro`, `HeroSplit.astro`)
+
+Add new variants by dropping a component into the folder and registering it in the dispatcher.
+
+## Contact Page (`content/contact.yaml`)
+
+```yaml
+info:
+  variant: stacked # Options: standard, stacked, none
+  title: "Let's work together"
+  intro: "Reach us by phone..."
+  phoneLabel: null
+  emailLabel: null
+```
+
+The dispatcher lives at `src/components/contact/info-form/InfoFormSection.astro` and wires into the variant files (`InfoFormStandard.astro`, `InfoFormStacked.astro`).
+
+## About Page (`content/about.yaml`)
+
+```yaml
+hero:
+  variant: classic # Options: classic, showcase, none
   title: "Built by neighbors, for neighbors"
   subtitle: "We started as..."
   ctaLabel: "Meet the team"
@@ -122,16 +100,10 @@ hero:
       value: "12"
 ```
 
-Available About hero variants:
+Variants live in `src/components/about/hero/` with the dispatcher `AboutHeroSection.astro`.
 
-- `classic` – split layout with stats and supporting image
-- `showcase` – full-bleed image with overlay copy
-- `none` – remove the hero section
+## Component File Structure
 
-Variants live under `src/components/about/hero/` with the dispatcher `AboutHeroSection.astro`.
+Page-specific UI lives in `src/components/<page>/<section>/`. For example, homepage variations are organised under `src/components/home/` with a dispatcher and variant files side by side. Register new variants in the dispatcher so pages can opt into them via the corresponding YAML.
 
-Centralising the imports makes it easier to swap storage (e.g., Content Collections or CMS) without touching every component.
-
-### Component File Structure
-
-Page-specific UI lives in `src/components/<page>/<section>/`. For example, homepage variations are organised under `src/components/home/` with a dispatcher (`HeroSection.astro`) alongside its variant files (`HeroClassic.astro`, `HeroSplit.astro`, etc.). Register new variants in the dispatcher for that section so pages can opt into them through `content/site.yaml`.
+Centralising imports this way makes it easy to swap storage (e.g., content collections or a CMS) without touching every component.

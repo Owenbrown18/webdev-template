@@ -1,5 +1,5 @@
 ---
-import { site, getHeroVariant } from '../../../config/content';
+import { site, home, getHeroVariant } from '../../../config/content';
 import type { SiteContent } from '../../../types/content';
 import HeroClassic from './HeroClassic.astro';
 import HeroSplit from './HeroSplit.astro';
@@ -10,8 +10,8 @@ const variants: Record<string, any> = {
 };
 
 const variantKey = getHeroVariant();
-const HeroComponent = variants[variantKey] ?? variants.classic;
-
+const HeroComponent = variantKey === 'none' ? null : variants[variantKey] ?? variants.classic;
+const hero = home.hero ?? {};
 const props = Astro.props;
 ---
-<HeroComponent site={site as SiteContent} {...props} />
+{HeroComponent ? <HeroComponent site={site as SiteContent} hero={hero} {...props} /> : null}
