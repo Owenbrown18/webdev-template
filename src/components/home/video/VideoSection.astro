@@ -1,0 +1,15 @@
+---
+import { site, getVideoVariant } from '../../../config/content';
+import type { SiteContent } from '../../../types/content';
+import VideoHalf from './VideoHalf.astro';
+import VideoFull from './VideoFull.astro';
+
+const variants: Record<string, any> = {
+  half: VideoHalf,
+  full: VideoFull,
+};
+
+const variantKey = getVideoVariant();
+const Component = variantKey === 'none' ? null : variants[variantKey] ?? variants.half;
+---
+{Component ? <Component site={site as SiteContent} /> : null}

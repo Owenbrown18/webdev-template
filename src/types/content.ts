@@ -26,6 +26,14 @@ export type SiteContent = {
     posterUrl?: string;
     caption?: string;
   };
+  layout?: {
+    hero?: string;
+    services?: string;
+    video?: string;
+    testimonials?: string;
+    booking?: string;
+    contactInfo?: string;
+  };
   colors?: {
     primary?: string;
     secondary?: string;
@@ -45,4 +53,21 @@ export type TestimonialsContent = {
     quote?: string;
     author?: string;
   }>;
+};
+
+export type AboutContent = {
+  hero?: {
+    variant?: string;
+    title?: string;
+    subtitle?: string;
+    ctaLabel?: string;
+    ctaHref?: string;
+    image?: string;
+    location?: string;
+    founded?: string;
+    stats?: Array<{
+      label?: string;
+      value?: string;
+    }>;
+  };
 };

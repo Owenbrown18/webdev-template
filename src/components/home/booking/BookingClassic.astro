@@ -1,6 +1,11 @@
 ---
-import { site } from '../config/content';
-const { heading = 'Book an Appointment', description = 'Reserve a time that works best for you.' } = Astro.props;
+import { site } from '../../../config/content';
+
+const {
+  heading = 'Book an Appointment',
+  description = 'Reserve a time that works best for you.',
+} = Astro.props;
+
 const embedUrl = site.booking?.embedUrl;
 const provider = site.booking?.provider;
 ---

@@ -1,0 +1,17 @@
+---
+import type { ServicesContent } from '../../../types/content';
+import { services, getServicesVariant } from '../../../config/content';
+import ServicesGrid from './ServicesGrid.astro';
+import ServicesList from './ServicesList.astro';
+
+const variants: Record<string, any> = {
+  grid: ServicesGrid,
+  list: ServicesList,
+};
+
+const variantKey = getServicesVariant();
+const Component = variantKey === 'none' ? null : variants[variantKey] ?? variants.grid;
+
+const props = Astro.props;
+---
+{Component ? <Component services={services as ServicesContent} {...props} /> : null}

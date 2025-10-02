@@ -1,0 +1,52 @@
+---
+import type { SiteContent } from '../../../types/content';
+
+interface Props {
+  site: SiteContent;
+}
+
+const { site }: Props = Astro.props as Props;
+const media = site.media ?? {};
+const videoUrl = media.videoUrl ?? '';
+const localVideo = media.localVideo ?? '';
+const caption = media.caption ?? 'See our team in action.';
+const posterUrl = media.posterUrl ?? '';
+const useLocalVideo = Boolean(localVideo);
+const hasEmbed = Boolean(videoUrl);
+const shouldRender = useLocalVideo || hasEmbed;
+---
+{shouldRender && (
+  <section class="py-16 sm:py-24">
+    <div class="mx-auto max-w-6xl px-6">
+      <figure class="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-lg">
+        <div class="relative aspect-[16/7] w-full bg-slate-900">
+          {useLocalVideo ? (
+            <video
+              src={localVideo}
+              poster={posterUrl || undefined}
+              autoplay
+              muted
+              loop
+              playsinline
+              class="absolute inset-0 h-full w-full object-cover"
+            ></video>
+          ) : (
+            <iframe
+              src={videoUrl}
+              title={`Video from ${site.name}`}
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+              loading="lazy"
+              class="absolute inset-0 h-full w-full"
+            ></iframe>
+          )}
+        </div>
+        {caption && (
+          <figcaption class="px-8 py-6 text-sm text-slate-600">
+            {caption}
+          </figcaption>
+        )}
+      </figure>
+    </div>
+  </section>
+)}

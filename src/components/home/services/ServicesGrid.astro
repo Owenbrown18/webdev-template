@@ -1,8 +1,19 @@
 ---
-import { getServices } from '../config/content';
+import type { ServicesContent } from '../../../types/content';
 
-const { title = 'Our Services', intro = 'Support tailored to your needs.' } = Astro.props;
-const items = getServices();
+interface Props {
+  services: ServicesContent;
+  title?: string;
+  intro?: string;
+}
+
+const {
+  services,
+  title = 'Our Services',
+  intro = 'Support tailored to your needs.',
+}: Props = Astro.props as Props;
+
+const items = Array.isArray(services.items) ? services.items : [];
 ---
 <section id="services" class="py-16 sm:py-20">
   <div class="mx-auto max-w-5xl px-6">

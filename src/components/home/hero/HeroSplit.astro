@@ -1,0 +1,72 @@
+---
+import type { SiteContent } from '../../../types/content';
+
+interface Props {
+  site: SiteContent;
+  title?: string;
+  tagline?: string;
+  contactHref?: string;
+  showBooking?: boolean;
+  bookingHref?: string;
+}
+
+const {
+  site,
+  title = site.name,
+  tagline = site.tagline,
+  contactHref = '/contact',
+  showBooking = Boolean(site.booking?.embedUrl),
+  bookingHref = '#booking',
+}: Props = Astro.props as Props;
+
+const bookingLabel = site.booking?.provider
+  ? `Book with ${site.booking.provider}`
+  : 'Book Now';
+---
+<section class="rounded-3xl border border-slate-200 bg-white shadow-sm">
+  <div class="grid gap-10 overflow-hidden px-6 py-16 sm:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)] sm:px-12">
+    <div class="flex flex-col justify-center gap-6">
+      <p class="text-sm font-semibold uppercase tracking-[0.28em] text-[color:var(--color-primary)]/90">
+        Trusted Local Experts
+      </p>
+      <h1 class="text-4xl font-semibold tracking-tight text-slate-900 sm:text-5xl">{title}</h1>
+      <p class="text-base leading-relaxed text-slate-600">{tagline}</p>
+      <div class="flex flex-wrap gap-3">
+        <a
+          href={contactHref}
+          class="inline-flex items-center justify-center rounded-full bg-[color:var(--color-primary)] px-6 py-3 text-base font-semibold text-white shadow-sm transition hover:brightness-110"
+        >
+          Contact Us
+        </a>
+        {showBooking && (
+          <a
+            href={bookingHref}
+            class="inline-flex items-center justify-center rounded-full border border-slate-200 px-6 py-3 text-base font-semibold text-slate-900 transition hover:border-[color:var(--color-primary)] hover:text-[color:var(--color-primary)]"
+          >
+            {bookingLabel}
+          </a>
+        )}
+      </div>
+    </div>
+    <div class="relative h-full w-full overflow-hidden rounded-2xl bg-slate-900">
+      <img
+        src="/images/hero.jpg"
+        alt=""
+        class="h-full w-full object-cover"
+        loading="lazy"
+        decoding="async"
+      />
+      <div class="absolute inset-0 bg-slate-900/40" aria-hidden="true"></div>
+      <div class="absolute bottom-6 left-6 right-6 rounded-2xl bg-white/95 p-6 shadow-lg">
+        <p class="text-sm font-semibold text-slate-900">Visit our showroom</p>
+        <p class="mt-1 text-sm text-slate-600">
+          {site.address?.line1}
+          {site.address?.line2 && `, ${site.address.line2}`}
+        </p>
+        <p class="text-sm text-slate-600">
+          {[site.address?.city, site.address?.state, site.address?.postalCode].filter(Boolean).join(', ')}
+        </p>
+      </div>
+    </div>
+  </div>
+</section>

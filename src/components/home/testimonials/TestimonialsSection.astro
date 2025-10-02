@@ -1,0 +1,22 @@
+---
+import type { SiteContent, TestimonialsContent } from '../../../types/content';
+import { getTestimonialsVariant, getTestimonials, site } from '../../../config/content';
+import TestimonialsGrid from './TestimonialsGrid.astro';
+import TestimonialsStack from './TestimonialsStack.astro';
+
+const variants: Record<string, any> = {
+  grid: TestimonialsGrid,
+  stack: TestimonialsStack,
+};
+
+const variantKey = getTestimonialsVariant();
+const providedQuotes = Astro.props.quotes as TestimonialsContent['items'] | undefined;
+const quotes = Array.isArray(providedQuotes) ? providedQuotes : getTestimonials();
+const currentSite = ((Astro.props.site as SiteContent) ?? site) as SiteContent;
+
+const Component = variantKey === 'none' ? null : variants[variantKey] ?? variants.grid;
+const safeQuotes = Array.isArray(quotes) ? quotes : [];
+---
+{Component && safeQuotes.length > 0 ? (
+  <Component quotes={safeQuotes as TestimonialsContent['items']} site={currentSite} />
+) : null}

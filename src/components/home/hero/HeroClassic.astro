@@ -1,13 +1,23 @@
 ---
-import { site } from '../config/content';
+import type { SiteContent } from '../../../types/content';
+
+interface Props {
+  site: SiteContent;
+  title?: string;
+  tagline?: string;
+  contactHref?: string;
+  showBooking?: boolean;
+  bookingHref?: string;
+}
 
 const {
+  site,
   title = site.name,
   tagline = site.tagline,
   contactHref = '/contact',
   showBooking = Boolean(site.booking?.embedUrl),
   bookingHref = '#booking',
-} = Astro.props;
+}: Props = Astro.props as Props;
 
 const bookingLabel = site.booking?.provider
   ? `Book with ${site.booking.provider}`

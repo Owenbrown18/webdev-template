@@ -1,0 +1,27 @@
+hero:
+  variant: "classic" # Options: classic, split, none
+  title: null
+  subtitle: null
+  primaryCtaLabel: "Contact Us"
+  primaryCtaHref: "/contact"
+  secondaryCtaLabel: "Book a consult"
+  secondaryCtaHref: "#booking"
+  image: "/images/hero.jpg"
+services:
+  variant: "grid" # Options: grid, list, none
+  title: "Our Services"
+  intro: "Support tailored to your needs."
+video:
+  variant: "full" # Options: half, full, none
+  videoUrl: "" # External video URL (e.g., YouTube)
+  localVideo: "/media/mainloop.mp4"
+  posterUrl: ""
+  caption: "A quick look at how we support neighbors every step of the way."
+testimonials:
+  variant: "stack" # Options: grid, stack, none
+  title: "Kind Words"
+  intro: "Real feedback from neighbors who trusted Local Business Co."
+booking:
+  variant: "none" # Options: classic, none
+  heading: "Book an Appointment"
+  description: "Reserve a time that works best for you."

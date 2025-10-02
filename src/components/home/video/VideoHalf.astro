@@ -1,13 +1,16 @@
 ---
-import { site } from '../config/content';
+import type { SiteContent } from '../../../types/content';
 
+interface Props {
+  site: SiteContent;
+}
+
+const { site }: Props = Astro.props as Props;
 const media = site.media ?? {};
-const {
-  videoUrl = media.videoUrl ?? '',
-  localVideo = media.localVideo ?? '',
-  caption = media.caption ?? 'See our team in action.',
-  posterUrl = media.posterUrl ?? '',
-} = Astro.props;
+const videoUrl = media.videoUrl ?? '';
+const localVideo = media.localVideo ?? '';
+const caption = media.caption ?? 'See our team in action.';
+const posterUrl = media.posterUrl ?? '';
 const useLocalVideo = Boolean(localVideo);
 const hasEmbed = Boolean(videoUrl);
 const shouldRender = useLocalVideo || hasEmbed;

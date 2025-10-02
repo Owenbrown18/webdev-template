@@ -1,16 +1,10 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import AboutHeroSection from '../components/about/hero/AboutHeroSection.astro';
 import { site } from '../config/content';
 ---
-<BaseLayout title="About" description={`Learn more about ${site.name}`} showTagline={false}>
-  <section class="py-16 sm:py-20">
-    <div class="mx-auto max-w-3xl px-6 text-center text-slate-600">
-      <h1 class="text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl">
-        About Us
-      </h1>
-      <p class="mt-4 text-base">
-        Content coming soon.
-      </p>
-    </div>
-  </section>
+<BaseLayout title="About" description={`Learn more about ${site.name}`}>
+  <div class="space-y-16 sm:space-y-20">
+    <AboutHeroSection />
+  </div>
 </BaseLayout>

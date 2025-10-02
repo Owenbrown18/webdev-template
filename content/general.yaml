@@ -25,19 +25,7 @@ socials:
 booking:
   provider: "Calendly"
   embedUrl: "https://calendly.com/your-business/consultation"
-media:
-  videoUrl: "" # External video URL (e.g., YouTube, Vimeo)
-  localVideo: "/media/mainloop.mp4"
-  posterUrl: ""
-  caption: "A quick look at how we support neighbors every step of the way."
 colors:
   primary: "#2563eb"
   secondary: "#0f172a"
   accent: "#f59e0b"
-layout:
-  hero: "classic" # Options: classic, split
-  services: "grid" # Options: grid, list, none
-  video: "full" # Options: half, full, none
-  testimonials: "stack" # Options: grid, stack, none
-  booking: "none" # Options: classic, none
-  contactInfo: "stacked" # Options: standard, stacked, none

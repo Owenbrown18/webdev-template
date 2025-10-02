@@ -1,0 +1,16 @@
+hero:
+  variant: "classic" # Options: classic, showcase, none
+  title: "Built by neighbors, for neighbors"
+  subtitle: "We started as a two-person crew with a shared belief: every project deserves personal care and reliable craftsmanship."
+  ctaLabel: "Meet the team"
+  ctaHref: "#team"
+  image: "/images/about-hero.jpg"
+  location: "Hometown, CA"
+  founded: "2012"
+  stats:
+    - label: "Years serving Hometown"
+      value: "12"
+    - label: "Projects delivered"
+      value: "450+"
+    - label: "Average rating"
+      value: "4.9/5"

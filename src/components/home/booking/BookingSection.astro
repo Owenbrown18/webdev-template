@@ -1,0 +1,12 @@
+---
+import { site, getBookingVariant } from '../../../config/content';
+import BookingClassic from './BookingClassic.astro';
+
+const variants: Record<string, any> = {
+  classic: BookingClassic,
+};
+
+const variantKey = getBookingVariant();
+const Component = variantKey === 'none' ? null : variants[variantKey] ?? variants.classic;
+---
+{Component ? <Component /> : null}

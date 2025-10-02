@@ -1,0 +1,17 @@
+---
+import { site, getHeroVariant } from '../../../config/content';
+import type { SiteContent } from '../../../types/content';
+import HeroClassic from './HeroClassic.astro';
+import HeroSplit from './HeroSplit.astro';
+
+const variants: Record<string, any> = {
+  classic: HeroClassic,
+  split: HeroSplit,
+};
+
+const variantKey = getHeroVariant();
+const HeroComponent = variants[variantKey] ?? variants.classic;
+
+const props = Astro.props;
+---
+<HeroComponent site={site as SiteContent} {...props} />

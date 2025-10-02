@@ -1,0 +1,16 @@
+---
+import type { SiteContent } from '../../../types/content';
+import { site, getAboutHeroVariant } from '../../../config/content';
+import AboutHeroClassic from './AboutHeroClassic.astro';
+import AboutHeroShowcase from './AboutHeroShowcase.astro';
+
+const variants: Record<string, any> = {
+  classic: AboutHeroClassic,
+  showcase: AboutHeroShowcase,
+};
+
+const variantKey = getAboutHeroVariant();
+const Component = variantKey === 'none' ? null : variants[variantKey] ?? variants.classic;
+const props = Astro.props;
+---
+{Component ? <Component site={site as SiteContent} {...props} /> : null}

@@ -1,66 +1,8 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import ContactForm from '../components/ContactForm.astro';
+import InfoFormSection from '../components/contact/info-form/InfoFormSection.astro';
 import { site } from '../config/content';
-const hours = Array.isArray(site.hours) ? site.hours : [];
-const phoneHref = site.phone ? `tel:${site.phone.replace(/[^\d+]/g, '')}` : '';
-const emailHref = site.email ? `mailto:${site.email}` : '';
-const addressParts = [site.address?.line1, site.address?.line2, [site.address?.city, site.address?.state].filter(Boolean).join(', '), site.address?.postalCode]
-  .filter((part) => Boolean(part && part.trim?.()))
-  .map((part) => (typeof part === 'string' ? part.trim() : part));
-const addressDisplay = addressParts.join('\n');
 ---
 <BaseLayout title="Contact" description={`Plan your next project with ${site.name}`} showTagline={false}>
-  <div class="grid gap-12 py-16 sm:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] sm:py-20">
-    <section class="rounded-3xl border border-slate-200 bg-white p-8 shadow-sm sm:p-12">
-      <h1 class="text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl">
-        Let's work together
-      </h1>
-      <p class="mt-4 text-base text-slate-600">
-        Reach us by phone or email, or send details through the form. We're quick to respond.
-      </p>
-      <dl class="mt-8 space-y-6 text-sm text-slate-700">
-        {site.phone && (
-          <div>
-            <dt class="font-semibold text-slate-900">Phone</dt>
-            <dd class="mt-1">
-              <a href={phoneHref} class="text-[color:var(--color-primary)] hover:underline">
-                {site.phone}
-              </a>
-            </dd>
-          </div>
-        )}
-        {site.email && (
-          <div>
-            <dt class="font-semibold text-slate-900">Email</dt>
-            <dd class="mt-1">
-              <a href={emailHref} class="text-[color:var(--color-primary)] hover:underline">
-                {site.email}
-              </a>
-            </dd>
-          </div>
-        )}
-        {addressDisplay && (
-          <div>
-            <dt class="font-semibold text-slate-900">Visit</dt>
-            <dd class="mt-1 whitespace-pre-line">{addressDisplay}</dd>
-          </div>
-        )}
-        {hours.length > 0 && (
-          <div>
-            <dt class="font-semibold text-slate-900">Hours</dt>
-            <dd class="mt-2 space-y-2">
-              {hours.map(({ label, open, close }) => (
-                <div class="flex justify-between text-sm">
-                  <span>{label}</span>
-                  <span>{open}{close ? ` – ${close}` : ''}</span>
-                </div>
-              ))}
-            </dd>
-          </div>
-        )}
-      </dl>
-    </section>
-    <ContactForm />
-  </div>
+  <InfoFormSection />
 </BaseLayout>
