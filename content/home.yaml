@@ -1,5 +1,5 @@
 hero:
-  variant: "classic" # Options: classic, split, none
+  variant: "classsic" # Options: classic, split, none
   title: null
   subtitle: null
   primaryCtaLabel: "Contact Us"
@@ -18,7 +18,7 @@ video:
   posterUrl: ""
   caption: "A quick look at how we support neighbors every step of the way."
 testimonials:
-  variant: "stack" # Options: grid, stack, none
+  variant: "grid" # Options: grid, stack, none
   title: "Kind Words"
   intro: "Real feedback from neighbors who trusted Local Business Co."
 booking:

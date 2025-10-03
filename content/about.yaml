@@ -1,5 +1,5 @@
 hero:
-  variant: "classic" # Options: classic, showcase, none
+  variant: "showcase" # Options: classic, showcase, none
   title: "Built by neighbors, for neighbors"
   subtitle: "We started as a two-person crew with a shared belief: every project deserves personal care and reliable craftsmanship."
   ctaLabel: "Meet the team"
