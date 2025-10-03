@@ -14,3 +14,41 @@ hero:
       value: "450+"
     - label: "Average rating"
       value: "4.9/5"
+values:
+  variant: "grid" # Options: grid, list, none
+  title: "Values that guide every project"
+  intro: "Our team brings the same dependable care to every job, whether it's a quick tune-up or a full-scale renovation."
+  items:
+    - title: "Hands-on partnership"
+      description: "We collaborate with homeowners at each milestone so there are no surprises, just steady progress."
+      icon: "HP"
+    - title: "Craft with intention"
+      description: "Materials, methods, and finishes are chosen with long-term performance and everyday livability in mind."
+      icon: "CI"
+    - title: "See it through"
+      description: "From prep to clean-up, we finish strong and leave every space better than we found it."
+      icon: "ST"
+    - title: "Neighbors first"
+      description: "We invest back into the community that supports us and prioritize service that feels personal."
+      icon: "NF"
+timeline:
+  variant: "steps" # Options: steps, vertical, milestone, none
+  title: "From a two-person crew to a trusted local team"
+  intro: "More than a decade of steady growth, community investment, and quality-first projects."
+  milestones:
+    - year: "2012"
+      title: "Started with a single truck"
+      description: "Two neighbors teamed up to help friends with home upgrades and discovered a shared commitment to craftsmanship."
+      image: null
+    - year: "2015"
+      title: "Expanded to a full service offering"
+      description: "Added licensed specialists and a dedicated project coordinator to keep every engagement running smoothly."
+      image: null
+    - year: "2018"
+      title: "New workshop & showroom"
+      description: "Opened a central space where clients can review materials, meet the crew, and plan projects in person."
+      image: null
+    - year: "2022"
+      title: "Community giveback milestone"
+      description: "Launched an annual volunteer week supporting local nonprofits with repairs, upgrades, and maintenance."
+      image: null

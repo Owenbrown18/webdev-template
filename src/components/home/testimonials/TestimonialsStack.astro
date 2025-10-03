@@ -27,7 +27,9 @@ const {
     </div>
     <div class="space-y-6">
       {quotes?.map(({ quote, author }, index) => (
-        <figure class={`rounded-3xl border border-slate-200 bg-white/95 p-6 shadow-sm sm:p-8 ${index % 2 === 0 ? 'sm:translate-x-0' : 'sm:translate-x-8'}`}>
+        <figure
+          class={`rounded-3xl border border-slate-200 bg-white/95 p-6 shadow-sm transition duration-200 hover:bg-white/95 hover:shadow-md focus-within:shadow-md sm:p-8 ${index % 2 === 0 ? 'sm:translate-x-0' : 'sm:translate-x-8'}`}
+        >
           <blockquote class="text-base font-medium leading-relaxed text-slate-700">
             “{quote}”
           </blockquote>

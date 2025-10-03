@@ -1,0 +1,38 @@
+---
+interface ValueItem {
+  title?: string;
+  description?: string;
+  icon?: string;
+}
+
+interface Props {
+  title: string;
+  intro: string;
+  items: ValueItem[];
+}
+
+const { title, intro, items } = Astro.props as Props;
+const values = Array.isArray(items) ? items.filter(Boolean) : [];
+---
+<section class="relative overflow-hidden rounded-3xl bg-slate-900 px-6 py-16 text-white sm:px-10">
+  <div class="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(255,255,255,0.15),_rgba(15,23,42,0.95))]" aria-hidden="true"></div>
+  <div class="relative mx-auto flex max-w-5xl flex-col gap-10 lg:flex-row lg:items-start">
+    <div class="max-w-lg">
+      <h2 class="text-3xl font-semibold tracking-tight sm:text-4xl">{title}</h2>
+      <p class="mt-4 text-base leading-7 text-white/70">{intro}</p>
+    </div>
+    <dl class="flex-1 space-y-6">
+      {values.map(({ title, description, icon }, index) => (
+        <div class="relative rounded-2xl border border-white/15 bg-white/5 p-6 shadow-sm backdrop-blur transition duration-200 hover:bg-white/95 hover:shadow-md focus-within:shadow-md">
+          <dt class="inline-flex items-center gap-3 text-base font-semibold">
+            <span class="flex h-10 w-10 items-center justify-center rounded-full bg-white/15 text-lg font-semibold">
+              {icon ? icon : index + 1}
+            </span>
+            {title}
+          </dt>
+          <dd class="mt-3 text-sm leading-6 text-white/70">{description}</dd>
+        </div>
+      ))}
+    </dl>
+  </div>
+</section>

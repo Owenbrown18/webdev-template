@@ -105,4 +105,25 @@ export type AboutContent = {
       value?: string;
     }>;
   };
+  values?: {
+    variant?: string;
+    title?: string | null;
+    intro?: string | null;
+    items?: Array<{
+      title?: string;
+      description?: string;
+      icon?: string;
+    }>;
+  };
+  timeline?: {
+    variant?: string;
+    title?: string | null;
+    intro?: string | null;
+    milestones?: Array<{
+      year?: string;
+      title?: string;
+      description?: string;
+      image?: string;
+    }>;
+  };
 };

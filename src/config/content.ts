@@ -78,3 +78,15 @@ export const getAboutHeroVariant = () => {
   const raw = about.hero?.variant?.trim?.().toLowerCase?.();
   return raw === 'none' ? 'none' : raw || 'classic';
 };
+
+/** Returns the about values layout key, defaulting to "grid". */
+export const getAboutValuesVariant = () => {
+  const raw = about.values?.variant?.trim?.().toLowerCase?.() || 'grid';
+  return raw === 'none' ? 'none' : raw;
+};
+
+/** Returns the about timeline layout key, defaulting to "steps". */
+export const getAboutTimelineVariant = () => {
+  const raw = about.timeline?.variant?.trim?.().toLowerCase?.() || 'steps';
+  return raw === 'none' ? 'none' : raw;
+};

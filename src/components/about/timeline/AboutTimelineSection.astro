@@ -1,0 +1,31 @@
+---
+import type { AboutContent } from '../../../types/content';
+import { about, getAboutTimelineVariant } from '../../../config/content';
+import AboutTimelineVertical from './AboutTimelineVertical.astro';
+import AboutTimelineMilestone from './AboutTimelineMilestone.astro';
+import AboutTimelineSteps from './AboutTimelineSteps.astro';
+
+const variants: Record<string, any> = {
+  vertical: AboutTimelineVertical,
+  milestone: AboutTimelineMilestone,
+  steps: AboutTimelineSteps,
+};
+
+const variantKey = getAboutTimelineVariant();
+const Component = variantKey === 'none' ? null : variants[variantKey] ?? variants.vertical;
+
+const props = Astro.props as Partial<{
+  title: string | null;
+  intro: string | null;
+  milestones: AboutContent['timeline'] extends { milestones?: infer T } ? T : undefined;
+}>;
+
+const base = about.timeline ?? {};
+const title = props.title ?? base.title ?? 'Our story in milestones';
+const intro = props.intro ?? base.intro ?? 'A look at the moments that shaped how we show up for neighbors every day.';
+const rawMilestones = Array.isArray(props.milestones) ? props.milestones : base.milestones;
+const milestones = Array.isArray(rawMilestones) ? rawMilestones.filter(Boolean) : [];
+---
+{Component && milestones.length > 0 ? (
+  <Component title={title} intro={intro} milestones={milestones} />
+) : null}

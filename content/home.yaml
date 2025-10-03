@@ -1,5 +1,5 @@
 hero:
-  variant: "classsic" # Options: classic, split, none
+  variant: "classic" # Options: classic, split, none
   title: null
   subtitle: null
   primaryCtaLabel: "Contact Us"

@@ -1,0 +1,56 @@
+---
+interface Milestone {
+  year?: string;
+  title?: string;
+  description?: string;
+  image?: string;
+}
+
+interface Props {
+  title: string;
+  intro: string;
+  milestones: Milestone[];
+}
+
+const { title, intro, milestones } = Astro.props as Props;
+---
+<section class="relative overflow-hidden rounded-3xl border border-slate-200 bg-white px-6 py-16 shadow-sm sm:px-10">
+  <div class="mx-auto max-w-4xl">
+    <div class="text-center">
+      <h2 class="text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl">{title}</h2>
+      <p class="mt-4 text-base leading-7 text-slate-600">{intro}</p>
+    </div>
+    <div class="relative mt-12">
+      <div class="absolute left-[1.1rem] top-0 hidden h-full w-px bg-slate-200 lg:block" aria-hidden="true"></div>
+      <div class="space-y-10">
+        {milestones.map(({ year, title, description, image }, index) => (
+          <article class="relative flex flex-col gap-4 rounded-2xl border border-slate-200/80 bg-white p-6 shadow-sm transition duration-200 hover:bg-white/95 hover:shadow-md focus-within:shadow-md lg:flex-row lg:items-center">
+            <div class="relative flex items-start gap-3 lg:w-48 lg:flex-col lg:items-start">
+              <span class="absolute -left-3 hidden h-8 w-8 rounded-full border-2 border-[color:var(--color-primary)] bg-white lg:flex lg:items-center lg:justify-center">
+                <span class="h-2 w-2 rounded-full bg-[color:var(--color-primary)]"></span>
+              </span>
+              <div class="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-[color:var(--color-primary)]/10 text-base font-semibold text-[color:var(--color-primary)] lg:ml-6">
+                {year ?? `Step ${index + 1}`}
+              </div>
+              <h3 class="text-lg font-semibold text-slate-900 lg:ml-6">{title}</h3>
+            </div>
+            <div class="flex-1 text-sm leading-6 text-slate-600 lg:pl-6">
+              {description}
+            </div>
+            {image && (
+              <div class="h-32 w-full overflow-hidden rounded-xl border border-slate-200/80 bg-slate-100 lg:h-32 lg:w-48">
+                <img
+                  src={image}
+                  alt=""
+                  class="h-full w-full object-cover"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+            )}
+          </article>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>

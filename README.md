@@ -93,3 +93,4 @@ The template relies on Tailwind CSS 3, with base styles imported via `src/styles
 - Automate scaffolding if you need to spin up many client sites quickly.
 
 This template is intentionally minimal yet flexible: edit YAML to control layout and messaging, introduce new variants when needed, and keep the codebase clean.
+
