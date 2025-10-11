@@ -90,3 +90,9 @@ export const getAboutTimelineVariant = () => {
   const raw = about.timeline?.variant?.trim?.().toLowerCase?.() || 'steps';
   return raw === 'none' ? 'none' : raw;
 };
+
+/** Returns the about team layout key, defaulting to "grid". */
+export const getAboutTeamVariant = () => {
+  const raw = about.team?.variant?.trim?.().toLowerCase?.() || 'grid';
+  return raw === 'none' ? 'none' : raw;
+};

@@ -1,0 +1,29 @@
+---
+import type { AboutContent } from '../../../types/content';
+import { about, getAboutTeamVariant } from '../../../config/content';
+import AboutTeamGrid from './AboutTeamGrid.astro';
+import AboutTeamList from './AboutTeamList.astro';
+
+const variants: Record<string, any> = {
+  grid: AboutTeamGrid,
+  list: AboutTeamList,
+};
+
+const variantKey = getAboutTeamVariant();
+const Component = variantKey === 'none' ? null : variants[variantKey] ?? variants.grid;
+
+const props = Astro.props as Partial<{
+  title: string | null;
+  intro: string | null;
+  members: AboutContent['team'] extends { members?: infer T } ? T : undefined;
+}>;
+
+const base = about.team ?? {};
+const title = props.title ?? base.title ?? 'Meet the neighbors behind the work';
+const intro = props.intro ?? base.intro ?? 'A team of specialists committed to dependable craftsmanship and clear communication.';
+const rawMembers = Array.isArray(props.members) ? props.members : base.members;
+const members = Array.isArray(rawMembers) ? rawMembers.filter(Boolean) : [];
+---
+{Component && members.length > 0 ? (
+  <Component title={title} intro={intro} members={members} />
+) : null}

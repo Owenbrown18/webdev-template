@@ -15,7 +15,7 @@ hero:
     - label: "Average rating"
       value: "4.9/5"
 values:
-  variant: "grid" # Options: grid, list, none
+  variant: "list" # Options: grid, list, none
   title: "Values that guide every project"
   intro: "Our team brings the same dependable care to every job, whether it's a quick tune-up or a full-scale renovation."
   items:
@@ -51,4 +51,35 @@ timeline:
     - year: "2022"
       title: "Community giveback milestone"
       description: "Launched an annual volunteer week supporting local nonprofits with repairs, upgrades, and maintenance."
+      image: null
+team:
+  variant: "list" # Options: grid, list, none
+  title: "Neighbors who bring the plan to life"
+  intro: "Our crew blends licensed expertise with friendly, boots-on-the-ground service that keeps every project moving."
+  members:
+    - name: "Avery Bennett"
+      role: "Co-founder & General Contractor"
+      bio: "Oversees every renovation with a detail-first mindset and keeps crews aligned from demo to final walkthrough."
+      image: null
+      highlight: "Founder"
+    - name: "Jordan Lee"
+      role: "Lead Project Coordinator"
+      bio: "Your go-to for scheduling, progress updates, and making sure the jobsite stays tidy and on-track."
+      image: null
+      highlight: "Client care"
+    - name: "Morgan Rivera"
+      role: "Electrical & Systems Specialist"
+      bio: "Designs practical upgrades that balance efficiency, safety, and long-term performance."
+      image: null
+    - name: "Sam Patel"
+      role: "Finishes Lead"
+      bio: "Brings every space together with custom millwork, paint, and touch-up details that elevate the final result."
+      image: null
+    - name: "Sam Patel"
+      role: "Finishes Lead"
+      bio: "Brings every space together with custom millwork, paint, and touch-up details that elevate the final result."
+      image: null
+    - name: "Sam Patel"
+      role: "Finishes Lead"
+      bio: "Brings every space together with custom millwork, paint, and touch-up details that elevate the final result."
       image: null

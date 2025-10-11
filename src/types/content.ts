@@ -126,4 +126,16 @@ export type AboutContent = {
       image?: string;
     }>;
   };
+  team?: {
+    variant?: string;
+    title?: string | null;
+    intro?: string | null;
+    members?: Array<{
+      name?: string;
+      role?: string;
+      bio?: string;
+      image?: string;
+      highlight?: string;
+    }>;
+  };
 };
