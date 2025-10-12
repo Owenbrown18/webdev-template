@@ -21,7 +21,7 @@ const items = getServices();
         name="name"
         required
         placeholder="Your name"
-        class="w-full rounded-lg border border-slate-200 bg-white px-4 py-3 text-base text-slate-900 shadow-sm focus:border-[color:var(--color-primary)] focus:outline-none focus:ring focus:ring-[color:var(--color-primary)]/20"
+        class="w-full rounded-lg border border-slate-200 bg-white px-4 py-3 text-base text-slate-900 shadow-sm focus:border-brand-primary focus:outline-none focus:ring focus:ring-brand-primary/20"
       />
     </label>
     <label class="flex flex-col gap-2 text-left text-sm font-medium text-slate-700">
@@ -31,7 +31,7 @@ const items = getServices();
         name="email"
         required
         placeholder="you@example.com"
-        class="w-full rounded-lg border border-slate-200 bg-white px-4 py-3 text-base text-slate-900 shadow-sm focus:border-[color:var(--color-primary)] focus:outline-none focus:ring focus:ring-[color:var(--color-primary)]/20"
+        class="w-full rounded-lg border border-slate-200 bg-white px-4 py-3 text-base text-slate-900 shadow-sm focus:border-brand-primary focus:outline-none focus:ring focus:ring-brand-primary/20"
       />
     </label>
   </div>
@@ -42,14 +42,14 @@ const items = getServices();
         type="tel"
         name="phone"
         placeholder="(555) 123-4567"
-        class="w-full rounded-lg border border-slate-200 bg-white px-4 py-3 text-base text-slate-900 shadow-sm focus:border-[color:var(--color-primary)] focus:outline-none focus:ring focus:ring-[color:var(--color-primary)]/20"
+        class="w-full rounded-lg border border-slate-200 bg-white px-4 py-3 text-base text-slate-900 shadow-sm focus:border-brand-primary focus:outline-none focus:ring focus:ring-brand-primary/20"
       />
     </label>
     <label class="flex flex-col gap-2 text-left text-sm font-medium text-slate-700">
       Service of Interest
       <select
         name="service"
-        class="w-full rounded-lg border border-slate-200 bg-white px-4 py-3 text-base text-slate-900 shadow-sm focus:border-[color:var(--color-primary)] focus:outline-none focus:ring focus:ring-[color:var(--color-primary)]/20"
+        class="w-full rounded-lg border border-slate-200 bg-white px-4 py-3 text-base text-slate-900 shadow-sm focus:border-brand-primary focus:outline-none focus:ring focus:ring-brand-primary/20"
       >
         <option value="">Select a service</option>
         {items.map(({ title }) => (
@@ -64,12 +64,12 @@ const items = getServices();
       name="message"
       rows="5"
       placeholder="Tell us about your project."
-      class="w-full rounded-lg border border-slate-200 bg-white px-4 py-3 text-base text-slate-900 shadow-sm focus:border-[color:var(--color-primary)] focus:outline-none focus:ring focus:ring-[color:var(--color-primary)]/20"
+      class="w-full rounded-lg border border-slate-200 bg-white px-4 py-3 text-base text-slate-900 shadow-sm focus:border-brand-primary focus:outline-none focus:ring focus:ring-brand-primary/20"
     ></textarea>
   </label>
   <button
     type="submit"
-    class="inline-flex w-full justify-center rounded-full bg-[color:var(--color-primary)] px-6 py-3 text-base font-semibold text-white shadow-lg shadow-[color:var(--color-primary)]/30 transition hover:brightness-110 sm:w-auto"
+    class="inline-flex w-full justify-center rounded-full bg-brand-primary px-6 py-3 text-base font-semibold text-white shadow-brand-glow transition hover:brightness-110 sm:w-auto"
   >
     Send Message
   </button>

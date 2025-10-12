@@ -14,9 +14,9 @@ interface Props {
 const { title, intro, items } = Astro.props as Props;
 const values = Array.isArray(items) ? items.filter(Boolean) : [];
 ---
-<section class="relative overflow-hidden rounded-3xl bg-slate-900 px-6 py-16 text-white sm:px-10">
+<section class="section-shell relative isolate overflow-hidden rounded-[2.5rem] bg-slate-900 text-white">
   <div class="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(255,255,255,0.15),_rgba(15,23,42,0.95))]" aria-hidden="true"></div>
-  <div class="relative mx-auto flex max-w-5xl flex-col gap-10 lg:flex-row lg:items-start">
+  <div class="section-container relative flex max-w-5xl flex-col gap-10 lg:flex-row lg:items-start">
     <div class="max-w-lg">
       <h2 class="text-3xl font-semibold tracking-tight sm:text-4xl">{title}</h2>
       <p class="mt-4 text-base leading-7 text-white/70">{intro}</p>

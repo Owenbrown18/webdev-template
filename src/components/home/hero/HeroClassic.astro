@@ -32,7 +32,7 @@ const bookingLabel = site.booking?.provider
   ? `Book with ${site.booking.provider}`
   : 'Book Now';
 ---
-<section class="relative isolate overflow-hidden rounded-3xl bg-slate-900 text-white shadow-xl">
+<section class="section-shell relative isolate overflow-hidden rounded-3xl bg-slate-900 text-white shadow-xl">
   <img
     src={image}
     alt=""
@@ -41,45 +41,48 @@ const bookingLabel = site.booking?.provider
     decoding="async"
   />
   <div class="absolute inset-0 bg-slate-900/70" aria-hidden="true"></div>
-  <div class="relative mx-auto max-w-5xl px-6 py-24 sm:py-28">
-    <div class="max-w-xl space-y-6">
-      <h1 class="text-4xl font-semibold tracking-tight sm:text-5xl">{title}</h1>
-      <p class="text-lg text-slate-100/80">{tagline}</p>
-      <div class="flex flex-wrap gap-4">
-        <a
-          href={primaryHref}
-          class="inline-flex items-center justify-center rounded-full bg-[color:var(--color-primary)] px-6 py-3 text-base font-semibold text-white shadow-lg shadow-[color:var(--color-primary)]/30 transition hover:brightness-110"
-        >
-          {primaryLabel}
-        </a>
-        {showSecondary ? (
+  <div class="section-container relative py-24 sm:py-28">
+    <div class="mx-auto max-w-5xl">
+      <div class="max-w-2xl space-y-6">
+        <p class="text-sm font-semibold uppercase tracking-[0.28em] text-white/70">Home</p>
+        <h1 class="text-4xl font-semibold tracking-tight sm:text-5xl">{title}</h1>
+        <p class="text-lg text-slate-100/80">{tagline}</p>
+        <div class="flex flex-wrap gap-4">
           <a
-            href={secondaryHref}
-            class="inline-flex items-center justify-center rounded-full border border-white/60 px-6 py-3 text-base font-semibold text-white transition hover:border-white hover:bg-white/10"
+            href={primaryHref}
+            class="inline-flex items-center justify-center rounded-full bg-white px-6 py-3 text-base font-semibold text-slate-900 shadow-lg transition hover:bg-slate-100"
           >
-            {secondaryLabel}
+            {primaryLabel}
           </a>
-        ) : (
-          showBookingCta && (
+          {showSecondary ? (
             <a
-              href="#booking"
+              href={secondaryHref}
               class="inline-flex items-center justify-center rounded-full border border-white/60 px-6 py-3 text-base font-semibold text-white transition hover:border-white hover:bg-white/10"
             >
-              Book with {site.booking?.provider ?? 'us'}
+              {secondaryLabel}
             </a>
-          )
+          ) : (
+            showBookingCta && (
+              <a
+                href="#booking"
+                class="inline-flex items-center justify-center rounded-full border border-white/60 px-6 py-3 text-base font-semibold text-white transition hover:border-white hover:bg-white/10"
+              >
+                Book with {site.booking?.provider ?? 'us'}
+              </a>
+            )
+          )}
+        </div>
+        {stats.length > 0 && (
+          <dl class="grid gap-6 sm:grid-cols-3">
+            {stats.map(({ label, value }) => (
+              <div class="rounded-2xl border border-white/10 bg-white/5 p-4 text-center shadow-sm backdrop-blur">
+                <dt class="text-sm font-medium text-white/70">{label}</dt>
+                <dd class="text-2xl font-semibold text-white">{value}</dd>
+              </div>
+            ))}
+          </dl>
         )}
       </div>
-      {stats.length > 0 && (
-        <dl class="grid gap-6 sm:grid-cols-3">
-          {stats.map(({ label, value }) => (
-            <div class="rounded-2xl border border-white/10 bg-white/5 p-4 text-center shadow-sm backdrop-blur">
-              <dt class="text-sm font-medium text-white/70">{label}</dt>
-              <dd class="text-2xl font-semibold text-white">{value}</dd>
-            </div>
-          ))}
-        </dl>
-      )}
     </div>
   </div>
 </section>

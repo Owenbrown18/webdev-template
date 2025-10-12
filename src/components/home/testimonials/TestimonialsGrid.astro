@@ -15,15 +15,15 @@ const {
   intro = `Real feedback from neighbors who trusted ${site.name}.`,
 }: Props = Astro.props as Props;
 ---
-<section class="py-16 sm:py-20">
-  <div class="mx-auto max-w-5xl px-6">
-    <div class="mx-auto max-w-2xl text-center">
-      <h2 class="text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl">{title}</h2>
-      <p class="mt-4 text-base text-slate-600">{intro}</p>
+<section class="section-shell">
+  <div class="section-container max-w-5xl">
+    <div class="section-intro max-w-2xl">
+      <h2 class="section-heading">{title}</h2>
+      <p class="section-subtitle">{intro}</p>
     </div>
     <div class="mt-12 grid gap-6 sm:grid-cols-2">
       {quotes?.map(({ quote, author }) => (
-        <figure class="h-full rounded-2xl border border-slate-200 bg-white p-6 text-left shadow-sm transition duration-200 hover:bg-white/95 hover:shadow-md focus-within:shadow-md">
+        <figure class="surface-card h-full p-6 text-left transition-shadow duration-200 hover:shadow-card-hover sm:p-7">
           <blockquote class="text-base font-medium leading-relaxed text-slate-700">
             “{quote}”
           </blockquote>

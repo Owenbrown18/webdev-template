@@ -8,7 +8,7 @@ hero:
   secondaryCtaHref: "#booking"
   image: "/images/hero.jpg"
 services:
-  variant: "grid" # Options: grid, list, none
+  variant: "list" # Options: grid, list, none
   title: "Our Services"
   intro: "Support tailored to your needs."
 video:

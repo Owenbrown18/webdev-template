@@ -9,3 +9,47 @@ html {
 body {
   min-height: 100vh;
 }
+
+@layer base {
+  :root {
+    color-scheme: light;
+  }
+
+  body {
+    background-color: rgb(var(--surface-base-rgb));
+  }
+}
+
+@layer components {
+  .section-shell {
+    @apply py-section sm:py-[5.5rem];
+  }
+
+  .section-container {
+    @apply mx-auto w-full max-w-6xl px-6;
+  }
+
+  .section-intro {
+    @apply mx-auto max-w-3xl text-center;
+  }
+
+  .section-eyebrow {
+    @apply text-xs font-semibold uppercase tracking-[0.28em] text-brand-primary/75 sm:text-sm;
+  }
+
+  .section-heading {
+    @apply mt-2 text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl;
+  }
+
+  .section-subtitle {
+    @apply mt-4 text-base text-slate-600;
+  }
+
+  .surface-card {
+    @apply rounded-surface border border-slate-200/70 bg-white/95 shadow-card backdrop-blur-[0px];
+  }
+
+  .surface-card-interactive {
+    @apply transition-transform duration-200 hover:-translate-y-1 hover:shadow-card-hover focus-visible:-translate-y-1 focus-visible:shadow-card-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary/25 focus-visible:ring-offset-2 focus-visible:ring-offset-white;
+  }
+}

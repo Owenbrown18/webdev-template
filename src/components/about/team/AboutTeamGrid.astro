@@ -15,49 +15,51 @@ interface Props {
 
 const { title, intro, members } = Astro.props as Props;
 ---
-<section class="px-6 py-16 sm:px-10">
-  <div class="mx-auto max-w-3xl text-center">
-    <h2 class="text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl">{title}</h2>
-    <p class="mt-4 text-base leading-7 text-slate-600">{intro}</p>
-  </div>
-  <div class="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-    {members.map(({ name, role, bio, image, highlight }) => (
-      <article class="flex h-full flex-col rounded-3xl bg-white p-6 shadow-sm transition duration-200 hover:bg-white/95 hover:shadow-md focus-within:shadow-md">
-        <div class="relative">
-          <div class="aspect-[3/4] w-full overflow-hidden rounded-2xl bg-slate-100 shadow-inner">
-            {image ? (
-              <img
-                src={image}
-                alt={name ? `${name} headshot` : ''}
-                class="h-full w-full object-cover"
-                loading="lazy"
-                decoding="async"
-              />
-            ) : (
-              <div class="flex h-full w-full items-center justify-center bg-gradient-to-br from-slate-200 via-white to-slate-100 text-3xl font-semibold text-slate-400">
-                {name
-                  ?.split(' ')
-                  .map((part) => part[0])
-                  .filter(Boolean)
-                  .slice(0, 2)
-                  .join('') ?? 'NB'}
-              </div>
+<section class="section-shell">
+  <div class="section-container">
+    <div class="section-intro max-w-3xl">
+      <h2 class="section-heading">{title}</h2>
+      <p class="section-subtitle leading-7">{intro}</p>
+    </div>
+    <div class="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+      {members.map(({ name, role, bio, image, highlight }) => (
+        <article class="surface-card flex h-full flex-col p-6 transition-shadow duration-200 hover:shadow-card-hover">
+          <div class="relative">
+            <div class="aspect-[3/4] w-full overflow-hidden rounded-2xl bg-slate-100 shadow-inner">
+              {image ? (
+                <img
+                  src={image}
+                  alt={name ? `${name} headshot` : ''}
+                  class="h-full w-full object-cover"
+                  loading="lazy"
+                  decoding="async"
+                />
+              ) : (
+                <div class="flex h-full w-full items-center justify-center bg-gradient-to-br from-slate-200 via-white to-slate-100 text-3xl font-semibold text-slate-400">
+                  {name
+                    ?.split(' ')
+                    .map((part) => part[0])
+                    .filter(Boolean)
+                    .slice(0, 2)
+                    .join('') ?? 'NB'}
+                </div>
+              )}
+            </div>
+            {highlight && (
+              <span class="absolute bottom-4 left-4 inline-flex rounded-full bg-brand-primary/90 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-white">
+                {highlight}
+              </span>
             )}
           </div>
-          {highlight && (
-            <span class="absolute bottom-4 left-4 inline-flex rounded-full bg-[color:var(--color-primary)]/90 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-white">
-              {highlight}
-            </span>
-          )}
-        </div>
-        <div class="mt-6 space-y-3">
-          <div>
-            <h3 class="text-lg font-semibold text-slate-900">{name}</h3>
-            {role && <p class="text-sm font-medium text-[color:var(--color-primary)]/80">{role}</p>}
+          <div class="mt-6 space-y-3">
+            <div>
+              <h3 class="text-lg font-semibold text-slate-900">{name}</h3>
+              {role && <p class="text-sm font-medium text-brand-primary/80">{role}</p>}
+            </div>
+            {bio && <p class="text-sm leading-6 text-slate-600">{bio}</p>}
           </div>
-          {bio && <p class="text-sm leading-6 text-slate-600">{bio}</p>}
-        </div>
-      </article>
-    ))}
+        </article>
+      ))}
+    </div>
   </div>
 </section>

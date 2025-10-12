@@ -72,7 +72,13 @@ Extend `src/types/content.ts` and add helpers when introducing additional sectio
 
 ## Styling
 
-The template relies on Tailwind CSS 3, with base styles imported via `src/styles/globals.css`. Most components use utility classes; when variants need shared styling, it is defined directly in the component. Feel free to extend Tailwind's `tailwind.config.cjs` if you want custom themes or plugin support.
+The template relies on Tailwind CSS 3 with shared design tokens and utilities defined in `tailwind.config.cjs` and `src/styles/globals.css`.
+
+- Brand colors resolve to the values in `content/general.yaml`, exposed as `text-brand-*`, `bg-brand-*`, and `border-brand-*` utilities.
+- Section scaffolding (`section-shell`, `section-container`, `section-intro`, `section-eyebrow`, etc.) keeps page rhythm consistent across variants.
+- Elevated surfaces (`surface-card` + `surface-card-interactive`) ensure cards, testimonials, and interactive blocks share the same radius, shadow, and focus states.
+
+Refer to `docs/ui-guidelines.md` for detailed UI guidance and best practices when creating new variants.
 
 ## Usage
 
@@ -93,4 +99,3 @@ The template relies on Tailwind CSS 3, with base styles imported via `src/styles
 - Automate scaffolding if you need to spin up many client sites quickly.
 
 This template is intentionally minimal yet flexible: edit YAML to control layout and messaging, introduce new variants when needed, and keep the codebase clean.
-

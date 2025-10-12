@@ -21,9 +21,9 @@ const hasEmbed = Boolean(videoUrl);
 const shouldRender = useLocalVideo || hasEmbed;
 ---
 {shouldRender && (
-  <section class="py-16 sm:py-24">
-    <div class="mx-auto max-w-6xl px-6">
-      <figure class="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-lg">
+  <section class="section-shell">
+    <div class="section-container max-w-6xl">
+      <figure class="surface-card overflow-hidden">
         <div class="relative aspect-[16/7] w-full bg-slate-900">
           {useLocalVideo ? (
             <video
@@ -46,11 +46,7 @@ const shouldRender = useLocalVideo || hasEmbed;
             ></iframe>
           )}
         </div>
-        {caption && (
-          <figcaption class="px-8 py-6 text-sm text-slate-600">
-            {caption}
-          </figcaption>
-        )}
+        {caption && <figcaption class="px-8 py-6 text-sm text-slate-600">{caption}</figcaption>}
       </figure>
     </div>
   </section>

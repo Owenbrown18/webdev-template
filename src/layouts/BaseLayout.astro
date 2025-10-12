@@ -3,18 +3,55 @@
 import { site, getSocialLinks } from '../config/content';
 import '../styles/globals.css';
 
+const hexToRgb = (value: string): string => {
+  if (!value) {
+    return '0 0 0';
+  }
+
+  const normalized = value.replace('#', '').trim();
+  if (normalized.length === 3) {
+    const r = normalized[0];
+    const g = normalized[1];
+    const b = normalized[2];
+    return `${parseInt(r + r, 16)} ${parseInt(g + g, 16)} ${parseInt(b + b, 16)}`;
+  }
+
+  if (normalized.length !== 6) {
+    return '0 0 0';
+  }
+
+  const bigint = Number.parseInt(normalized, 16);
+  const r = (bigint >> 16) & 255;
+  const g = (bigint >> 8) & 255;
+  const b = bigint & 255;
+
+  return `${r} ${g} ${b}`;
+};
+
 const { title, description, showTagline = true } = Astro.props;
 const pageTitle = title ? `${title} | ${site.name}` : site.name;
 const metaDescription = description ?? site.tagline;
 const primaryColor = site.colors?.primary ?? '#2563eb';
 const secondaryColor = site.colors?.secondary ?? '#0f172a';
 const accentColor = site.colors?.accent ?? '#f59e0b';
+const primaryRgb = hexToRgb(primaryColor);
+const secondaryRgb = hexToRgb(secondaryColor);
+const accentRgb = hexToRgb(accentColor);
+const surfaceBaseRgb = '248 250 252';
+const surfaceCardRgb = '255 255 255';
+const surfaceMutedRgb = '241 245 249';
 const shouldRenderTagline = Boolean(showTagline && site.tagline?.trim());
 const bodyStyle = `
   font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --color-primary: ${primaryColor};
   --color-secondary: ${secondaryColor};
   --color-accent: ${accentColor};
+  --color-primary-rgb: ${primaryRgb};
+  --color-secondary-rgb: ${secondaryRgb};
+  --color-accent-rgb: ${accentRgb};
+  --surface-base-rgb: ${surfaceBaseRgb};
+  --surface-card-rgb: ${surfaceCardRgb};
+  --surface-muted-rgb: ${surfaceMutedRgb};
 `;
 ---
 <!DOCTYPE html>
@@ -39,7 +76,7 @@ const bodyStyle = `
       <div class="mx-auto flex h-20 w-full max-w-6xl items-center justify-between border-b border-slate-200/80 px-6">
         <a
           href="/"
-          class="text-[1.6rem] font-semibold text-slate-900 transition hover:text-[color:var(--color-primary)]"
+          class="text-[1.6rem] font-semibold text-slate-900 transition hover:text-brand-primary"
         >
           {site.name}
         </a>
@@ -51,7 +88,7 @@ const bodyStyle = `
           ].map(({ href, label }) => (
             <a
               href={href}
-              class="rounded-full px-4 py-2 transition-colors hover:bg-slate-100 hover:text-[color:var(--color-primary)]"
+              class="rounded-full px-4 py-2 transition-colors hover:bg-slate-100 hover:text-brand-primary"
             >
               {label}
             </a>
@@ -83,7 +120,7 @@ const bodyStyle = `
             {getSocialLinks().map(([key, url]) => (
               <a
                 href={url}
-                class="capitalize transition-colors hover:text-[color:var(--color-primary)]"
+                class="capitalize transition-colors hover:text-brand-primary"
               >
                 {key}
               </a>

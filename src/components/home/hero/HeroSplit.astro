@@ -26,10 +26,11 @@ const secondaryHref = hero.secondaryCtaHref ?? '#booking';
 const image = hero.image ?? '/images/hero.jpg';
 const showBookingCta = Boolean(site.booking?.embedUrl) && !showSecondary;
 ---
-<section class="rounded-3xl border border-slate-200 bg-white shadow-sm">
-  <div class="grid gap-10 overflow-hidden px-6 py-16 sm:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)] sm:px-12">
+<section class="section-shell">
+  <div class="section-container">
+    <div class="surface-card grid gap-10 overflow-hidden p-6 sm:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)] sm:p-12">
     <div class="flex flex-col justify-center gap-6">
-      <p class="text-sm font-semibold uppercase tracking-[0.28em] text-[color:var(--color-primary)]/90">
+      <p class="text-sm font-semibold uppercase tracking-[0.28em] text-brand-primary/90">
         Trusted Local Experts
       </p>
       <h1 class="text-4xl font-semibold tracking-tight text-slate-900 sm:text-5xl">{title}</h1>
@@ -37,14 +38,14 @@ const showBookingCta = Boolean(site.booking?.embedUrl) && !showSecondary;
       <div class="flex flex-wrap gap-3">
         <a
           href={primaryHref}
-          class="inline-flex items-center justify-center rounded-full bg-[color:var(--color-primary)] px-6 py-3 text-base font-semibold text-white shadow-sm transition hover:brightness-110"
+          class="inline-flex items-center justify-center rounded-full bg-brand-primary px-6 py-3 text-base font-semibold text-white shadow-brand-glow transition hover:brightness-110"
         >
           {primaryLabel}
         </a>
         {showSecondary ? (
           <a
             href={secondaryHref}
-            class="inline-flex items-center justify-center rounded-full border border-slate-200 px-6 py-3 text-base font-semibold text-slate-900 transition hover:border-[color:var(--color-primary)] hover:text-[color:var(--color-primary)]"
+            class="inline-flex items-center justify-center rounded-full border border-slate-200 px-6 py-3 text-base font-semibold text-slate-900 transition hover:border-brand-primary hover:text-brand-primary"
           >
             {secondaryLabel}
           </a>
@@ -52,7 +53,7 @@ const showBookingCta = Boolean(site.booking?.embedUrl) && !showSecondary;
           showBookingCta && (
             <a
               href="#booking"
-              class="inline-flex items-center justify-center rounded-full border border-slate-200 px-6 py-3 text-base font-semibold text-slate-900 transition hover:border-[color:var(--color-primary)] hover:text-[color:var(--color-primary)]"
+              class="inline-flex items-center justify-center rounded-full border border-slate-200 px-6 py-3 text-base font-semibold text-slate-900 transition hover:border-brand-primary hover:text-brand-primary"
             >
               Book with {site.booking?.provider ?? 'us'}
             </a>
@@ -69,7 +70,7 @@ const showBookingCta = Boolean(site.booking?.embedUrl) && !showSecondary;
         decoding="async"
       />
       <div class="absolute inset-0 bg-slate-900/40" aria-hidden="true"></div>
-      <div class="absolute bottom-6 left-6 right-6 rounded-2xl bg-white/95 p-6 shadow-lg">
+      <div class="absolute bottom-6 left-6 right-6 rounded-2xl bg-white/95 p-6 shadow-card">
         <p class="text-sm font-semibold text-slate-900">Visit our showroom</p>
         <p class="mt-1 text-sm text-slate-600">
           {site.address?.line1}
@@ -79,6 +80,8 @@ const showBookingCta = Boolean(site.booking?.embedUrl) && !showSecondary;
           {[site.address?.city, site.address?.state, site.address?.postalCode].filter(Boolean).join(', ')}
         </p>
       </div>
+    </div>
+  </div>
     </div>
   </div>
 </section>

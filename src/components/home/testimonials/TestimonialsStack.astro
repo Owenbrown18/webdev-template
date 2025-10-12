@@ -15,20 +15,16 @@ const {
   intro = 'Stories from neighbors',
 }: Props = Astro.props as Props;
 ---
-<section class="py-16 sm:py-20">
-  <div class="mx-auto flex max-w-5xl flex-col gap-12 px-6">
-    <div class="text-center">
-      <p class="text-sm font-semibold uppercase tracking-[0.28em] text-[color:var(--color-primary)]/90">
-        {intro}
-      </p>
-      <h2 class="mt-2 text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl">
-        {title}
-      </h2>
+<section class="section-shell">
+  <div class="section-container flex max-w-5xl flex-col gap-12">
+    <div class="section-intro">
+      <p class="section-eyebrow">{intro}</p>
+      <h2 class="section-heading">{title}</h2>
     </div>
     <div class="space-y-6">
       {quotes?.map(({ quote, author }, index) => (
         <figure
-          class={`rounded-3xl border border-slate-200 bg-white/95 p-6 shadow-sm transition duration-200 hover:bg-white/95 hover:shadow-md focus-within:shadow-md sm:p-8 ${index % 2 === 0 ? 'sm:translate-x-0' : 'sm:translate-x-8'}`}
+          class={`surface-card p-6 sm:p-8 ${index % 2 === 0 ? 'sm:translate-x-0' : 'sm:translate-x-8'}`}
         >
           <blockquote class="text-base font-medium leading-relaxed text-slate-700">
             “{quote}”

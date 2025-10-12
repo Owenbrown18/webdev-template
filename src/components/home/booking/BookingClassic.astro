@@ -17,18 +17,16 @@ const embedUrl = site.booking?.embedUrl;
 const provider = site.booking?.provider;
 ---
 {embedUrl && (
-  <section id="booking" class="py-16 sm:py-20">
-    <div class="mx-auto max-w-5xl px-6">
-      <div class="mx-auto max-w-2xl text-center">
-        <h2 class="text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl">
-          {heading}
-        </h2>
-        <p class="mt-4 text-base text-slate-600">
+  <section id="booking" class="section-shell">
+    <div class="section-container max-w-5xl">
+      <div class="section-intro max-w-2xl">
+        <h2 class="section-heading">{heading}</h2>
+        <p class="section-subtitle">
           {description}
           {provider && ` — powered by ${provider}`}
         </p>
       </div>
-      <div class="mt-10 overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm">
+      <div class="mt-10 surface-card overflow-hidden">
         <iframe
           src={embedUrl}
           title={`Booking with ${site.name}`}

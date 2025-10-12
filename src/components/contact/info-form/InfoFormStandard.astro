@@ -32,9 +32,9 @@ const addressParts = [
   .map((part) => (typeof part === 'string' ? part.trim() : part));
 const addressDisplay = addressParts.join('\n');
 ---
-<section class="py-16 sm:py-20">
-  <div class="grid gap-12 sm:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)]">
-    <article class="rounded-3xl border border-slate-200 bg-white p-8 shadow-sm sm:p-12">
+<section class="section-shell">
+  <div class="section-container grid gap-12 sm:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)]">
+    <article class="surface-card p-8 sm:p-12">
       <h1 class="text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl">{title}</h1>
       <p class="mt-4 text-base text-slate-600">{intro}</p>
       <dl class="mt-8 space-y-6 text-sm text-slate-700">
@@ -42,7 +42,7 @@ const addressDisplay = addressParts.join('\n');
           <div>
             <dt class="font-semibold text-slate-900">Phone</dt>
             <dd class="mt-1">
-              <a href={phoneHref} class="text-[color:var(--color-primary)] hover:underline">
+              <a href={phoneHref} class="text-brand-primary hover:underline">
                 {phoneLabel ?? site.phone}
               </a>
             </dd>
@@ -52,7 +52,7 @@ const addressDisplay = addressParts.join('\n');
           <div>
             <dt class="font-semibold text-slate-900">Email</dt>
             <dd class="mt-1">
-              <a href={emailHref} class="text-[color:var(--color-primary)] hover:underline">
+              <a href={emailHref} class="text-brand-primary hover:underline">
                 {emailLabel ?? site.email}
               </a>
             </dd>
