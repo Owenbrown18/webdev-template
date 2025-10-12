@@ -11,8 +11,13 @@ const {
   location = 'Hometown, USA',
   founded = '2012',
 } = hero;
+
+const details = [
+  location && { label: 'Located in', value: location },
+  founded && { label: 'Founded', value: founded },
+].filter(Boolean) as Array<{ label: string; value: string }>;
 ---
-<section class="section-shell relative isolate overflow-hidden rounded-3xl bg-slate-900 text-white shadow-xl">
+<section class="section-shell min-h-hero relative isolate overflow-hidden rounded-3xl bg-slate-900 text-white shadow-xl">
   <img
     src={image}
     alt=""
@@ -42,16 +47,16 @@ const {
           </a>
         </div>
       </div>
-      <div class="space-y-4 rounded-3xl border border-white/20 bg-white/10 p-6 text-sm text-white/80 shadow-lg backdrop-blur">
-        <div class="space-y-1">
-          <span class="font-semibold uppercase tracking-[0.32em] text-white/60">Located in</span>
-          <p class="text-base font-semibold text-white">{location}</p>
-        </div>
-        <div class="space-y-1">
-          <span class="font-semibold uppercase tracking-[0.32em] text-white/60">Founded</span>
-          <p class="text-base font-semibold text-white">{founded}</p>
-        </div>
-      </div>
+      {details.length > 0 && (
+        <dl class="space-y-4">
+          {details.map(({ label, value }) => (
+            <div class="rounded-2xl border border-white/15 bg-white/5 p-6 text-center shadow-sm backdrop-blur">
+              <dt class="text-sm font-semibold uppercase tracking-[0.22em] text-white/70">{label}</dt>
+              <dd class="mt-2 text-2xl font-semibold text-white">{value}</dd>
+            </div>
+          ))}
+        </dl>
+      )}
     </div>
   </div>
 </section>
