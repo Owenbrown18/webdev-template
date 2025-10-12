@@ -54,6 +54,12 @@ body {
   }
 
   .min-h-hero {
-    min-height: 26rem;
+    height: 34rem;
+  }
+
+  @screen lg {
+    .min-h-hero {
+      height: 38rem;
+    }
   }
 }
