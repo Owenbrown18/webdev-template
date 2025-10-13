@@ -16,8 +16,10 @@ hero:
       value: "4.9/5"
 values:
   variant: "list" # Options: grid, list, none
+  eyebrow: "Our values"
   title: "Values that guide every project"
   intro: "Our team brings the same dependable care to every job, whether it's a quick tune-up or a full-scale renovation."
+  supporting: "Every promise we make to clients ties back to these principles. They guide hiring, training, and how we show up in your home."
   items:
     - title: "Hands-on partnership"
       description: "We collaborate with homeowners at each milestone so there are no surprises, just steady progress."
@@ -28,9 +30,6 @@ values:
     - title: "See it through"
       description: "From prep to clean-up, we finish strong and leave every space better than we found it."
       icon: "ST"
-    - title: "Neighbors first"
-      description: "We invest back into the community that supports us and prioritize service that feels personal."
-      icon: "NF"
 timeline:
   variant: "steps" # Options: steps, vertical, milestone, none
   title: "From a two-person crew to a trusted local team"

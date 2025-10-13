@@ -107,8 +107,10 @@ export type AboutContent = {
   };
   values?: {
     variant?: string;
+    eyebrow?: string | null;
     title?: string | null;
     intro?: string | null;
+    supporting?: string | null;
     items?: Array<{
       title?: string;
       description?: string;
