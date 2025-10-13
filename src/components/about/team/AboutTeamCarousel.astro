@@ -1,0 +1,267 @@
+---
+interface Member {
+  name?: string;
+  role?: string;
+  bio?: string;
+  image?: string;
+  highlight?: string;
+}
+
+interface Props {
+  title: string;
+  intro?: string;
+  eyebrow?: string;
+  members: Member[];
+  backgroundClass?: string;
+}
+
+const {
+  title,
+  intro,
+  eyebrow,
+  members,
+  backgroundClass,
+}: Props = Astro.props as Props;
+
+const teamMembers = Array.isArray(members) ? members.filter(Boolean) : [];
+
+const sectionClasses = ['section-shell', backgroundClass ?? ''].filter(Boolean).join(' ');
+---
+<section class={sectionClasses} data-team-carousel>
+  <div class="section-container">
+    <div class="section-intro max-w-3xl">
+      {eyebrow && <p class="section-eyebrow">{eyebrow}</p>}
+      <h2 class="section-heading">{title}</h2>
+      {intro && <p class="section-subtitle leading-7">{intro}</p>}
+    </div>
+    <div class="team-carousel-viewport" data-carousel-viewport>
+      <div
+        class="team-carousel-track"
+        data-carousel-track
+        role="group"
+        aria-roledescription="carousel"
+        aria-label="Team members"
+      >
+        {teamMembers.map(({ name, role, bio, image, highlight }) => (
+          <article class="team-carousel-card surface-card flex h-full min-h-[20rem] flex-col p-5 transition-shadow duration-200 hover:shadow-card-hover" data-carousel-card>
+            <div class="relative">
+              <div class="aspect-[3/4] w-full overflow-hidden rounded-xl bg-slate-100 shadow-inner">
+                {image ? (
+                  <img
+                    src={image}
+                    alt={name ? `${name} headshot` : ''}
+                    class="h-full w-full object-cover"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                ) : (
+                  <div class="flex h-full w-full items-center justify-center bg-gradient-to-br from-slate-200 via-white to-slate-100 text-3xl font-semibold text-slate-400">
+                    {name
+                      ?.split(' ')
+                      .map((part) => part[0])
+                      .filter(Boolean)
+                      .slice(0, 2)
+                      .join('') ?? 'NB'}
+                  </div>
+                )}
+              </div>
+              {highlight && (
+                <span class="absolute bottom-4 left-4 inline-flex rounded-full bg-brand-primary/90 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-white">
+                  {highlight}
+                </span>
+              )}
+            </div>
+            <div class="mt-5 space-y-2">
+              <div>
+                <h3 class="text-lg font-semibold text-slate-900">{name}</h3>
+                {role && <p class="text-sm font-medium text-brand-primary/80">{role}</p>}
+              </div>
+              {bio && <p class="text-sm leading-6 text-slate-600 line-clamp-4">{bio}</p>}
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+<script type="module">
+  (() => {
+    const SPEED = 0.03;
+
+    const getSlidesPerView = (total) => {
+      if (window.matchMedia('(min-width: 1024px)').matches) {
+        return Math.min(3, total);
+      }
+      if (window.matchMedia('(min-width: 640px)').matches) {
+        return Math.min(2, total);
+      }
+      return 1;
+    };
+
+    const debounce = (fn, wait = 150) => {
+      let timer;
+      return () => {
+        window.clearTimeout(timer);
+        timer = window.setTimeout(fn, wait);
+      };
+    };
+
+    const initCarousel = (container) => {
+      if (container.dataset.carouselReady === 'true') return;
+      container.dataset.carouselReady = 'true';
+
+      const viewport = container.querySelector('[data-carousel-viewport]');
+      const track = container.querySelector('[data-carousel-track]');
+      if (!viewport || !track) return;
+
+      const originals = Array.from(track.querySelectorAll('[data-carousel-card]'));
+      const baseCount = originals.length;
+      if (baseCount <= 1) {
+        track.style.setProperty('--slides-per-view', '1');
+        return;
+      }
+
+      track.querySelectorAll('[data-carousel-clone]').forEach((node) => node.remove());
+
+      const beforeFragment = document.createDocumentFragment();
+      const afterFragment = document.createDocumentFragment();
+
+      originals.forEach((slide) => {
+        const beforeClone = slide.cloneNode(true);
+        beforeClone.dataset.carouselClone = 'true';
+        beforeFragment.appendChild(beforeClone);
+
+        const afterClone = slide.cloneNode(true);
+        afterClone.dataset.carouselClone = 'true';
+        afterFragment.appendChild(afterClone);
+      });
+
+      track.insertBefore(beforeFragment, originals[0]);
+      track.appendChild(afterFragment);
+
+      let slidesPerView = getSlidesPerView(baseCount);
+      let cardWidth = viewport.offsetWidth / slidesPerView;
+      let baseWidth = cardWidth * baseCount;
+      let position = baseWidth;
+      let lastTime;
+      let isInView = false;
+
+      const updateMeasurements = (immediate = false) => {
+        slidesPerView = getSlidesPerView(baseCount);
+        track.style.setProperty('--slides-per-view', String(slidesPerView));
+        cardWidth = viewport.offsetWidth / slidesPerView;
+        baseWidth = cardWidth * baseCount;
+        position = baseWidth + (position % baseWidth);
+        if (immediate) {
+          track.style.transform = 'translateX(' + (-position) + 'px)';
+        }
+      };
+
+      const step = (timestamp) => {
+        if (!lastTime) lastTime = timestamp;
+        const delta = timestamp - lastTime;
+        lastTime = timestamp;
+
+        if (isInView && document.visibilityState === 'visible') {
+          position += delta * SPEED;
+          const loopMax = baseWidth * 2;
+          if (position >= loopMax) {
+            position -= baseWidth;
+          }
+          track.style.transform = 'translateX(' + (-position) + 'px)';
+        }
+
+        requestAnimationFrame(step);
+      };
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          isInView = entries.some((entry) => entry.isIntersecting);
+          if (!isInView) {
+            lastTime = undefined;
+          }
+        },
+        { threshold: 0.3 },
+      );
+
+      observer.observe(container);
+
+      document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState !== 'visible') {
+          lastTime = undefined;
+        }
+      });
+
+      container.addEventListener('mouseenter', () => {
+        lastTime = undefined;
+      });
+
+      container.addEventListener('mouseleave', () => {
+        lastTime = undefined;
+      });
+
+      const handleResize = debounce(() => updateMeasurements(true));
+      window.addEventListener('resize', handleResize);
+
+      updateMeasurements(true);
+      track.style.transform = 'translateX(' + (-position) + 'px)';
+      requestAnimationFrame(step);
+
+      container.addEventListener('astro:before-remove', () => {
+        observer.disconnect();
+        window.removeEventListener('resize', handleResize);
+      });
+    };
+
+    const initAllCarousels = () => {
+      document.querySelectorAll('[data-team-carousel]').forEach((el) => initCarousel(el));
+    };
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initAllCarousels, { once: true });
+    } else {
+      initAllCarousels();
+    }
+  })();
+</script>
+<style>
+  [data-carousel-track] {
+    --slides-per-view: 1;
+    display: flex;
+    gap: 1rem;
+    will-change: transform;
+  }
+
+  .team-carousel-viewport {
+    margin-top: 2rem;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .team-carousel-card {
+    flex: 0 0 calc(78% / var(--slides-per-view));
+    max-width: calc(78% / var(--slides-per-view));
+    min-height: 21rem;
+  }
+
+  .team-carousel-viewport::before,
+  .team-carousel-viewport::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 5rem;
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  .team-carousel-viewport::before {
+    left: 0;
+    background: linear-gradient(to right, rgba(248, 250, 252, 1), rgba(248, 250, 252, 0));
+  }
+
+  .team-carousel-viewport::after {
+    right: 0;
+    background: linear-gradient(to left, rgba(248, 250, 252, 1), rgba(248, 250, 252, 0));
+  }
+</style>
