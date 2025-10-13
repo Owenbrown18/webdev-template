@@ -1,0 +1,34 @@
+---
+import type { AboutContent } from '../../../types/content';
+import { about, getAboutProcessVariant } from '../../../config/content';
+import AboutProcessSteps from './AboutProcessSteps.astro';
+
+const variants: Record<string, any> = {
+  steps: AboutProcessSteps,
+};
+
+const variantKey = getAboutProcessVariant();
+const Component = variantKey === 'none' ? null : variants[variantKey] ?? variants.steps;
+
+const props = Astro.props as Partial<{
+  title: string | null;
+  intro: string | null;
+  eyebrow: string | null;
+  steps: AboutContent['process'] extends { steps?: infer T } ? T : undefined;
+}>;
+
+const base = about.process ?? {};
+const title = props.title ?? base.title ?? 'How we work';
+const intro = props.intro ?? base.intro ?? 'A simple, dependable process keeps every project on track.';
+const eyebrow = props.eyebrow ?? base.eyebrow;
+const rawSteps = Array.isArray(props.steps) ? props.steps : base.steps;
+const steps = Array.isArray(rawSteps) ? rawSteps.filter(Boolean) : [];
+---
+{Component && steps.length > 0 ? (
+  <Component
+    title={title}
+    intro={intro}
+    eyebrow={eyebrow ?? undefined}
+    steps={steps}
+  />
+) : null}

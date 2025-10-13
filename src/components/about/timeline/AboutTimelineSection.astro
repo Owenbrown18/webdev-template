@@ -17,15 +17,22 @@ const Component = variantKey === 'none' ? null : variants[variantKey] ?? variant
 const props = Astro.props as Partial<{
   title: string | null;
   intro: string | null;
+  eyebrow: string | null;
   milestones: AboutContent['timeline'] extends { milestones?: infer T } ? T : undefined;
 }>;
 
 const base = about.timeline ?? {};
 const title = props.title ?? base.title ?? 'Our story in milestones';
 const intro = props.intro ?? base.intro ?? 'A look at the moments that shaped how we show up for neighbors every day.';
+const eyebrow = props.eyebrow ?? base.eyebrow;
 const rawMilestones = Array.isArray(props.milestones) ? props.milestones : base.milestones;
 const milestones = Array.isArray(rawMilestones) ? rawMilestones.filter(Boolean) : [];
 ---
 {Component && milestones.length > 0 ? (
-  <Component title={title} intro={intro} milestones={milestones} />
+  <Component
+    title={title}
+    intro={intro}
+    eyebrow={eyebrow ?? undefined}
+    milestones={milestones}
+  />
 ) : null}

@@ -11,6 +11,19 @@ const variants: Record<string, any> = {
 
 const variantKey = getVideoVariant();
 const Component = variantKey === 'none' ? null : variants[variantKey] ?? variants.half;
-const video = home.video ?? {};
+const {
+  eyebrow = 'See us in action',
+  title = `${site.name} in motion`,
+  intro = '',
+  ...video
+} = home.video ?? {};
 ---
-{Component ? <Component site={site as SiteContent} video={video} /> : null}
+{Component ? (
+  <Component
+    site={site as SiteContent}
+    video={video}
+    eyebrow={eyebrow ?? undefined}
+    title={title ?? undefined}
+    intro={intro ?? undefined}
+  />
+) : null}

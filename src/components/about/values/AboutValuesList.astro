@@ -23,30 +23,25 @@ const {
 
 const values = Array.isArray(items) ? items.filter(Boolean) : [];
 ---
-<section class="section-shell relative isolate overflow-hidden rounded-[2.5rem] bg-slate-900 text-white">
-  <div class="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(255,255,255,0.16),_rgba(15,23,42,0.9))]" aria-hidden="true"></div>
-  <div class="absolute inset-0 bg-[linear-gradient(135deg,_rgba(37,99,235,0.18),_transparent_40%,_rgba(15,23,42,0.65))]" aria-hidden="true"></div>
-  <div class="section-container relative grid max-w-5xl gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] lg:items-start">
+<section class="section-shell">
+  <div class="section-container grid max-w-5xl gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] lg:items-start">
     <div class="space-y-6">
-      {eyebrow && (
-        <p class="text-sm font-semibold uppercase tracking-[0.28em] text-white/70">{eyebrow}</p>
-      )}
-      <h2 class="text-3xl font-semibold tracking-tight sm:text-4xl">{title}</h2>
-      {intro && <p class="text-base leading-7 text-white/75">{intro}</p>}
-      {supporting && <p class="text-sm text-white/50">{supporting}</p>}
+      {eyebrow && <p class="section-eyebrow">{eyebrow}</p>}
+      <h2 class="section-heading">{title}</h2>
+      {intro && <p class="section-subtitle">{intro}</p>}
+      {supporting && <p class="text-sm text-slate-500">{supporting}</p>}
     </div>
-    <dl class="relative space-y-6 border-l border-white/15 pl-10">
-      <span class="pointer-events-none absolute inset-y-0 left-[-1px] hidden w-px bg-gradient-to-b from-white/50 via-white/10 to-transparent lg:block" aria-hidden="true"></span>
+    <dl class="relative space-y-6 border-l border-slate-200 pl-10">
+      <span class="pointer-events-none absolute inset-y-0 left-[-1px] hidden w-px bg-gradient-to-b from-slate-200 via-transparent to-transparent lg:block" aria-hidden="true"></span>
       {values.map(({ title, description, icon }, index) => (
-        <div class="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.04] p-6 shadow-[0_12px_32px_-20px_rgba(15,23,42,0.8)] transition-all duration-200 hover:-translate-y-1 hover:border-white/30 hover:bg-white/[0.08]">
-          <dt class="flex items-center gap-4 text-base font-semibold tracking-tight">
-            <span class="relative flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-full bg-white/10 text-sm font-semibold uppercase tracking-[0.12em] text-white/80">
-              <span class="absolute inset-0 rounded-full bg-white/15 opacity-0 transition-opacity duration-200 group-hover:opacity-100" aria-hidden="true"></span>
+        <div class="surface-card relative p-6 transition-shadow duration-200 hover:shadow-card-hover">
+          <dt class="flex items-center gap-4 text-base font-semibold tracking-tight text-slate-900">
+            <span class="relative flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-full bg-brand-primary/10 text-sm font-semibold uppercase tracking-[0.12em] text-brand-primary">
               {icon ? icon : String(index + 1).padStart(2, '0')}
             </span>
             <span>{title}</span>
           </dt>
-          <dd class="mt-3 text-sm leading-6 text-white/70">{description}</dd>
+          <dd class="mt-3 text-sm leading-6 text-slate-600">{description}</dd>
         </div>
       ))}
     </dl>

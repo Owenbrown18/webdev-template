@@ -6,6 +6,7 @@ interface Props {
   site: SiteContent;
   title?: string;
   intro?: string;
+  eyebrow?: string;
 }
 
 const {
@@ -13,13 +14,15 @@ const {
   site,
   title = `Why people choose ${site.name}`,
   intro = 'Stories from neighbors',
+  eyebrow = 'Testimonials',
 }: Props = Astro.props as Props;
 ---
 <section class="section-shell">
   <div class="section-container flex max-w-5xl flex-col gap-12">
     <div class="section-intro">
-      <p class="section-eyebrow">{intro}</p>
+      {eyebrow && <p class="section-eyebrow">{eyebrow}</p>}
       <h2 class="section-heading">{title}</h2>
+      {intro && <p class="section-subtitle">{intro}</p>}
     </div>
     <div class="space-y-6">
       {quotes?.map(({ quote, author }, index) => (

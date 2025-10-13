@@ -9,18 +9,27 @@ interface Member {
 
 interface Props {
   title: string;
-  intro: string;
+  intro?: string;
+  eyebrow?: string;
   members: Member[];
 }
 
-const { title, intro, members } = Astro.props as Props;
+const {
+  title,
+  intro,
+  eyebrow,
+  members,
+}: Props = Astro.props as Props;
 ---
 <section class="section-shell relative isolate overflow-hidden rounded-[2.5rem] bg-slate-900 text-white">
   <div class="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(255,255,255,0.14),_rgba(15,23,42,0.92))]" aria-hidden="true"></div>
   <div class="section-container relative max-w-5xl space-y-12">
-    <div class="max-w-3xl">
+    <div class="max-w-3xl space-y-4">
+      {eyebrow && (
+        <p class="text-sm font-semibold uppercase tracking-[0.28em] text-white/70">{eyebrow}</p>
+      )}
       <h2 class="text-3xl font-semibold tracking-tight sm:text-4xl">{title}</h2>
-      <p class="mt-4 text-base leading-7 text-white/70">{intro}</p>
+      {intro && <p class="text-base leading-7 text-white/70">{intro}</p>}
     </div>
     <div class="space-y-6">
       {members.map(({ name, role, bio, image, highlight }) => (

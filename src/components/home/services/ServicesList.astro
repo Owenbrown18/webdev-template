@@ -5,12 +5,14 @@ interface Props {
   services: ServicesContent;
   title?: string;
   intro?: string;
+  eyebrow?: string;
 }
 
 const {
   services,
   title = 'Our Services',
   intro = 'Support tailored to your needs.',
+  eyebrow = 'What we do',
 }: Props = Astro.props as Props;
 
 const items = Array.isArray(services.items) ? services.items : [];
@@ -18,7 +20,7 @@ const items = Array.isArray(services.items) ? services.items : [];
 <section id="services" class="section-shell">
   <div class="section-container max-w-4xl">
     <div class="section-intro">
-      <p class="section-eyebrow">What we do</p>
+      {eyebrow && <p class="section-eyebrow">{eyebrow}</p>}
       <h2 class="section-heading">{title}</h2>
       <p class="section-subtitle">{intro}</p>
     </div>

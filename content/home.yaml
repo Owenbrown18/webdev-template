@@ -9,16 +9,21 @@ hero:
   image: "/images/hero.jpg"
 services:
   variant: "list" # Options: grid, list, none
+  eyebrow: "What we do"
   title: "Our Services"
   intro: "Support tailored to your needs."
 video:
   variant: "full" # Options: half, full, none
+  eyebrow: "See us in action"
+  title: "A day on site with our crew"
+  intro: "From prep to final walkthrough, here’s how we keep projects moving smoothly."
   videoUrl: "" # External video URL (e.g., YouTube)
   localVideo: "/media/mainloop.mp4"
   posterUrl: ""
   caption: "A quick look at how we support neighbors every step of the way."
 testimonials:
   variant: "grid" # Options: grid, stack, none
+  eyebrow: "What clients say"
   title: "Kind Words"
   intro: "Real feedback from neighbors who trusted Local Business Co."
 booking:

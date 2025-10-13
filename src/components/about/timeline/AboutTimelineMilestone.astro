@@ -8,18 +8,27 @@ interface Milestone {
 
 interface Props {
   title: string;
-  intro: string;
+  intro?: string;
+  eyebrow?: string;
   milestones: Milestone[];
 }
 
-const { title, intro, milestones } = Astro.props as Props;
+const {
+  title,
+  intro,
+  eyebrow,
+  milestones,
+}: Props = Astro.props as Props;
 ---
 <section class="section-shell relative isolate overflow-hidden rounded-[2.5rem] bg-slate-900 text-white">
   <div class="absolute inset-0 bg-[linear-gradient(135deg,_rgba(15,23,42,0.95),_rgba(37,99,235,0.35))]" aria-hidden="true"></div>
   <div class="section-container relative max-w-5xl">
-    <div class="max-w-2xl">
+    <div class="max-w-2xl space-y-4 text-center">
+      {eyebrow && (
+        <p class="text-sm font-semibold uppercase tracking-[0.28em] text-white/70">{eyebrow}</p>
+      )}
       <h2 class="text-3xl font-semibold tracking-tight sm:text-4xl">{title}</h2>
-      <p class="mt-4 text-base leading-7 text-white/70">{intro}</p>
+      {intro && <p class="text-base leading-7 text-white/70">{intro}</p>}
     </div>
     <div class="mt-12 grid gap-6 lg:grid-cols-3">
       {milestones.map(({ year, title, description, image }, index) => (

@@ -34,6 +34,7 @@ const metaDescription = description ?? site.tagline;
 const primaryColor = site.colors?.primary ?? '#2563eb';
 const secondaryColor = site.colors?.secondary ?? '#0f172a';
 const accentColor = site.colors?.accent ?? '#f59e0b';
+const footerCredit = site.footerCredit;
 const primaryRgb = hexToRgb(primaryColor);
 const secondaryRgb = hexToRgb(secondaryColor);
 const accentRgb = hexToRgb(accentColor);
@@ -116,7 +117,7 @@ const bodyStyle = `
       <footer class="border-t border-slate-200 py-8 text-sm text-slate-500">
         <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <p>&copy; {new Date().getFullYear()} {site.name}. All rights reserved.</p>
-          <div class="flex flex-wrap gap-4">
+          <div class="flex flex-wrap items-center gap-4">
             {getSocialLinks().map(([key, url]) => (
               <a
                 href={url}
@@ -125,6 +126,19 @@ const bodyStyle = `
                 {key}
               </a>
             ))}
+            {footerCredit?.label && footerCredit?.href && (
+              <span class="hidden h-4 w-px bg-slate-200 sm:inline" aria-hidden="true"></span>
+            )}
+            {footerCredit?.label && footerCredit?.href && (
+              <a
+                href={footerCredit.href}
+                class="font-medium text-slate-600 transition-colors hover:text-brand-primary"
+                target="_blank"
+                rel="noreferrer"
+              >
+                {footerCredit.label}
+              </a>
+            )}
           </div>
         </div>
       </footer>

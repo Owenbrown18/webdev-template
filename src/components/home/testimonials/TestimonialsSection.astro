@@ -19,6 +19,7 @@ const safeQuotes = Array.isArray(quotes) ? quotes : [];
 const settings = home.testimonials ?? {};
 const title = settings.title ?? 'Kind Words';
 const intro = settings.intro ?? `Real feedback from neighbors who trusted ${site.name}.`;
+const eyebrow = settings.eyebrow ?? 'Testimonials';
 ---
 {Component && safeQuotes.length > 0 ? (
   <Component
@@ -26,5 +27,6 @@ const intro = settings.intro ?? `Real feedback from neighbors who trusted ${site
     site={currentSite}
     title={title}
     intro={intro}
+    eyebrow={eyebrow}
   />
 ) : null}

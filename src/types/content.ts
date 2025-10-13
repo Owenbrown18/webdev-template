@@ -25,6 +25,10 @@ export type SiteContent = {
     secondary?: string;
     accent?: string;
   };
+  footerCredit?: {
+    label?: string;
+    href?: string;
+  };
 };
 
 export type HomeContent = {
@@ -44,6 +48,7 @@ export type HomeContent = {
   };
   services?: {
     variant?: string;
+    eyebrow?: string | null;
     title?: string | null;
     intro?: string | null;
   };
@@ -53,9 +58,13 @@ export type HomeContent = {
     localVideo?: string | null;
     posterUrl?: string | null;
     caption?: string | null;
+    eyebrow?: string | null;
+    title?: string | null;
+    intro?: string | null;
   };
   testimonials?: {
     variant?: string;
+    eyebrow?: string | null;
     title?: string | null;
     intro?: string | null;
   };
@@ -117,8 +126,19 @@ export type AboutContent = {
       icon?: string;
     }>;
   };
+  process?: {
+    variant?: string;
+    eyebrow?: string | null;
+    title?: string | null;
+    intro?: string | null;
+    steps?: Array<{
+      title?: string;
+      description?: string;
+    }>;
+  };
   timeline?: {
     variant?: string;
+    eyebrow?: string | null;
     title?: string | null;
     intro?: string | null;
     milestones?: Array<{
@@ -130,6 +150,7 @@ export type AboutContent = {
   };
   team?: {
     variant?: string;
+    eyebrow?: string | null;
     title?: string | null;
     intro?: string | null;
     members?: Array<{

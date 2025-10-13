@@ -8,17 +8,24 @@ interface Milestone {
 
 interface Props {
   title: string;
-  intro: string;
+  intro?: string;
+  eyebrow?: string;
   milestones: Milestone[];
 }
 
-const { title, intro, milestones } = Astro.props as Props;
+const {
+  title,
+  intro,
+  eyebrow,
+  milestones,
+}: Props = Astro.props as Props;
 ---
 <section class="section-shell">
   <div class="section-container max-w-4xl">
-    <div class="section-intro">
+    <div class="section-intro text-center">
+      {eyebrow && <p class="section-eyebrow">{eyebrow}</p>}
       <h2 class="section-heading">{title}</h2>
-      <p class="section-subtitle leading-7">{intro}</p>
+      {intro && <p class="section-subtitle leading-7">{intro}</p>}
     </div>
     <div class="relative mt-12">
       <div class="absolute left-[1.1rem] top-0 hidden h-full w-px bg-slate-200 lg:block" aria-hidden="true"></div>

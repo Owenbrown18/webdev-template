@@ -9,9 +9,18 @@ interface Props {
     posterUrl?: string | null;
     caption?: string | null;
   };
+  eyebrow?: string;
+  title?: string;
+  intro?: string;
 }
 
-const { site, video = {} }: Props = Astro.props as Props;
+const {
+  site,
+  video = {},
+  eyebrow = 'See us in action',
+  title = `${site.name} in motion`,
+  intro = '',
+}: Props = Astro.props as Props;
 const videoUrl = video.videoUrl ?? '';
 const localVideo = video.localVideo ?? '';
 const caption = video.caption ?? 'See our team in action.';
@@ -23,6 +32,13 @@ const shouldRender = useLocalVideo || hasEmbed;
 {shouldRender && (
   <section class="section-shell">
     <div class="section-container max-w-6xl">
+      {(eyebrow || title || intro) && (
+        <div class="section-intro max-w-3xl pb-10">
+          {eyebrow && <p class="section-eyebrow">{eyebrow}</p>}
+          {title && <h2 class="section-heading">{title}</h2>}
+          {intro && <p class="section-subtitle">{intro}</p>}
+        </div>
+      )}
       <figure class="surface-card overflow-hidden">
         <div class="relative aspect-[16/7] w-full bg-slate-900">
           {useLocalVideo ? (

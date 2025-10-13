@@ -29,3 +29,6 @@ colors:
   primary: "#2563eb"
   secondary: "#0f172a"
   accent: "#f59e0b"
+footerCredit:
+  label: "Website by OB Design"
+  href: "https://obdesign.example"

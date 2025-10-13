@@ -85,6 +85,12 @@ export const getAboutValuesVariant = () => {
   return raw === 'none' ? 'none' : raw;
 };
 
+/** Returns the about process layout key, defaulting to "steps". */
+export const getAboutProcessVariant = () => {
+  const raw = about.process?.variant?.trim?.().toLowerCase?.() || 'steps';
+  return raw === 'none' ? 'none' : raw;
+};
+
 /** Returns the about timeline layout key, defaulting to "steps". */
 export const getAboutTimelineVariant = () => {
   const raw = about.timeline?.variant?.trim?.().toLowerCase?.() || 'steps';

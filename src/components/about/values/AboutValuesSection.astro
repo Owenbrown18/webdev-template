@@ -15,15 +15,25 @@ const Component = variantKey === 'none' ? null : variants[variantKey] ?? variant
 const props = Astro.props as Partial<{
   title: string | null;
   intro: string | null;
+  eyebrow: string | null;
+  supporting: string | null;
   items: AboutContent['values'] extends { items?: infer T } ? T : undefined;
 }>;
 
 const base = about.values ?? {};
 const title = props.title ?? base.title ?? 'Guided by service-first values';
 const intro = props.intro ?? base.intro ?? `We show up with integrity, clear communication, and dependable follow-through on every project.`;
+const eyebrow = props.eyebrow ?? base.eyebrow;
+const supporting = props.supporting ?? base.supporting;
 const rawItems = Array.isArray(props.items) ? props.items : base.items;
 const items = Array.isArray(rawItems) ? rawItems.filter(Boolean) : [];
 ---
 {Component && items.length > 0 ? (
-  <Component title={title} intro={intro} items={items} />
+  <Component
+    title={title}
+    intro={intro}
+    eyebrow={eyebrow ?? undefined}
+    supporting={supporting ?? undefined}
+    items={items}
+  />
 ) : null}

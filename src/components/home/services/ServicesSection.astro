@@ -14,6 +14,7 @@ const Component = variantKey === 'none' ? null : variants[variantKey] ?? variant
 const settings = home.services ?? {};
 const title = settings.title ?? 'Our Services';
 const intro = settings.intro ?? 'Support tailored to your needs.';
+const eyebrow = settings.eyebrow ?? 'What we do';
 const props = Astro.props;
 ---
 {Component ? (
@@ -21,6 +22,7 @@ const props = Astro.props;
     services={services as ServicesContent}
     title={title}
     intro={intro}
+    eyebrow={eyebrow}
     {...props}
   />
 ) : null}
