@@ -27,6 +27,6 @@ testimonials:
   title: "Kind Words"
   intro: "Real feedback from neighbors who trusted Local Business Co."
 booking:
-  variant: "none" # Options: classic, none
+  variant: "classic" # Options: classic, none
   heading: "Book an Appointment"
   description: "Reserve a time that works best for you."

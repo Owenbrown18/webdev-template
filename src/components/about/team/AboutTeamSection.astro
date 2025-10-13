@@ -3,10 +3,12 @@ import { about, getAboutTeamVariant, getAboutTeamBackgroundTone } from '../../..
 import { normalizeBackgroundTone, sectionBackgroundClass } from '../../../utils/background';
 import AboutTeamGrid from './AboutTeamGrid.astro';
 import AboutTeamList from './AboutTeamList.astro';
+import AboutTeamCarousel from './AboutTeamCarousel.astro';
 
 const variants: Record<string, any> = {
   grid: AboutTeamGrid,
   list: AboutTeamList,
+  carousel: AboutTeamCarousel,
 };
 
 const variantKey = getAboutTeamVariant();

@@ -123,35 +123,30 @@ const sectionClasses = ['section-shell', backgroundClass ?? ''].filter(Boolean).
 
       track.querySelectorAll('[data-carousel-clone]').forEach((node) => node.remove());
 
-      const beforeFragment = document.createDocumentFragment();
-      const afterFragment = document.createDocumentFragment();
-
-      originals.forEach((slide) => {
-        const beforeClone = slide.cloneNode(true);
-        beforeClone.dataset.carouselClone = 'true';
-        beforeFragment.appendChild(beforeClone);
-
-        const afterClone = slide.cloneNode(true);
-        afterClone.dataset.carouselClone = 'true';
-        afterFragment.appendChild(afterClone);
-      });
-
-      track.insertBefore(beforeFragment, originals[0]);
-      track.appendChild(afterFragment);
+      const clonesNeeded = Math.max(2, getSlidesPerView(baseCount) + 2);
+      for (let i = 0; i < clonesNeeded; i += 1) {
+        const clone = originals[i % baseCount].cloneNode(true);
+        clone.dataset.carouselClone = 'true';
+        track.appendChild(clone);
+      }
 
       let slidesPerView = getSlidesPerView(baseCount);
-      let cardWidth = viewport.offsetWidth / slidesPerView;
-      let baseWidth = cardWidth * baseCount;
-      let position = baseWidth;
+      let gap = parseFloat(window.getComputedStyle(track).gap || '0');
+      const measureItemWidth = () => {
+        const first = track.querySelector('[data-carousel-card]');
+        return first ? first.getBoundingClientRect().width + gap : 0;
+      };
+
+      let itemWidth = measureItemWidth();
+      let position = 0;
       let lastTime;
       let isInView = false;
 
       const updateMeasurements = (immediate = false) => {
         slidesPerView = getSlidesPerView(baseCount);
         track.style.setProperty('--slides-per-view', String(slidesPerView));
-        cardWidth = viewport.offsetWidth / slidesPerView;
-        baseWidth = cardWidth * baseCount;
-        position = baseWidth + (position % baseWidth);
+        gap = parseFloat(window.getComputedStyle(track).gap || '0');
+        itemWidth = measureItemWidth();
         if (immediate) {
           track.style.transform = 'translateX(' + (-position) + 'px)';
         }
@@ -162,11 +157,12 @@ const sectionClasses = ['section-shell', backgroundClass ?? ''].filter(Boolean).
         const delta = timestamp - lastTime;
         lastTime = timestamp;
 
-        if (isInView && document.visibilityState === 'visible') {
+        if (isInView && document.visibilityState === 'visible' && itemWidth > 0) {
           position += delta * SPEED;
-          const loopMax = baseWidth * 2;
-          if (position >= loopMax) {
-            position -= baseWidth;
+          while (position >= itemWidth) {
+            position -= itemWidth;
+            const first = track.firstElementChild;
+            if (first) track.appendChild(first);
           }
           track.style.transform = 'translateX(' + (-position) + 'px)';
         }
@@ -242,26 +238,24 @@ const sectionClasses = ['section-shell', backgroundClass ?? ''].filter(Boolean).
     flex: 0 0 calc(78% / var(--slides-per-view));
     max-width: calc(78% / var(--slides-per-view));
     min-height: 21rem;
-  }
-
-  .team-carousel-viewport::before,
-  .team-carousel-viewport::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    width: 5rem;
-    pointer-events: none;
-    z-index: 2;
+    border: none;
+    box-shadow:
+      0 20px 45px -28px rgba(15, 23, 42, 0.28),
+      0 8px 25px -30px rgba(15, 23, 42, 0.18);
   }
 
   .team-carousel-viewport::before {
-    left: 0;
-    background: linear-gradient(to right, rgba(248, 250, 252, 1), rgba(248, 250, 252, 0));
-  }
-
-  .team-carousel-viewport::after {
-    right: 0;
-    background: linear-gradient(to left, rgba(248, 250, 252, 1), rgba(248, 250, 252, 0));
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 2;
+    background-image:
+      linear-gradient(to right, rgba(248, 250, 252, 1) 0%, rgba(248, 250, 252, 0) 80%),
+      linear-gradient(to left, rgba(248, 250, 252, 1) 0%, rgba(248, 250, 252, 0) 80%),
+      linear-gradient(to top, rgba(248, 250, 252, 1) 0%, rgba(248, 250, 252, 0) 65%);
+    background-size: 5rem 100%, 5rem 100%, 100% 3.5rem;
+    background-repeat: no-repeat;
+    background-position: left top, right top, center bottom;
   }
 </style>

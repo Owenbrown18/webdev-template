@@ -102,7 +102,7 @@ founders:
         Rowan brings a background in architectural drafting and neighborhood organizing, blending design sensibility with people-first service.
         They make sure every homeowner knows the plan, feels heard, and ends the project excited to show off the results.
 team:
-  variant: "grid" # Options: grid, list, none
+  variant: "carousel" # Options: grid, list, carousel, none
   background:
     tone: "none" # Options: none, soft-slate
   eyebrow: "The team"
@@ -111,27 +111,19 @@ team:
   members:
     - name: "Avery Bennett"
       role: "Co-founder & General Contractor"
-      bio: "Oversees every renovation with a detail-first mindset and keeps crews aligned from demo to final walkthrough."
+      bio: "Oversees every renovation with a detail-first mindset and"
       image: null
       highlight: "Founder"
     - name: "Jordan Lee"
       role: "Lead Project Coordinator"
-      bio: "Your go-to for scheduling, progress updates, and making sure the jobsite stays tidy and on-track."
+      bio: "Your go-to for scheduling, progress updates, and"
       image: null
       highlight: "Client care"
     - name: "Morgan Rivera"
       role: "Electrical & Systems Specialist"
-      bio: "Designs practical upgrades that balance efficiency, safety, and long-term performance."
+      bio: "Designs practical upgrades that balance efficiency"
       image: null
     - name: "Sam Patel"
       role: "Finishes Lead"
-      bio: "Brings every space together with custom millwork, paint, and touch-up details that elevate the final result."
-      image: null
-    - name: "Sam Patel"
-      role: "Finishes Lead"
-      bio: "Brings every space together with custom millwork, paint, and touch-up details that elevate the final result."
-      image: null
-    - name: "Sam Patel"
-      role: "Finishes Lead"
-      bio: "Brings every space together with custom millwork, paint, and touch-up details that elevate the final result."
+      bio: "Brings every space together with custom millwork"
       image: null
