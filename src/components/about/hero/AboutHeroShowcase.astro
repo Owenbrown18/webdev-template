@@ -16,8 +16,24 @@ const details = [
   location && { label: 'Located in', value: location },
   founded && { label: 'Founded', value: founded },
 ].filter(Boolean) as Array<{ label: string; value: string }>;
+
+const { backgroundClass } = Astro.props as { backgroundClass?: string };
+const sectionClasses = [
+  backgroundClass,
+  'section-shell',
+  'min-h-hero',
+  'relative',
+  'isolate',
+  'overflow-hidden',
+  'rounded-3xl',
+  'bg-slate-900',
+  'text-white',
+  'shadow-xl',
+]
+  .filter(Boolean)
+  .join(' ');
 ---
-<section class="section-shell min-h-hero relative isolate overflow-hidden rounded-3xl bg-slate-900 text-white shadow-xl">
+<section class={sectionClasses}>
   <img
     src={image}
     alt=""

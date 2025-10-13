@@ -102,6 +102,9 @@ export type TestimonialsContent = {
 export type AboutContent = {
   hero?: {
     variant?: string;
+    background?: {
+      tone?: string | null; // Options: none, soft-slate
+    };
     title?: string;
     subtitle?: string;
     ctaLabel?: string;
@@ -116,6 +119,9 @@ export type AboutContent = {
   };
   values?: {
     variant?: string;
+    background?: {
+      tone?: string | null; // Options: none, soft-slate
+    };
     eyebrow?: string | null;
     title?: string | null;
     intro?: string | null;
@@ -128,6 +134,9 @@ export type AboutContent = {
   };
   process?: {
     variant?: string;
+    background?: {
+      tone?: string | null; // Options: none, soft-slate
+    };
     eyebrow?: string | null;
     title?: string | null;
     intro?: string | null;
@@ -138,6 +147,9 @@ export type AboutContent = {
   };
   timeline?: {
     variant?: string;
+    background?: {
+      tone?: string | null; // Options: none, soft-slate
+    };
     eyebrow?: string | null;
     title?: string | null;
     intro?: string | null;
@@ -148,8 +160,29 @@ export type AboutContent = {
       image?: string;
     }>;
   };
+  founders?: {
+    variant?: string;
+    background?: {
+      tone?: string | null; // Options: none, soft-slate
+    };
+    eyebrow?: string | null;
+    title?: string | null;
+    intro?: string | null;
+    supporting?: string | null;
+    profiles?: Array<{
+      name?: string;
+      role?: string;
+      bio?: string;
+      story?: string;
+      image?: string;
+      highlight?: string;
+    }>;
+  };
   team?: {
     variant?: string;
+    background?: {
+      tone?: string | null; // Options: none, soft-slate
+    };
     eyebrow?: string | null;
     title?: string | null;
     intro?: string | null;

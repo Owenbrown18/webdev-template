@@ -1,0 +1,107 @@
+---
+interface Profile {
+  name?: string;
+  role?: string;
+  bio?: string;
+  story?: string;
+  image?: string;
+  highlight?: string;
+}
+
+interface FormattedProfile extends Profile {
+  paragraphs: string[];
+}
+
+interface Props {
+  title: string;
+  intro?: string;
+  eyebrow?: string;
+  supporting?: string;
+  profiles: Profile[];
+  backgroundClass?: string;
+}
+
+const {
+  title,
+  intro,
+  eyebrow,
+  supporting,
+  profiles,
+  backgroundClass,
+}: Props = Astro.props as Props;
+
+const formattedProfiles: FormattedProfile[] = profiles.map((profile) => ({
+  ...profile,
+  paragraphs:
+    typeof profile.story === 'string'
+      ? profile.story
+          .split(/\n{2,}/)
+          .map((block) => block.trim())
+          .filter(Boolean)
+      : [],
+}));
+const sectionClasses = [backgroundClass, 'section-shell'].filter(Boolean).join(' ');
+---
+<section class={sectionClasses} id="founders">
+  <div class="section-container">
+    <div class="section-intro max-w-3xl">
+      {eyebrow && <p class="section-eyebrow">{eyebrow}</p>}
+      <h2 class="section-heading">{title}</h2>
+      {intro && <p class="section-subtitle leading-7 text-slate-700">{intro}</p>}
+      {supporting && (
+        <p class="mt-6 mx-auto max-w-2xl text-base leading-7 text-slate-600 text-center">
+          {supporting}
+        </p>
+      )}
+    </div>
+    <div class="mt-12 space-y-12">
+      {formattedProfiles.map(
+        ({ name, role, bio, image, highlight, paragraphs }) => (
+          <article class="surface-card grid gap-8 p-6 transition-shadow duration-200 hover:shadow-card-hover lg:grid-cols-[minmax(0,230px),1fr]">
+            <div class="relative">
+              <div class="aspect-[4/5] w-full overflow-hidden rounded-2xl bg-slate-100 shadow-inner">
+                {image ? (
+                  <img
+                    src={image}
+                    alt={name ? `${name} portrait` : ''}
+                    class="h-full w-full object-cover object-center"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                ) : (
+                  <div class="flex h-full w-full items-center justify-center bg-gradient-to-br from-slate-200 via-white to-slate-100 text-3xl font-semibold text-slate-400">
+                    {name
+                      ?.split(' ')
+                      .map((part) => part[0])
+                      .filter(Boolean)
+                      .slice(0, 2)
+                      .join('') ?? 'FG'}
+                  </div>
+                )}
+              </div>
+              {highlight && (
+                <span class="absolute bottom-4 left-4 inline-flex rounded-full bg-brand-primary/90 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-white">
+                  {highlight}
+                </span>
+              )}
+            </div>
+            <div class="space-y-4">
+              <div>
+                <h3 class="text-xl font-semibold text-slate-900">{name}</h3>
+                {role && <p class="text-sm font-medium uppercase tracking-wide text-brand-primary/80">{role}</p>}
+              </div>
+              {bio && <p class="text-base leading-7 text-slate-700">{bio}</p>}
+              {paragraphs.length > 0 && (
+                <div class="space-y-4 text-base leading-7 text-slate-600">
+                  {paragraphs.map((paragraph) => (
+                    <p>{paragraph}</p>
+                  ))}
+                </div>
+              )}
+            </div>
+          </article>
+        ),
+      )}
+    </div>
+  </div>
+</section>

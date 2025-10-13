@@ -1,0 +1,42 @@
+---
+import {
+  about,
+  getAboutFoundersVariant,
+  getAboutFoundersBackgroundTone,
+} from '../../../config/content';
+import { normalizeBackgroundTone, sectionBackgroundClass } from '../../../utils/background';
+import AboutFoundersSpotlight from './AboutFoundersSpotlight.astro';
+
+const variants: Record<string, any> = {
+  spotlight: AboutFoundersSpotlight,
+};
+
+const variantKey = getAboutFoundersVariant();
+const Component = variantKey === 'none' ? null : variants[variantKey] ?? variants.spotlight;
+
+const props = Astro.props ?? {};
+
+const base = about.founders ?? {};
+const title =
+  props.title ??
+  base.title ??
+  'Founders who turned weekend projects into a trusted local service';
+const intro = props.intro ?? base.intro ?? null;
+const eyebrow = props.eyebrow ?? base.eyebrow;
+const supporting = props.supporting ?? base.supporting ?? null;
+const rawProfiles = Array.isArray(props.profiles) ? props.profiles : base.profiles;
+const profiles = Array.isArray(rawProfiles) ? rawProfiles.filter(Boolean) : [];
+const fallbackTone = getAboutFoundersBackgroundTone();
+const backgroundTone = normalizeBackgroundTone(props.backgroundTone ?? base.background?.tone ?? fallbackTone);
+const backgroundClass = sectionBackgroundClass(backgroundTone);
+---
+{Component && profiles.length > 0 ? (
+  <Component
+    title={title}
+    intro={intro ?? undefined}
+    eyebrow={eyebrow ?? undefined}
+    supporting={supporting ?? undefined}
+    profiles={profiles}
+    backgroundClass={backgroundClass}
+  />
+) : null}

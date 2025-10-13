@@ -11,6 +11,7 @@ interface Props {
   intro?: string;
   eyebrow?: string;
   milestones: Milestone[];
+  backgroundClass?: string;
 }
 
 const {
@@ -18,9 +19,23 @@ const {
   intro,
   eyebrow,
   milestones,
+  backgroundClass,
 }: Props = Astro.props as Props;
+
+const sectionClasses = [
+  backgroundClass,
+  'section-shell',
+  'relative',
+  'isolate',
+  'overflow-hidden',
+  'rounded-[2.5rem]',
+  'bg-slate-900',
+  'text-white',
+]
+  .filter(Boolean)
+  .join(' ');
 ---
-<section class="section-shell relative isolate overflow-hidden rounded-[2.5rem] bg-slate-900 text-white">
+<section class={sectionClasses}>
   <div class="absolute inset-0 bg-[linear-gradient(135deg,_rgba(15,23,42,0.95),_rgba(37,99,235,0.35))]" aria-hidden="true"></div>
   <div class="section-container relative max-w-5xl">
     <div class="max-w-2xl space-y-4 text-center">

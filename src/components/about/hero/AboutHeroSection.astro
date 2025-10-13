@@ -1,6 +1,6 @@
 ---
-import type { SiteContent } from '../../../types/content';
-import { site, getAboutHeroVariant } from '../../../config/content';
+import { site, getAboutHeroVariant, getAboutHeroBackgroundTone } from '../../../config/content';
+import { normalizeBackgroundTone, sectionBackgroundClass } from '../../../utils/background';
 import AboutHeroClassic from './AboutHeroClassic.astro';
 import AboutHeroShowcase from './AboutHeroShowcase.astro';
 
@@ -11,6 +11,18 @@ const variants: Record<string, any> = {
 
 const variantKey = getAboutHeroVariant();
 const Component = variantKey === 'none' ? null : variants[variantKey] ?? variants.classic;
-const props = Astro.props;
+const rawProps = (Astro.props ?? {}) as Record<string, any>;
+const overrideTone = rawProps.backgroundTone;
+const restProps = { ...rawProps };
+delete restProps.backgroundTone;
+const fallbackTone = getAboutHeroBackgroundTone();
+const backgroundTone = normalizeBackgroundTone(overrideTone ?? fallbackTone);
+const backgroundClass = sectionBackgroundClass(backgroundTone);
 ---
-{Component ? <Component site={site as SiteContent} {...props} /> : null}
+{Component ? (
+  <Component
+    site={site}
+    backgroundClass={backgroundClass}
+    {...restProps}
+  />
+) : null}

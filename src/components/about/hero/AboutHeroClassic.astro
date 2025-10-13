@@ -11,8 +11,11 @@ const {
   image = '/images/about-hero.jpg',
   stats = [],
 } = hero;
+
+const { backgroundClass } = Astro.props as { backgroundClass?: string };
+const sectionClasses = [backgroundClass, 'section-shell'].filter(Boolean).join(' ');
 ---
-<section class="section-shell">
+<section class={sectionClasses}>
   <div class="section-container grid gap-10 sm:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] sm:items-center">
     <div class="space-y-6">
       <h1 class="text-4xl font-semibold tracking-tight text-slate-900 sm:text-5xl">{title}</h1>

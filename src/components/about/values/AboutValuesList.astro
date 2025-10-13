@@ -11,6 +11,7 @@ interface Props {
   eyebrow?: string;
   supporting?: string;
   items?: ValueItem[];
+  backgroundClass?: string;
 }
 
 const {
@@ -19,19 +20,21 @@ const {
   eyebrow = 'Our values',
   supporting = 'Every promise we make to clients ties back to these principles. They guide hiring, training, and how we show up in your home.',
   items = [],
+  backgroundClass,
 } = Astro.props as Props;
 
 const values = Array.isArray(items) ? items.filter(Boolean) : [];
+const sectionClasses = [backgroundClass, 'section-shell'].filter(Boolean).join(' ');
 ---
-<section class="section-shell">
-  <div class="section-container grid max-w-5xl gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] lg:items-start">
-    <div class="space-y-6">
+<section class={sectionClasses}>
+  <div class="section-container">
+    <div class="section-intro max-w-3xl">
       {eyebrow && <p class="section-eyebrow">{eyebrow}</p>}
       <h2 class="section-heading">{title}</h2>
       {intro && <p class="section-subtitle">{intro}</p>}
-      {supporting && <p class="text-sm text-slate-500">{supporting}</p>}
+      {supporting && <p class="mt-6 text-sm text-slate-500 text-center">{supporting}</p>}
     </div>
-    <dl class="relative space-y-6 border-l border-slate-200 pl-10">
+    <dl class="relative mx-auto mt-12 max-w-4xl space-y-6 border-l border-slate-200 pl-10">
       <span class="pointer-events-none absolute inset-y-0 left-[-1px] hidden w-px bg-gradient-to-b from-slate-200 via-transparent to-transparent lg:block" aria-hidden="true"></span>
       {values.map(({ title, description, icon }, index) => (
         <div class="surface-card relative p-6 transition-shadow duration-200 hover:shadow-card-hover">

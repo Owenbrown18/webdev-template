@@ -1,5 +1,7 @@
 hero:
   variant: "showcase" # Options: classic, showcase, none
+  background:
+    tone: "none" # Options: none, soft-slate
   title: "Built by neighbors, for neighbors"
   subtitle: "We started as a two-person crew with a shared belief: every project deserves personal care and reliable craftsmanship."
   ctaLabel: "Meet the team"
@@ -16,6 +18,8 @@ hero:
       value: "4.9/5"
 values:
   variant: "list" # Options: grid, list, none
+  background:
+    tone: "none" # Options: none, soft-slate
   eyebrow: "Our values"
   title: "Values that guide every project"
   intro: "Our team brings the same dependable care to every job, whether it's a quick tune-up or a full-scale renovation."
@@ -32,6 +36,8 @@ values:
       icon: "ST"
 process:
   variant: "steps" # Options: steps, none
+  background:
+    tone: "soft-slate" # Options: none, soft-slate
   eyebrow: "How we work"
   title: "A clear path from hello to handoff"
   intro: "Every engagement follows the same dependable checkpoints so you always know what's next."
@@ -48,6 +54,8 @@ process:
       description: "We handle final punch lists, share care tips, and stay available for follow-up questions after project close."
 timeline:
   variant: "steps" # Options: steps, vertical, milestone, none
+  background:
+    tone: "none" # Options: none, soft-slate
   eyebrow: "Our journey"
   title: "From a two-person crew to a trusted local team"
   intro: "More than a decade of steady growth, community investment, and quality-first projects."
@@ -68,8 +76,35 @@ timeline:
       title: "Community giveback milestone"
       description: "Launched an annual volunteer week supporting local nonprofits with repairs, upgrades, and maintenance."
       image: null
+founders:
+  variant: "spotlight" # Options: spotlight, none
+  background:
+    tone: "soft-slate" # Options: none, soft-slate
+  eyebrow: "Founders spotlight"
+  title: "Neighbors who started it all"
+  intro: "Two lifelong locals who turned weekend repair calls into a trusted, full-service renovation crew."
+  supporting: "Their roots in the community mean every project gets the same care they originally gave to friends and family."
+  profiles:
+    - name: "Avery Bennett"
+      role: "Co-founder & General Contractor"
+      highlight: "Field leadership"
+      image: null
+      bio: "Leads onsite teams, oversees scopes, and keeps the build moving with a detail-first eye."
+      story: |
+        Avery grew up tinkering alongside their grandfather, a carpenter who taught the value of doing things right the first time.
+        Today, that ethos shows up in every site walkthrough, punch list, and the way crews clean up before heading home.
+    - name: "Rowan Ellis"
+      role: "Co-founder & Client Experience"
+      highlight: "Client partner"
+      image: null
+      bio: "Champions transparent communication, design alignment, and the client experience start to finish."
+      story: |
+        Rowan brings a background in architectural drafting and neighborhood organizing, blending design sensibility with people-first service.
+        They make sure every homeowner knows the plan, feels heard, and ends the project excited to show off the results.
 team:
   variant: "grid" # Options: grid, list, none
+  background:
+    tone: "none" # Options: none, soft-slate
   eyebrow: "The team"
   title: "Neighbors who bring the plan to life"
   intro: "Our crew blends licensed expertise with friendly, boots-on-the-ground service that keeps every project moving."

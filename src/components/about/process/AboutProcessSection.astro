@@ -1,6 +1,10 @@
 ---
-import type { AboutContent } from '../../../types/content';
-import { about, getAboutProcessVariant } from '../../../config/content';
+import {
+  about,
+  getAboutProcessVariant,
+  getAboutProcessBackgroundTone,
+} from '../../../config/content';
+import { normalizeBackgroundTone, sectionBackgroundClass } from '../../../utils/background';
 import AboutProcessSteps from './AboutProcessSteps.astro';
 
 const variants: Record<string, any> = {
@@ -10,12 +14,7 @@ const variants: Record<string, any> = {
 const variantKey = getAboutProcessVariant();
 const Component = variantKey === 'none' ? null : variants[variantKey] ?? variants.steps;
 
-const props = Astro.props as Partial<{
-  title: string | null;
-  intro: string | null;
-  eyebrow: string | null;
-  steps: AboutContent['process'] extends { steps?: infer T } ? T : undefined;
-}>;
+const props = Astro.props ?? {};
 
 const base = about.process ?? {};
 const title = props.title ?? base.title ?? 'How we work';
@@ -23,6 +22,9 @@ const intro = props.intro ?? base.intro ?? 'A simple, dependable process keeps e
 const eyebrow = props.eyebrow ?? base.eyebrow;
 const rawSteps = Array.isArray(props.steps) ? props.steps : base.steps;
 const steps = Array.isArray(rawSteps) ? rawSteps.filter(Boolean) : [];
+const fallbackTone = getAboutProcessBackgroundTone();
+const backgroundTone = normalizeBackgroundTone(props.backgroundTone ?? base.background?.tone ?? fallbackTone);
+const backgroundClass = sectionBackgroundClass(backgroundTone);
 ---
 {Component && steps.length > 0 ? (
   <Component
@@ -30,5 +32,6 @@ const steps = Array.isArray(rawSteps) ? rawSteps.filter(Boolean) : [];
     intro={intro}
     eyebrow={eyebrow ?? undefined}
     steps={steps}
+    backgroundClass={backgroundClass}
   />
 ) : null}

@@ -1,6 +1,6 @@
 ---
-import type { AboutContent } from '../../../types/content';
-import { about, getAboutTeamVariant } from '../../../config/content';
+import { about, getAboutTeamVariant, getAboutTeamBackgroundTone } from '../../../config/content';
+import { normalizeBackgroundTone, sectionBackgroundClass } from '../../../utils/background';
 import AboutTeamGrid from './AboutTeamGrid.astro';
 import AboutTeamList from './AboutTeamList.astro';
 
@@ -12,12 +12,7 @@ const variants: Record<string, any> = {
 const variantKey = getAboutTeamVariant();
 const Component = variantKey === 'none' ? null : variants[variantKey] ?? variants.grid;
 
-const props = Astro.props as Partial<{
-  title: string | null;
-  intro: string | null;
-  eyebrow: string | null;
-  members: AboutContent['team'] extends { members?: infer T } ? T : undefined;
-}>;
+const props = (Astro.props ?? {}) as Record<string, any>;
 
 const base = about.team ?? {};
 const title = props.title ?? base.title ?? 'Meet the neighbors behind the work';
@@ -25,6 +20,9 @@ const intro = props.intro ?? base.intro ?? 'A team of specialists committed to d
 const eyebrow = props.eyebrow ?? base.eyebrow;
 const rawMembers = Array.isArray(props.members) ? props.members : base.members;
 const members = Array.isArray(rawMembers) ? rawMembers.filter(Boolean) : [];
+const fallbackTone = getAboutTeamBackgroundTone();
+const backgroundTone = normalizeBackgroundTone(props.backgroundTone ?? base.background?.tone ?? fallbackTone);
+const backgroundClass = sectionBackgroundClass(backgroundTone);
 ---
 {Component && members.length > 0 ? (
   <Component
@@ -32,5 +30,6 @@ const members = Array.isArray(rawMembers) ? rawMembers.filter(Boolean) : [];
     intro={intro}
     eyebrow={eyebrow ?? undefined}
     members={members}
+    backgroundClass={backgroundClass}
   />
 ) : null}

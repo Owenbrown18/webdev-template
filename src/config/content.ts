@@ -12,6 +12,7 @@ import contactSource from '../../content/contact.yaml';
 import aboutSource from '../../content/about.yaml';
 import servicesSource from '../../content/services.yaml';
 import testimonialsSource from '../../content/testimonials.yaml';
+import { normalizeBackgroundTone } from '../utils/background';
 
 /**
  * Centralised accessors for all content data. Components and pages should import from here
@@ -97,8 +98,23 @@ export const getAboutTimelineVariant = () => {
   return raw === 'none' ? 'none' : raw;
 };
 
+/** Returns the about founders layout key, defaulting to "spotlight". */
+export const getAboutFoundersVariant = () => {
+  const raw = about.founders?.variant?.trim?.().toLowerCase?.() || 'spotlight';
+  return raw === 'none' ? 'none' : raw;
+};
+
 /** Returns the about team layout key, defaulting to "grid". */
 export const getAboutTeamVariant = () => {
   const raw = about.team?.variant?.trim?.().toLowerCase?.() || 'grid';
   return raw === 'none' ? 'none' : raw;
 };
+
+const getBackgroundTone = (value?: string | null) => normalizeBackgroundTone(value);
+
+export const getAboutHeroBackgroundTone = () => getBackgroundTone(about.hero?.background?.tone);
+export const getAboutValuesBackgroundTone = () => getBackgroundTone(about.values?.background?.tone);
+export const getAboutProcessBackgroundTone = () => getBackgroundTone(about.process?.background?.tone);
+export const getAboutTimelineBackgroundTone = () => getBackgroundTone(about.timeline?.background?.tone);
+export const getAboutFoundersBackgroundTone = () => getBackgroundTone(about.founders?.background?.tone);
+export const getAboutTeamBackgroundTone = () => getBackgroundTone(about.team?.background?.tone);

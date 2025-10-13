@@ -53,6 +53,66 @@ body {
     @apply transition-transform duration-200 hover:-translate-y-1 hover:shadow-card-hover focus-visible:-translate-y-1 focus-visible:shadow-card-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary/25 focus-visible:ring-offset-2 focus-visible:ring-offset-white;
   }
 
+  .full-bleed {
+    position: relative;
+    left: 50%;
+    right: 50%;
+    width: 100vw;
+    margin-left: -50vw;
+    margin-right: -50vw;
+  }
+
+  .section-background {
+    @apply full-bleed;
+    isolation: isolate;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .section-background::before,
+  .section-background::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background-image: linear-gradient(to right, transparent, rgba(148, 163, 184, 0.45), transparent);
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .section-background::before {
+    top: 0;
+  }
+
+  .section-background::after {
+    bottom: 0;
+  }
+
+  .section-background-soft-slate + .section-background-soft-slate::before {
+    opacity: 0;
+  }
+
+  .section-background-soft-slate {
+    background: radial-gradient(
+        120% 120% at 50% 18%,
+        rgba(148, 163, 184, 0.12),
+        rgba(148, 163, 184, 0.05) 40%,
+        rgba(248, 250, 252, 0) 75%
+      ),
+      radial-gradient(
+        120% 120% at 50% 102%,
+        rgba(148, 163, 184, 0.08),
+        rgba(248, 250, 252, 0) 65%
+      ),
+      linear-gradient(
+        180deg,
+        rgba(226, 232, 240, 0.14) 0%,
+        rgba(241, 245, 249, 0.05) 38%,
+        rgba(255, 255, 255, 0) 82%
+      );
+  }
+
   .min-h-hero {
     height: 34rem;
   }
