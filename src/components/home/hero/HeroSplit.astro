@@ -12,9 +12,10 @@ interface Props {
     secondaryCtaHref?: string | null;
     image?: string | null;
   };
+  backgroundClass?: string;
 }
 
-const { site, hero = {} }: Props = Astro.props as Props;
+const { site, hero = {}, backgroundClass }: Props = Astro.props as Props;
 
 const title = hero.title ?? site.name;
 const tagline = hero.subtitle ?? site.tagline;
@@ -25,8 +26,9 @@ const secondaryLabel = hero.secondaryCtaLabel ?? 'Book now';
 const secondaryHref = hero.secondaryCtaHref ?? '#booking';
 const image = hero.image ?? '/images/hero.jpg';
 const showBookingCta = Boolean(site.booking?.embedUrl) && !showSecondary;
+const sectionClasses = [backgroundClass, 'section-shell'].filter(Boolean).join(' ');
 ---
-<section class="section-shell">
+<section class={sectionClasses}>
   <div class="section-container">
     <div class="surface-card grid gap-10 overflow-hidden p-6 sm:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)] sm:p-12">
     <div class="flex flex-col justify-center gap-6">

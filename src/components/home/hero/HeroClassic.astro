@@ -13,9 +13,10 @@ interface Props {
     image?: string | null;
     stats?: Array<{ label?: string; value?: string }>;
   };
+  backgroundClass?: string;
 }
 
-const { site, hero = {} }: Props = Astro.props as Props;
+const { site, hero = {}, backgroundClass }: Props = Astro.props as Props;
 
 const title = hero.title ?? site.name;
 const tagline = hero.subtitle ?? site.tagline;
@@ -31,8 +32,14 @@ const showBookingCta = Boolean(site.booking?.embedUrl) && !showSecondary;
 const bookingLabel = site.booking?.provider
   ? `Book with ${site.booking.provider}`
   : 'Book Now';
+const sectionClasses = [
+  backgroundClass,
+  'section-shell min-h-hero relative isolate overflow-hidden rounded-3xl bg-slate-900 text-white shadow-xl',
+]
+  .filter(Boolean)
+  .join(' ');
 ---
-<section class="section-shell min-h-hero relative isolate overflow-hidden rounded-3xl bg-slate-900 text-white shadow-xl">
+<section class={sectionClasses}>
   <img
     src={image}
     alt=""

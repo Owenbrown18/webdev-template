@@ -1,5 +1,11 @@
 ---
-import { site, home, getHeroVariant } from '../../../config/content';
+import {
+  site,
+  home,
+  getHeroVariant,
+  getHeroBackgroundTone,
+} from '../../../config/content';
+import { normalizeBackgroundTone, sectionBackgroundClass } from '../../../utils/background';
 import type { SiteContent } from '../../../types/content';
 import HeroClassic from './HeroClassic.astro';
 import HeroSplit from './HeroSplit.astro';
@@ -12,6 +18,17 @@ const variants: Record<string, any> = {
 const variantKey = getHeroVariant();
 const HeroComponent = variantKey === 'none' ? null : variants[variantKey] ?? variants.classic;
 const hero = home.hero ?? {};
-const props = Astro.props;
+const props = (Astro.props ?? {}) as Record<string, any>;
+const { backgroundTone: overrideTone, backgroundClass: overrideClass, ...restProps } = props;
+const fallbackTone = getHeroBackgroundTone();
+const backgroundTone = normalizeBackgroundTone(overrideTone ?? hero.background?.tone ?? fallbackTone);
+const backgroundClass = overrideClass ?? sectionBackgroundClass(backgroundTone);
 ---
-{HeroComponent ? <HeroComponent site={site as SiteContent} hero={hero} {...props} /> : null}
+{HeroComponent ? (
+  <HeroComponent
+    site={site as SiteContent}
+    hero={hero}
+    backgroundClass={backgroundClass}
+    {...restProps}
+  />
+) : null}

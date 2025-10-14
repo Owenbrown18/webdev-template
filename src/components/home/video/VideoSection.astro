@@ -1,6 +1,12 @@
 ---
-import { site, home, getVideoVariant } from '../../../config/content';
+import {
+  site,
+  home,
+  getVideoVariant,
+  getVideoBackgroundTone,
+} from '../../../config/content';
 import type { SiteContent } from '../../../types/content';
+import { normalizeBackgroundTone, sectionBackgroundClass } from '../../../utils/background';
 import VideoHalf from './VideoHalf.astro';
 import VideoFull from './VideoFull.astro';
 
@@ -17,6 +23,11 @@ const {
   intro = '',
   ...video
 } = home.video ?? {};
+const props = (Astro.props ?? {}) as Record<string, any>;
+const { backgroundTone: overrideTone, backgroundClass: overrideClass, ...restProps } = props;
+const fallbackTone = getVideoBackgroundTone();
+const backgroundTone = normalizeBackgroundTone(overrideTone ?? (home.video?.background?.tone ?? fallbackTone));
+const backgroundClass = overrideClass ?? sectionBackgroundClass(backgroundTone);
 ---
 {Component ? (
   <Component
@@ -25,5 +36,7 @@ const {
     eyebrow={eyebrow ?? undefined}
     title={title ?? undefined}
     intro={intro ?? undefined}
+    backgroundClass={backgroundClass}
+    {...restProps}
   />
 ) : null}

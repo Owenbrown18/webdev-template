@@ -34,6 +34,9 @@ export type SiteContent = {
 export type HomeContent = {
   hero?: {
     variant?: string;
+    background?: {
+      tone?: string | null; // Options: none, soft-slate
+    };
     title?: string | null;
     subtitle?: string | null;
     primaryCtaLabel?: string | null;
@@ -48,12 +51,18 @@ export type HomeContent = {
   };
   services?: {
     variant?: string;
+    background?: {
+      tone?: string | null; // Options: none, soft-slate
+    };
     eyebrow?: string | null;
     title?: string | null;
     intro?: string | null;
   };
   video?: {
     variant?: string;
+    background?: {
+      tone?: string | null; // Options: none, soft-slate
+    };
     videoUrl?: string | null;
     localVideo?: string | null;
     posterUrl?: string | null;
@@ -64,12 +73,18 @@ export type HomeContent = {
   };
   testimonials?: {
     variant?: string;
+    background?: {
+      tone?: string | null; // Options: none, soft-slate
+    };
     eyebrow?: string | null;
     title?: string | null;
     intro?: string | null;
   };
   booking?: {
     variant?: string;
+    background?: {
+      tone?: string | null; // Options: none, soft-slate
+    };
     heading?: string | null;
     description?: string | null;
   };

@@ -13,11 +13,13 @@ const variantKey = getAboutHeroVariant();
 const Component = variantKey === 'none' ? null : variants[variantKey] ?? variants.classic;
 const rawProps = (Astro.props ?? {}) as Record<string, any>;
 const overrideTone = rawProps.backgroundTone;
+const overrideClass = rawProps.backgroundClass;
 const restProps = { ...rawProps };
 delete restProps.backgroundTone;
+delete restProps.backgroundClass;
 const fallbackTone = getAboutHeroBackgroundTone();
 const backgroundTone = normalizeBackgroundTone(overrideTone ?? fallbackTone);
-const backgroundClass = sectionBackgroundClass(backgroundTone);
+const backgroundClass = overrideClass ?? sectionBackgroundClass(backgroundTone);
 ---
 {Component ? (
   <Component

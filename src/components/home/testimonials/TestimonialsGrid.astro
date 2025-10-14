@@ -7,6 +7,7 @@ interface Props {
   title?: string;
   intro?: string;
   eyebrow?: string;
+  backgroundClass?: string;
 }
 
 const {
@@ -15,9 +16,11 @@ const {
   title = 'Kind Words',
   intro = `Real feedback from neighbors who trusted ${site.name}.`,
   eyebrow = 'Testimonials',
+  backgroundClass,
 }: Props = Astro.props as Props;
+const sectionClasses = [backgroundClass, 'section-shell'].filter(Boolean).join(' ');
 ---
-<section class="section-shell">
+<section class={sectionClasses}>
   <div class="section-container max-w-5xl">
     <div class="section-intro max-w-2xl">
       {eyebrow && <p class="section-eyebrow">{eyebrow}</p>}

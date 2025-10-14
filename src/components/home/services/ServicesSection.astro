@@ -1,6 +1,12 @@
 ---
 import type { ServicesContent } from '../../../types/content';
-import { services, home, getServicesVariant } from '../../../config/content';
+import {
+  services,
+  home,
+  getServicesVariant,
+  getServicesBackgroundTone,
+} from '../../../config/content';
+import { normalizeBackgroundTone, sectionBackgroundClass } from '../../../utils/background';
 import ServicesGrid from './ServicesGrid.astro';
 import ServicesList from './ServicesList.astro';
 
@@ -15,7 +21,11 @@ const settings = home.services ?? {};
 const title = settings.title ?? 'Our Services';
 const intro = settings.intro ?? 'Support tailored to your needs.';
 const eyebrow = settings.eyebrow ?? 'What we do';
-const props = Astro.props;
+const props = (Astro.props ?? {}) as Record<string, any>;
+const { backgroundTone: overrideTone, backgroundClass: overrideClass, ...restProps } = props;
+const fallbackTone = getServicesBackgroundTone();
+const backgroundTone = normalizeBackgroundTone(overrideTone ?? settings.background?.tone ?? fallbackTone);
+const backgroundClass = overrideClass ?? sectionBackgroundClass(backgroundTone);
 ---
 {Component ? (
   <Component
@@ -23,6 +33,7 @@ const props = Astro.props;
     title={title}
     intro={intro}
     eyebrow={eyebrow}
-    {...props}
+    backgroundClass={backgroundClass}
+    {...restProps}
   />
 ) : null}

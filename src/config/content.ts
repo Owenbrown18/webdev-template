@@ -112,6 +112,12 @@ export const getAboutTeamVariant = () => {
 
 const getBackgroundTone = (value?: string | null) => normalizeBackgroundTone(value);
 
+export const getHeroBackgroundTone = () => getBackgroundTone(home.hero?.background?.tone);
+export const getServicesBackgroundTone = () => getBackgroundTone(home.services?.background?.tone);
+export const getVideoBackgroundTone = () => getBackgroundTone(home.video?.background?.tone);
+export const getTestimonialsBackgroundTone = () => getBackgroundTone(home.testimonials?.background?.tone);
+export const getBookingBackgroundTone = () => getBackgroundTone(home.booking?.background?.tone);
+
 export const getAboutHeroBackgroundTone = () => getBackgroundTone(about.hero?.background?.tone);
 export const getAboutValuesBackgroundTone = () => getBackgroundTone(about.values?.background?.tone);
 export const getAboutProcessBackgroundTone = () => getBackgroundTone(about.process?.background?.tone);

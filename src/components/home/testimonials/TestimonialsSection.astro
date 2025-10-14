@@ -1,6 +1,13 @@
 ---
 import type { SiteContent, TestimonialsContent } from '../../../types/content';
-import { getTestimonialsVariant, getTestimonials, site, home } from '../../../config/content';
+import {
+  getTestimonialsVariant,
+  getTestimonials,
+  site,
+  home,
+  getTestimonialsBackgroundTone,
+} from '../../../config/content';
+import { normalizeBackgroundTone, sectionBackgroundClass } from '../../../utils/background';
 import TestimonialsGrid from './TestimonialsGrid.astro';
 import TestimonialsStack from './TestimonialsStack.astro';
 
@@ -20,6 +27,11 @@ const settings = home.testimonials ?? {};
 const title = settings.title ?? 'Kind Words';
 const intro = settings.intro ?? `Real feedback from neighbors who trusted ${site.name}.`;
 const eyebrow = settings.eyebrow ?? 'Testimonials';
+const props = (Astro.props ?? {}) as Record<string, any>;
+const { backgroundTone: overrideTone, backgroundClass: overrideClass, ...restProps } = props;
+const fallbackTone = getTestimonialsBackgroundTone();
+const backgroundTone = normalizeBackgroundTone(overrideTone ?? settings.background?.tone ?? fallbackTone);
+const backgroundClass = overrideClass ?? sectionBackgroundClass(backgroundTone);
 ---
 {Component && safeQuotes.length > 0 ? (
   <Component
@@ -28,5 +40,7 @@ const eyebrow = settings.eyebrow ?? 'Testimonials';
     title={title}
     intro={intro}
     eyebrow={eyebrow}
+    backgroundClass={backgroundClass}
+    {...restProps}
   />
 ) : null}

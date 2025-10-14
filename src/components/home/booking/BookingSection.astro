@@ -1,6 +1,12 @@
 ---
-import { site, home, getBookingVariant } from '../../../config/content';
+import {
+  site,
+  home,
+  getBookingVariant,
+  getBookingBackgroundTone,
+} from '../../../config/content';
 import BookingClassic from './BookingClassic.astro';
+import { normalizeBackgroundTone, sectionBackgroundClass } from '../../../utils/background';
 
 const variants: Record<string, any> = {
   classic: BookingClassic,
@@ -9,11 +15,18 @@ const variants: Record<string, any> = {
 const variantKey = getBookingVariant();
 const Component = variantKey === 'none' ? null : variants[variantKey] ?? variants.classic;
 const settings = home.booking ?? {};
+const props = (Astro.props ?? {}) as Record<string, any>;
+const { backgroundTone: overrideTone, backgroundClass: overrideClass, ...restProps } = props;
+const fallbackTone = getBookingBackgroundTone();
+const backgroundTone = normalizeBackgroundTone(overrideTone ?? settings.background?.tone ?? fallbackTone);
+const backgroundClass = overrideClass ?? sectionBackgroundClass(backgroundTone);
 ---
 {Component ? (
   <Component
     site={site}
     heading={settings.heading ?? 'Book an Appointment'}
     description={settings.description ?? 'Reserve a time that works best for you.'}
+    backgroundClass={backgroundClass}
+    {...restProps}
   />
 ) : null}

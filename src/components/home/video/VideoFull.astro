@@ -12,6 +12,7 @@ interface Props {
   eyebrow?: string;
   title?: string;
   intro?: string;
+  backgroundClass?: string;
 }
 
 const {
@@ -20,6 +21,7 @@ const {
   eyebrow = 'See us in action',
   title = `${site.name} in motion`,
   intro = '',
+  backgroundClass,
 }: Props = Astro.props as Props;
 const videoUrl = video.videoUrl ?? '';
 const localVideo = video.localVideo ?? '';
@@ -28,9 +30,10 @@ const posterUrl = video.posterUrl ?? '';
 const useLocalVideo = Boolean(localVideo);
 const hasEmbed = Boolean(videoUrl);
 const shouldRender = useLocalVideo || hasEmbed;
+const sectionClasses = [backgroundClass, 'section-shell'].filter(Boolean).join(' ');
 ---
 {shouldRender && (
-  <section class="section-shell">
+  <section class={sectionClasses}>
     <div class="section-container max-w-6xl">
       {(eyebrow || title || intro) && (
         <div class="section-intro max-w-3xl pb-10">

@@ -5,19 +5,22 @@ interface Props {
   site: SiteContent;
   heading?: string;
   description?: string;
+  backgroundClass?: string;
 }
 
 const {
   site,
   heading = 'Book an Appointment',
   description = 'Reserve a time that works best for you.',
+  backgroundClass,
 }: Props = Astro.props as Props;
 
 const embedUrl = site.booking?.embedUrl;
 const provider = site.booking?.provider;
+const sectionClasses = [backgroundClass, 'section-shell'].filter(Boolean).join(' ');
 ---
 {embedUrl && (
-  <section id="booking" class="section-shell">
+  <section id="booking" class={sectionClasses}>
     <div class="section-container max-w-5xl">
       <div class="section-intro max-w-2xl">
         <h2 class="section-heading">{heading}</h2>

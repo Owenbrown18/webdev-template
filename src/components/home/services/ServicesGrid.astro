@@ -5,17 +5,20 @@ interface Props {
   services: ServicesContent;
   title?: string;
   intro?: string;
+  backgroundClass?: string;
 }
 
 const {
   services,
   title = 'Our Services',
   intro = 'Support tailored to your needs.',
+  backgroundClass,
 }: Props = Astro.props as Props;
 
 const items = Array.isArray(services.items) ? services.items : [];
+const sectionClasses = [backgroundClass, 'section-shell'].filter(Boolean).join(' ');
 ---
-<section id="services" class="section-shell">
+<section id="services" class={sectionClasses}>
   <div class="section-container max-w-5xl">
     <div class="section-intro max-w-2xl">
       <h2 class="section-heading">{title}</h2>

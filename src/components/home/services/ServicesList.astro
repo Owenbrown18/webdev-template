@@ -6,6 +6,7 @@ interface Props {
   title?: string;
   intro?: string;
   eyebrow?: string;
+  backgroundClass?: string;
 }
 
 const {
@@ -13,11 +14,13 @@ const {
   title = 'Our Services',
   intro = 'Support tailored to your needs.',
   eyebrow = 'What we do',
+  backgroundClass,
 }: Props = Astro.props as Props;
 
 const items = Array.isArray(services.items) ? services.items : [];
+const sectionClasses = [backgroundClass, 'section-shell'].filter(Boolean).join(' ');
 ---
-<section id="services" class="section-shell">
+<section id="services" class={sectionClasses}>
   <div class="section-container max-w-4xl">
     <div class="section-intro">
       {eyebrow && <p class="section-eyebrow">{eyebrow}</p>}
