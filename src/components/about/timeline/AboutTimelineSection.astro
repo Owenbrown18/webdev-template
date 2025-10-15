@@ -3,15 +3,14 @@ import {
   about,
   getAboutTimelineVariant,
   getAboutTimelineBackgroundTone,
+  isAboutTimelineAnimationEnabled,
 } from '../../../config/content';
 import { normalizeBackgroundTone, sectionBackgroundClass } from '../../../utils/background';
 import AboutTimelineVertical from './AboutTimelineVertical.astro';
-import AboutTimelineMilestone from './AboutTimelineMilestone.astro';
 import AboutTimelineSteps from './AboutTimelineSteps.astro';
 
 const variants: Record<string, any> = {
   vertical: AboutTimelineVertical,
-  milestone: AboutTimelineMilestone,
   steps: AboutTimelineSteps,
 };
 
@@ -29,6 +28,8 @@ const milestones = Array.isArray(rawMilestones) ? rawMilestones.filter(Boolean) 
 const fallbackTone = getAboutTimelineBackgroundTone();
 const backgroundTone = normalizeBackgroundTone(props.backgroundTone ?? base.background?.tone ?? fallbackTone);
 const backgroundClass = sectionBackgroundClass(backgroundTone);
+const animationSetting = props.animation ?? base.animation;
+const animationEnabled = animationSetting ?? isAboutTimelineAnimationEnabled();
 ---
 {Component && milestones.length > 0 ? (
   <Component
@@ -37,5 +38,6 @@ const backgroundClass = sectionBackgroundClass(backgroundTone);
     eyebrow={eyebrow ?? undefined}
     milestones={milestones}
     backgroundClass={backgroundClass}
+    animationEnabled={animationEnabled !== false}
   />
 ) : null}

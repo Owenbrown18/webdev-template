@@ -1,5 +1,4 @@
 ---
-import type { AboutContent } from '../../../types/content';
 import { about } from '../../../config/content';
 
 const hero = about.hero ?? {};
@@ -12,12 +11,37 @@ const {
   stats = [],
 } = hero;
 
-const { backgroundClass } = Astro.props as { backgroundClass?: string };
+const { backgroundClass, animationEnabled = true } = Astro.props as {
+  backgroundClass?: string;
+  animationEnabled?: boolean;
+};
+
+const shouldAnimate = animationEnabled !== false;
 const sectionClasses = [backgroundClass, 'section-shell'].filter(Boolean).join(' ');
+const textClasses = [
+  'space-y-6',
+  shouldAnimate
+    ? 'motion-safe:opacity-0 motion-safe:-translate-y-4 motion-safe:transition-all motion-safe:duration-[900ms] motion-safe:ease-out data-[visible=true]:motion-safe:opacity-100 data-[visible=true]:motion-safe:translate-y-0'
+    : '',
+]
+  .filter(Boolean)
+  .join(' ');
+const imageClasses = [
+  'relative h-full overflow-hidden rounded-3xl border border-slate-200 bg-slate-900 shadow-lg',
+  shouldAnimate
+    ? 'motion-safe:scale-[1.03] motion-safe:transition-transform motion-safe:duration-[1400ms] motion-safe:ease-out data-[visible=true]:motion-safe:scale-100'
+    : '',
+]
+  .filter(Boolean)
+  .join(' ');
 ---
-<section class={sectionClasses}>
+<section
+  class={sectionClasses}
+  data-hero-root
+  data-animate={shouldAnimate ? 'true' : undefined}
+>
   <div class="section-container grid gap-10 sm:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] sm:items-center">
-    <div class="space-y-6">
+    <div class={textClasses} data-hero-text>
       <h1 class="text-4xl font-semibold tracking-tight text-slate-900 sm:text-5xl">{title}</h1>
       <p class="text-base leading-relaxed text-slate-600">{subtitle}</p>
       <div class="flex flex-wrap gap-4">
@@ -45,9 +69,50 @@ const sectionClasses = [backgroundClass, 'section-shell'].filter(Boolean).join('
         </dl>
       )}
     </div>
-    <div class="relative h-full overflow-hidden rounded-3xl border border-slate-200 bg-slate-900 shadow-lg">
+    <div class={imageClasses} data-hero-image>
       <img src={image} alt="" class="h-full w-full object-cover" loading="lazy" decoding="async" />
       <div class="absolute inset-0 bg-slate-900/20" aria-hidden="true"></div>
     </div>
   </div>
+  {shouldAnimate ? (
+    <script>
+      const roots = Array.from(document.querySelectorAll('[data-hero-root][data-animate="true"]'));
+      const supportMatchMedia = typeof window !== 'undefined' && typeof window.matchMedia === 'function';
+      const prefersReducedMotion = supportMatchMedia
+        ? window.matchMedia('(prefers-reduced-motion: reduce)').matches
+        : false;
+      const reveal = (el: Element | null) => {
+        if (el instanceof HTMLElement) {
+          el.dataset.visible = 'true';
+        }
+      };
+
+      roots.forEach((root) => {
+        if (!(root instanceof HTMLElement)) {
+          return;
+        }
+
+        if (root.dataset.heroAnimated === 'true') {
+          return;
+        }
+
+        root.dataset.heroAnimated = 'true';
+        const text = root.querySelector('[data-hero-text]');
+        const image = root.querySelector('[data-hero-image]');
+
+        if (prefersReducedMotion) {
+          reveal(text);
+          reveal(image);
+          return;
+        }
+
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            reveal(text);
+            reveal(image);
+          });
+        });
+      });
+    </script>
+  ) : null}
 </section>

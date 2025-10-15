@@ -4,6 +4,7 @@ import {
   home,
   getHeroVariant,
   getHeroBackgroundTone,
+  isHeroAnimationEnabled,
 } from '../../../config/content';
 import { normalizeBackgroundTone, sectionBackgroundClass } from '../../../utils/background';
 import type { SiteContent } from '../../../types/content';
@@ -19,16 +20,24 @@ const variantKey = getHeroVariant();
 const HeroComponent = variantKey === 'none' ? null : variants[variantKey] ?? variants.classic;
 const hero = home.hero ?? {};
 const props = (Astro.props ?? {}) as Record<string, any>;
-const { backgroundTone: overrideTone, backgroundClass: overrideClass, ...restProps } = props;
+const {
+  backgroundTone: overrideTone,
+  backgroundClass: overrideClass,
+  animation: animationOverride,
+  ...restProps
+} = props;
 const fallbackTone = getHeroBackgroundTone();
 const backgroundTone = normalizeBackgroundTone(overrideTone ?? hero.background?.tone ?? fallbackTone);
 const backgroundClass = overrideClass ?? sectionBackgroundClass(backgroundTone);
+const animationSetting = animationOverride ?? hero.animation;
+const animationEnabled = animationSetting ?? isHeroAnimationEnabled();
 ---
 {HeroComponent ? (
   <HeroComponent
     site={site as SiteContent}
     hero={hero}
     backgroundClass={backgroundClass}
+    animationEnabled={animationEnabled !== false}
     {...restProps}
   />
 ) : null}

@@ -2,6 +2,7 @@ hero:
   variant: "showcase" # Options: classic, showcase, none
   background:
     tone: "soft-slate" # Options: none, soft-slate
+  animation: true # Toggle hero animation on/off
   title: "Built by neighbors, for neighbors"
   subtitle: "We started as a two-person crew with a shared belief: every project deserves personal care and reliable craftsmanship."
   ctaLabel: "Meet the team"
@@ -38,6 +39,7 @@ process:
   variant: "steps" # Options: steps, none
   background:
     tone: "soft-slate" # Options: none, soft-slate
+  animation: true # Toggle reveal animation on/off
   eyebrow: "How we work"
   title: "A clear path from hello to handoff"
   intro: "Every engagement follows the same dependable checkpoints so you always know what's next."
@@ -53,9 +55,10 @@ process:
     - title: "Wrap-up & support"
       description: "We handle final punch lists, share care tips, and stay available for follow-up questions after project close."
 timeline:
-  variant: "steps" # Options: steps, vertical, milestone, none
+  variant: "steps" # Options: steps, vertical, none
   background:
     tone: "none" # Options: none, soft-slate
+  animation: true # Toggle reveal animation on/off
   eyebrow: "Our journey"
   title: "From a two-person crew to a trusted local team"
   intro: "More than a decade of steady growth, community investment, and quality-first projects."

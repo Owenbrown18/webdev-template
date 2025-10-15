@@ -14,9 +14,10 @@ interface Props {
     stats?: Array<{ label?: string; value?: string }>;
   };
   backgroundClass?: string;
+  animationEnabled?: boolean;
 }
 
-const { site, hero = {}, backgroundClass }: Props = Astro.props as Props;
+const { site, hero = {}, backgroundClass, animationEnabled = true }: Props = Astro.props as Props;
 
 const title = hero.title ?? site.name;
 const tagline = hero.subtitle ?? site.tagline;
@@ -32,25 +33,48 @@ const showBookingCta = Boolean(site.booking?.embedUrl) && !showSecondary;
 const bookingLabel = site.booking?.provider
   ? `Book with ${site.booking.provider}`
   : 'Book Now';
+const shouldAnimate = animationEnabled !== false;
 const sectionClasses = [
   backgroundClass,
   'section-shell min-h-hero relative isolate overflow-hidden rounded-3xl bg-slate-900 text-white shadow-xl',
 ]
   .filter(Boolean)
   .join(' ');
+const textClasses = [
+  'max-w-2xl space-y-6',
+  shouldAnimate
+    ? 'motion-safe:opacity-0 motion-safe:translate-y-6 motion-safe:transition-all motion-safe:duration-[900ms] motion-safe:ease-out data-[visible=true]:motion-safe:opacity-100 data-[visible=true]:motion-safe:translate-y-0'
+    : '',
+]
+  .filter(Boolean)
+  .join(' ');
+const imageWrapperClasses = [
+  'absolute inset-0',
+  shouldAnimate
+    ? 'motion-safe:scale-[1.04] motion-safe:transition-transform motion-safe:duration-[1400ms] motion-safe:ease-out data-[visible=true]:motion-safe:scale-100'
+    : '',
+]
+  .filter(Boolean)
+  .join(' ');
 ---
-<section class={sectionClasses}>
-  <img
-    src={image}
-    alt=""
-    class="absolute inset-0 h-full w-full object-cover"
-    loading="lazy"
-    decoding="async"
-  />
-  <div class="absolute inset-0 bg-slate-900/70" aria-hidden="true"></div>
+<section
+  class={sectionClasses}
+  data-hero-root
+  data-animate={shouldAnimate ? 'true' : undefined}
+>
+  <div class={imageWrapperClasses} data-hero-image>
+    <img
+      src={image}
+      alt=""
+      class="h-full w-full object-cover"
+      loading="lazy"
+      decoding="async"
+    />
+    <div class="absolute inset-0 bg-slate-900/70" aria-hidden="true"></div>
+  </div>
   <div class="section-container relative py-24 sm:py-28">
     <div class="mx-auto max-w-5xl">
-      <div class="max-w-2xl space-y-6">
+      <div class={textClasses} data-hero-text>
         <p class="text-sm font-semibold uppercase tracking-[0.28em] text-white/70">Home</p>
         <h1 class="text-4xl font-semibold tracking-tight sm:text-5xl">{title}</h1>
         <p class="text-lg text-slate-100/80">{tagline}</p>
@@ -92,4 +116,45 @@ const sectionClasses = [
       </div>
     </div>
   </div>
+  {shouldAnimate ? (
+    <script>
+      const roots = Array.from(document.querySelectorAll('[data-hero-root][data-animate="true"]'));
+      const supportMatchMedia = typeof window !== 'undefined' && typeof window.matchMedia === 'function';
+      const prefersReducedMotion = supportMatchMedia
+        ? window.matchMedia('(prefers-reduced-motion: reduce)').matches
+        : false;
+      const reveal = (el: Element | null) => {
+        if (el instanceof HTMLElement) {
+          el.dataset.visible = 'true';
+        }
+      };
+
+      roots.forEach((root) => {
+        if (!(root instanceof HTMLElement)) {
+          return;
+        }
+
+        if (root.dataset.heroAnimated === 'true') {
+          return;
+        }
+
+        root.dataset.heroAnimated = 'true';
+        const text = root.querySelector('[data-hero-text]');
+        const image = root.querySelector('[data-hero-image]');
+
+        if (prefersReducedMotion) {
+          reveal(text);
+          reveal(image);
+          return;
+        }
+
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            reveal(text);
+            reveal(image);
+          });
+        });
+      });
+    </script>
+  ) : null}
 </section>

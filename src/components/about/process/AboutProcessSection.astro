@@ -3,6 +3,7 @@ import {
   about,
   getAboutProcessVariant,
   getAboutProcessBackgroundTone,
+  isAboutProcessAnimationEnabled,
 } from '../../../config/content';
 import { normalizeBackgroundTone, sectionBackgroundClass } from '../../../utils/background';
 import AboutProcessSteps from './AboutProcessSteps.astro';
@@ -25,6 +26,8 @@ const steps = Array.isArray(rawSteps) ? rawSteps.filter(Boolean) : [];
 const fallbackTone = getAboutProcessBackgroundTone();
 const backgroundTone = normalizeBackgroundTone(props.backgroundTone ?? base.background?.tone ?? fallbackTone);
 const backgroundClass = sectionBackgroundClass(backgroundTone);
+const animationSetting = props.animation ?? base.animation;
+const animationEnabled = animationSetting ?? isAboutProcessAnimationEnabled();
 ---
 {Component && steps.length > 0 ? (
   <Component
@@ -33,5 +36,6 @@ const backgroundClass = sectionBackgroundClass(backgroundTone);
     eyebrow={eyebrow ?? undefined}
     steps={steps}
     backgroundClass={backgroundClass}
+    animationEnabled={animationEnabled !== false}
   />
 ) : null}

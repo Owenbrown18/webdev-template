@@ -50,6 +50,9 @@ export const getServicesVariant = () => {
   return raw === 'none' ? 'none' : raw;
 };
 
+const getBackgroundTone = (value?: string | null) => normalizeBackgroundTone(value);
+const isAnimationEnabled = (value?: boolean | null) => value !== false;
+
 /** Returns the video layout key, defaulting to "half". */
 export const getVideoVariant = () => {
   const raw = home.video?.variant?.trim?.().toLowerCase?.() || 'half';
@@ -110,13 +113,12 @@ export const getAboutTeamVariant = () => {
   return raw === 'none' ? 'none' : raw;
 };
 
-const getBackgroundTone = (value?: string | null) => normalizeBackgroundTone(value);
-
 export const getHeroBackgroundTone = () => getBackgroundTone(home.hero?.background?.tone);
 export const getServicesBackgroundTone = () => getBackgroundTone(home.services?.background?.tone);
 export const getVideoBackgroundTone = () => getBackgroundTone(home.video?.background?.tone);
 export const getTestimonialsBackgroundTone = () => getBackgroundTone(home.testimonials?.background?.tone);
 export const getBookingBackgroundTone = () => getBackgroundTone(home.booking?.background?.tone);
+export const isHeroAnimationEnabled = () => isAnimationEnabled(home.hero?.animation);
 
 export const getAboutHeroBackgroundTone = () => getBackgroundTone(about.hero?.background?.tone);
 export const getAboutValuesBackgroundTone = () => getBackgroundTone(about.values?.background?.tone);
@@ -124,3 +126,7 @@ export const getAboutProcessBackgroundTone = () => getBackgroundTone(about.proce
 export const getAboutTimelineBackgroundTone = () => getBackgroundTone(about.timeline?.background?.tone);
 export const getAboutFoundersBackgroundTone = () => getBackgroundTone(about.founders?.background?.tone);
 export const getAboutTeamBackgroundTone = () => getBackgroundTone(about.team?.background?.tone);
+export const isAboutHeroAnimationEnabled = () => isAnimationEnabled(about.hero?.animation);
+export const isAboutProcessAnimationEnabled = () => isAnimationEnabled(about.process?.animation);
+export const isAboutTimelineAnimationEnabled = () => isAnimationEnabled(about.timeline?.animation);
+export const isServicesAnimationEnabled = () => isAnimationEnabled(home.services?.animation);

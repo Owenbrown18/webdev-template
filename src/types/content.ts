@@ -37,6 +37,7 @@ export type HomeContent = {
     background?: {
       tone?: string | null; // Options: none, soft-slate
     };
+    animation?: boolean | null;
     title?: string | null;
     subtitle?: string | null;
     primaryCtaLabel?: string | null;
@@ -54,6 +55,7 @@ export type HomeContent = {
     background?: {
       tone?: string | null; // Options: none, soft-slate
     };
+    animation?: boolean | null;
     eyebrow?: string | null;
     title?: string | null;
     intro?: string | null;
@@ -120,6 +122,7 @@ export type AboutContent = {
     background?: {
       tone?: string | null; // Options: none, soft-slate
     };
+    animation?: boolean | null;
     title?: string;
     subtitle?: string;
     ctaLabel?: string;
@@ -152,6 +155,7 @@ export type AboutContent = {
     background?: {
       tone?: string | null; // Options: none, soft-slate
     };
+    animation?: boolean | null;
     eyebrow?: string | null;
     title?: string | null;
     intro?: string | null;
@@ -165,6 +169,7 @@ export type AboutContent = {
     background?: {
       tone?: string | null; // Options: none, soft-slate
     };
+    animation?: boolean | null;
     eyebrow?: string | null;
     title?: string | null;
     intro?: string | null;

@@ -12,6 +12,7 @@ interface Props {
   eyebrow?: string;
   milestones: Milestone[];
   backgroundClass?: string;
+  animationEnabled?: boolean;
 }
 
 const {
@@ -20,6 +21,7 @@ const {
   eyebrow,
   milestones,
   backgroundClass,
+  animationEnabled = true,
 }: Props = Astro.props as Props;
 
 const sectionClasses = [
@@ -28,6 +30,16 @@ const sectionClasses = [
   'relative',
   'isolate',
   backgroundClass ? 'overflow-hidden' : '',
+]
+  .filter(Boolean)
+  .join(' ');
+const shouldAnimate = animationEnabled !== false;
+const animationClasses = shouldAnimate
+  ? 'motion-safe:translate-y-6 motion-safe:opacity-0 motion-safe:transition-all motion-safe:duration-[1400ms] motion-safe:ease-out data-[visible=true]:motion-safe:translate-y-0 data-[visible=true]:motion-safe:opacity-100'
+  : '';
+const cardClasses = [
+  'surface-card p-6 transition-shadow duration-200 hover:shadow-card-hover',
+  animationClasses,
 ]
   .filter(Boolean)
   .join(' ');
@@ -53,7 +65,7 @@ const sectionClasses = [
             </div>
             <article
               data-timeline-card
-              class="surface-card p-6 transition-shadow duration-200 hover:shadow-card-hover motion-safe:translate-y-6 motion-safe:opacity-0 motion-safe:transition-all motion-safe:duration-[1400ms] motion-safe:ease-out data-[visible=true]:motion-safe:translate-y-0 data-[visible=true]:motion-safe:opacity-100"
+              class={cardClasses}
             >
               <div class="flex items-center gap-4 text-sm font-medium text-brand-primary">
                 <span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-brand-primary/10 text-[0.75rem] font-semibold">
@@ -79,43 +91,45 @@ const sectionClasses = [
       </div>
     </div>
   </div>
-  <script>
-    const roots = Array.from(document.querySelectorAll('[data-timeline-root]'));
-    const supportMatchMedia = typeof window !== 'undefined' && typeof window.matchMedia === 'function';
-    const prefersReducedMotion = supportMatchMedia
-      ? window.matchMedia('(prefers-reduced-motion: reduce)').matches
-      : false;
-    const reveal = (el: Element | null) => {
-      if (el instanceof HTMLElement) {
-        el.dataset.visible = 'true';
-      }
-    };
+  {shouldAnimate ? (
+    <script>
+      const roots = Array.from(document.querySelectorAll('[data-timeline-root]'));
+      const supportMatchMedia = typeof window !== 'undefined' && typeof window.matchMedia === 'function';
+      const prefersReducedMotion = supportMatchMedia
+        ? window.matchMedia('(prefers-reduced-motion: reduce)').matches
+        : false;
+      const reveal = (el: Element | null) => {
+        if (el instanceof HTMLElement) {
+          el.dataset.visible = 'true';
+        }
+      };
 
-    roots.forEach((root) => {
-      const cards = Array.from(root.querySelectorAll('[data-timeline-card]'));
-      if (cards.length === 0) return;
+      roots.forEach((root) => {
+        const cards = Array.from(root.querySelectorAll('[data-timeline-card]'));
+        if (cards.length === 0) return;
 
-      if (!prefersReducedMotion && 'IntersectionObserver' in window) {
-        const observer = new IntersectionObserver(
-          (entries, obs) => {
-            entries.forEach((entry) => {
-              if (entry.isIntersecting) {
-                const element = entry.target;
-                reveal(element);
-                obs.unobserve(element);
-              }
-            });
-          },
-          {
-            rootMargin: '0px 0px -10% 0px',
-            threshold: 0.1,
-          },
-        );
+        if (!prefersReducedMotion && 'IntersectionObserver' in window) {
+          const observer = new IntersectionObserver(
+            (entries, obs) => {
+              entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                  const element = entry.target;
+                  reveal(element);
+                  obs.unobserve(element);
+                }
+              });
+            },
+            {
+              rootMargin: '0px 0px -10% 0px',
+              threshold: 0.1,
+            },
+          );
 
-        cards.forEach((card) => observer.observe(card));
-      } else {
-        cards.forEach((card) => reveal(card));
-      }
-    });
-  </script>
+          cards.forEach((card) => observer.observe(card));
+        } else {
+          cards.forEach((card) => reveal(card));
+        }
+      });
+    </script>
+  ) : null}
 </section>

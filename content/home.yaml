@@ -2,17 +2,19 @@ hero:
   variant: "classic" # Options: classic, split, none
   background:
     tone: "soft-slate" # Options: none, soft-slate
+  animation: true # Toggle hero animation on/off
   title: null
   subtitle: null
   primaryCtaLabel: "Contact Us"
   primaryCtaHref: "/contact"
   secondaryCtaLabel: "Book a consult"
   secondaryCtaHref: "#booking"
-  image: "/images/hero.jpg"
+  image: "/images/home-hero.jpg"
 services:
   variant: "list" # Options: grid, list, none
   background:
     tone: "none" # Options: none, soft-slate
+  animation: true # Toggle reveal animation on/off
   eyebrow: "What we do"
   title: "Our Services"
   intro: "Support tailored to your needs."

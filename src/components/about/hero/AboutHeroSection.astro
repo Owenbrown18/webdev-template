@@ -1,5 +1,10 @@
 ---
-import { site, getAboutHeroVariant, getAboutHeroBackgroundTone } from '../../../config/content';
+import {
+  site,
+  getAboutHeroVariant,
+  getAboutHeroBackgroundTone,
+  isAboutHeroAnimationEnabled,
+} from '../../../config/content';
 import { normalizeBackgroundTone, sectionBackgroundClass } from '../../../utils/background';
 import AboutHeroClassic from './AboutHeroClassic.astro';
 import AboutHeroShowcase from './AboutHeroShowcase.astro';
@@ -15,16 +20,21 @@ const rawProps = (Astro.props ?? {}) as Record<string, any>;
 const overrideTone = rawProps.backgroundTone;
 const overrideClass = rawProps.backgroundClass;
 const restProps = { ...rawProps };
+const animationOverride = rawProps.animation as boolean | undefined;
 delete restProps.backgroundTone;
 delete restProps.backgroundClass;
+delete restProps.animation;
 const fallbackTone = getAboutHeroBackgroundTone();
 const backgroundTone = normalizeBackgroundTone(overrideTone ?? fallbackTone);
 const backgroundClass = overrideClass ?? sectionBackgroundClass(backgroundTone);
+const animationEnabled =
+  animationOverride !== undefined ? animationOverride : isAboutHeroAnimationEnabled();
 ---
 {Component ? (
   <Component
     site={site}
     backgroundClass={backgroundClass}
+    animationEnabled={animationEnabled !== false}
     {...restProps}
   />
 ) : null}
