@@ -29,6 +29,12 @@ export type SiteContent = {
     label?: string;
     href?: string;
   };
+  preloader?: {
+    enabled?: boolean;
+    backgroundColor?: string | null;
+    logo?: string | null;
+    minimumDurationMs?: number | null;
+  };
 };
 
 export type HomeContent = {
@@ -65,6 +71,7 @@ export type HomeContent = {
     background?: {
       tone?: string | null; // Options: none, soft-slate
     };
+    animation?: boolean | null;
     videoUrl?: string | null;
     localVideo?: string | null;
     posterUrl?: string | null;
@@ -78,6 +85,7 @@ export type HomeContent = {
     background?: {
       tone?: string | null; // Options: none, soft-slate
     };
+    animation?: boolean | null;
     eyebrow?: string | null;
     title?: string | null;
     intro?: string | null;

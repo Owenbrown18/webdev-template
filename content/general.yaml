@@ -32,3 +32,8 @@ colors:
 footerCredit:
   label: "Website by OB Design"
   href: "https://obdesign.example"
+preloader:
+  enabled: true
+  backgroundColor: null
+  logo: "/images/loading-logo.png"
+  minimumDurationMs: 2000

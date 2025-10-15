@@ -22,6 +22,7 @@ video:
   variant: "full" # Options: half, full, none
   background:
     tone: "soft-slate" # Options: none, soft-slate
+  animation: true # Toggle video animation on/off
   eyebrow: "See us in action"
   title: "A day on site with our crew"
   intro: "From prep to final walkthrough, here’s how we keep projects moving smoothly."
@@ -33,6 +34,7 @@ testimonials:
   variant: "grid" # Options: grid, stack, none
   background:
     tone: "none" # Options: none, soft-slate
+  animation: true # Toggle testimonials animation on/off
   eyebrow: "What clients say"
   title: "Kind Words"
   intro: "Real feedback from neighbors who trusted Local Business Co."

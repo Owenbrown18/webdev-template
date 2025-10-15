@@ -43,6 +43,53 @@ const surfaceBaseRgb = '248 250 252';
 const surfaceCardRgb = '255 255 255';
 const surfaceMutedRgb = '241 245 249';
 const shouldRenderTagline = Boolean(showTagline && site.tagline?.trim());
+const preloaderConfig = site.preloader ?? {};
+const isPreloaderEnabled = preloaderConfig.enabled === true;
+const preloaderBackgroundColor =
+  typeof preloaderConfig.backgroundColor === 'string'
+    ? preloaderConfig.backgroundColor.trim() || null
+    : null;
+const preloaderLogo =
+  typeof preloaderConfig.logo === 'string' ? preloaderConfig.logo.trim() || null : null;
+const rawPreloaderDuration = Number(preloaderConfig.minimumDurationMs ?? 2000);
+const preloaderMinimumDuration = Number.isFinite(rawPreloaderDuration)
+  ? Math.max(0, rawPreloaderDuration)
+  : 2000;
+const shouldRenderPreloader = isPreloaderEnabled;
+const preloaderScript = `(() => {
+  const preloader = document.getElementById('site-preloader');
+  if (!preloader) return;
+  const storageKey = 'site-preloader:shown';
+  const hasShown = window.sessionStorage.getItem(storageKey) === 'true';
+
+  if (hasShown) {
+    preloader.remove();
+    return;
+  }
+
+  const minimumDuration = ${preloaderMinimumDuration};
+  const start = performance.now();
+  let hideTriggered = false;
+  const triggerHide = () => {
+    if (hideTriggered) return;
+    hideTriggered = true;
+    const elapsed = performance.now() - start;
+    const delay = Math.max(minimumDuration - elapsed, 0);
+    window.setTimeout(() => {
+      preloader.classList.add('is-site-preloader-hidden');
+      preloader.addEventListener('transitionend', () => {
+        preloader.remove();
+        window.sessionStorage.setItem(storageKey, 'true');
+      }, { once: true });
+    }, delay);
+  };
+  if (document.readyState === 'complete') {
+    triggerHide();
+  } else {
+    window.addEventListener('load', triggerHide, { once: true });
+  }
+  window.setTimeout(triggerHide, minimumDuration + 4000);
+})();`;
 const bodyStyle = `
   font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --color-primary: ${primaryColor};
@@ -74,6 +121,25 @@ const bodyStyle = `
     ))}
   </head>
   <body class="bg-slate-50 text-slate-900 antialiased" style={bodyStyle}>
+    {shouldRenderPreloader && (
+      <div
+        id="site-preloader"
+        class="site-preloader"
+        style={preloaderBackgroundColor ? `--preloader-background: ${preloaderBackgroundColor};` : undefined}
+        aria-hidden="true"
+      >
+        {preloaderLogo && (
+          <img
+            src={preloaderLogo}
+            alt=""
+            class="site-preloader__logo"
+            loading="eager"
+            decoding="async"
+          />
+        )}
+      </div>
+    )}
+    {shouldRenderPreloader && <script is:inline set:html={preloaderScript}></script>}
     <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:rounded focus:bg-white focus:px-4 focus:py-2 focus:text-sm focus:font-medium focus:text-slate-900">
       Skip to content
     </a>
@@ -103,19 +169,19 @@ const bodyStyle = `
     </header>
     <div class="mx-auto flex min-h-screen w-full max-w-6xl flex-col px-6">
       {shouldRenderTagline && (
-        <p class="pt-12 text-sm font-medium uppercase tracking-[0.2em] text-slate-500">
+        <p class="pt-6 text-sm font-medium uppercase tracking-[0.2em] text-slate-500">
           {site.tagline}
         </p>
       )}
       <main
         id="main"
         class:list={{
-          'flex-1': true,
-          'pb-16': true,
-          'pt-6': shouldRenderTagline,
-          'pt-12': !shouldRenderTagline,
-        }}
-      >
+      'flex-1': true,
+      'pb-16': true,
+      'pt-6': shouldRenderTagline,
+      'pt-12': !shouldRenderTagline,
+    }}
+  >
         <slot />
       </main>
       <footer class="border-t border-slate-200 py-8 text-sm text-slate-500">

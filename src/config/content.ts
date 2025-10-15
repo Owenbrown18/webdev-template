@@ -119,6 +119,8 @@ export const getVideoBackgroundTone = () => getBackgroundTone(home.video?.backgr
 export const getTestimonialsBackgroundTone = () => getBackgroundTone(home.testimonials?.background?.tone);
 export const getBookingBackgroundTone = () => getBackgroundTone(home.booking?.background?.tone);
 export const isHeroAnimationEnabled = () => isAnimationEnabled(home.hero?.animation);
+export const isVideoAnimationEnabled = () => isAnimationEnabled(home.video?.animation);
+export const isTestimonialsAnimationEnabled = () => isAnimationEnabled(home.testimonials?.animation);
 
 export const getAboutHeroBackgroundTone = () => getBackgroundTone(about.hero?.background?.tone);
 export const getAboutValuesBackgroundTone = () => getBackgroundTone(about.values?.background?.tone);

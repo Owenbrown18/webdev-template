@@ -17,10 +17,23 @@ const {
   intro = 'Stories from neighbors',
   eyebrow = 'Testimonials',
   backgroundClass,
+  animationEnabled = true,
 }: Props = Astro.props as Props;
 const sectionClasses = [backgroundClass, 'section-shell'].filter(Boolean).join(' ');
+const shouldAnimate = animationEnabled !== false;
+const cardAnimationClasses = [
+  'surface-card p-6 sm:p-8',
+  shouldAnimate
+    ? 'motion-safe:opacity-0 motion-safe:translate-y-6 motion-safe:transition-all motion-safe:duration-[1400ms] motion-safe:ease-out data-[visible=true]:motion-safe:opacity-100 data-[visible=true]:motion-safe:translate-y-0'
+    : '',
+]
+  .filter(Boolean)
+  .join(' ');
 ---
-<section class={sectionClasses}>
+<section
+  class={sectionClasses}
+  data-testimonials-root={shouldAnimate ? '' : undefined}
+>
   <div class="section-container flex max-w-5xl flex-col gap-12">
     <div class="section-intro">
       {eyebrow && <p class="section-eyebrow">{eyebrow}</p>}
@@ -28,16 +41,76 @@ const sectionClasses = [backgroundClass, 'section-shell'].filter(Boolean).join('
       {intro && <p class="section-subtitle">{intro}</p>}
     </div>
     <div class="space-y-6">
-      {quotes?.map(({ quote, author }, index) => (
-        <figure
-          class={`surface-card p-6 sm:p-8 ${index % 2 === 0 ? 'sm:translate-x-0' : 'sm:translate-x-8'}`}
-        >
+      {quotes?.map(({ quote, author }, index) => {
+        const offsetClass = index % 2 === 0 ? 'sm:translate-x-0' : 'sm:translate-x-8';
+        const delayStyle = shouldAnimate ? `transition-delay: ${index * 120}ms;` : undefined;
+        return (
+          <figure
+            data-testimonial-card
+            class={`${cardAnimationClasses} ${offsetClass}`}
+            style={delayStyle}
+          >
           <blockquote class="text-base font-medium leading-relaxed text-slate-700">
             “{quote}”
           </blockquote>
           <figcaption class="mt-4 text-sm font-semibold text-slate-900">{author}</figcaption>
-        </figure>
-      ))}
+          </figure>
+        );
+      })}
     </div>
   </div>
+  {shouldAnimate ? (
+    <script>
+      const roots = Array.from(document.querySelectorAll('[data-testimonials-root]'));
+      const supportMatchMedia = typeof window !== 'undefined' && typeof window.matchMedia === 'function';
+      const prefersReducedMotion = supportMatchMedia
+        ? window.matchMedia('(prefers-reduced-motion: reduce)').matches
+        : false;
+      const reveal = (el: Element | null) => {
+        if (el instanceof HTMLElement) {
+          el.dataset.visible = 'true';
+        }
+      };
+
+      roots.forEach((root) => {
+        if (!(root instanceof HTMLElement)) {
+          return;
+        }
+
+        if (root.dataset.testimonialsAnimated === 'true') {
+          return;
+        }
+
+        const cards = Array.from(root.querySelectorAll('[data-testimonial-card]'));
+        if (cards.length === 0) {
+          return;
+        }
+
+        root.dataset.testimonialsAnimated = 'true';
+
+        if (prefersReducedMotion || !('IntersectionObserver' in window)) {
+          cards.forEach((card) => reveal(card));
+          return;
+        }
+
+        const observer = new IntersectionObserver(
+          (entries, obs) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                const element = entry.target;
+                reveal(element);
+                obs.unobserve(element);
+              }
+            });
+          },
+          {
+            rootMargin: '0px 0px -10% 0px',
+            threshold: 0.1,
+          },
+        );
+
+        cards.forEach((card) => observer.observe(card));
+      });
+    </script>
+  ) : null}
 </section>

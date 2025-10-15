@@ -13,6 +13,7 @@ interface Props {
   title?: string;
   intro?: string;
   backgroundClass?: string;
+  animationEnabled?: boolean;
 }
 
 const {
@@ -22,6 +23,7 @@ const {
   title = `${site.name} in motion`,
   intro = '',
   backgroundClass,
+  animationEnabled = true,
 }: Props = Astro.props as Props;
 const videoUrl = video.videoUrl ?? '';
 const localVideo = video.localVideo ?? '';
@@ -31,9 +33,21 @@ const useLocalVideo = Boolean(localVideo);
 const hasEmbed = Boolean(videoUrl);
 const shouldRender = useLocalVideo || hasEmbed;
 const sectionClasses = [backgroundClass, 'section-shell'].filter(Boolean).join(' ');
+const shouldAnimate = animationEnabled !== false;
+const figureClasses = [
+  'surface-card overflow-hidden',
+  shouldAnimate
+    ? 'motion-safe:opacity-0 motion-safe:translate-y-6 motion-safe:transition-all motion-safe:duration-[1400ms] motion-safe:ease-out data-[visible=true]:motion-safe:opacity-100 data-[visible=true]:motion-safe:translate-y-0'
+    : '',
+]
+  .filter(Boolean)
+  .join(' ');
 ---
 {shouldRender && (
-  <section class={sectionClasses}>
+  <section
+    class={sectionClasses}
+    data-video-root={shouldAnimate ? '' : undefined}
+  >
     <div class="section-container max-w-5xl">
       {(eyebrow || title || intro) && (
         <div class="section-intro max-w-3xl pb-10">
@@ -42,7 +56,7 @@ const sectionClasses = [backgroundClass, 'section-shell'].filter(Boolean).join('
           {intro && <p class="section-subtitle">{intro}</p>}
         </div>
       )}
-      <figure class="surface-card overflow-hidden">
+      <figure class={figureClasses} data-video-card>
         <div class="relative aspect-[18/7] w-full bg-slate-900">
           {useLocalVideo ? (
             <video
@@ -68,5 +82,53 @@ const sectionClasses = [backgroundClass, 'section-shell'].filter(Boolean).join('
         {caption && <figcaption class="px-6 py-4 text-sm text-slate-600">{caption}</figcaption>}
       </figure>
     </div>
+    {shouldAnimate ? (
+      <script>
+        const roots = Array.from(document.querySelectorAll('[data-video-root]'));
+        const supportMatchMedia = typeof window !== 'undefined' && typeof window.matchMedia === 'function';
+        const prefersReducedMotion = supportMatchMedia
+          ? window.matchMedia('(prefers-reduced-motion: reduce)').matches
+          : false;
+        const reveal = (el: Element | null) => {
+          if (el instanceof HTMLElement) {
+            el.dataset.visible = 'true';
+          }
+        };
+
+        roots.forEach((root) => {
+          if (!(root instanceof HTMLElement)) {
+            return;
+          }
+
+          const cards = Array.from(root.querySelectorAll('[data-video-card]'));
+          if (cards.length === 0) {
+            return;
+          }
+
+          if (prefersReducedMotion || !('IntersectionObserver' in window)) {
+            cards.forEach((card) => reveal(card));
+            return;
+          }
+
+          const observer = new IntersectionObserver(
+            (entries, obs) => {
+              entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                  const element = entry.target;
+                  reveal(element);
+                  obs.unobserve(element);
+                }
+              });
+            },
+            {
+              rootMargin: '0px 0px -10% 0px',
+              threshold: 0.1,
+            },
+          );
+
+          cards.forEach((card) => observer.observe(card));
+        });
+      </script>
+    ) : null}
   </section>
 )}

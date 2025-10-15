@@ -4,6 +4,7 @@ import {
   home,
   getVideoVariant,
   getVideoBackgroundTone,
+  isVideoAnimationEnabled,
 } from '../../../config/content';
 import type { SiteContent } from '../../../types/content';
 import { normalizeBackgroundTone, sectionBackgroundClass } from '../../../utils/background';
@@ -24,10 +25,16 @@ const {
   ...video
 } = home.video ?? {};
 const props = (Astro.props ?? {}) as Record<string, any>;
-const { backgroundTone: overrideTone, backgroundClass: overrideClass, ...restProps } = props;
+const {
+  backgroundTone: overrideTone,
+  backgroundClass: overrideClass,
+  animation: animationOverride,
+  ...restProps
+} = props;
 const fallbackTone = getVideoBackgroundTone();
 const backgroundTone = normalizeBackgroundTone(overrideTone ?? (home.video?.background?.tone ?? fallbackTone));
 const backgroundClass = overrideClass ?? sectionBackgroundClass(backgroundTone);
+const animationEnabled = animationOverride !== undefined ? animationOverride : isVideoAnimationEnabled();
 ---
 {Component ? (
   <Component
@@ -37,6 +44,7 @@ const backgroundClass = overrideClass ?? sectionBackgroundClass(backgroundTone);
     title={title ?? undefined}
     intro={intro ?? undefined}
     backgroundClass={backgroundClass}
+    animationEnabled={animationEnabled !== false}
     {...restProps}
   />
 ) : null}

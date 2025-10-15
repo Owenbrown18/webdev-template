@@ -122,4 +122,24 @@ body {
       height: 38rem;
     }
   }
+
+  .site-preloader {
+    @apply fixed inset-0 z-[9999] grid place-items-center;
+    background: var(--preloader-background, rgb(var(--surface-base-rgb)));
+    opacity: 1;
+    transition: opacity 0.35s ease, visibility 0s linear 0.35s;
+  }
+
+  .site-preloader__logo {
+    max-width: min(320px, 65vw);
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+  }
+
+  .is-site-preloader-hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
 }
