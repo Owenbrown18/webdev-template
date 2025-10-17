@@ -1,7 +1,7 @@
 hero:
   variant: "showcase" # Options: classic, showcase, none
   background:
-    tone: "gradient" # Options: none, gradient
+    tone: "none" # Options: none, gradient
     color: null # Optional CSS color to override the gradient palette
   animation: true # Toggle hero animation on/off
   title: "Built by neighbors, for neighbors"

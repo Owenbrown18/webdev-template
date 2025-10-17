@@ -1,7 +1,7 @@
 hero:
   variant: "classic" # Options: classic, split, none
   background:
-    tone: "gradient" # Options: none, gradient
+    tone: "none" # Options: none, gradient
     color: null # Optional CSS color (hex, rgb, etc.)
   animation: true # Toggle hero animation on/off
   title: null
