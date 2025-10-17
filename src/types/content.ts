@@ -201,6 +201,21 @@ export type ServicesPageContent = {
       image?: string | null;
     }>;
   };
+  testimonials?: {
+    variant?: string;
+    background?: {
+      tone?: string | null; // Options: none, gradient
+      color?: string | null;
+    };
+    animation?: boolean | null;
+    eyebrow?: string | null;
+    title?: string | null;
+    intro?: string | null;
+    items?: Array<{
+      quote?: string | null;
+      author?: string | null;
+    }>;
+  };
   faq?: {
     background?: {
       tone?: string | null; // Options: none, gradient

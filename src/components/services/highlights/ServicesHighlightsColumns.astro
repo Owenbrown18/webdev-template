@@ -69,12 +69,16 @@ const cardAnimationClass = shouldAnimate
         {intro && <p class="section-subtitle">{intro}</p>}
       </div>
       <div class="grid gap-6 lg:grid-cols-3">
-        {safeItems.map(({ title, description, features, icon, image }) => {
+        {safeItems.map(({ title, description, features, icon, image }, index) => {
           const showImage = typeof image === 'string' && image.trim().length > 0;
           const showIcon = !showImage && typeof icon === 'string' && icon.trim().length > 0;
 
           return (
-            <div class={`surface-card h-full p-6 sm:p-7 ${cardAnimationClass}`} data-highlight-card>
+            <div
+              class={`surface-card h-full p-6 sm:p-7 ${cardAnimationClass}`}
+              data-highlight-card
+              style={shouldAnimate ? `transition-delay: ${120 + index * 60}ms;` : undefined}
+            >
               <div class="flex flex-col gap-4">
                 {showImage ? (
                   <div class="overflow-hidden rounded-2xl border border-white/10 bg-white/10">
@@ -112,39 +116,55 @@ const cardAnimationClass = shouldAnimate
           ? window.matchMedia('(prefers-reduced-motion: reduce)').matches
           : false;
 
+        const reveal = (el) => {
+          if (el instanceof HTMLElement) {
+            el.dataset.visible = 'true';
+          }
+        };
+
         roots.forEach((root) => {
           if (!(root instanceof HTMLElement)) {
             return;
           }
 
-          const intro = root.querySelector('[data-highlights-intro]');
-          const cards = Array.from(root.querySelectorAll('[data-highlight-card]'));
-
-          if (prefersReducedMotion) {
-            if (intro instanceof HTMLElement) {
-              intro.dataset.visible = 'true';
-            }
-            cards.forEach((card) => {
-              if (card instanceof HTMLElement) {
-                card.dataset.visible = 'true';
-              }
-            });
+          if (root.dataset.highlightsAnimated === 'true') {
             return;
           }
 
-          requestAnimationFrame(() => {
-            requestAnimationFrame(() => {
-              if (intro instanceof HTMLElement) {
-                intro.dataset.visible = 'true';
-              }
-              cards.forEach((card, index) => {
-                if (!(card instanceof HTMLElement)) {
-                  return;
+          const intro = root.querySelector('[data-highlights-intro]');
+          const cards = Array.from(root.querySelectorAll('[data-highlight-card]'));
+          const targets = [intro, ...cards];
+
+          if (targets.length === 0) {
+            return;
+          }
+
+          root.dataset.highlightsAnimated = 'true';
+
+          if (prefersReducedMotion || !('IntersectionObserver' in window)) {
+            targets.forEach((target) => reveal(target));
+            return;
+          }
+
+          const observer = new IntersectionObserver(
+            (entries, obs) => {
+              entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                  reveal(entry.target);
+                  obs.unobserve(entry.target);
                 }
-                card.style.transitionDelay = `${120 + index * 60}ms`;
-                card.dataset.visible = 'true';
               });
-            });
+            },
+            {
+              rootMargin: '0px 0px -10% 0px',
+              threshold: 0.15,
+            },
+          );
+
+          targets.forEach((target) => {
+            if (target instanceof HTMLElement) {
+              observer.observe(target);
+            }
           });
         });
       </script>

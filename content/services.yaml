@@ -64,6 +64,21 @@ highlights:
         - "Flexible maintenance schedules"
         - "Emergency on-call coverage"
         - "Performance reporting"
+testimonials:
+  variant: "grid"
+  background:
+    tone: "none"
+  animation: true
+  eyebrow: "Testimonials"
+  title: "Trusted by homeowners and facility teams"
+  intro: "Hear how our service plans keep projects on schedule and stress-free."
+  items:
+    - quote: "They translated a long wish list into a phased plan that respected our budget. Communication was effortless the entire time."
+      author: "Priya S., property manager"
+    - quote: "Every technician showed up prepared and friendly. We always knew what was happening next and why."
+      author: "Jordan M., homeowner"
+    - quote: "Our renovation wrapped early because they coordinated vendors and approvals before bottlenecks hit."
+      author: "Lena K., operations lead"
 faq:
   background:
     tone: "none"
@@ -81,7 +96,7 @@ faq:
 cta:
   background:
     tone: "none"
-    color: "#1e293b"
+    color: "#f1f5f9"
   animation: true
   eyebrow: "Ready to get started?"
   title: "Let’s build your service plan"
