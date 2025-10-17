@@ -1,0 +1,137 @@
+---
+import {
+  servicesPage,
+  getServicesCtaBackgroundTone,
+  isServicesCtaAnimationEnabled,
+} from '../../../config/content';
+import {
+  normalizeBackgroundTone,
+  normalizeBackgroundColor,
+  sectionBackgroundClass,
+  sectionBackgroundToneAttr,
+  createBackgroundStyle,
+} from '../../../utils/background';
+
+const base = servicesPage.cta ?? {};
+const props = (Astro.props ?? {}) as Record<string, any>;
+const {
+  backgroundTone: overrideTone,
+  backgroundClass: overrideClass,
+  backgroundColor: overrideColor,
+  animation: animationOverride,
+  ...restProps
+} = props;
+
+const fallbackTone = getServicesCtaBackgroundTone();
+const backgroundTone = normalizeBackgroundTone(overrideTone ?? base.background?.tone ?? fallbackTone);
+const backgroundClass = overrideClass ?? sectionBackgroundClass(backgroundTone);
+const backgroundToneAttr = sectionBackgroundToneAttr(backgroundTone);
+const backgroundColor = normalizeBackgroundColor(overrideColor ?? base.background?.color);
+const backgroundStyle = createBackgroundStyle(backgroundColor);
+const animationSetting = animationOverride ?? base.animation;
+const animationEnabled = animationSetting ?? isServicesCtaAnimationEnabled();
+
+const eyebrow = (restProps.eyebrow ?? base.eyebrow) as string | undefined;
+const title = (restProps.title ?? base.title) as string | undefined;
+const intro = (restProps.intro ?? base.intro) as string | undefined;
+const primaryCta =
+  restProps.primaryCtaLabel ?? base.primaryCtaLabel
+    ? {
+        label: (restProps.primaryCtaLabel ?? base.primaryCtaLabel) as string,
+        href: (restProps.primaryCtaHref ?? base.primaryCtaHref) as string,
+      }
+    : null;
+const secondaryCta =
+  restProps.secondaryCtaLabel ?? base.secondaryCtaLabel
+    ? {
+        label: (restProps.secondaryCtaLabel ?? base.secondaryCtaLabel) as string,
+        href: (restProps.secondaryCtaHref ?? base.secondaryCtaHref) as string,
+      }
+    : null;
+const hasContent = Boolean(title || intro || primaryCta || secondaryCta);
+const shouldAnimate = animationEnabled !== false;
+const sectionClasses = [backgroundClass, 'section-shell'].filter(Boolean).join(' ');
+const cardClasses = [
+  'relative overflow-hidden rounded-3xl bg-slate-900 text-white shadow-xl',
+  shouldAnimate
+    ? 'motion-safe:opacity-0 motion-safe:translate-y-6 motion-safe:transition-all motion-safe:duration-[1200ms] motion-safe:ease-out data-[visible=true]:motion-safe:opacity-100 data-[visible=true]:motion-safe:translate-y-0'
+    : '',
+]
+  .filter(Boolean)
+  .join(' ');
+---
+{hasContent ? (
+  <section
+    class={sectionClasses}
+    data-background-tone={backgroundToneAttr ?? undefined}
+    style={backgroundStyle}
+    data-cta-root={shouldAnimate ? 'true' : undefined}
+  >
+    <div class="section-container">
+      <div class={cardClasses} data-cta-card>
+        <div class="absolute inset-0">
+          <div class="absolute inset-0 bg-gradient-to-br from-brand-primary/20 via-transparent to-slate-900" aria-hidden="true"></div>
+          <div class="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(255,255,255,0.14),_transparent_55%)]" aria-hidden="true"></div>
+        </div>
+        <div class="relative grid gap-8 px-8 py-12 sm:px-12 sm:py-16 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-center">
+          <div class="space-y-4">
+            {eyebrow && <p class="text-xs font-semibold uppercase tracking-[0.28em] text-brand-primary/70">{eyebrow}</p>}
+            {title && <h2 class="text-3xl font-semibold tracking-tight sm:text-4xl">{title}</h2>}
+            {intro && <p class="text-base leading-relaxed text-white/75">{intro}</p>}
+          </div>
+          {(primaryCta || secondaryCta) && (
+            <div class="flex flex-col gap-3 sm:flex-row sm:justify-end">
+              {primaryCta && primaryCta.label && primaryCta.href && (
+                <a
+                  href={primaryCta.href}
+                  class="inline-flex items-center justify-center rounded-full bg-white px-6 py-3 text-base font-semibold text-slate-900 shadow-lg transition hover:bg-slate-100"
+                >
+                  {primaryCta.label}
+                </a>
+              )}
+              {secondaryCta && secondaryCta.label && secondaryCta.href && (
+                <a
+                  href={secondaryCta.href}
+                  class="inline-flex items-center justify-center rounded-full border border-white/40 px-6 py-3 text-base font-semibold text-white transition hover:border-white hover:bg-white/10"
+                >
+                  {secondaryCta.label}
+                </a>
+              )}
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+    {shouldAnimate ? (
+      <script>
+        const roots = Array.from(document.querySelectorAll('[data-cta-root="true"]'));
+        const supportMatchMedia = typeof window !== 'undefined' && typeof window.matchMedia === 'function';
+        const prefersReducedMotion = supportMatchMedia
+          ? window.matchMedia('(prefers-reduced-motion: reduce)').matches
+          : false;
+
+        roots.forEach((root) => {
+          if (!(root instanceof HTMLElement)) {
+            return;
+          }
+
+          const card = root.querySelector('[data-cta-card]');
+          if (!(card instanceof HTMLElement)) {
+            return;
+          }
+
+          if (prefersReducedMotion) {
+            card.dataset.visible = 'true';
+            return;
+          }
+
+          requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+              card.dataset.visible = 'true';
+            });
+          });
+        });
+      </script>
+    ) : null}
+  </section>
+) : null}

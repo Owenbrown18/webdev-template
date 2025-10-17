@@ -1,8 +1,8 @@
 ---
-import type { ServicesContent } from '../../../types/content';
+import type { ServicesListContent, ServicesListItem } from '../../../types/content';
 
 interface Props {
-  services: ServicesContent;
+  services: ServicesListContent;
   title?: string;
   intro?: string;
   eyebrow?: string;
@@ -10,6 +10,8 @@ interface Props {
   animationEnabled?: boolean;
   backgroundTone?: string;
   backgroundStyle?: string;
+  mode?: 'teaser' | 'detailed';
+  itemHrefFallback?: string | null;
 }
 
 const {
@@ -21,6 +23,8 @@ const {
   animationEnabled = true,
   backgroundTone,
   backgroundStyle,
+  mode = 'teaser',
+  itemHrefFallback,
 }: Props = Astro.props as Props;
 
 const items = Array.isArray(services.items) ? services.items : [];
@@ -29,12 +33,28 @@ const shouldAnimate = animationEnabled !== false;
 const animationClasses = shouldAnimate
   ? 'motion-safe:translate-y-6 motion-safe:opacity-0 motion-safe:transition-all motion-safe:duration-[1400ms] motion-safe:ease-out data-[visible=true]:motion-safe:translate-y-0 data-[visible=true]:motion-safe:opacity-100'
   : '';
+const isDetailed = mode === 'detailed';
+const baseCardClasses = ['surface-card', 'block', 'p-6', 'sm:p-7'];
 const cardClasses = [
-  'surface-card surface-card-interactive block p-6 sm:p-7',
+  ...baseCardClasses,
+  !isDetailed ? 'surface-card-interactive' : '',
   animationClasses,
 ]
   .filter(Boolean)
   .join(' ');
+const safeHref = typeof itemHrefFallback === 'string' && itemHrefFallback.length > 0 ? itemHrefFallback : undefined;
+const makeSummary = (item: ServicesListItem) => item.summary ?? item.blurb ?? '';
+const resolveHref = (item: ServicesListItem) => {
+  const explicit = item.link?.href?.trim();
+  if (explicit) return explicit;
+  return isDetailed ? undefined : safeHref ?? '/services';
+};
+const resolveLinkLabel = (item: ServicesListItem) => item.link?.label?.trim();
+const collectMeta = (item: ServicesListItem) =>
+  [
+    item.duration && { label: item.duration },
+    item.startingPrice && { label: item.startingPrice },
+  ].filter(Boolean) as Array<{ label: string }>;
 ---
 <section
   id="services"
@@ -43,28 +63,77 @@ const cardClasses = [
   style={backgroundStyle}
   data-services-root={shouldAnimate ? '' : undefined}
 >
-  <div class="section-container max-w-4xl">
-    <div class="section-intro">
-      {eyebrow && <p class="section-eyebrow">{eyebrow}</p>}
-      <h2 class="section-heading">{title}</h2>
-      <p class="section-subtitle">{intro}</p>
+    <div class="section-container max-w-4xl">
+      <div class="section-intro">
+        {eyebrow && <p class="section-eyebrow">{eyebrow}</p>}
+        <h2 class="section-heading">{title}</h2>
+        <p class="section-subtitle">{intro}</p>
+      </div>
+      <div class="mt-12 space-y-6">
+        {items.map((item) => {
+          const href = resolveHref(item);
+          const summary = makeSummary(item);
+          const features = Array.isArray(item.features) ? item.features : [];
+          const meta = collectMeta(item);
+          const linkLabel = resolveLinkLabel(item);
+
+          const content = (
+            <div class="flex flex-col gap-4">
+              <div class="flex items-start justify-between gap-4">
+                <div>
+                  {item.title && <h3 class="text-lg font-semibold text-slate-900">{item.title}</h3>}
+                  {summary && <p class="mt-3 text-sm leading-relaxed text-slate-600">{summary}</p>}
+                </div>
+                {item.icon && <span class="text-2xl" aria-hidden="true">{item.icon}</span>}
+              </div>
+              {isDetailed && features.length > 0 && (
+                <ul class="space-y-2 text-sm text-slate-600">
+                  {features.map((feature) => (
+                    <li class="flex items-start gap-2">
+                      <span class="mt-1 inline-block h-1.5 w-1.5 flex-none rounded-full bg-brand-primary/50"></span>
+                      <span class="leading-relaxed">{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+              )}
+              {isDetailed && meta.length > 0 && (
+                <div class="flex flex-wrap gap-2">
+                  {meta.map(({ label }) => (
+                    <span class="inline-flex items-center rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-slate-600">
+                      {label}
+                    </span>
+                  ))}
+                </div>
+              )}
+              {isDetailed && (href || linkLabel) && (
+                <div class="pt-2">
+                  <a
+                    href={href ?? '#'}
+                    class="inline-flex items-center gap-2 text-sm font-semibold text-brand-primary transition hover:text-brand-primary/80"
+                  >
+                    {linkLabel ?? 'Learn more'}
+                    <span aria-hidden="true">→</span>
+                  </a>
+                </div>
+              )}
+            </div>
+          );
+
+          return href && !isDetailed ? (
+            <a href={href} data-service-card class={cardClasses}>
+              {content}
+            </a>
+          ) : (
+            <div data-service-card class={cardClasses}>
+              {content}
+            </div>
+          );
+        })}
+      </div>
     </div>
-    <div class="mt-12 space-y-6">
-      {items.map(({ title, blurb }) => (
-        <a
-          href="/services"
-          data-service-card
-          class={cardClasses}
-        >
-          <h3 class="text-lg font-semibold text-slate-900">{title}</h3>
-          <p class="mt-3 text-sm leading-relaxed text-slate-600">{blurb}</p>
-        </a>
-      ))}
-    </div>
-  </div>
-  {shouldAnimate ? (
-    <script>
-      const roots = Array.from(document.querySelectorAll('[data-services-root]'));
+    {shouldAnimate ? (
+      <script>
+        const roots = Array.from(document.querySelectorAll('[data-services-root]'));
       const supportMatchMedia = typeof window !== 'undefined' && typeof window.matchMedia === 'function';
       const prefersReducedMotion = supportMatchMedia
         ? window.matchMedia('(prefers-reduced-motion: reduce)').matches

@@ -1,0 +1,73 @@
+items:
+  - title: "Priority Consultations"
+    summary: "Personalized on-site visits to understand your goals and craft an actionable plan."
+    features:
+      - "Comprehensive walk-through"
+      - "Actionable recommendations"
+      - "Follow-up recap within 24 hours"
+    icon: "🧭"
+    duration: "60–90 minutes"
+    startingPrice: "$175"
+    link:
+      label: "Book a consult"
+      href: "/contact"
+  - title: "Complete Project Support"
+    summary: "Hands-on implementation, coordination, and follow-through for every phase of the work."
+    features:
+      - "Dedicated project lead"
+      - "Trusted partner network"
+      - "Progress updates at every milestone"
+    icon: "🛠"
+    duration: "Multi-week"
+    startingPrice: "Custom quote"
+    link:
+      label: "Start a project"
+      href: "/contact"
+  - title: "Ongoing Maintenance"
+    summary: "Reliable check-ins and tune-ups that keep your investment in peak condition all year."
+    features:
+      - "Seasonal inspections"
+      - "Preventative care plan"
+      - "Priority scheduling for repairs"
+    icon: "♻️"
+    duration: "Monthly or quarterly"
+    startingPrice: "$95/mo"
+    link:
+      label: "Enroll now"
+      href: "/contact"
+  - title: "Emergency Callouts"
+    summary: "Rapid response when something unexpected happens and you need a trusted partner fast."
+    features:
+      - "24/7 availability"
+      - "On-site within hours"
+      - "Stabilize & resolve urgent issues"
+    icon: "⚡"
+    duration: "As needed"
+    startingPrice: "From $225"
+    link:
+      label: "Request help"
+      href: "/contact"
+  - title: "Seasonal Checkups"
+    summary: "Scheduled tune-ups that keep everything running smoothly as the seasons change."
+    features:
+      - "Pre-season inspections"
+      - "Performance optimization"
+      - "Detailed service reports"
+    icon: "🍂"
+    duration: "Twice per year"
+    startingPrice: "$160"
+    link:
+      label: "Plan your visit"
+      href: "/contact"
+  - title: "Custom Projects"
+    summary: "Flexible support tailored to unique requests that require a specialized approach."
+    features:
+      - "Solution-first discovery"
+      - "Specialized vendor sourcing"
+      - "White-glove delivery"
+    icon: "✨"
+    duration: "Varies"
+    startingPrice: "Custom quote"
+    link:
+      label: "Tell us about it"
+      href: "/contact"

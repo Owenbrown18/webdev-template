@@ -1,0 +1,123 @@
+---
+import {
+  servicesPage,
+  getServicesFaqBackgroundTone,
+  isServicesFaqAnimationEnabled,
+} from '../../../config/content';
+import {
+  normalizeBackgroundTone,
+  normalizeBackgroundColor,
+  sectionBackgroundClass,
+  sectionBackgroundToneAttr,
+  createBackgroundStyle,
+} from '../../../utils/background';
+
+const base = servicesPage.faq ?? {};
+const props = (Astro.props ?? {}) as Record<string, any>;
+const {
+  backgroundTone: overrideTone,
+  backgroundClass: overrideClass,
+  backgroundColor: overrideColor,
+  animation: animationOverride,
+  ...restProps
+} = props;
+
+const fallbackTone = getServicesFaqBackgroundTone();
+const backgroundTone = normalizeBackgroundTone(overrideTone ?? base.background?.tone ?? fallbackTone);
+const backgroundClass = overrideClass ?? sectionBackgroundClass(backgroundTone);
+const backgroundToneAttr = sectionBackgroundToneAttr(backgroundTone);
+const backgroundColor = normalizeBackgroundColor(overrideColor ?? base.background?.color);
+const backgroundStyle = createBackgroundStyle(backgroundColor);
+const animationSetting = animationOverride ?? base.animation;
+const animationEnabled = animationSetting ?? isServicesFaqAnimationEnabled();
+
+const eyebrow = (restProps.eyebrow ?? base.eyebrow) as string | undefined;
+const title = (restProps.title ?? base.title) as string | undefined;
+const intro = (restProps.intro ?? base.intro) as string | undefined;
+const items = Array.isArray(restProps.items ?? base.items)
+  ? (restProps.items ?? base.items).filter((entry) => entry && (entry.question || entry.answer))
+  : [];
+const shouldRender = Boolean((eyebrow || title || intro) && items.length > 0);
+const shouldAnimate = animationEnabled !== false;
+const sectionClasses = [backgroundClass, 'section-shell'].filter(Boolean).join(' ');
+const introClasses = [
+  'section-intro max-w-3xl',
+  shouldAnimate
+    ? 'motion-safe:translate-y-6 motion-safe:opacity-0 motion-safe:transition-all motion-safe:duration-[900ms] motion-safe:ease-out data-[visible=true]:motion-safe:translate-y-0 data-[visible=true]:motion-safe:opacity-100'
+    : '',
+]
+  .filter(Boolean)
+  .join(' ');
+const itemAnimationClass = shouldAnimate
+  ? 'motion-safe:translate-y-6 motion-safe:opacity-0 motion-safe:transition-all motion-safe:duration-[800ms] motion-safe:ease-out data-[visible=true]:motion-safe:translate-y-0 data-[visible=true]:motion-safe:opacity-100'
+  : '';
+---
+{shouldRender ? (
+  <section
+    class={sectionClasses}
+    data-background-tone={backgroundToneAttr ?? undefined}
+    style={backgroundStyle}
+    data-faq-root={shouldAnimate ? 'true' : undefined}
+  >
+    <div class="section-container max-w-4xl space-y-10">
+      <div class={introClasses} data-faq-intro>
+        {eyebrow && <p class="section-eyebrow">{eyebrow}</p>}
+        {title && <h2 class="section-heading">{title}</h2>}
+        {intro && <p class="section-subtitle">{intro}</p>}
+      </div>
+      <dl class="space-y-6" data-faq-list>
+        {items.map((item, index) => (
+          <div class={`surface-card p-6 sm:p-7 ${itemAnimationClass}`} data-faq-item data-index={index}>
+            {item.question && <dt class="text-lg font-semibold text-slate-900">{item.question}</dt>}
+            {item.answer && <dd class="mt-3 text-sm leading-relaxed text-slate-600">{item.answer}</dd>}
+          </div>
+        ))}
+      </dl>
+    </div>
+    {shouldAnimate ? (
+      <script>
+        const roots = Array.from(document.querySelectorAll('[data-faq-root="true"]'));
+        const supportMatchMedia = typeof window !== 'undefined' && typeof window.matchMedia === 'function';
+        const prefersReducedMotion = supportMatchMedia
+          ? window.matchMedia('(prefers-reduced-motion: reduce)').matches
+          : false;
+
+        roots.forEach((root) => {
+          if (!(root instanceof HTMLElement)) {
+            return;
+          }
+
+          const intro = root.querySelector('[data-faq-intro]');
+          const items = Array.from(root.querySelectorAll('[data-faq-item]'));
+
+          if (prefersReducedMotion) {
+            if (intro instanceof HTMLElement) {
+              intro.dataset.visible = 'true';
+            }
+            items.forEach((item) => {
+              if (item instanceof HTMLElement) {
+                item.dataset.visible = 'true';
+              }
+            });
+            return;
+          }
+
+          requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+              if (intro instanceof HTMLElement) {
+                intro.dataset.visible = 'true';
+              }
+              items.forEach((item, index) => {
+                if (!(item instanceof HTMLElement)) {
+                  return;
+                }
+                item.style.transitionDelay = `${index * 80}ms`;
+                item.dataset.visible = 'true';
+              });
+            });
+          });
+        });
+      </script>
+    ) : null}
+  </section>
+) : null}

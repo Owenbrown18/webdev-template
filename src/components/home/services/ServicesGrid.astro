@@ -1,13 +1,15 @@
 ---
-import type { ServicesContent } from '../../../types/content';
+import type { ServicesListContent, ServicesListItem } from '../../../types/content';
 
 interface Props {
-  services: ServicesContent;
+  services: ServicesListContent;
   title?: string;
   intro?: string;
   backgroundClass?: string;
   backgroundTone?: string;
   backgroundStyle?: string;
+  mode?: 'teaser' | 'detailed';
+  itemHrefFallback?: string | null;
 }
 
 const {
@@ -17,10 +19,26 @@ const {
   backgroundClass,
   backgroundTone,
   backgroundStyle,
+  mode = 'teaser',
+  itemHrefFallback,
 }: Props = Astro.props as Props;
 
 const items = Array.isArray(services.items) ? services.items : [];
 const sectionClasses = [backgroundClass, 'section-shell'].filter(Boolean).join(' ');
+const safeHref = typeof itemHrefFallback === 'string' && itemHrefFallback.length > 0 ? itemHrefFallback : undefined;
+const isDetailed = mode === 'detailed';
+const makeSummary = (item: ServicesListItem) => item.summary ?? item.blurb ?? '';
+const makeMeta = (item: ServicesListItem) =>
+  [
+    item.duration && { label: item.duration },
+    item.startingPrice && { label: item.startingPrice },
+  ].filter(Boolean) as Array<{ label: string }>;
+const resolveHref = (item: ServicesListItem) => {
+  const explicit = item.link?.href?.trim();
+  if (explicit) return explicit;
+  return isDetailed ? undefined : safeHref ?? '/services';
+};
+const resolveLinkLabel = (item: ServicesListItem) => item.link?.label?.trim();
 ---
 <section
   id="services"
@@ -34,12 +52,67 @@ const sectionClasses = [backgroundClass, 'section-shell'].filter(Boolean).join('
       <p class="section-subtitle">{intro}</p>
     </div>
     <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-      {items.map(({ title, blurb }) => (
-        <a href="/services" class="surface-card surface-card-interactive flex h-full flex-col p-6 sm:p-7">
-          <h3 class="text-lg font-semibold text-slate-900">{title}</h3>
-          <p class="mt-3 text-sm leading-relaxed text-slate-600">{blurb}</p>
-        </a>
-      ))}
+      {items.map((item) => {
+        const href = resolveHref(item);
+        const summary = makeSummary(item);
+        const features = Array.isArray(item.features) ? item.features : [];
+        const meta = makeMeta(item);
+        const linkLabel = resolveLinkLabel(item);
+        const content = (
+          <div class="flex h-full flex-col gap-4">
+            <div class="flex items-start justify-between gap-4">
+              <div>
+                {item.title && <h3 class="text-lg font-semibold text-slate-900">{item.title}</h3>}
+                {summary && <p class="mt-2 text-sm leading-relaxed text-slate-600">{summary}</p>}
+              </div>
+              {item.icon && (
+                <span class="text-2xl" aria-hidden="true">{item.icon}</span>
+              )}
+            </div>
+            {isDetailed && features.length > 0 && (
+              <ul class="mt-1 space-y-2 text-sm text-slate-600">
+                {features.map((feature) => (
+                  <li class="flex items-start gap-2">
+                    <span class="mt-1 inline-block h-1.5 w-1.5 flex-none rounded-full bg-brand-primary/50"></span>
+                    <span class="leading-relaxed">{feature}</span>
+                  </li>
+                ))}
+              </ul>
+            )}
+            {isDetailed && meta.length > 0 && (
+              <div class="flex flex-wrap gap-2">
+                {meta.map(({ label }) => (
+                  <span class="inline-flex items-center rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-slate-600">
+                    {label}
+                  </span>
+                ))}
+              </div>
+            )}
+            {isDetailed && (href || linkLabel) && (
+              <div class="mt-auto pt-2">
+                <a
+                  href={href ?? '#'}
+                  class="inline-flex items-center gap-2 text-sm font-semibold text-brand-primary transition hover:text-brand-primary/80"
+                >
+                  {linkLabel ?? 'Learn more'}
+                  <span aria-hidden="true">→</span>
+                </a>
+              </div>
+            )}
+          </div>
+        );
+
+        return href && !isDetailed ? (
+          <a
+            href={href}
+            class="surface-card surface-card-interactive flex h-full flex-col p-6 sm:p-7"
+          >
+            {content}
+          </a>
+        ) : (
+          <div class="surface-card flex h-full flex-col p-6 sm:p-7">{content}</div>
+        );
+      })}
     </div>
   </div>
 </section>
