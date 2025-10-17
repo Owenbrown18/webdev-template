@@ -1,0 +1,61 @@
+---
+import {
+  servicesPage,
+  getServicesHighlightsVariant,
+  getServicesHighlightsBackgroundTone,
+  isServicesHighlightsAnimationEnabled,
+} from '../../../config/content';
+import {
+  normalizeBackgroundTone,
+  normalizeBackgroundColor,
+  sectionBackgroundClass,
+  sectionBackgroundToneAttr,
+  createBackgroundStyle,
+} from '../../../utils/background';
+import ServicesHighlightsColumns from './ServicesHighlightsColumns.astro';
+
+const variants: Record<string, any> = {
+  columns: ServicesHighlightsColumns,
+};
+
+const variantKey = getServicesHighlightsVariant();
+const Component = variantKey === 'none' ? null : variants[variantKey] ?? variants.columns;
+
+const base = servicesPage.highlights ?? {};
+const props = (Astro.props ?? {}) as Record<string, any>;
+const {
+  backgroundTone: overrideTone,
+  backgroundClass: overrideClass,
+  backgroundColor: overrideColor,
+  animation: animationOverride,
+  ...restProps
+} = props;
+
+const fallbackTone = getServicesHighlightsBackgroundTone();
+const backgroundTone = normalizeBackgroundTone(overrideTone ?? base.background?.tone ?? fallbackTone);
+const backgroundClass = overrideClass ?? sectionBackgroundClass(backgroundTone);
+const backgroundToneAttr = sectionBackgroundToneAttr(backgroundTone);
+const backgroundColor = normalizeBackgroundColor(overrideColor ?? base.background?.color);
+const backgroundStyle = createBackgroundStyle(backgroundColor);
+const animationSetting = animationOverride ?? base.animation;
+const animationEnabled = animationSetting ?? isServicesHighlightsAnimationEnabled();
+
+const eyebrow = (restProps.eyebrow ?? base.eyebrow) as string | undefined;
+const title = (restProps.title ?? base.title) as string | undefined;
+const intro = (restProps.intro ?? base.intro) as string | undefined;
+const items = Array.isArray(restProps.items ?? base.items)
+  ? (restProps.items ?? base.items).filter(Boolean)
+  : [];
+---
+{Component && items.length > 0 ? (
+  <Component
+    eyebrow={eyebrow}
+    title={title}
+    intro={intro}
+    items={items}
+    backgroundClass={backgroundClass}
+    backgroundTone={backgroundToneAttr}
+    backgroundStyle={backgroundStyle}
+    animationEnabled={animationEnabled}
+  />
+) : null}

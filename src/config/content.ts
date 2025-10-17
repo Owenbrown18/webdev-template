@@ -2,7 +2,8 @@ import type {
   AboutContent,
   ContactContent,
   HomeContent,
-  ServicesContent,
+  ServicesListContent,
+  ServicesPageContent,
   SiteContent,
   TestimonialsContent,
 } from '../types/content';
@@ -10,7 +11,8 @@ import generalSource from '../../content/general.yaml';
 import homeSource from '../../content/home.yaml';
 import contactSource from '../../content/contact.yaml';
 import aboutSource from '../../content/about.yaml';
-import servicesSource from '../../content/services.yaml';
+import servicesListSource from '../../content/services-list.yaml';
+import servicesPageSource from '../../content/services.yaml';
 import testimonialsSource from '../../content/testimonials.yaml';
 import { normalizeBackgroundTone } from '../utils/background';
 
@@ -23,7 +25,8 @@ export const site = generalSource as SiteContent; // global business info
 export const home = homeSource as HomeContent;
 export const contact = contactSource as ContactContent;
 export const about = aboutSource as AboutContent;
-export const services = servicesSource as ServicesContent;
+export const services = servicesListSource as ServicesListContent;
+export const servicesPage = servicesPageSource as ServicesPageContent;
 export const testimonials = testimonialsSource as TestimonialsContent;
 
 /**
@@ -36,10 +39,47 @@ export const getSocialLinks = () => Object.entries(site.socials ?? {});
  */
 export const getServices = () => (Array.isArray(services.items) ? services.items : []);
 
+export const getServicesPageMetadata = () => servicesPage.metadata ?? {};
+
 /**
  * Returns the testimonials array, normalising empty payloads to an empty array.
  */
 export const getTestimonials = () => (Array.isArray(testimonials.items) ? testimonials.items : []);
+
+export const getServicesHeroBackgroundTone = () => getBackgroundTone(servicesPage.hero?.background?.tone);
+export const isServicesHeroAnimationEnabled = () => isAnimationEnabled(servicesPage.hero?.animation);
+
+export const getServicesOverviewBackgroundTone = () =>
+  getBackgroundTone(servicesPage.overview?.background?.tone);
+export const isServicesOverviewAnimationEnabled = () =>
+  isAnimationEnabled(servicesPage.overview?.animation);
+
+export const getServicesHighlightsVariant = () => {
+  const raw = servicesPage.highlights?.variant?.trim?.().toLowerCase?.() || 'columns';
+  return raw === 'none' ? 'none' : raw;
+};
+export const getServicesHighlightsBackgroundTone = () =>
+  getBackgroundTone(servicesPage.highlights?.background?.tone);
+export const isServicesHighlightsAnimationEnabled = () =>
+  isAnimationEnabled(servicesPage.highlights?.animation);
+
+export const getServicesCatalogVariant = () => {
+  const raw = servicesPage.catalog?.variant?.trim?.().toLowerCase?.();
+  if (!raw) {
+    return getServicesVariant();
+  }
+  return raw === 'none' ? 'none' : raw;
+};
+export const getServicesCatalogBackgroundTone = () =>
+  getBackgroundTone(servicesPage.catalog?.background?.tone);
+export const isServicesCatalogAnimationEnabled = () =>
+  isAnimationEnabled(servicesPage.catalog?.animation);
+
+export const getServicesFaqBackgroundTone = () => getBackgroundTone(servicesPage.faq?.background?.tone);
+export const isServicesFaqAnimationEnabled = () => isAnimationEnabled(servicesPage.faq?.animation);
+
+export const getServicesCtaBackgroundTone = () => getBackgroundTone(servicesPage.cta?.background?.tone);
+export const isServicesCtaAnimationEnabled = () => isAnimationEnabled(servicesPage.cta?.animation);
 
 /** Returns the hero layout key specified in home content, defaulting to "classic". */
 export const getHeroVariant = () => home.hero?.variant?.trim?.().toLowerCase?.() || 'classic';
