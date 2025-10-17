@@ -51,11 +51,7 @@ const itemHrefFallback = props.itemHrefFallback as string | null | undefined;
 const componentProps = {
   mode,
   itemHrefFallback: itemHrefFallback ?? undefined,
-  ...(Component === ServicesList
-    ? {
-        animationEnabled: animationEnabled !== false,
-      }
-    : {}),
+  animationEnabled: animationEnabled !== false,
 };
 ---
 {Component ? (

@@ -10,6 +10,7 @@ interface Props {
   backgroundStyle?: string;
   mode?: 'teaser' | 'detailed';
   itemHrefFallback?: string | null;
+  animationEnabled?: boolean;
 }
 
 const {
@@ -21,12 +22,17 @@ const {
   backgroundStyle,
   mode = 'teaser',
   itemHrefFallback,
+  animationEnabled = true,
 }: Props = Astro.props as Props;
 
 const items = Array.isArray(services.items) ? services.items : [];
 const sectionClasses = [backgroundClass, 'section-shell'].filter(Boolean).join(' ');
 const safeHref = typeof itemHrefFallback === 'string' && itemHrefFallback.length > 0 ? itemHrefFallback : undefined;
 const isDetailed = mode === 'detailed';
+const shouldAnimate = animationEnabled !== false;
+const cardAnimationClasses = shouldAnimate
+  ? 'motion-safe:translate-y-6 motion-safe:opacity-0 motion-safe:transition-all motion-safe:duration-[1000ms] motion-safe:ease-out data-[visible=true]:motion-safe:translate-y-0 data-[visible=true]:motion-safe:opacity-100'
+  : '';
 const makeSummary = (item: ServicesListItem) => item.summary ?? item.blurb ?? '';
 const makeMeta = (item: ServicesListItem) =>
   [
@@ -45,6 +51,7 @@ const resolveLinkLabel = (item: ServicesListItem) => item.link?.label?.trim();
   class={sectionClasses}
   data-background-tone={backgroundTone ?? undefined}
   style={backgroundStyle}
+  data-services-grid-root={shouldAnimate ? '' : undefined}
 >
   <div class="section-container max-w-5xl">
     <div class="section-intro max-w-2xl">
@@ -52,7 +59,7 @@ const resolveLinkLabel = (item: ServicesListItem) => item.link?.label?.trim();
       <p class="section-subtitle">{intro}</p>
     </div>
     <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-      {items.map((item) => {
+      {items.map((item, index) => {
         const href = resolveHref(item);
         const summary = makeSummary(item);
         const features = Array.isArray(item.features) ? item.features : [];
@@ -105,14 +112,72 @@ const resolveLinkLabel = (item: ServicesListItem) => item.link?.label?.trim();
         return href && !isDetailed ? (
           <a
             href={href}
-            class="surface-card surface-card-interactive flex h-full flex-col p-6 sm:p-7"
+            class={`surface-card surface-card-interactive flex h-full flex-col p-6 sm:p-7 ${cardAnimationClasses}`}
+            data-services-grid-card
+            style={shouldAnimate ? `transition-delay: ${120 + index * 60}ms;` : undefined}
           >
             {content}
           </a>
         ) : (
-          <div class="surface-card flex h-full flex-col p-6 sm:p-7">{content}</div>
+          <div
+            class={`surface-card flex h-full flex-col p-6 sm:p-7 ${cardAnimationClasses}`}
+            data-services-grid-card
+            style={shouldAnimate ? `transition-delay: ${120 + index * 60}ms;` : undefined}
+          >
+            {content}
+          </div>
         );
       })}
     </div>
   </div>
+  {shouldAnimate ? (
+    <script>
+      const roots = Array.from(document.querySelectorAll('[data-services-grid-root]'));
+      const supportMatchMedia = typeof window !== 'undefined' && typeof window.matchMedia === 'function';
+      const prefersReducedMotion = supportMatchMedia
+        ? window.matchMedia('(prefers-reduced-motion: reduce)').matches
+        : false;
+      const reveal = (el) => {
+        if (el instanceof HTMLElement) {
+          el.dataset.visible = 'true';
+        }
+      };
+
+      roots.forEach((root) => {
+        if (!(root instanceof HTMLElement)) return;
+        if (root.dataset.servicesGridAnimated === 'true') return;
+
+        const cards = Array.from(root.querySelectorAll('[data-services-grid-card]'));
+        if (cards.length === 0) return;
+
+        root.dataset.servicesGridAnimated = 'true';
+
+        if (prefersReducedMotion || !('IntersectionObserver' in window)) {
+          cards.forEach((card) => reveal(card));
+          return;
+        }
+
+        const observer = new IntersectionObserver(
+          (entries, obs) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                reveal(entry.target);
+                obs.unobserve(entry.target);
+              }
+            });
+          },
+          {
+            rootMargin: '0px 0px -10% 0px',
+            threshold: 0.15,
+          },
+        );
+
+        cards.forEach((card) => {
+          if (card instanceof HTMLElement) {
+            observer.observe(card);
+          }
+        });
+      });
+    </script>
+  ) : null}
 </section>
