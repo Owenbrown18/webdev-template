@@ -31,7 +31,7 @@ overview:
 catalog:
   variant: "grid"
   background:
-    tone: "none"
+    tone: "gradient"
   animation: true
   eyebrow: "Service catalog"
   title: "Comprehensive support, one trusted team"
@@ -39,7 +39,7 @@ catalog:
 highlights:
   variant: "columns"
   background:
-    tone: "gradient"
+    tone: "none"
     color: "#0b3c74"
   animation: true
   eyebrow: "Featured capabilities"
@@ -80,7 +80,7 @@ faq:
       answer: "Yes. We can collaborate with existing partners or recommend specialists from our vetted network."
 cta:
   background:
-    tone: "gradient"
+    tone: "none"
     color: "#1e293b"
   animation: true
   eyebrow: "Ready to get started?"
