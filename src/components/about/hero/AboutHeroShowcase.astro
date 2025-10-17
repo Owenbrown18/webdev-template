@@ -1,151 +1,44 @@
 ---
 import { about } from '../../../config/content';
+import ShowcaseHero from '../../shared/hero/ShowcaseHero.astro';
 
 const hero = about.hero ?? {};
-const {
-  title = 'Crafting spaces that feel like home',
-  subtitle = 'From the first walkthrough to the final touch, our team sweats the details so you can enjoy the results.',
-  ctaLabel = 'Our journey',
-  ctaHref = '#timeline',
-  image = '/images/about-hero.jpg',
-  location = 'Hometown, USA',
-  founded = '2012',
-} = hero;
-
 const details = [
-  location && { label: 'Located in', value: location },
-  founded && { label: 'Founded', value: founded },
+  hero.location && { label: 'Located in', value: hero.location },
+  hero.founded && { label: 'Founded', value: hero.founded },
 ].filter(Boolean) as Array<{ label: string; value: string }>;
 
-const { backgroundClass, backgroundTone, backgroundStyle, animationEnabled = true } = Astro.props as {
+const {
+  backgroundClass,
+  backgroundTone,
+  backgroundStyle,
+  animationEnabled = true,
+} = Astro.props as {
   backgroundClass?: string;
   backgroundTone?: string;
   animationEnabled?: boolean;
   backgroundStyle?: string;
 };
 
-const shouldAnimate = animationEnabled !== false;
-const sectionClasses = [
-  backgroundClass,
-  'full-bleed',
-  'section-shell',
-  'min-h-hero',
-  'relative',
-  'isolate',
-  'overflow-hidden',
-  'rounded-3xl',
-  'bg-slate-900',
-  'text-white',
-  'shadow-xl',
-]
-  .filter(Boolean)
-  .join(' ');
-const textClasses = [
-  'max-w-2xl space-y-6',
-  shouldAnimate
-    ? 'motion-safe:opacity-0 motion-safe:translate-y-6 motion-safe:transition-all motion-safe:duration-[900ms] motion-safe:ease-out data-[visible=true]:motion-safe:opacity-100 data-[visible=true]:motion-safe:translate-y-0'
-    : '',
-]
-  .filter(Boolean)
-  .join(' ');
-const imageWrapperClasses = [
-  'absolute inset-0',
-  shouldAnimate
-    ? 'motion-safe:scale-[1.04] motion-safe:transition-transform motion-safe:duration-[1400ms] motion-safe:ease-out data-[visible=true]:motion-safe:scale-100'
-    : '',
-]
-  .filter(Boolean)
-  .join(' ');
+const primaryCta =
+  hero.ctaLabel && hero.ctaHref
+    ? { label: hero.ctaLabel, href: hero.ctaHref }
+    : { label: 'Our journey', href: '#timeline' };
+const secondaryCta = { label: 'View services', href: '/services' };
 ---
-<section
-  class={sectionClasses}
-  data-background-tone={backgroundTone ?? undefined}
-  style={backgroundStyle}
-  data-hero-root
-  data-animate={shouldAnimate ? 'true' : undefined}
->
-  <div class={imageWrapperClasses} data-hero-image>
-    <img
-      src={image}
-      alt=""
-      class="absolute inset-0 h-full w-full object-cover"
-      loading="lazy"
-      decoding="async"
-    />
-    <div class="absolute inset-0 bg-slate-900/70" aria-hidden="true"></div>
-  </div>
-  <div class="section-container relative py-24 sm:py-28">
-    <div class="mx-auto grid max-w-5xl gap-12 sm:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)] sm:items-center">
-      <div class={textClasses} data-hero-text>
-        <p class="text-sm font-semibold uppercase tracking-[0.28em] text-white/70">About Us</p>
-        <h1 class="text-4xl font-semibold tracking-tight sm:text-5xl">{title}</h1>
-        <p class="text-base leading-relaxed text-white/80">{subtitle}</p>
-        <div class="flex flex-wrap gap-3">
-          <a
-            href={ctaHref}
-            class="inline-flex items-center justify-center rounded-full bg-white px-6 py-3 text-base font-semibold text-slate-900 shadow-lg transition hover:bg-slate-100"
-          >
-            {ctaLabel}
-          </a>
-          <a
-            href="/services"
-            class="inline-flex items-center justify-center rounded-full border border-white/50 px-6 py-3 text-base font-semibold text-white transition hover:border-white hover:bg-white/10"
-          >
-            View services
-          </a>
-        </div>
-      </div>
-      {details.length > 0 && (
-        <dl class="space-y-4">
-          {details.map(({ label, value }) => (
-            <div class="rounded-2xl border border-white/15 bg-white/5 p-6 text-center shadow-sm backdrop-blur">
-              <dt class="text-sm font-semibold uppercase tracking-[0.22em] text-white/70">{label}</dt>
-              <dd class="mt-2 text-2xl font-semibold text-white">{value}</dd>
-            </div>
-          ))}
-        </dl>
-      )}
-    </div>
-  </div>
-  {shouldAnimate ? (
-    <script>
-      const roots = Array.from(document.querySelectorAll('[data-hero-root][data-animate="true"]'));
-      const supportMatchMedia = typeof window !== 'undefined' && typeof window.matchMedia === 'function';
-      const prefersReducedMotion = supportMatchMedia
-        ? window.matchMedia('(prefers-reduced-motion: reduce)').matches
-        : false;
-      const reveal = (el: Element | null) => {
-        if (el instanceof HTMLElement) {
-          el.dataset.visible = 'true';
-        }
-      };
-
-      roots.forEach((root) => {
-        if (!(root instanceof HTMLElement)) {
-          return;
-        }
-
-        if (root.dataset.heroAnimated === 'true') {
-          return;
-        }
-
-        root.dataset.heroAnimated = 'true';
-        const text = root.querySelector('[data-hero-text]');
-        const image = root.querySelector('[data-hero-image]');
-
-        if (prefersReducedMotion) {
-          reveal(text);
-          reveal(image);
-          return;
-        }
-
-        requestAnimationFrame(() => {
-          requestAnimationFrame(() => {
-            reveal(text);
-            reveal(image);
-          });
-        });
-      });
-    </script>
-  ) : null}
-</section>
+<ShowcaseHero
+  tagLabel="About Us"
+  title={hero.title ?? 'Crafting spaces that feel like home'}
+  subtitle={
+    hero.subtitle ??
+      'From the first walkthrough to the final touch, our team sweats the details so you can enjoy the results.'
+  }
+  primaryCta={primaryCta}
+  secondaryCta={secondaryCta}
+  image={hero.image ?? '/images/about-hero.jpg'}
+  details={details}
+  backgroundClass={backgroundClass}
+  backgroundTone={backgroundTone}
+  backgroundStyle={backgroundStyle}
+  animationEnabled={animationEnabled}
+/>

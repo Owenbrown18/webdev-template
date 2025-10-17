@@ -29,6 +29,19 @@ const hexToRgb = (value: string): string => {
 };
 
 const { title, description, showTagline = true } = Astro.props;
+const normalizePath = (value: string | undefined) => {
+  if (!value) return '/';
+  const trimmed = value.trim();
+  if (!trimmed || trimmed === '/') return '/';
+  return trimmed.replace(/\/+$/, '') || '/';
+};
+const currentPath = normalizePath(Astro.url?.pathname);
+const navItems = [
+  { href: '/', label: 'Home' },
+  { href: '/about', label: 'About' },
+  { href: '/services', label: 'Services' },
+  { href: '/contact', label: 'Contact' },
+];
 const pageTitle = title ? `${title} | ${site.name}` : site.name;
 const metaDescription = description ?? site.tagline;
 const primaryColor = site.colors?.primary ?? '#2563eb';
@@ -152,18 +165,23 @@ const bodyStyle = `
           {site.name}
         </a>
         <nav class="flex items-center gap-2 text-sm font-medium text-slate-600">
-          {[
-            { href: '/', label: 'Home' },
-            { href: '/about', label: 'About' },
-            { href: '/contact', label: 'Contact' },
-          ].map(({ href, label }) => (
-            <a
-              href={href}
-              class="rounded-full px-4 py-2 transition-colors hover:bg-slate-100 hover:text-brand-primary"
-            >
-              {label}
-            </a>
-          ))}
+          {navItems.map(({ href, label }) => {
+            const normalizedHref = normalizePath(href);
+            const isActive = normalizedHref === currentPath;
+            const baseClasses =
+              'rounded-full px-4 py-2 transition-colors hover:bg-slate-100 hover:text-brand-primary';
+            const activeClasses = isActive ? 'bg-slate-900 text-white shadow-sm' : '';
+
+            return (
+              <a
+                href={href}
+                class={`${baseClasses} ${activeClasses}`.trim()}
+                aria-current={isActive ? 'page' : undefined}
+              >
+                {label}
+              </a>
+            );
+          })}
         </nav>
       </div>
     </header>

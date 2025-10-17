@@ -1,0 +1,170 @@
+---
+interface HighlightItem {
+  title?: string | null;
+  description?: string | null;
+  features?: string[];
+  icon?: string | null;
+  image?: string | null;
+}
+
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  intro?: string;
+  items: HighlightItem[];
+  backgroundClass?: string;
+  backgroundTone?: string;
+  backgroundStyle?: string;
+  animationEnabled?: boolean;
+}
+
+const {
+  eyebrow,
+  title,
+  intro,
+  items,
+  backgroundClass,
+  backgroundTone,
+  backgroundStyle,
+  animationEnabled = true,
+}: Props = Astro.props as Props;
+
+const safeItems = Array.isArray(items)
+  ? (items.filter(Boolean) as HighlightItem[]).map((item) => ({
+      title: item.title,
+      description: item.description,
+      features: Array.isArray(item.features)
+        ? (item.features.filter((feature) => typeof feature === 'string' && feature.trim().length > 0) as string[])
+        : [],
+      icon: item.icon,
+      image: item.image,
+    }))
+  : [];
+
+const shouldAnimate = animationEnabled !== false;
+const sectionClasses = [backgroundClass, 'section-shell'].filter(Boolean).join(' ');
+const contentClasses = [
+  'section-container space-y-12',
+  shouldAnimate
+    ? 'motion-safe:translate-y-6 motion-safe:opacity-0 motion-safe:transition-all motion-safe:duration-[900ms] motion-safe:ease-out data-[visible=true]:motion-safe:translate-y-0 data-[visible=true]:motion-safe:opacity-100'
+    : '',
+]
+  .filter(Boolean)
+  .join(' ');
+const cardAnimationClass = shouldAnimate
+  ? 'motion-safe:translate-y-6 motion-safe:opacity-0 motion-safe:transition-all motion-safe:duration-[900ms] motion-safe:delay-[160ms] motion-safe:ease-out data-[visible=true]:motion-safe:translate-y-0 data-[visible=true]:motion-safe:opacity-100'
+  : '';
+---
+{safeItems.length > 0 ? (
+  <section
+    class={sectionClasses}
+    data-background-tone={backgroundTone ?? undefined}
+    style={backgroundStyle}
+    data-highlights-root={shouldAnimate ? 'true' : undefined}
+  >
+    <div class={contentClasses} data-highlights-intro>
+      <div class="section-intro max-w-3xl">
+        {eyebrow && <p class="section-eyebrow">{eyebrow}</p>}
+        {title && <h2 class="section-heading">{title}</h2>}
+        {intro && <p class="section-subtitle">{intro}</p>}
+      </div>
+      <div class="grid gap-6 lg:grid-cols-3">
+        {safeItems.map(({ title, description, features, icon, image }) => {
+          const showImage = typeof image === 'string' && image.trim().length > 0;
+          const showIcon = !showImage && typeof icon === 'string' && icon.trim().length > 0;
+
+          return (
+            <div class={`surface-card h-full p-6 sm:p-7 ${cardAnimationClass}`} data-highlight-card>
+              <div class="flex flex-col gap-4">
+                {showImage ? (
+                  <div class="overflow-hidden rounded-2xl border border-white/10 bg-white/10">
+                    <img src={image!} alt="" class="h-32 w-full object-cover" loading="lazy" decoding="async" />
+                  </div>
+                ) : null}
+                {showIcon ? (
+                  <div class="flex h-14 w-14 items-center justify-center rounded-full bg-slate-900/5 text-2xl">
+                    {icon}
+                  </div>
+                ) : null}
+                {title && <h3 class="text-xl font-semibold text-slate-900">{title}</h3>}
+                {description && <p class="text-sm leading-relaxed text-slate-600">{description}</p>}
+                {features.length > 0 && (
+                  <ul class="mt-2 space-y-2 text-sm text-slate-600">
+                    {features.map((feature) => (
+                      <li class="flex items-start gap-2">
+                        <span class="mt-1 inline-block h-1.5 w-1.5 flex-none rounded-full bg-brand-primary/60"></span>
+                        <span class="leading-relaxed">{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+    {shouldAnimate ? (
+      <script>
+        const roots = Array.from(document.querySelectorAll('[data-highlights-root="true"]'));
+        const supportMatchMedia = typeof window !== 'undefined' && typeof window.matchMedia === 'function';
+        const prefersReducedMotion = supportMatchMedia
+          ? window.matchMedia('(prefers-reduced-motion: reduce)').matches
+          : false;
+        const reveal = (el) => {
+          if (el instanceof HTMLElement) {
+            el.dataset.visible = 'true';
+          }
+        };
+
+        roots.forEach((root) => {
+          if (!(root instanceof HTMLElement)) {
+            return;
+          }
+
+          if (root.dataset.highlightsAnimated === 'true') {
+            return;
+          }
+
+          const intro = root.querySelector('[data-highlights-intro]');
+          const cards = Array.from(root.querySelectorAll('[data-highlight-card]'));
+
+          root.dataset.highlightsAnimated = 'true';
+
+          if (prefersReducedMotion || !('IntersectionObserver' in window)) {
+            reveal(intro);
+            cards.forEach((card) => reveal(card));
+            return;
+          }
+
+          const observer = new IntersectionObserver(
+            (entries, obs) => {
+              entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                  reveal(entry.target);
+                  obs.unobserve(entry.target);
+                }
+              });
+            },
+            {
+              rootMargin: '0px 0px -12% 0px',
+              threshold: 0.15,
+            },
+          );
+
+          if (intro instanceof HTMLElement) {
+            observer.observe(intro);
+          }
+
+          cards.forEach((card, index) => {
+            if (!(card instanceof HTMLElement)) {
+              return;
+            }
+            card.style.transitionDelay = `${120 + index * 60}ms`;
+            observer.observe(card);
+          });
+        });
+      </script>
+    ) : null}
+  </section>
+) : null}

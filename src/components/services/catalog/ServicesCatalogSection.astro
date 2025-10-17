@@ -1,0 +1,69 @@
+---
+import ServicesSection from '../../home/services/ServicesSection.astro';
+import {
+  servicesPage,
+  getServicesCatalogVariant,
+  getServicesCatalogBackgroundTone,
+  isServicesCatalogAnimationEnabled,
+} from '../../../config/content';
+import {
+  normalizeBackgroundTone,
+  normalizeBackgroundColor,
+  sectionBackgroundClass,
+  sectionBackgroundToneAttr,
+  createBackgroundStyle,
+} from '../../../utils/background';
+
+const catalog = servicesPage.catalog ?? {};
+const props = (Astro.props ?? {}) as Record<string, any>;
+const {
+  backgroundTone: overrideTone,
+  backgroundColor: overrideColor,
+  backgroundClass: overrideClass,
+  animation: animationOverride,
+  variant: variantOverride,
+  title: titleOverride,
+  intro: introOverride,
+  eyebrow: eyebrowOverride,
+  itemHrefFallback: itemHrefOverride,
+  ...restProps
+} = props;
+delete restProps.backgroundTone;
+delete restProps.backgroundColor;
+delete restProps.backgroundClass;
+delete restProps.animation;
+delete restProps.variant;
+delete restProps.title;
+delete restProps.intro;
+delete restProps.eyebrow;
+delete restProps.itemHrefFallback;
+
+const fallbackTone = getServicesCatalogBackgroundTone();
+const backgroundTone = normalizeBackgroundTone(overrideTone ?? catalog.background?.tone ?? fallbackTone);
+const backgroundClass = overrideClass ?? sectionBackgroundClass(backgroundTone);
+const backgroundToneAttr = sectionBackgroundToneAttr(backgroundTone);
+const backgroundColor = normalizeBackgroundColor(overrideColor ?? catalog.background?.color);
+const backgroundStyle = createBackgroundStyle(backgroundColor);
+const animationSetting = animationOverride ?? catalog.animation;
+const animationEnabled = animationSetting ?? isServicesCatalogAnimationEnabled();
+const variant = typeof variantOverride === 'string' ? variantOverride : getServicesCatalogVariant();
+const title = (titleOverride ?? catalog.title ?? 'Our services') as string;
+const intro = (introOverride ?? catalog.intro ?? 'Explore the work we do for clients every day.') as string;
+const eyebrow = (eyebrowOverride ?? catalog.eyebrow ?? 'Service catalog') as string;
+const itemHrefFallback =
+  itemHrefOverride === undefined ? null : (itemHrefOverride as string | null | undefined);
+---
+<ServicesSection
+  variant={variant}
+  backgroundTone={backgroundToneAttr}
+  backgroundClass={backgroundClass}
+  backgroundColor={backgroundColor}
+  animation={animationEnabled}
+  title={title}
+  intro={intro}
+  eyebrow={eyebrow}
+  mode="detailed"
+  itemHrefFallback={itemHrefFallback}
+  {...restProps}
+  backgroundStyle={backgroundStyle}
+/>

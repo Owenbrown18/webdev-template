@@ -1,5 +1,5 @@
 ---
-import type { ServicesContent } from '../../../types/content';
+import type { ServicesListContent } from '../../../types/content';
 import {
   services,
   home,
@@ -22,13 +22,14 @@ const variants: Record<string, any> = {
   list: ServicesList,
 };
 
-const variantKey = getServicesVariant();
-const Component = variantKey === 'none' ? null : variants[variantKey] ?? variants.grid;
 const settings = home.services ?? {};
+const props = (Astro.props ?? {}) as Record<string, any>;
+const variantOverride = typeof props.variant === 'string' ? props.variant.trim().toLowerCase() : undefined;
+const variantKey = variantOverride ?? getServicesVariant();
+const Component = variantKey === 'none' ? null : variants[variantKey] ?? variants.grid;
 const title = settings.title ?? 'Our Services';
 const intro = settings.intro ?? 'Support tailored to your needs.';
 const eyebrow = settings.eyebrow ?? 'What we do';
-const props = (Astro.props ?? {}) as Record<string, any>;
 const {
   backgroundTone: overrideTone,
   backgroundColor: overrideColor,
@@ -36,6 +37,7 @@ const {
   animation: animationOverride,
   ...restProps
 } = props;
+delete restProps.variant;
 const fallbackTone = getServicesBackgroundTone();
 const backgroundTone = normalizeBackgroundTone(overrideTone ?? settings.background?.tone ?? fallbackTone);
 const backgroundClass = overrideClass ?? sectionBackgroundClass(backgroundTone);
@@ -44,16 +46,21 @@ const backgroundColor = normalizeBackgroundColor(overrideColor ?? settings.backg
 const backgroundStyle = createBackgroundStyle(backgroundColor);
 const animationSetting = animationOverride ?? settings.animation;
 const animationEnabled = animationSetting ?? isServicesAnimationEnabled();
-const componentProps =
-  Component === ServicesList
+const mode = (props.mode ?? 'teaser') as 'teaser' | 'detailed';
+const itemHrefFallback = props.itemHrefFallback as string | null | undefined;
+const componentProps = {
+  mode,
+  itemHrefFallback: itemHrefFallback ?? undefined,
+  ...(Component === ServicesList
     ? {
         animationEnabled: animationEnabled !== false,
       }
-    : {};
+    : {}),
+};
 ---
 {Component ? (
   <Component
-    services={services as ServicesContent}
+    services={services as ServicesListContent}
     title={title}
     intro={intro}
     eyebrow={eyebrow}

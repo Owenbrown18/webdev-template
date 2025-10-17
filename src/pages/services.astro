@@ -1,0 +1,26 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ServicesHeroSection from '../components/services/hero/ServicesHeroSection.astro';
+import ServicesOverviewSection from '../components/services/overview/ServicesOverviewSection.astro';
+import ServicesCatalogSection from '../components/services/catalog/ServicesCatalogSection.astro';
+import ServicesHighlightsSection from '../components/services/highlights/ServicesHighlightsSection.astro';
+import ServicesTestimonialsSection from '../components/services/testimonials/ServicesTestimonialsSection.astro';
+import ServicesFaqSection from '../components/services/faq/ServicesFaqSection.astro';
+import ServicesCtaSection from '../components/services/cta/ServicesCtaSection.astro';
+import { site, getServicesPageMetadata } from '../config/content';
+
+const metadata = getServicesPageMetadata();
+const title = metadata.title ?? 'Services';
+const description = metadata.description ?? `See how ${site.name} supports every phase of your project.`;
+---
+<BaseLayout title={title} description={description}>
+  <div class="space-y-16 sm:space-y-20">
+    <ServicesHeroSection />
+    <ServicesOverviewSection />
+    <ServicesCatalogSection />
+    <ServicesHighlightsSection />
+    <ServicesTestimonialsSection />
+    <ServicesFaqSection />
+    <ServicesCtaSection />
+  </div>
+</BaseLayout>

@@ -1,13 +1,107 @@
-items:
-  - title: "Priority Consultations"
-    blurb: "Personalized on-site visits to understand your goals and craft an actionable plan."
-  - title: "Complete Project Support"
-    blurb: "Hands-on implementation, coordination, and follow-through for every phase of the work."
-  - title: "Ongoing Maintenance"
-    blurb: "Reliable check-ins and tune-ups that keep your investment in peak condition all year."
-  - title: "Emergency Callouts"
-    blurb: "Rapid response when something unexpected happens and you need a trusted partner fast."
-  - title: "Seasonal Checkups"
-    blurb: "Scheduled tune-ups that keep everything running smoothly as the seasons change."
-  - title: "Custom Projects"
-    blurb: "Flexible support tailored to unique requests that require a specialized approach."
+metadata:
+  title: "Services"
+  description: "Explore our complete catalog of services, from discovery and planning to hands-on delivery and ongoing maintenance."
+  heroImageAlt: "Technician reviewing plans with a homeowner"
+hero:
+  background:
+    tone: "gradient"
+    color: "#0f172a"
+  animation: true
+  tagLabel: "Services"
+  title: "Reliable, end-to-end care for every project"
+  subtitle: "Whether you need a one-off consult or an ongoing partner, our team brings seasoned expertise and attentive service to every engagement."
+  primaryCtaLabel: "Book a consultation"
+  primaryCtaHref: "/contact"
+  secondaryCtaLabel: "Download pricing guide"
+  secondaryCtaHref: "/contact"
+  image: "/images/about-hero.jpg"
+  details:
+    - label: "Average response"
+      value: "< 24 hrs"
+    - label: "Projects delivered"
+      value: "450+"
+overview:
+  background:
+    tone: "none"
+  animation: true
+  eyebrow: "Why partner with us"
+  title: "Expert support at every stage"
+  intro: "We combine technical know-how with a personable approach, making complex work feel effortless for homeowners, property managers, and business owners alike."
+  supporting: "Each engagement starts with listening. From there we design a clear path forward, assemble the right team, and keep you informed through final delivery and beyond."
+catalog:
+  variant: "grid"
+  background:
+    tone: "none"
+  animation: true
+  eyebrow: "Service catalog"
+  title: "Comprehensive support, one trusted team"
+  intro: "Browse our most-requested services and assemble a plan that matches your project scope, timeline, and budget."
+testimonials:
+  variant: "grid"
+  background:
+    tone: "none"
+  animation: true
+  eyebrow: "Client feedback"
+  title: "Trusted partners, lasting results"
+  intro: "Hear how our service team keeps projects on schedule and clients at ease."
+  items:
+    - quote: "They outlined a clear plan from the very first call and delivered exactly when they said they would."
+      author: "Morgan T. — Facilities Director"
+    - quote: "Responsive, transparent, and genuinely invested in the outcome of our renovation."
+      author: "Luis R. — Homeowner"
+    - quote: "Their maintenance crew has saved us countless hours every season."
+      author: "Priya K. — Property Manager"
+highlights:
+  variant: "columns"
+  background:
+    tone: "gradient"
+    color: "#0b3c74"
+  animation: true
+  eyebrow: "Featured capabilities"
+  title: "Tailored service packages"
+  intro: "Mix and match deliverables that fit your goals, timeline, and budget."
+  items:
+    - title: "Consult & Strategize"
+      description: "Define priorities, clarify scope, and build a roadmap that keeps every stakeholder aligned."
+      features:
+        - "Site walkthrough & discovery"
+        - "Scope definition & milestones"
+        - "Budget planning guidance"
+    - title: "Build & Implement"
+      description: "From sourcing materials to coordinating crews, we manage the moving pieces while you stay informed."
+      features:
+        - "Dedicated project lead"
+        - "Preferred vendor management"
+        - "Quality assurance checkpoints"
+    - title: "Support & Maintain"
+      description: "Protect your investment with proactive care, seasonal tune-ups, and rapid-response callouts."
+      features:
+        - "Flexible maintenance schedules"
+        - "Emergency on-call coverage"
+        - "Performance reporting"
+faq:
+  background:
+    tone: "none"
+  animation: true
+  eyebrow: "FAQ"
+  title: "Answers before we get started"
+  intro: "Have another question? Reach out anytime and we’ll reply within one business day."
+  items:
+    - question: "Do you offer custom bundles?"
+      answer: "Absolutely. Most clients mix and match deliverables across our catalog. We’ll collaborate on a scope that fits your budget and timeline."
+    - question: "How quickly can emergency work begin?"
+      answer: "Emergency callouts begin within hours. You’ll receive a confirmation text as soon as a technician is en route."
+    - question: "Can you work with our preferred vendors?"
+      answer: "Yes. We can collaborate with existing partners or recommend specialists from our vetted network."
+cta:
+  background:
+    tone: "none"
+    color: null
+  animation: true
+  eyebrow: "Ready to get started?"
+  title: "Let’s build your service plan"
+  intro: "Tell us what you’re working on and we’ll recommend the right mix of services."
+  primaryCtaLabel: "Request a quote"
+  primaryCtaHref: "/contact"
+  secondaryCtaLabel: "Call us at (555) 123-4567"
+  secondaryCtaHref: "tel:5551234567"

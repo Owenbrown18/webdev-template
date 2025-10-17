@@ -1,0 +1,165 @@
+---
+import {
+  servicesPage,
+  getServicesCtaBackgroundTone,
+  isServicesCtaAnimationEnabled,
+} from '../../../config/content';
+import {
+  normalizeBackgroundTone,
+  normalizeBackgroundColor,
+  sectionBackgroundClass,
+  sectionBackgroundToneAttr,
+  createBackgroundStyle,
+} from '../../../utils/background';
+
+const base = servicesPage.cta ?? {};
+const props = (Astro.props ?? {}) as Record<string, any>;
+const {
+  backgroundTone: overrideTone,
+  backgroundClass: overrideClass,
+  backgroundColor: overrideColor,
+  animation: animationOverride,
+  ...restProps
+} = props;
+
+const fallbackTone = getServicesCtaBackgroundTone();
+const backgroundTone = normalizeBackgroundTone(overrideTone ?? base.background?.tone ?? fallbackTone);
+const backgroundClass = overrideClass ?? sectionBackgroundClass(backgroundTone);
+const backgroundToneAttr = sectionBackgroundToneAttr(backgroundTone);
+const backgroundColor = normalizeBackgroundColor(overrideColor ?? base.background?.color);
+const backgroundStyle = createBackgroundStyle(backgroundColor);
+const animationSetting = animationOverride ?? base.animation;
+const animationEnabled = animationSetting ?? isServicesCtaAnimationEnabled();
+
+const eyebrow = (restProps.eyebrow ?? base.eyebrow) as string | undefined;
+const title = (restProps.title ?? base.title) as string | undefined;
+const intro = (restProps.intro ?? base.intro) as string | undefined;
+const primaryCta =
+  restProps.primaryCtaLabel ?? base.primaryCtaLabel
+    ? {
+        label: (restProps.primaryCtaLabel ?? base.primaryCtaLabel) as string,
+        href: (restProps.primaryCtaHref ?? base.primaryCtaHref) as string,
+      }
+    : null;
+const secondaryCta =
+  restProps.secondaryCtaLabel ?? base.secondaryCtaLabel
+    ? {
+        label: (restProps.secondaryCtaLabel ?? base.secondaryCtaLabel) as string,
+        href: (restProps.secondaryCtaHref ?? base.secondaryCtaHref) as string,
+      }
+    : null;
+const hasContent = Boolean(title || intro || primaryCta || secondaryCta);
+const shouldAnimate = animationEnabled !== false;
+const sectionClasses = [backgroundClass, 'section-shell'].filter(Boolean).join(' ');
+const cardClasses = [
+  'surface-card relative overflow-hidden rounded-3xl bg-white/95 text-slate-900 shadow-xl ring-1 ring-slate-200/70',
+  shouldAnimate
+    ? 'motion-safe:opacity-0 motion-safe:translate-y-6 motion-safe:transition-all motion-safe:duration-[1200ms] motion-safe:ease-out data-[visible=true]:motion-safe:opacity-100 data-[visible=true]:motion-safe:translate-y-0'
+    : '',
+]
+  .filter(Boolean)
+  .join(' ');
+---
+{hasContent ? (
+  <section
+    class={sectionClasses}
+    data-background-tone={backgroundToneAttr ?? undefined}
+    style={backgroundStyle}
+    data-cta-root={shouldAnimate ? 'true' : undefined}
+  >
+    <div class="section-container">
+      <div class={cardClasses} data-cta-card>
+        <div class="absolute inset-0">
+          <div
+            class="absolute inset-0 bg-gradient-to-br from-brand-primary/15 via-white to-brand-primary/5"
+            aria-hidden="true"
+          ></div>
+          <div
+            class="absolute inset-x-10 top-0 h-40 rounded-full bg-brand-primary/10 blur-3xl"
+            aria-hidden="true"
+          ></div>
+        </div>
+        <div class="relative grid gap-8 px-8 py-12 sm:px-12 sm:py-16 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-center">
+          <div class="space-y-4">
+            {eyebrow && <p class="text-xs font-semibold uppercase tracking-[0.28em] text-brand-primary/80">{eyebrow}</p>}
+            {title && <h2 class="text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl">{title}</h2>}
+            {intro && <p class="text-base leading-relaxed text-slate-600">{intro}</p>}
+          </div>
+          {(primaryCta || secondaryCta) && (
+            <div class="flex flex-col gap-3 sm:flex-row sm:justify-end">
+              {primaryCta && primaryCta.label && primaryCta.href && (
+                <a
+                  href={primaryCta.href}
+                  class="inline-flex items-center justify-center rounded-full bg-brand-primary px-6 py-3 text-base font-semibold text-white shadow-brand-glow transition hover:brightness-110"
+                >
+                  {primaryCta.label}
+                </a>
+              )}
+              {secondaryCta && secondaryCta.label && secondaryCta.href && (
+                <a
+                  href={secondaryCta.href}
+                  class="inline-flex items-center justify-center rounded-full border border-slate-300 px-6 py-3 text-base font-semibold text-slate-700 transition hover:border-slate-400 hover:text-slate-900"
+                >
+                  {secondaryCta.label}
+                </a>
+              )}
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+    {shouldAnimate ? (
+      <script>
+        const roots = Array.from(document.querySelectorAll('[data-cta-root="true"]'));
+        const supportMatchMedia = typeof window !== 'undefined' && typeof window.matchMedia === 'function';
+        const prefersReducedMotion = supportMatchMedia
+          ? window.matchMedia('(prefers-reduced-motion: reduce)').matches
+          : false;
+        const reveal = (el) => {
+          if (el instanceof HTMLElement) {
+            el.dataset.visible = 'true';
+          }
+        };
+
+        roots.forEach((root) => {
+          if (!(root instanceof HTMLElement)) {
+            return;
+          }
+
+          if (root.dataset.ctaAnimated === 'true') {
+            return;
+          }
+
+          const card = root.querySelector('[data-cta-card]');
+          if (!(card instanceof HTMLElement)) {
+            return;
+          }
+
+          root.dataset.ctaAnimated = 'true';
+
+          if (prefersReducedMotion || !('IntersectionObserver' in window)) {
+            reveal(card);
+            return;
+          }
+
+          const observer = new IntersectionObserver(
+            (entries, obs) => {
+              entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                  reveal(entry.target);
+                  obs.unobserve(entry.target);
+                }
+              });
+            },
+            {
+              rootMargin: '0px 0px -12% 0px',
+              threshold: 0.2,
+            },
+          );
+
+          observer.observe(card);
+        });
+      </script>
+    ) : null}
+  </section>
+) : null}

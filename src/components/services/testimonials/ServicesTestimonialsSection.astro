@@ -1,0 +1,81 @@
+---
+import type { SiteContent, TestimonialsContent } from '../../../types/content';
+import {
+  servicesPage,
+  site,
+  getServicesTestimonials,
+  getServicesTestimonialsVariant,
+  getServicesTestimonialsBackgroundTone,
+  isServicesTestimonialsAnimationEnabled,
+} from '../../../config/content';
+import {
+  normalizeBackgroundTone,
+  normalizeBackgroundColor,
+  sectionBackgroundClass,
+  sectionBackgroundToneAttr,
+  createBackgroundStyle,
+} from '../../../utils/background';
+import TestimonialsGrid from '../../home/testimonials/TestimonialsGrid.astro';
+import TestimonialsStack from '../../home/testimonials/TestimonialsStack.astro';
+
+const variants: Record<string, any> = {
+  grid: TestimonialsGrid,
+  stack: TestimonialsStack,
+};
+
+const base = servicesPage.testimonials ?? {};
+const props = (Astro.props ?? {}) as Record<string, any>;
+const {
+  backgroundTone: overrideTone,
+  backgroundColor: overrideColor,
+  backgroundClass: overrideClass,
+  animation: animationOverride,
+  variant: variantOverride,
+  quotes: quotesOverride,
+  site: siteOverride,
+  eyebrow: eyebrowOverride,
+  title: titleOverride,
+  intro: introOverride,
+  ...restProps
+} = props;
+
+const variantKey =
+  typeof variantOverride === 'string' ? variantOverride.trim().toLowerCase() : getServicesTestimonialsVariant();
+const Component = variantKey === 'none' ? null : variants[variantKey] ?? variants.grid;
+
+const fallbackTone = getServicesTestimonialsBackgroundTone();
+const backgroundTone = normalizeBackgroundTone(overrideTone ?? base.background?.tone ?? fallbackTone);
+const backgroundClass = overrideClass ?? sectionBackgroundClass(backgroundTone);
+const backgroundToneAttr = sectionBackgroundToneAttr(backgroundTone);
+const backgroundColor = normalizeBackgroundColor(overrideColor ?? base.background?.color);
+const backgroundStyle = createBackgroundStyle(backgroundColor);
+const animationSetting = animationOverride ?? base.animation;
+const animationEnabled = animationSetting ?? isServicesTestimonialsAnimationEnabled();
+
+const rawQuotes =
+  quotesOverride !== undefined
+    ? (Array.isArray(quotesOverride) ? quotesOverride : [])
+    : getServicesTestimonials();
+const safeQuotes = Array.isArray(rawQuotes)
+  ? (rawQuotes.filter((item) => item && (item.quote || item.author)) as TestimonialsContent['items'])
+  : [];
+
+const eyebrow = (eyebrowOverride ?? base.eyebrow) as string | undefined;
+const title = (titleOverride ?? base.title) as string | undefined;
+const intro = (introOverride ?? base.intro) as string | undefined;
+const currentSite = ((siteOverride as SiteContent) ?? site) as SiteContent;
+---
+{Component && safeQuotes.length > 0 ? (
+  <Component
+    quotes={safeQuotes}
+    site={currentSite}
+    title={title}
+    intro={intro}
+    eyebrow={eyebrow}
+    backgroundClass={backgroundClass}
+    backgroundTone={backgroundToneAttr}
+    backgroundStyle={backgroundStyle}
+    animationEnabled={animationEnabled !== false}
+    {...restProps}
+  />
+) : null}

@@ -116,11 +116,134 @@ export type ContactContent = {
   };
 };
 
-export type ServicesContent = {
-  items?: Array<{
-    title?: string;
-    blurb?: string;
-  }>;
+export type ServiceLink = {
+  label?: string | null;
+  href?: string | null;
+};
+
+export type ServicesListItem = {
+  title?: string;
+  summary?: string;
+  blurb?: string;
+  features?: string[];
+  icon?: string | null;
+  duration?: string | null;
+  startingPrice?: string | null;
+  link?: ServiceLink | null;
+};
+
+export type ServicesListContent = {
+  items?: Array<ServicesListItem>;
+};
+
+export type ServicesPageContent = {
+  metadata?: {
+    title?: string | null;
+    description?: string | null;
+    heroImageAlt?: string | null;
+  };
+  hero?: {
+    background?: {
+      tone?: string | null; // Options: none, gradient
+      color?: string | null;
+    };
+    animation?: boolean | null;
+    tagLabel?: string | null;
+    title?: string | null;
+    subtitle?: string | null;
+    primaryCtaLabel?: string | null;
+    primaryCtaHref?: string | null;
+    secondaryCtaLabel?: string | null;
+    secondaryCtaHref?: string | null;
+    image?: string | null;
+    details?: Array<{
+      label?: string | null;
+      value?: string | null;
+    }>;
+  };
+  overview?: {
+    background?: {
+      tone?: string | null; // Options: none, gradient
+      color?: string | null;
+    };
+    animation?: boolean | null;
+    eyebrow?: string | null;
+    title?: string | null;
+    intro?: string | null;
+    supporting?: string | null;
+  };
+  catalog?: {
+    variant?: string;
+    background?: {
+      tone?: string | null; // Options: none, gradient
+      color?: string | null;
+    };
+    animation?: boolean | null;
+    eyebrow?: string | null;
+    title?: string | null;
+    intro?: string | null;
+  };
+  testimonials?: {
+    variant?: string;
+    background?: {
+      tone?: string | null; // Options: none, gradient
+      color?: string | null;
+    };
+    animation?: boolean | null;
+    eyebrow?: string | null;
+    title?: string | null;
+    intro?: string | null;
+    items?: Array<{
+      quote?: string | null;
+      author?: string | null;
+    }>;
+  };
+  highlights?: {
+    variant?: string;
+    background?: {
+      tone?: string | null; // Options: none, gradient
+      color?: string | null;
+    };
+    animation?: boolean | null;
+    eyebrow?: string | null;
+    title?: string | null;
+    intro?: string | null;
+    items?: Array<{
+      title?: string | null;
+      description?: string | null;
+      features?: string[];
+      icon?: string | null;
+      image?: string | null;
+    }>;
+  };
+  faq?: {
+    background?: {
+      tone?: string | null; // Options: none, gradient
+      color?: string | null;
+    };
+    animation?: boolean | null;
+    eyebrow?: string | null;
+    title?: string | null;
+    intro?: string | null;
+    items?: Array<{
+      question?: string | null;
+      answer?: string | null;
+    }>;
+  };
+  cta?: {
+    background?: {
+      tone?: string | null; // Options: none, gradient
+      color?: string | null;
+    };
+    animation?: boolean | null;
+    eyebrow?: string | null;
+    title?: string | null;
+    intro?: string | null;
+    primaryCtaLabel?: string | null;
+    primaryCtaHref?: string | null;
+    secondaryCtaLabel?: string | null;
+    secondaryCtaHref?: string | null;
+  };
 };
 
 export type TestimonialsContent = {
