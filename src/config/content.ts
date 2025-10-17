@@ -63,6 +63,15 @@ export const getServicesHighlightsBackgroundTone = () =>
 export const isServicesHighlightsAnimationEnabled = () =>
   isAnimationEnabled(servicesPage.highlights?.animation);
 
+export const getServicesTestimonialsVariant = () => {
+  const raw = servicesPage.testimonials?.variant?.trim?.().toLowerCase?.() || 'grid';
+  return raw === 'none' ? 'none' : raw;
+};
+export const getServicesTestimonialsBackgroundTone = () =>
+  getBackgroundTone(servicesPage.testimonials?.background?.tone);
+export const isServicesTestimonialsAnimationEnabled = () =>
+  isAnimationEnabled(servicesPage.testimonials?.animation);
+
 export const getServicesCatalogVariant = () => {
   const raw = servicesPage.catalog?.variant?.trim?.().toLowerCase?.();
   if (!raw) {
