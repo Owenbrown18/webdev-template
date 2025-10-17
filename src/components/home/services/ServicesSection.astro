@@ -16,10 +16,12 @@ import {
 } from '../../../utils/background';
 import ServicesGrid from './ServicesGrid.astro';
 import ServicesList from './ServicesList.astro';
+import ServicesSpotlight from './ServicesSpotlight.astro';
 
 const variants: Record<string, any> = {
   grid: ServicesGrid,
   list: ServicesList,
+  spotlight: ServicesSpotlight,
 };
 
 const settings = home.services ?? {};

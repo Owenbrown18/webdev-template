@@ -1,0 +1,230 @@
+---
+import type { ServicesListContent, ServicesListItem } from '../../../types/content';
+
+interface SpotlightImage {
+  src: string;
+  alt?: string;
+}
+
+interface Props {
+  services: ServicesListContent;
+  title?: string;
+  intro?: string;
+  eyebrow?: string;
+  backgroundClass?: string;
+  backgroundTone?: string;
+  backgroundStyle?: string;
+  animationEnabled?: boolean;
+  mode?: 'teaser' | 'detailed';
+  itemHrefFallback?: string | null;
+}
+
+const {
+  services,
+  title = 'Our Services',
+  intro = 'Support tailored to your needs.',
+  eyebrow = 'What we do',
+  backgroundClass,
+  backgroundTone,
+  backgroundStyle,
+  animationEnabled = true,
+  mode = 'teaser',
+  itemHrefFallback,
+}: Props = Astro.props as Props;
+
+const items = Array.isArray(services.items) ? services.items : [];
+const sectionClasses = [backgroundClass, 'section-shell'].filter(Boolean).join(' ');
+const shouldAnimate = animationEnabled !== false;
+const animationClasses = shouldAnimate
+  ? 'motion-safe:translate-y-10 motion-safe:opacity-0 motion-safe:transition-all motion-safe:duration-[1200ms] motion-safe:ease-out data-[visible=true]:motion-safe:translate-y-0 data-[visible=true]:motion-safe:opacity-100'
+  : '';
+const isDetailed = mode === 'detailed';
+const safeHref = typeof itemHrefFallback === 'string' && itemHrefFallback.length > 0 ? itemHrefFallback : undefined;
+
+const normalizeImage = (image: ServicesListItem['image']): SpotlightImage | null => {
+  if (!image) return null;
+  if (typeof image === 'string') {
+    const src = image.trim();
+    return src ? { src } : null;
+  }
+
+  const src = image.src?.trim();
+  if (!src) return null;
+  const alt = image.alt?.trim() || undefined;
+  return { src, alt };
+};
+
+const makeSummary = (item: ServicesListItem) => item.summary ?? item.blurb ?? '';
+const getParagraphs = (text: string) =>
+  text
+    .split(/\n{2,}/)
+    .map((entry) => entry.trim())
+    .filter(Boolean);
+const collectMeta = (item: ServicesListItem) =>
+  [
+    item.duration && { label: item.duration },
+    item.startingPrice && { label: item.startingPrice },
+  ].filter(Boolean) as Array<{ label: string }>;
+const resolveHref = (item: ServicesListItem) => {
+  const explicit = item.link?.href?.trim();
+  if (explicit) return explicit;
+  return isDetailed ? undefined : safeHref ?? '/services';
+};
+const resolveLinkLabel = (item: ServicesListItem) => item.link?.label?.trim();
+---
+<section
+  id="services"
+  class={sectionClasses}
+  data-background-tone={backgroundTone ?? undefined}
+  style={backgroundStyle}
+  data-services-spotlight-root={shouldAnimate ? '' : undefined}
+>
+  <div class="section-container max-w-5xl">
+    <div class="section-intro max-w-3xl">
+      {eyebrow && <p class="section-eyebrow">{eyebrow}</p>}
+      <h2 class="section-heading">{title}</h2>
+      <p class="section-subtitle">{intro}</p>
+    </div>
+    <div class="mt-16 space-y-16 lg:space-y-20">
+      {items.map((item, index) => {
+        const image = normalizeImage(item.image);
+        const summary = makeSummary(item);
+        const paragraphs = summary ? getParagraphs(summary) : [];
+        const features = Array.isArray(item.features) ? item.features : [];
+        const meta = collectMeta(item);
+        const href = resolveHref(item);
+        const linkLabel = resolveLinkLabel(item);
+        const shouldSwap = !!image && index % 2 === 1;
+        const itemStyle = shouldAnimate ? `transition-delay: ${160 + index * 120}ms;` : undefined;
+
+        return (
+          <article
+            class={`surface-card overflow-hidden p-0 ${animationClasses}`}
+            data-services-spotlight-item
+            style={itemStyle}
+          >
+            <div class={`flex flex-col ${image ? 'lg:grid lg:grid-cols-[minmax(0,6fr)_minmax(0,5fr)] lg:items-stretch' : ''}`}>
+              <div
+                class={[
+                  'flex flex-col gap-6 p-8 sm:p-10 lg:p-12',
+                  image ? (shouldSwap ? 'lg:order-2' : 'lg:order-1') : '',
+                ]
+                  .filter(Boolean)
+                  .join(' ')}
+              >
+                <div class="flex items-start gap-4">
+                  <div class="flex-1">
+                    {item.title && <h3 class="text-2xl font-semibold text-slate-900">{item.title}</h3>}
+                    {paragraphs.length > 0 ? (
+                      <div class="mt-4 space-y-4 text-base leading-relaxed text-slate-600">
+                        {paragraphs.map((paragraph) => (
+                          <p>{paragraph}</p>
+                        ))}
+                      </div>
+                    ) : (
+                      summary && <p class="mt-4 text-base leading-relaxed text-slate-600">{summary}</p>
+                    )}
+                  </div>
+                  {item.icon && <span class="text-3xl" aria-hidden="true">{item.icon}</span>}
+                </div>
+                {features.length > 0 && (
+                  <div class="border-t border-slate-100 pt-6">
+                    <h4 class="text-sm font-semibold uppercase tracking-wide text-slate-500">Highlights</h4>
+                    <ul class="mt-4 space-y-3 text-sm leading-relaxed text-slate-600">
+                      {features.map((feature) => (
+                        <li class="flex items-start gap-3">
+                          <span class="mt-1 inline-block h-1.5 w-1.5 flex-none rounded-full bg-brand-primary/50"></span>
+                          <span>{feature}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+                {(meta.length > 0 || (isDetailed && (href || linkLabel))) && (
+                  <div class="mt-auto flex flex-col gap-4 pt-2 sm:flex-row sm:items-center sm:justify-between">
+                    {meta.length > 0 && (
+                      <div class="flex flex-wrap gap-2">
+                        {meta.map(({ label }) => (
+                          <span class="inline-flex items-center rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-slate-600">
+                            {label}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+                    {isDetailed && (href || linkLabel) && (
+                      <a
+                        href={href ?? '#'}
+                        class="inline-flex items-center gap-2 text-sm font-semibold text-brand-primary transition hover:text-brand-primary/80"
+                      >
+                        {linkLabel ?? 'Learn more'}
+                        <span aria-hidden="true">→</span>
+                      </a>
+                    )}
+                  </div>
+                )}
+              </div>
+              {image && (
+                <div
+                  class={[
+                    'relative min-h-[16rem] overflow-hidden',
+                    'bg-slate-900/5',
+                    shouldSwap ? 'lg:order-1' : 'lg:order-2',
+                  ]
+                    .filter(Boolean)
+                    .join(' ')}
+                >
+                  <img
+                    src={image.src}
+                    alt={image.alt ?? ''}
+                    loading="lazy"
+                    class="h-full w-full object-cover"
+                  />
+                </div>
+              )}
+            </div>
+          </article>
+        );
+      })}
+    </div>
+  </div>
+  {shouldAnimate ? (
+    <script>
+      const roots = Array.from(document.querySelectorAll('[data-services-spotlight-root]'));
+      const supportMatchMedia = typeof window !== 'undefined' && typeof window.matchMedia === 'function';
+      const prefersReducedMotion = supportMatchMedia
+        ? window.matchMedia('(prefers-reduced-motion: reduce)').matches
+        : false;
+      const reveal = (el: Element | null) => {
+        if (el instanceof HTMLElement) {
+          el.dataset.visible = 'true';
+        }
+      };
+
+      roots.forEach((root) => {
+        const items = Array.from(root.querySelectorAll('[data-services-spotlight-item]'));
+        if (items.length === 0) return;
+
+        if (!prefersReducedMotion && 'IntersectionObserver' in window) {
+          const observer = new IntersectionObserver(
+            (entries, obs) => {
+              entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                  reveal(entry.target);
+                  obs.unobserve(entry.target);
+                }
+              });
+            },
+            {
+              rootMargin: '0px 0px -10% 0px',
+              threshold: 0.12,
+            },
+          );
+
+          items.forEach((item) => observer.observe(item));
+        } else {
+          items.forEach((item) => reveal(item));
+        }
+      });
+    </script>
+  ) : null}
+</section>

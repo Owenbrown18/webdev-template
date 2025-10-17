@@ -1,6 +1,9 @@
 items:
   - title: "Priority Consultations"
-    summary: "Personalized on-site visits to understand your goals and craft an actionable plan."
+    summary: |
+      Start with a dedicated strategy session tailored to your property. We walk every room, document your wish list, and surface hidden risks before you commit resources.
+
+      You leave with a prioritized action plan, budget guardrails, and a written recap within 24 hours so every stakeholder can move fast.
     features:
       - "Comprehensive walk-through"
       - "Actionable recommendations"
@@ -9,10 +12,16 @@ items:
     duration: "60–90 minutes"
     startingPrice: "$175"
     link:
-      label: "Book a consult"
+      label: "Request details"
       href: "/contact"
+    image:
+      src: "https://images.unsplash.com/photo-1523419409543-0c1df022bdd7?auto=format&fit=crop&w=1600&q=80"
+      alt: "Consultant reviewing renovation plans with homeowners at a kitchen table"
   - title: "Complete Project Support"
-    summary: "Hands-on implementation, coordination, and follow-through for every phase of the work."
+    summary: |
+      Partner with a team that handles scheduling, crews, and quality control from kickoff through punch list. We manage permits, vendors, and material lead times so the build stays moving.
+
+      Weekly checkpoints, shared dashboards, and on-site supervision keep you informed while we execute the plan with zero guesswork.
     features:
       - "Dedicated project lead"
       - "Trusted partner network"
@@ -21,10 +30,16 @@ items:
     duration: "Multi-week"
     startingPrice: "Custom quote"
     link:
-      label: "Start a project"
+      label: "Request details"
       href: "/contact"
+    image:
+      src: "https://images.unsplash.com/photo-1570126909238-0eafec8c2235?auto=format&fit=crop&w=1600&q=80"
+      alt: "Construction manager coordinating crews on a job site"
   - title: "Ongoing Maintenance"
-    summary: "Reliable check-ins and tune-ups that keep your investment in peak condition all year."
+    summary: |
+      Build a maintenance rhythm that protects warranties and budgets. Our technicians rotate through seasonal checklists, tighten mechanical systems, and document every visit for future reference.
+
+      You get alerts about emerging issues early, complete with recommendations and cost ranges before anything escalates.
     features:
       - "Seasonal inspections"
       - "Preventative care plan"
@@ -33,10 +48,16 @@ items:
     duration: "Monthly or quarterly"
     startingPrice: "$95/mo"
     link:
-      label: "Enroll now"
+      label: "Request details"
       href: "/contact"
+    image:
+      src: "https://images.unsplash.com/photo-1529429617124-aee711a30c42?auto=format&fit=crop&w=1600&q=80"
+      alt: "Technician performing maintenance on building equipment"
   - title: "Emergency Callouts"
-    summary: "Rapid response when something unexpected happens and you need a trusted partner fast."
+    summary: |
+      When the unexpected happens, our rapid-response crew mobilizes immediately. We stabilize the site, implement temporary fixes, and coordinate follow-up trades so you can focus on the bigger picture.
+
+      Real-time text updates keep you in the loop from dispatch to resolution, with documentation ready for insurance or internal reporting.
     features:
       - "24/7 availability"
       - "On-site within hours"
@@ -45,10 +66,16 @@ items:
     duration: "As needed"
     startingPrice: "From $225"
     link:
-      label: "Request help"
+      label: "Request details"
       href: "/contact"
+    image:
+      src: "https://images.unsplash.com/photo-1568605114967-8130f3a36994?auto=format&fit=crop&w=1600&q=80"
+      alt: "Emergency technician working quickly in a dimly lit mechanical room"
   - title: "Seasonal Checkups"
-    summary: "Scheduled tune-ups that keep everything running smoothly as the seasons change."
+    summary: |
+      Prepare your property for every seasonal shift. We inspect critical systems, test safety devices, and fine-tune performance so heating, cooling, and irrigation switchover days go smoothly.
+
+      Detailed reports highlight preventative tasks and easy wins that keep energy use low and comfort high all year long.
     features:
       - "Pre-season inspections"
       - "Performance optimization"
@@ -57,10 +84,16 @@ items:
     duration: "Twice per year"
     startingPrice: "$160"
     link:
-      label: "Plan your visit"
+      label: "Request details"
       href: "/contact"
+    image:
+      src: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1600&q=80"
+      alt: "Home exterior checklist being reviewed during a fall inspection"
   - title: "Custom Projects"
-    summary: "Flexible support tailored to unique requests that require a specialized approach."
+    summary: |
+      Have an unconventional scope? We thrive on adaptive reuse, specialized upgrades, and distinctive builds. Discovery workshops surface constraints early, then we assemble a vetted team tailored to the challenge.
+
+      Expect collaborative design reviews, transparent pricing models, and white-glove execution from planning through final punch list.
     features:
       - "Solution-first discovery"
       - "Specialized vendor sourcing"
@@ -69,5 +102,8 @@ items:
     duration: "Varies"
     startingPrice: "Custom quote"
     link:
-      label: "Tell us about it"
+      label: "Request details"
       href: "/contact"
+    image:
+      src: "https://images.unsplash.com/photo-1529429306209-8b24f4d58828?auto=format&fit=crop&w=1600&q=80"
+      alt: "Collaborative design session reviewing custom project concepts"

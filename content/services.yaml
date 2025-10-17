@@ -29,15 +29,16 @@ overview:
   intro: "We combine technical know-how with a personable approach, making complex work feel effortless for homeowners, property managers, and business owners alike."
   supporting: "Each engagement starts with listening. From there we design a clear path forward, assemble the right team, and keep you informed through final delivery and beyond."
 catalog:
-  variant: "grid"
+  variant: "spotlight" # Options: grid, list, spotlight, none
   background:
     tone: "gradient"
+    color: "#0002"
   animation: true
   eyebrow: "Service catalog"
   title: "Comprehensive support, one trusted team"
   intro: "Browse our most-requested services and assemble a plan that matches your project scope, timeline, and budget."
 highlights:
-  variant: "columns"
+  variant: "columns" # Options: columns, none
   background:
     tone: "none"
     color: "#0b3c74"
@@ -65,9 +66,10 @@ highlights:
         - "Emergency on-call coverage"
         - "Performance reporting"
 testimonials:
-  variant: "grid"
+  variant: "grid" # Options: grid, stack, none
   background:
-    tone: "none"
+    tone: "gradient"
+    color: "#0002"
   animation: true
   eyebrow: "Testimonials"
   title: "Trusted by homeowners and facility teams"
@@ -95,13 +97,13 @@ faq:
       answer: "Yes. We can collaborate with existing partners or recommend specialists from our vetted network."
 cta:
   background:
-    tone: "none"
-    color: "#f1f5f9"
+    tone: "gradient"
+    color: "#0002"
   animation: true
-  eyebrow: "Ready to get started?"
-  title: "Let’s build your service plan"
-  intro: "Tell us what you’re working on and we’ll recommend the right mix of services."
-  primaryCtaLabel: "Request a quote"
+  eyebrow: "Next steps"
+  title: "Build your tailored service plan"
+  intro: "Share your project priorities and we’ll quickly outline the mix of services, timeline considerations, and budget guardrails that fit. Prefer to talk it through? Call us and we’ll walk you through options live."
+  primaryCtaLabel: "Request details"
   primaryCtaHref: "/contact"
-  secondaryCtaLabel: "Call us at (555) 123-4567"
+  secondaryCtaLabel: "Call (555) 123-4567"
   secondaryCtaHref: "tel:5551234567"

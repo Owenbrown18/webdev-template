@@ -130,6 +130,10 @@ export type ServicesListItem = {
   duration?: string | null;
   startingPrice?: string | null;
   link?: ServiceLink | null;
+  image?: string | null | {
+    src?: string | null;
+    alt?: string | null;
+  };
 };
 
 export type ServicesListContent = {
