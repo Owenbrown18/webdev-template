@@ -41,7 +41,8 @@ export type HomeContent = {
   hero?: {
     variant?: string;
     background?: {
-      tone?: string | null; // Options: none, soft-slate
+      tone?: string | null; // Options: none, gradient
+      color?: string | null; // Optional CSS color used when tone is "gradient"
     };
     animation?: boolean | null;
     title?: string | null;
@@ -59,7 +60,8 @@ export type HomeContent = {
   services?: {
     variant?: string;
     background?: {
-      tone?: string | null; // Options: none, soft-slate
+      tone?: string | null; // Options: none, gradient
+      color?: string | null;
     };
     animation?: boolean | null;
     eyebrow?: string | null;
@@ -69,7 +71,8 @@ export type HomeContent = {
   video?: {
     variant?: string;
     background?: {
-      tone?: string | null; // Options: none, soft-slate
+      tone?: string | null; // Options: none, gradient
+      color?: string | null;
     };
     animation?: boolean | null;
     videoUrl?: string | null;
@@ -83,7 +86,8 @@ export type HomeContent = {
   testimonials?: {
     variant?: string;
     background?: {
-      tone?: string | null; // Options: none, soft-slate
+      tone?: string | null; // Options: none, gradient
+      color?: string | null;
     };
     animation?: boolean | null;
     eyebrow?: string | null;
@@ -93,8 +97,10 @@ export type HomeContent = {
   booking?: {
     variant?: string;
     background?: {
-      tone?: string | null; // Options: none, soft-slate
+      tone?: string | null; // Options: none, gradient
+      color?: string | null;
     };
+    animation?: boolean | null;
     heading?: string | null;
     description?: string | null;
   };
@@ -128,7 +134,8 @@ export type AboutContent = {
   hero?: {
     variant?: string;
     background?: {
-      tone?: string | null; // Options: none, soft-slate
+      tone?: string | null; // Options: none, gradient
+      color?: string | null; // Optional CSS color used when tone is "gradient"
     };
     animation?: boolean | null;
     title?: string;
@@ -146,8 +153,10 @@ export type AboutContent = {
   values?: {
     variant?: string;
     background?: {
-      tone?: string | null; // Options: none, soft-slate
+      tone?: string | null; // Options: none, gradient
+      color?: string | null;
     };
+    animation?: boolean | null;
     eyebrow?: string | null;
     title?: string | null;
     intro?: string | null;
@@ -161,7 +170,8 @@ export type AboutContent = {
   process?: {
     variant?: string;
     background?: {
-      tone?: string | null; // Options: none, soft-slate
+      tone?: string | null; // Options: none, gradient
+      color?: string | null;
     };
     animation?: boolean | null;
     eyebrow?: string | null;
@@ -175,7 +185,8 @@ export type AboutContent = {
   timeline?: {
     variant?: string;
     background?: {
-      tone?: string | null; // Options: none, soft-slate
+      tone?: string | null; // Options: none, gradient
+      color?: string | null;
     };
     animation?: boolean | null;
     eyebrow?: string | null;
@@ -188,10 +199,35 @@ export type AboutContent = {
       image?: string;
     }>;
   };
+  community?: {
+    variant?: string;
+    background?: {
+      tone?: string | null; // Options: none, gradient
+      color?: string | null;
+    };
+    animation?: boolean | null;
+    eyebrow?: string | null;
+    title?: string | null;
+    intro?: string | null;
+    supporting?: string | null;
+    stats?: Array<{
+      label?: string;
+      value?: string;
+    }>;
+    items?: Array<{
+      title?: string;
+      description?: string;
+      icon?: string;
+      highlight?: string;
+      ctaLabel?: string;
+      details?: string;
+    }>;
+  };
   founders?: {
     variant?: string;
     background?: {
-      tone?: string | null; // Options: none, soft-slate
+      tone?: string | null; // Options: none, gradient
+      color?: string | null;
     };
     eyebrow?: string | null;
     title?: string | null;
@@ -209,7 +245,8 @@ export type AboutContent = {
   team?: {
     variant?: string;
     background?: {
-      tone?: string | null; // Options: none, soft-slate
+      tone?: string | null; // Options: none, gradient
+      color?: string | null;
     };
     eyebrow?: string | null;
     title?: string | null;

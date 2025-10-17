@@ -13,6 +13,8 @@ interface Props {
   eyebrow?: string;
   members: Member[];
   backgroundClass?: string;
+  backgroundTone?: string;
+  backgroundStyle?: string;
 }
 
 const {
@@ -21,13 +23,20 @@ const {
   eyebrow,
   members,
   backgroundClass,
+  backgroundTone,
+  backgroundStyle,
 }: Props = Astro.props as Props;
 
 const teamMembers = Array.isArray(members) ? members.filter(Boolean) : [];
 
 const sectionClasses = ['section-shell', backgroundClass ?? ''].filter(Boolean).join(' ');
 ---
-<section class={sectionClasses} data-team-carousel>
+<section
+  class={sectionClasses}
+  data-background-tone={backgroundTone ?? undefined}
+  style={backgroundStyle}
+  data-team-carousel
+>
   <div class="section-container">
     <div class="section-intro max-w-3xl">
       {eyebrow && <p class="section-eyebrow">{eyebrow}</p>}
@@ -232,6 +241,8 @@ const sectionClasses = ['section-shell', backgroundClass ?? ''].filter(Boolean).
     margin-top: 2rem;
     overflow: hidden;
     position: relative;
+    --team-carousel-fade-edge: var(--section-background-edge, rgba(248, 250, 252, 1));
+    --team-carousel-fade-top: var(--section-background-top, rgba(248, 250, 252, 1));
   }
 
   .team-carousel-card {
@@ -240,8 +251,8 @@ const sectionClasses = ['section-shell', backgroundClass ?? ''].filter(Boolean).
     min-height: 21rem;
     border: none;
     box-shadow:
-      0 20px 45px -28px rgba(15, 23, 42, 0.28),
-      0 8px 25px -30px rgba(15, 23, 42, 0.18);
+      0 18px 38px -30px rgba(15, 23, 42, 0.22),
+      0 10px 28px -32px rgba(15, 23, 42, 0.14);
   }
 
   .team-carousel-viewport::before {
@@ -250,12 +261,14 @@ const sectionClasses = ['section-shell', backgroundClass ?? ''].filter(Boolean).
     inset: 0;
     pointer-events: none;
     z-index: 2;
+    opacity: 0.85;
     background-image:
-      linear-gradient(to right, rgba(248, 250, 252, 1) 0%, rgba(248, 250, 252, 0) 80%),
-      linear-gradient(to left, rgba(248, 250, 252, 1) 0%, rgba(248, 250, 252, 0) 80%),
-      linear-gradient(to top, rgba(248, 250, 252, 1) 0%, rgba(248, 250, 252, 0) 65%);
-    background-size: 5rem 100%, 5rem 100%, 100% 3.5rem;
+      radial-gradient(130% 180% at 0% 50%, color-mix(in srgb, var(--team-carousel-fade-edge) 65%, rgba(248, 250, 252, 0) 35%), rgba(248, 250, 252, 0) 70%),
+      radial-gradient(130% 180% at 100% 50%, color-mix(in srgb, var(--team-carousel-fade-edge) 65%, rgba(248, 250, 252, 0) 35%), rgba(248, 250, 252, 0) 70%),
+      radial-gradient(160% 90% at 50% 0%, color-mix(in srgb, var(--team-carousel-fade-top) 60%, rgba(248, 250, 252, 0) 40%), rgba(248, 250, 252, 0) 82%);
+    background-size: 30% 100%, 30% 100%, 100% 120%;
     background-repeat: no-repeat;
-    background-position: left top, right top, center bottom;
+    background-position: left center, right center, center -20%;
+    filter: blur(6px);
   }
 </style>

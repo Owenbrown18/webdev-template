@@ -13,6 +13,8 @@ interface Props {
   milestones: Milestone[];
   backgroundClass?: string;
   animationEnabled?: boolean;
+  backgroundTone?: string;
+  backgroundStyle?: string;
 }
 
 const {
@@ -22,6 +24,8 @@ const {
   milestones,
   backgroundClass,
   animationEnabled = true,
+  backgroundTone,
+  backgroundStyle,
 }: Props = Astro.props as Props;
 
 const sectionClasses = [
@@ -44,7 +48,12 @@ const cardClasses = [
   .filter(Boolean)
   .join(' ');
 ---
-<section class={sectionClasses} data-timeline-root>
+<section
+  class={sectionClasses}
+  data-background-tone={backgroundTone ?? undefined}
+  style={backgroundStyle}
+  data-timeline-root
+>
   <div class="section-container space-y-12">
     <div class="section-intro max-w-3xl text-center">
       {eyebrow && <p class="section-eyebrow">{eyebrow}</p>}
@@ -57,7 +66,7 @@ const cardClasses = [
         {milestones.map(({ year, title, description, image }, index) => (
           <div class="grid gap-6 lg:grid-cols-[minmax(0,320px)_minmax(0,1fr)] lg:items-start">
             <div class="relative pl-8 text-sm text-slate-600">
-              <span class="absolute -left-[2.05rem] top-1 flex h-5 w-5 items-center justify-center rounded-full border-2 border-brand-primary bg-white shadow-[0_0_0_6px_rgba(var(--color-primary-rgb),0.08)]">
+              <span class="absolute -left-[2.05rem] top-1 flex h-5 w-5 items-center justify-center rounded-full border-2 border-brand-primary bg-white shadow-[0_0_0_6px_rgb(var(--color-primary-rgb)_/_0.08)]">
                 <span class="h-2 w-2 rounded-full bg-brand-primary"></span>
               </span>
               <p class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">{year ?? `Step ${index + 1}`}</p>

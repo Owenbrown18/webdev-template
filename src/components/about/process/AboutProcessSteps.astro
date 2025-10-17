@@ -11,6 +11,8 @@ interface Props {
   steps: StepItem[];
   backgroundClass?: string;
   animationEnabled?: boolean;
+  backgroundTone?: string;
+  backgroundStyle?: string;
 }
 
 const {
@@ -20,6 +22,8 @@ const {
   steps,
   backgroundClass,
   animationEnabled = true,
+  backgroundTone,
+  backgroundStyle,
 }: Props = Astro.props as Props;
 
 const sectionClasses = [backgroundClass, 'section-shell'].filter(Boolean).join(' ');
@@ -34,7 +38,12 @@ const cardClasses = [
   .filter(Boolean)
   .join(' ');
 ---
-<section class={sectionClasses} data-process-root>
+<section
+  class={sectionClasses}
+  data-background-tone={backgroundTone ?? undefined}
+  style={backgroundStyle}
+  data-process-root
+>
   <div class="section-container max-w-4xl">
     <div class="section-intro">
       {eyebrow && <p class="section-eyebrow">{eyebrow}</p>}

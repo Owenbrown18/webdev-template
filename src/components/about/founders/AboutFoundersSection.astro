@@ -4,7 +4,13 @@ import {
   getAboutFoundersVariant,
   getAboutFoundersBackgroundTone,
 } from '../../../config/content';
-import { normalizeBackgroundTone, sectionBackgroundClass } from '../../../utils/background';
+import {
+  normalizeBackgroundTone,
+  normalizeBackgroundColor,
+  sectionBackgroundClass,
+  sectionBackgroundToneAttr,
+  createBackgroundStyle,
+} from '../../../utils/background';
 import AboutFoundersSpotlight from './AboutFoundersSpotlight.astro';
 
 const variants: Record<string, any> = {
@@ -29,6 +35,9 @@ const profiles = Array.isArray(rawProfiles) ? rawProfiles.filter(Boolean) : [];
 const fallbackTone = getAboutFoundersBackgroundTone();
 const backgroundTone = normalizeBackgroundTone(props.backgroundTone ?? base.background?.tone ?? fallbackTone);
 const backgroundClass = sectionBackgroundClass(backgroundTone);
+const backgroundToneAttr = sectionBackgroundToneAttr(backgroundTone);
+const backgroundColor = normalizeBackgroundColor(props.backgroundColor ?? base.background?.color);
+const backgroundStyle = createBackgroundStyle(backgroundColor);
 ---
 {Component && profiles.length > 0 ? (
   <Component
@@ -38,5 +47,7 @@ const backgroundClass = sectionBackgroundClass(backgroundTone);
     supporting={supporting ?? undefined}
     profiles={profiles}
     backgroundClass={backgroundClass}
+    backgroundTone={backgroundToneAttr}
+    backgroundStyle={backgroundStyle}
   />
 ) : null}

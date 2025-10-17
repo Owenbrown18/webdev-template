@@ -11,9 +11,11 @@ const {
   stats = [],
 } = hero;
 
-const { backgroundClass, animationEnabled = true } = Astro.props as {
+const { backgroundClass, backgroundTone, backgroundStyle, animationEnabled = true } = Astro.props as {
   backgroundClass?: string;
   animationEnabled?: boolean;
+  backgroundTone?: string;
+  backgroundStyle?: string;
 };
 
 const shouldAnimate = animationEnabled !== false;
@@ -37,6 +39,8 @@ const imageClasses = [
 ---
 <section
   class={sectionClasses}
+  data-background-tone={backgroundTone ?? undefined}
+  style={backgroundStyle}
   data-hero-root
   data-animate={shouldAnimate ? 'true' : undefined}
 >

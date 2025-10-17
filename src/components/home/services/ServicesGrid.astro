@@ -6,6 +6,8 @@ interface Props {
   title?: string;
   intro?: string;
   backgroundClass?: string;
+  backgroundTone?: string;
+  backgroundStyle?: string;
 }
 
 const {
@@ -13,12 +15,19 @@ const {
   title = 'Our Services',
   intro = 'Support tailored to your needs.',
   backgroundClass,
+  backgroundTone,
+  backgroundStyle,
 }: Props = Astro.props as Props;
 
 const items = Array.isArray(services.items) ? services.items : [];
 const sectionClasses = [backgroundClass, 'section-shell'].filter(Boolean).join(' ');
 ---
-<section id="services" class={sectionClasses}>
+<section
+  id="services"
+  class={sectionClasses}
+  data-background-tone={backgroundTone ?? undefined}
+  style={backgroundStyle}
+>
   <div class="section-container max-w-5xl">
     <div class="section-intro max-w-2xl">
       <h2 class="section-heading">{title}</h2>

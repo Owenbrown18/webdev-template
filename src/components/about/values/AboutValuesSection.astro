@@ -3,8 +3,15 @@ import {
   about,
   getAboutValuesVariant,
   getAboutValuesBackgroundTone,
+  isAboutValuesAnimationEnabled,
 } from '../../../config/content';
-import { normalizeBackgroundTone, sectionBackgroundClass } from '../../../utils/background';
+import {
+  normalizeBackgroundTone,
+  normalizeBackgroundColor,
+  sectionBackgroundClass,
+  sectionBackgroundToneAttr,
+  createBackgroundStyle,
+} from '../../../utils/background';
 import AboutValuesGrid from './AboutValuesGrid.astro';
 import AboutValuesList from './AboutValuesList.astro';
 
@@ -16,7 +23,7 @@ const variants: Record<string, any> = {
 const variantKey = getAboutValuesVariant();
 const Component = variantKey === 'none' ? null : variants[variantKey] ?? variants.grid;
 
-const props = Astro.props ?? {};
+const props = (Astro.props ?? {}) as Record<string, any>;
 
 const base = about.values ?? {};
 const title = props.title ?? base.title ?? 'Guided by service-first values';
@@ -26,8 +33,15 @@ const supporting = props.supporting ?? base.supporting;
 const rawItems = Array.isArray(props.items) ? props.items : base.items;
 const items = Array.isArray(rawItems) ? rawItems.filter(Boolean) : [];
 const fallbackTone = getAboutValuesBackgroundTone();
-const backgroundTone = normalizeBackgroundTone(props.backgroundTone ?? base.background?.tone ?? fallbackTone);
+const backgroundTone = normalizeBackgroundTone(
+  props.backgroundTone ?? base.background?.tone ?? fallbackTone,
+);
 const backgroundClass = sectionBackgroundClass(backgroundTone);
+const backgroundToneAttr = sectionBackgroundToneAttr(backgroundTone);
+const backgroundColor = normalizeBackgroundColor(props.backgroundColor ?? base.background?.color);
+const backgroundStyle = createBackgroundStyle(backgroundColor);
+const animationOverride = props.animation;
+const animationEnabled = animationOverride !== undefined ? animationOverride !== false : isAboutValuesAnimationEnabled();
 ---
 {Component && items.length > 0 ? (
   <Component
@@ -37,5 +51,8 @@ const backgroundClass = sectionBackgroundClass(backgroundTone);
     supporting={supporting ?? undefined}
     items={items}
     backgroundClass={backgroundClass}
+    backgroundTone={backgroundToneAttr}
+    backgroundStyle={backgroundStyle}
+    animationEnabled={animationEnabled}
   />
 ) : null}

@@ -8,6 +8,7 @@ html {
 
 body {
   min-height: 100vh;
+  overflow-x: hidden;
 }
 
 @layer base {
@@ -64,53 +65,42 @@ body {
 
   .section-background {
     @apply full-bleed;
+    position: relative;
     isolation: isolate;
     overflow: hidden;
-    position: relative;
-  }
-
-  .section-background::before,
-  .section-background::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    right: 0;
-    height: 1px;
-    background-image: linear-gradient(to right, transparent, rgba(148, 163, 184, 0.45), transparent);
-    pointer-events: none;
-    z-index: 1;
+    --section-background-source: var(--section-background-custom, #dbe4f3);
+    --section-background-base-color: color-mix(in srgb, var(--section-background-source) 55%, rgba(255, 255, 255, 0));
+    --section-background-highlight-color: color-mix(in srgb, var(--section-background-source) 40%, rgba(255, 255, 255, 0));
+    --section-background-edge: color-mix(in srgb, var(--section-background-source) 65%, #ffffff 35%);
+    --section-background-top: color-mix(in srgb, var(--section-background-source) 55%, #ffffff 45%);
+    background-color: rgba(248, 250, 252, 0.6);
   }
 
   .section-background::before {
-    top: 0;
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background:
+      radial-gradient(135% 120% at 50% 18%, color-mix(in srgb, var(--section-background-base-color) 75%, transparent), transparent 78%),
+      radial-gradient(160% 140% at 50% 82%, color-mix(in srgb, var(--section-background-highlight-color) 55%, transparent), transparent 84%),
+      radial-gradient(120% 140% at 12% 52%, color-mix(in srgb, var(--section-background-base-color) 35%, transparent), transparent 80%);
+    opacity: 0.85;
+    pointer-events: none;
   }
 
   .section-background::after {
-    bottom: 0;
-  }
-
-  .section-background-soft-slate + .section-background-soft-slate::before {
-    opacity: 0;
-  }
-
-  .section-background-soft-slate {
-    background: radial-gradient(
-        120% 120% at 50% 18%,
-        rgba(148, 163, 184, 0.12),
-        rgba(148, 163, 184, 0.05) 40%,
-        rgba(248, 250, 252, 0) 75%
-      ),
-      radial-gradient(
-        120% 120% at 50% 102%,
-        rgba(148, 163, 184, 0.08),
-        rgba(248, 250, 252, 0) 65%
-      ),
-      linear-gradient(
-        180deg,
-        rgba(226, 232, 240, 0.14) 0%,
-        rgba(241, 245, 249, 0.05) 38%,
-        rgba(255, 255, 255, 0) 82%
-      );
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-image:
+      linear-gradient(to right, transparent, rgba(148, 163, 184, 0.25), transparent),
+      linear-gradient(to right, transparent, rgba(148, 163, 184, 0.18), transparent);
+    background-repeat: no-repeat;
+    background-position: top, bottom;
+    background-size: 100% 1px, 100% 1px;
+    z-index: 2;
   }
 
   .min-h-hero {
@@ -141,5 +131,21 @@ body {
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
+  }
+
+  .section-background > .section-container {
+    position: relative;
+    z-index: 3;
+  }
+
+  [data-hero-root] > [data-hero-image] {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  [data-hero-root] > .section-container {
+    position: relative;
+    z-index: 3;
   }
 }

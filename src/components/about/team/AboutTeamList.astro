@@ -13,6 +13,8 @@ interface Props {
   eyebrow?: string;
   members: Member[];
   backgroundClass?: string;
+  backgroundTone?: string;
+  backgroundStyle?: string;
 }
 
 const {
@@ -21,6 +23,8 @@ const {
   eyebrow,
   members,
   backgroundClass,
+  backgroundTone,
+  backgroundStyle,
 }: Props = Astro.props as Props;
 
 const sectionClasses = [
@@ -36,7 +40,11 @@ const sectionClasses = [
   .filter(Boolean)
   .join(' ');
 ---
-<section class={sectionClasses}>
+<section
+  class={sectionClasses}
+  data-background-tone={backgroundTone ?? undefined}
+  style={backgroundStyle}
+>
   <div class="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(255,255,255,0.14),_rgba(15,23,42,0.92))]" aria-hidden="true"></div>
   <div class="section-container relative max-w-5xl space-y-12">
     <div class="mx-auto max-w-3xl space-y-4 text-center">

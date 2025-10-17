@@ -101,6 +101,12 @@ export const getAboutTimelineVariant = () => {
   return raw === 'none' ? 'none' : raw;
 };
 
+/** Returns the about community layout key, defaulting to "cards". */
+export const getAboutCommunityVariant = () => {
+  const raw = about.community?.variant?.trim?.().toLowerCase?.() || 'cards';
+  return raw === 'none' ? 'none' : raw;
+};
+
 /** Returns the about founders layout key, defaulting to "spotlight". */
 export const getAboutFoundersVariant = () => {
   const raw = about.founders?.variant?.trim?.().toLowerCase?.() || 'spotlight';
@@ -121,14 +127,18 @@ export const getBookingBackgroundTone = () => getBackgroundTone(home.booking?.ba
 export const isHeroAnimationEnabled = () => isAnimationEnabled(home.hero?.animation);
 export const isVideoAnimationEnabled = () => isAnimationEnabled(home.video?.animation);
 export const isTestimonialsAnimationEnabled = () => isAnimationEnabled(home.testimonials?.animation);
+export const isBookingAnimationEnabled = () => isAnimationEnabled(home.booking?.animation);
 
 export const getAboutHeroBackgroundTone = () => getBackgroundTone(about.hero?.background?.tone);
 export const getAboutValuesBackgroundTone = () => getBackgroundTone(about.values?.background?.tone);
+export const isAboutValuesAnimationEnabled = () => isAnimationEnabled(about.values?.animation);
 export const getAboutProcessBackgroundTone = () => getBackgroundTone(about.process?.background?.tone);
 export const getAboutTimelineBackgroundTone = () => getBackgroundTone(about.timeline?.background?.tone);
+export const getAboutCommunityBackgroundTone = () => getBackgroundTone(about.community?.background?.tone);
 export const getAboutFoundersBackgroundTone = () => getBackgroundTone(about.founders?.background?.tone);
 export const getAboutTeamBackgroundTone = () => getBackgroundTone(about.team?.background?.tone);
 export const isAboutHeroAnimationEnabled = () => isAnimationEnabled(about.hero?.animation);
 export const isAboutProcessAnimationEnabled = () => isAnimationEnabled(about.process?.animation);
 export const isAboutTimelineAnimationEnabled = () => isAnimationEnabled(about.timeline?.animation);
+export const isAboutCommunityAnimationEnabled = () => isAnimationEnabled(about.community?.animation);
 export const isServicesAnimationEnabled = () => isAnimationEnabled(home.services?.animation);

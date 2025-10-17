@@ -1,11 +1,18 @@
 ---
 import {
   site,
+  about,
   getAboutHeroVariant,
   getAboutHeroBackgroundTone,
   isAboutHeroAnimationEnabled,
 } from '../../../config/content';
-import { normalizeBackgroundTone, sectionBackgroundClass } from '../../../utils/background';
+import {
+  normalizeBackgroundTone,
+  normalizeBackgroundColor,
+  sectionBackgroundClass,
+  sectionBackgroundToneAttr,
+  createBackgroundStyle,
+} from '../../../utils/background';
 import AboutHeroClassic from './AboutHeroClassic.astro';
 import AboutHeroShowcase from './AboutHeroShowcase.astro';
 
@@ -18,15 +25,21 @@ const variantKey = getAboutHeroVariant();
 const Component = variantKey === 'none' ? null : variants[variantKey] ?? variants.classic;
 const rawProps = (Astro.props ?? {}) as Record<string, any>;
 const overrideTone = rawProps.backgroundTone;
+const overrideColor = rawProps.backgroundColor;
 const overrideClass = rawProps.backgroundClass;
 const restProps = { ...rawProps };
 const animationOverride = rawProps.animation as boolean | undefined;
 delete restProps.backgroundTone;
+delete restProps.backgroundColor;
 delete restProps.backgroundClass;
 delete restProps.animation;
 const fallbackTone = getAboutHeroBackgroundTone();
 const backgroundTone = normalizeBackgroundTone(overrideTone ?? fallbackTone);
 const backgroundClass = overrideClass ?? sectionBackgroundClass(backgroundTone);
+const backgroundToneAttr = sectionBackgroundToneAttr(backgroundTone);
+const heroContent = about.hero ?? {};
+const backgroundColor = normalizeBackgroundColor(overrideColor ?? heroContent.background?.color);
+const backgroundStyle = createBackgroundStyle(backgroundColor);
 const animationEnabled =
   animationOverride !== undefined ? animationOverride : isAboutHeroAnimationEnabled();
 ---
@@ -34,6 +47,8 @@ const animationEnabled =
   <Component
     site={site}
     backgroundClass={backgroundClass}
+    backgroundTone={backgroundToneAttr}
+    backgroundStyle={backgroundStyle}
     animationEnabled={animationEnabled !== false}
     {...restProps}
   />

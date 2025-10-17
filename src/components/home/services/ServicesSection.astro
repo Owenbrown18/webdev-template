@@ -7,7 +7,13 @@ import {
   getServicesBackgroundTone,
   isServicesAnimationEnabled,
 } from '../../../config/content';
-import { normalizeBackgroundTone, sectionBackgroundClass } from '../../../utils/background';
+import {
+  normalizeBackgroundTone,
+  normalizeBackgroundColor,
+  sectionBackgroundClass,
+  sectionBackgroundToneAttr,
+  createBackgroundStyle,
+} from '../../../utils/background';
 import ServicesGrid from './ServicesGrid.astro';
 import ServicesList from './ServicesList.astro';
 
@@ -25,6 +31,7 @@ const eyebrow = settings.eyebrow ?? 'What we do';
 const props = (Astro.props ?? {}) as Record<string, any>;
 const {
   backgroundTone: overrideTone,
+  backgroundColor: overrideColor,
   backgroundClass: overrideClass,
   animation: animationOverride,
   ...restProps
@@ -32,6 +39,9 @@ const {
 const fallbackTone = getServicesBackgroundTone();
 const backgroundTone = normalizeBackgroundTone(overrideTone ?? settings.background?.tone ?? fallbackTone);
 const backgroundClass = overrideClass ?? sectionBackgroundClass(backgroundTone);
+const backgroundToneAttr = sectionBackgroundToneAttr(backgroundTone);
+const backgroundColor = normalizeBackgroundColor(overrideColor ?? settings.background?.color);
+const backgroundStyle = createBackgroundStyle(backgroundColor);
 const animationSetting = animationOverride ?? settings.animation;
 const animationEnabled = animationSetting ?? isServicesAnimationEnabled();
 const componentProps =
@@ -48,6 +58,8 @@ const componentProps =
     intro={intro}
     eyebrow={eyebrow}
     backgroundClass={backgroundClass}
+    backgroundTone={backgroundToneAttr}
+    backgroundStyle={backgroundStyle}
     {...componentProps}
     {...restProps}
   />

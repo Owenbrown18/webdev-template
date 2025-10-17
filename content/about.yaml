@@ -1,7 +1,8 @@
 hero:
   variant: "showcase" # Options: classic, showcase, none
   background:
-    tone: "soft-slate" # Options: none, soft-slate
+    tone: "gradient" # Options: none, gradient
+    color: null # Optional CSS color to override the gradient palette
   animation: true # Toggle hero animation on/off
   title: "Built by neighbors, for neighbors"
   subtitle: "We started as a two-person crew with a shared belief: every project deserves personal care and reliable craftsmanship."
@@ -18,13 +19,15 @@ hero:
     - label: "Average rating"
       value: "4.9/5"
 values:
-  variant: "list" # Options: grid, list, none
+  variant: "grid" # Options: grid, list, none
   background:
-    tone: "none" # Options: none, soft-slate
+    tone: "none" # Options: none, gradient
+    color: null
+  animation: true # Toggle values animation on/off
   eyebrow: "Our values"
   title: "Values that guide every project"
   intro: "Our team brings the same dependable care to every job, whether it's a quick tune-up or a full-scale renovation."
-  supporting: "asdasd test test promise we make to clients ties back to these principles. They guide hiring, training, and how we show up in you asdsdad"
+  supporting: ""
   items:
     - title: "Hands-on partnership"
       description: "We collaborate with homeowners at each milestone so there are no surprises, just steady progress."
@@ -38,7 +41,8 @@ values:
 process:
   variant: "steps" # Options: steps, none
   background:
-    tone: "soft-slate" # Options: none, soft-slate
+    tone: "gradient" # Options: none, gradient
+    color: "#0002"
   animation: true # Toggle reveal animation on/off
   eyebrow: "How we work"
   title: "A clear path from hello to handoff"
@@ -57,7 +61,8 @@ process:
 timeline:
   variant: "steps" # Options: steps, vertical, none
   background:
-    tone: "none" # Options: none, soft-slate
+    tone: "none" # Options: none, gradient
+    color: null
   animation: true # Toggle reveal animation on/off
   eyebrow: "Our journey"
   title: "From a two-person crew to a trusted local team"
@@ -79,10 +84,62 @@ timeline:
       title: "Community giveback milestone"
       description: "Launched an annual volunteer week supporting local nonprofits with repairs, upgrades, and maintenance."
       image: null
+community:
+  variant: "cards" # Options: cards, none
+  background:
+    tone: "gradient" # Options: none, gradient
+    color: "#0002"
+  animation: true # Toggle reveal animation on/off
+  eyebrow: "Community impact"
+  title: "Investing time and skill back into Hometown"
+  intro: "We partner with local nonprofits and trade programs to keep essential spaces safe, accessible, and welcoming."
+  supporting: "Every initiative is staffed by volunteers from our crew and apprentices from regional trade schools."
+  stats:
+    - label: "Volunteer hours donated"
+      value: "750+"
+    - label: "Spaces restored"
+      value: "32"
+    - label: "Youth apprentices mentored"
+      value: "18"
+  items:
+    - title: "Neighborhood Fix-It Week"
+      description: "Annual volunteer blitz supporting seniors and community centers with repairs, weatherproofing, and safety upgrades."
+      icon: "NF"
+      highlight: "Since 2017"
+      ctaLabel: "See more"
+      details: |
+        Our crew dedicates a full week every spring to tackling accessibility upgrades, weatherproofing, and critical repairs for neighbors who need a hand.
+
+        Partner organizations nominate the homes and facilities, and we supply tools, materials, and licensed supervision so every upgrade passes inspection.
+
+        Volunteers join in daily shifts, receive safety briefings, and leave with a checklist for ongoing maintenance the residents can manage.
+    - title: "Skilled Trades Mentorship"
+      description: "Hands-on training for local students including jobsite shadowing, tool stipends, and pathways into licensed apprenticeships."
+      icon: "TM"
+      highlight: "Quarterly cohorts"
+      ctaLabel: "See more"
+      details: |
+        We partner with the regional trade school to pair mentors from our crew with juniors and seniors exploring construction careers.
+
+        Each cohort includes four on-site shadow days, two deep-dive workshops in our fabrication shop, and stipends that cover starter tools.
+
+        Graduates receive references, OSHA-10 certification support, and introductions to apprenticeship sponsors across multiple trades.
+    - title: "Community Project Fund"
+      description: "A rotating micro-grant that covers materials for urgent repairs nominated by neighborhood organizations."
+      icon: "PF"
+      highlight: "$10K annual fund"
+      ctaLabel: "See more"
+      details: |
+        The fund accepts quarterly nominations from civic groups, schools, and nonprofits that need help funding a targeted scope of repair work.
+
+        We prioritize safety upgrades and accessibility improvements, sourcing materials at cost and coordinating volunteer labor whenever possible.
+
+        Awarded projects are completed within 60 days, with transparent receipts and a wrap-up report shared with the sponsoring organization.
 founders:
   variant: "spotlight" # Options: spotlight, none
   background:
-    tone: "soft-slate" # Options: none, soft-slate
+    tone: "none" # Options: none, gradient
+    color: null
   eyebrow: "Founders spotlight"
   title: "Neighbors who started it all"
   intro: "Two lifelong locals who turned weekend repair calls into a trusted, full-service renovation crew."
@@ -107,7 +164,8 @@ founders:
 team:
   variant: "carousel" # Options: grid, list, carousel, none
   background:
-    tone: "none" # Options: none, soft-slate
+    tone: "gradient" # Options: none, gradient
+    color: "#0002"
   eyebrow: "The team"
   title: "Neighbors who bring the plan to life"
   intro: "Our crew blends licensed expertise with friendly, boots-on-the-ground service that keeps every project moving."

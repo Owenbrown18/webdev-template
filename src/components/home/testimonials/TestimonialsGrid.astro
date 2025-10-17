@@ -8,6 +8,9 @@ interface Props {
   intro?: string;
   eyebrow?: string;
   backgroundClass?: string;
+  animationEnabled?: boolean;
+  backgroundTone?: string;
+  backgroundStyle?: string;
 }
 
 const {
@@ -18,6 +21,8 @@ const {
   eyebrow = 'Testimonials',
   backgroundClass,
   animationEnabled = true,
+  backgroundTone,
+  backgroundStyle,
 }: Props = Astro.props as Props;
 const sectionClasses = [backgroundClass, 'section-shell'].filter(Boolean).join(' ');
 const shouldAnimate = animationEnabled !== false;
@@ -32,6 +37,8 @@ const cardBaseClasses = [
 ---
 <section
   class={sectionClasses}
+  data-background-tone={backgroundTone ?? undefined}
+  style={backgroundStyle}
   data-testimonials-root={shouldAnimate ? '' : undefined}
 >
   <div class="section-container max-w-5xl">

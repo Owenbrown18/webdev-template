@@ -14,6 +14,8 @@ interface Props {
   intro?: string;
   backgroundClass?: string;
   animationEnabled?: boolean;
+  backgroundTone?: string;
+  backgroundStyle?: string;
 }
 
 const {
@@ -24,6 +26,8 @@ const {
   intro = '',
   backgroundClass,
   animationEnabled = true,
+  backgroundTone,
+  backgroundStyle,
 }: Props = Astro.props as Props;
 const videoUrl = video.videoUrl ?? '';
 const localVideo = video.localVideo ?? '';
@@ -46,6 +50,8 @@ const figureClasses = [
 {shouldRender && (
   <section
     class={sectionClasses}
+    data-background-tone={backgroundTone ?? undefined}
+    style={backgroundStyle}
     data-video-root={shouldAnimate ? '' : undefined}
   >
     <div class="section-container max-w-5xl">

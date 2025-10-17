@@ -17,9 +17,11 @@ const details = [
   founded && { label: 'Founded', value: founded },
 ].filter(Boolean) as Array<{ label: string; value: string }>;
 
-const { backgroundClass, animationEnabled = true } = Astro.props as {
+const { backgroundClass, backgroundTone, backgroundStyle, animationEnabled = true } = Astro.props as {
   backgroundClass?: string;
+  backgroundTone?: string;
   animationEnabled?: boolean;
+  backgroundStyle?: string;
 };
 
 const shouldAnimate = animationEnabled !== false;
@@ -56,6 +58,8 @@ const imageWrapperClasses = [
 ---
 <section
   class={sectionClasses}
+  data-background-tone={backgroundTone ?? undefined}
+  style={backgroundStyle}
   data-hero-root
   data-animate={shouldAnimate ? 'true' : undefined}
 >

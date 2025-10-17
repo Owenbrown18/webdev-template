@@ -6,6 +6,9 @@ interface Props {
   heading?: string;
   description?: string;
   backgroundClass?: string;
+  animationEnabled?: boolean;
+  backgroundTone?: string;
+  backgroundStyle?: string;
 }
 
 const {
@@ -13,14 +16,32 @@ const {
   heading = 'Book an Appointment',
   description = 'Reserve a time that works best for you.',
   backgroundClass,
+  animationEnabled = true,
+  backgroundTone,
+  backgroundStyle,
 }: Props = Astro.props as Props;
 
 const embedUrl = site.booking?.embedUrl;
 const provider = site.booking?.provider;
 const sectionClasses = [backgroundClass, 'section-shell'].filter(Boolean).join(' ');
+const shouldAnimate = animationEnabled !== false;
+const frameWrapperClasses = [
+  'mt-10 surface-card overflow-hidden',
+  shouldAnimate
+    ? 'motion-safe:opacity-0 motion-safe:translate-y-6 motion-safe:transition-all motion-safe:duration-[1600ms] motion-safe:ease-out data-[visible=true]:motion-safe:opacity-100 data-[visible=true]:motion-safe:translate-y-0'
+    : '',
+]
+  .filter(Boolean)
+  .join(' ');
 ---
 {embedUrl && (
-  <section id="booking" class={sectionClasses}>
+  <section
+    id="booking"
+    class={sectionClasses}
+    data-background-tone={backgroundTone ?? undefined}
+    style={backgroundStyle}
+    data-booking-root={shouldAnimate ? '' : undefined}
+  >
     <div class="section-container max-w-5xl">
       <div class="section-intro max-w-2xl">
         <h2 class="section-heading">{heading}</h2>
@@ -29,7 +50,7 @@ const sectionClasses = [backgroundClass, 'section-shell'].filter(Boolean).join('
           {provider && ` — powered by ${provider}`}
         </p>
       </div>
-      <div class="mt-10 surface-card overflow-hidden">
+      <div class={frameWrapperClasses} data-booking-card>
         <iframe
           src={embedUrl}
           title={`Booking with ${site.name}`}
@@ -40,5 +61,59 @@ const sectionClasses = [backgroundClass, 'section-shell'].filter(Boolean).join('
         ></iframe>
       </div>
     </div>
+    {shouldAnimate ? (
+      <script>
+        const roots = Array.from(document.querySelectorAll('[data-booking-root]'));
+        const supportMatchMedia = typeof window !== 'undefined' && typeof window.matchMedia === 'function';
+        const prefersReducedMotion = supportMatchMedia
+          ? window.matchMedia('(prefers-reduced-motion: reduce)').matches
+          : false;
+        const reveal = (el: Element | null) => {
+          if (el instanceof HTMLElement) {
+            el.dataset.visible = 'true';
+          }
+        };
+
+        roots.forEach((root) => {
+          if (!(root instanceof HTMLElement)) {
+            return;
+          }
+
+          if (root.dataset.bookingAnimated === 'true') {
+            return;
+          }
+
+          const cards = Array.from(root.querySelectorAll('[data-booking-card]'));
+          if (cards.length === 0) {
+            return;
+          }
+
+          root.dataset.bookingAnimated = 'true';
+
+          if (prefersReducedMotion || !('IntersectionObserver' in window)) {
+            cards.forEach((card) => reveal(card));
+            return;
+          }
+
+          const observer = new IntersectionObserver(
+            (entries, obs) => {
+              entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                  const element = entry.target;
+                  reveal(element);
+                  obs.unobserve(element);
+                }
+              });
+            },
+            {
+              rootMargin: '0px 0px -10% 0px',
+              threshold: 0.1,
+            },
+          );
+
+          cards.forEach((card) => observer.observe(card));
+        });
+      </script>
+    ) : null}
   </section>
 )}

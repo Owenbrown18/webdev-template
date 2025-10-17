@@ -1,7 +1,8 @@
 hero:
   variant: "classic" # Options: classic, split, none
   background:
-    tone: "soft-slate" # Options: none, soft-slate
+    tone: "gradient" # Options: none, gradient
+    color: null # Optional CSS color (hex, rgb, etc.)
   animation: true # Toggle hero animation on/off
   title: null
   subtitle: null
@@ -13,7 +14,8 @@ hero:
 services:
   variant: "list" # Options: grid, list, none
   background:
-    tone: "none" # Options: none, soft-slate
+    tone: "none" # Options: none, gradient
+    color: null
   animation: true # Toggle reveal animation on/off
   eyebrow: "What we do"
   title: "Our Services"
@@ -21,7 +23,8 @@ services:
 video:
   variant: "full" # Options: half, full, none
   background:
-    tone: "soft-slate" # Options: none, soft-slate
+    tone: "gradient" # Options: none, gradient
+    color: null
   animation: true # Toggle video animation on/off
   eyebrow: "See us in action"
   title: "A day on site with our crew"
@@ -33,7 +36,8 @@ video:
 testimonials:
   variant: "grid" # Options: grid, stack, none
   background:
-    tone: "none" # Options: none, soft-slate
+    tone: "none" # Options: none, gradient
+    color: null
   animation: true # Toggle testimonials animation on/off
   eyebrow: "What clients say"
   title: "Kind Words"
@@ -41,6 +45,8 @@ testimonials:
 booking:
   variant: "classic" # Options: classic, none
   background:
-    tone: "soft-slate" # Options: none, soft-slate
+    tone: "gradient" # Options: none, gradient
+    color: null
+  animation: true # Toggle booking animation on/off
   heading: "Book an Appointment"
   description: "Reserve a time that works best for you."

@@ -12,6 +12,9 @@ interface Props {
   supporting?: string;
   items?: ValueItem[];
   backgroundClass?: string;
+  animationEnabled?: boolean;
+  backgroundTone?: string;
+  backgroundStyle?: string;
 }
 
 const {
@@ -21,32 +24,149 @@ const {
   supporting = 'Every promise we make to clients ties back to these principles. They guide hiring, training, and how we show up in your home.',
   items = [],
   backgroundClass,
-} = Astro.props as Props;
+  animationEnabled = true,
+  backgroundTone,
+  backgroundStyle,
+}: Props = Astro.props as Props;
 
 const values = Array.isArray(items) ? items.filter(Boolean) : [];
 const sectionClasses = [backgroundClass, 'section-shell'].filter(Boolean).join(' ');
+const shouldAnimate = animationEnabled !== false;
+const entryClasses = [
+  'surface-card relative overflow-hidden p-6 transition-shadow duration-200 hover:shadow-card-hover',
+  shouldAnimate
+    ? 'motion-safe:opacity-0 motion-safe:-translate-y-3 motion-safe:transition-all motion-safe:duration-[1400ms] motion-safe:ease-out data-[visible=true]:motion-safe:opacity-100 data-[visible=true]:motion-safe:translate-y-0'
+    : '',
+]
+  .filter(Boolean)
+  .join(' ');
 ---
-<section class={sectionClasses}>
+<section
+  class={sectionClasses}
+  data-background-tone={backgroundTone ?? undefined}
+  style={backgroundStyle}
+  data-values-root={shouldAnimate ? '' : undefined}
+>
   <div class="section-container">
     <div class="section-intro max-w-3xl">
       {eyebrow && <p class="section-eyebrow">{eyebrow}</p>}
       <h2 class="section-heading">{title}</h2>
       {intro && <p class="section-subtitle">{intro}</p>}
-      {supporting && <p class="mt-6 text-sm text-slate-500 text-center">{supporting}</p>}
+      {supporting && <p class="mt-6 text-center text-sm text-slate-500">{supporting}</p>}
     </div>
     <dl class="relative mx-auto mt-12 max-w-4xl space-y-6 border-l border-slate-200 pl-10">
       <span class="pointer-events-none absolute inset-y-0 left-[-1px] hidden w-px bg-gradient-to-b from-slate-200 via-transparent to-transparent lg:block" aria-hidden="true"></span>
-      {values.map(({ title, description, icon }, index) => (
-        <div class="surface-card relative p-6 transition-shadow duration-200 hover:shadow-card-hover">
-          <dt class="flex items-center gap-4 text-base font-semibold tracking-tight text-slate-900">
-            <span class="relative flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-full bg-brand-primary/10 text-sm font-semibold uppercase tracking-[0.12em] text-brand-primary">
-              {icon ? icon : String(index + 1).padStart(2, '0')}
-            </span>
-            <span>{title}</span>
-          </dt>
-          <dd class="mt-3 text-sm leading-6 text-slate-600">{description}</dd>
-        </div>
-      ))}
+      {values.map(({ title, description, icon }, index) => {
+        const delayStyle = shouldAnimate ? `transition-delay: ${index * 120}ms;` : undefined;
+        return (
+          <div
+            data-values-card
+            class={entryClasses}
+            style={delayStyle}
+          >
+            <span class="values-highlight" aria-hidden="true"></span>
+            <dt class="flex items-center gap-4 text-base font-semibold tracking-tight text-slate-900">
+              <span class="relative flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-full bg-brand-primary/10 text-sm font-semibold uppercase tracking-[0.12em] text-brand-primary">
+                {icon ? icon : String(index + 1).padStart(2, '0')}
+              </span>
+              <span>{title}</span>
+            </dt>
+            <dd class="mt-3 text-sm leading-6 text-slate-600">{description}</dd>
+          </div>
+        );
+      })}
     </dl>
   </div>
+  {shouldAnimate ? (
+    <script>
+      const roots = Array.from(document.querySelectorAll('[data-values-root]'));
+      const supportMatchMedia = typeof window !== 'undefined' && typeof window.matchMedia === 'function';
+      const prefersReducedMotion = supportMatchMedia
+        ? window.matchMedia('(prefers-reduced-motion: reduce)').matches
+        : false;
+      const reveal = (el: Element | null) => {
+        if (el instanceof HTMLElement) {
+          el.dataset.visible = 'true';
+        }
+      };
+
+      roots.forEach((root) => {
+        if (!(root instanceof HTMLElement)) {
+          return;
+        }
+
+        if (root.dataset.valuesAnimated === 'true') {
+          return;
+        }
+
+        const cards = Array.from(root.querySelectorAll('[data-values-card]'));
+        if (cards.length === 0) {
+          return;
+        }
+
+        root.dataset.valuesAnimated = 'true';
+
+        if (prefersReducedMotion || !('IntersectionObserver' in window)) {
+          cards.forEach((card) => reveal(card));
+          return;
+        }
+
+        const observer = new IntersectionObserver(
+          (entries, obs) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                const element = entry.target;
+                reveal(element);
+                obs.unobserve(element);
+              }
+            });
+          },
+          {
+            rootMargin: '0px 0px -10% 0px',
+            threshold: 0.1,
+          },
+        );
+
+        cards.forEach((card) => observer.observe(card));
+      });
+    </script>
+  ) : null}
 </section>
+
+<style is:global>
+  @keyframes values-highlight-sweep {
+    0% {
+      transform: translateX(-140%);
+      opacity: 0;
+    }
+    25% {
+      opacity: 0.4;
+    }
+    100% {
+      transform: translateX(140%);
+      opacity: 0;
+    }
+  }
+
+  [data-values-card] .values-highlight {
+    position: absolute;
+    top: -30%;
+    bottom: -30%;
+    left: -40%;
+    width: 40%;
+    background: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0),
+      rgba(255, 255, 255, 0.45),
+      rgba(255, 255, 255, 0)
+    );
+    opacity: 0;
+    transform: translateX(-140%);
+    pointer-events: none;
+    filter: blur(18px);
+  }
+
+  [data-values-card][data-visible="true"] .values-highlight {
+    animation: values-highlight-sweep 1.6s ease-out forwards;
+  }
+</style>

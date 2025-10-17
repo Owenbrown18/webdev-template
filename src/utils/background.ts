@@ -1,19 +1,24 @@
-export type SectionBackgroundTone = 'none' | 'soft-slate';
-
-const normalizeMap: Record<string, SectionBackgroundTone> = {
-  'soft-slate': 'soft-slate',
-  softslate: 'soft-slate',
-  'soft_slate': 'soft-slate',
-};
+export type SectionBackgroundTone = 'none' | 'gradient';
 
 export const normalizeBackgroundTone = (value?: string | null): SectionBackgroundTone => {
-  if (!value) {
-    return 'none';
-  }
-
-  const key = value.trim().toLowerCase();
-  return normalizeMap[key] ?? 'none';
+  const tone = value?.trim().toLowerCase();
+  return tone === 'gradient' ? 'gradient' : 'none';
 };
 
 export const sectionBackgroundClass = (tone: SectionBackgroundTone): string | undefined =>
-  tone === 'none' ? undefined : 'section-background section-background-soft-slate';
+  tone === 'gradient' ? 'section-background' : undefined;
+
+export const sectionBackgroundToneAttr = (tone: SectionBackgroundTone): string | undefined =>
+  tone === 'gradient' ? 'gradient' : undefined;
+
+export const normalizeBackgroundColor = (value?: string | null): string | undefined => {
+  if (typeof value !== 'string') {
+    return undefined;
+  }
+
+  const trimmed = value.trim();
+  return trimmed.length > 0 ? trimmed : undefined;
+};
+
+export const createBackgroundStyle = (color?: string): string | undefined =>
+  color ? `--section-background-custom: ${color}` : undefined;

@@ -1,6 +1,12 @@
 ---
 import { about, getAboutTeamVariant, getAboutTeamBackgroundTone } from '../../../config/content';
-import { normalizeBackgroundTone, sectionBackgroundClass } from '../../../utils/background';
+import {
+  normalizeBackgroundTone,
+  normalizeBackgroundColor,
+  sectionBackgroundClass,
+  sectionBackgroundToneAttr,
+  createBackgroundStyle,
+} from '../../../utils/background';
 import AboutTeamGrid from './AboutTeamGrid.astro';
 import AboutTeamList from './AboutTeamList.astro';
 import AboutTeamCarousel from './AboutTeamCarousel.astro';
@@ -25,6 +31,9 @@ const members = Array.isArray(rawMembers) ? rawMembers.filter(Boolean) : [];
 const fallbackTone = getAboutTeamBackgroundTone();
 const backgroundTone = normalizeBackgroundTone(props.backgroundTone ?? base.background?.tone ?? fallbackTone);
 const backgroundClass = sectionBackgroundClass(backgroundTone);
+const backgroundToneAttr = sectionBackgroundToneAttr(backgroundTone);
+const backgroundColor = normalizeBackgroundColor(props.backgroundColor ?? base.background?.color);
+const backgroundStyle = createBackgroundStyle(backgroundColor);
 ---
 {Component && members.length > 0 ? (
   <Component
@@ -33,5 +42,7 @@ const backgroundClass = sectionBackgroundClass(backgroundTone);
     eyebrow={eyebrow ?? undefined}
     members={members}
     backgroundClass={backgroundClass}
+    backgroundTone={backgroundToneAttr}
+    backgroundStyle={backgroundStyle}
   />
 ) : null}

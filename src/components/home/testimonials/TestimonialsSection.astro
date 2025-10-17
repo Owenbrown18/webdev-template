@@ -8,7 +8,13 @@ import {
   getTestimonialsBackgroundTone,
   isTestimonialsAnimationEnabled,
 } from '../../../config/content';
-import { normalizeBackgroundTone, sectionBackgroundClass } from '../../../utils/background';
+import {
+  normalizeBackgroundTone,
+  normalizeBackgroundColor,
+  sectionBackgroundClass,
+  sectionBackgroundToneAttr,
+  createBackgroundStyle,
+} from '../../../utils/background';
 import TestimonialsGrid from './TestimonialsGrid.astro';
 import TestimonialsStack from './TestimonialsStack.astro';
 
@@ -31,6 +37,7 @@ const eyebrow = settings.eyebrow ?? 'Testimonials';
 const props = (Astro.props ?? {}) as Record<string, any>;
 const {
   backgroundTone: overrideTone,
+  backgroundColor: overrideColor,
   backgroundClass: overrideClass,
   animation: animationOverride,
   ...restProps
@@ -38,6 +45,9 @@ const {
 const fallbackTone = getTestimonialsBackgroundTone();
 const backgroundTone = normalizeBackgroundTone(overrideTone ?? settings.background?.tone ?? fallbackTone);
 const backgroundClass = overrideClass ?? sectionBackgroundClass(backgroundTone);
+const backgroundToneAttr = sectionBackgroundToneAttr(backgroundTone);
+const backgroundColor = normalizeBackgroundColor(overrideColor ?? settings.background?.color);
+const backgroundStyle = createBackgroundStyle(backgroundColor);
 const animationEnabled =
   animationOverride !== undefined ? animationOverride : isTestimonialsAnimationEnabled();
 ---
@@ -49,6 +59,8 @@ const animationEnabled =
     intro={intro}
     eyebrow={eyebrow}
     backgroundClass={backgroundClass}
+    backgroundTone={backgroundToneAttr}
+    backgroundStyle={backgroundStyle}
     animationEnabled={animationEnabled !== false}
     {...restProps}
   />

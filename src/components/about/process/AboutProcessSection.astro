@@ -5,7 +5,13 @@ import {
   getAboutProcessBackgroundTone,
   isAboutProcessAnimationEnabled,
 } from '../../../config/content';
-import { normalizeBackgroundTone, sectionBackgroundClass } from '../../../utils/background';
+import {
+  normalizeBackgroundTone,
+  normalizeBackgroundColor,
+  sectionBackgroundClass,
+  sectionBackgroundToneAttr,
+  createBackgroundStyle,
+} from '../../../utils/background';
 import AboutProcessSteps from './AboutProcessSteps.astro';
 
 const variants: Record<string, any> = {
@@ -24,8 +30,13 @@ const eyebrow = props.eyebrow ?? base.eyebrow;
 const rawSteps = Array.isArray(props.steps) ? props.steps : base.steps;
 const steps = Array.isArray(rawSteps) ? rawSteps.filter(Boolean) : [];
 const fallbackTone = getAboutProcessBackgroundTone();
-const backgroundTone = normalizeBackgroundTone(props.backgroundTone ?? base.background?.tone ?? fallbackTone);
+const backgroundTone = normalizeBackgroundTone(
+  props.backgroundTone ?? base.background?.tone ?? fallbackTone,
+);
 const backgroundClass = sectionBackgroundClass(backgroundTone);
+const backgroundToneAttr = sectionBackgroundToneAttr(backgroundTone);
+const backgroundColor = normalizeBackgroundColor(props.backgroundColor ?? base.background?.color);
+const backgroundStyle = createBackgroundStyle(backgroundColor);
 const animationSetting = props.animation ?? base.animation;
 const animationEnabled = animationSetting ?? isAboutProcessAnimationEnabled();
 ---
@@ -36,6 +47,8 @@ const animationEnabled = animationSetting ?? isAboutProcessAnimationEnabled();
     eyebrow={eyebrow ?? undefined}
     steps={steps}
     backgroundClass={backgroundClass}
+    backgroundTone={backgroundToneAttr}
+    backgroundStyle={backgroundStyle}
     animationEnabled={animationEnabled !== false}
   />
 ) : null}

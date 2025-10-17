@@ -8,6 +8,8 @@ interface Props {
   eyebrow?: string;
   backgroundClass?: string;
   animationEnabled?: boolean;
+  backgroundTone?: string;
+  backgroundStyle?: string;
 }
 
 const {
@@ -17,6 +19,8 @@ const {
   eyebrow = 'What we do',
   backgroundClass,
   animationEnabled = true,
+  backgroundTone,
+  backgroundStyle,
 }: Props = Astro.props as Props;
 
 const items = Array.isArray(services.items) ? services.items : [];
@@ -32,7 +36,13 @@ const cardClasses = [
   .filter(Boolean)
   .join(' ');
 ---
-<section id="services" class={sectionClasses} data-services-root={shouldAnimate ? '' : undefined}>
+<section
+  id="services"
+  class={sectionClasses}
+  data-background-tone={backgroundTone ?? undefined}
+  style={backgroundStyle}
+  data-services-root={shouldAnimate ? '' : undefined}
+>
   <div class="section-container max-w-4xl">
     <div class="section-intro">
       {eyebrow && <p class="section-eyebrow">{eyebrow}</p>}

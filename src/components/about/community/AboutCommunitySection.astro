@@ -1,0 +1,57 @@
+---
+import {
+  about,
+  getAboutCommunityVariant,
+  getAboutCommunityBackgroundTone,
+  isAboutCommunityAnimationEnabled,
+} from '../../../config/content';
+import {
+  normalizeBackgroundTone,
+  normalizeBackgroundColor,
+  sectionBackgroundClass,
+  sectionBackgroundToneAttr,
+  createBackgroundStyle,
+} from '../../../utils/background';
+import AboutCommunityCards from './AboutCommunityCards.astro';
+
+const variants: Record<string, any> = {
+  cards: AboutCommunityCards,
+};
+
+const variantKey = getAboutCommunityVariant();
+const Component = variantKey === 'none' ? null : variants[variantKey] ?? variants.cards;
+
+const props = Astro.props ?? {};
+
+const base = about.community ?? {};
+const title = props.title ?? base.title ?? 'Community impact that matters';
+const intro = props.intro ?? base.intro ?? 'We invest time, skill, and resources into neighborhood programs that keep homes and shared spaces welcoming for everyone.';
+const eyebrow = props.eyebrow ?? base.eyebrow;
+const supporting = props.supporting ?? base.supporting;
+const rawStats = Array.isArray(props.stats) ? props.stats : base.stats;
+const stats = Array.isArray(rawStats) ? rawStats.filter(Boolean) : [];
+const rawItems = Array.isArray(props.items) ? props.items : base.items;
+const items = Array.isArray(rawItems) ? rawItems.filter(Boolean) : [];
+const fallbackTone = getAboutCommunityBackgroundTone();
+const backgroundTone = normalizeBackgroundTone(props.backgroundTone ?? base.background?.tone ?? fallbackTone);
+const backgroundClass = sectionBackgroundClass(backgroundTone);
+const backgroundToneAttr = sectionBackgroundToneAttr(backgroundTone);
+const backgroundColor = normalizeBackgroundColor(props.backgroundColor ?? base.background?.color);
+const backgroundStyle = createBackgroundStyle(backgroundColor);
+const animationSetting = props.animation ?? base.animation;
+const animationEnabled = animationSetting ?? isAboutCommunityAnimationEnabled();
+---
+{Component && items.length > 0 ? (
+  <Component
+    title={title}
+    intro={intro}
+    eyebrow={eyebrow ?? undefined}
+    supporting={supporting ?? undefined}
+    stats={stats}
+    items={items}
+    backgroundClass={backgroundClass}
+    backgroundTone={backgroundToneAttr}
+    backgroundStyle={backgroundStyle}
+    animationEnabled={animationEnabled !== false}
+  />
+) : null}

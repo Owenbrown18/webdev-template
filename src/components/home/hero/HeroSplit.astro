@@ -13,10 +13,20 @@ interface Props {
     image?: string | null;
   };
   backgroundClass?: string;
+  backgroundTone?: string;
+  backgroundStyle?: string;
   animationEnabled?: boolean;
 }
 
-const { site, hero = {}, backgroundClass, animationEnabled = true }: Props = Astro.props as Props;
+const {
+  site,
+  hero = {},
+  backgroundClass,
+  backgroundTone,
+  backgroundStyle,
+  animationEnabled = true,
+}: Props =
+  Astro.props as Props;
 
 const title = hero.title ?? site.name;
 const tagline = hero.subtitle ?? site.tagline;
@@ -48,6 +58,8 @@ const imageWrapperClasses = [
 ---
 <section
   class={sectionClasses}
+  data-background-tone={backgroundTone ?? undefined}
+  style={backgroundStyle}
   data-hero-root
   data-animate={shouldAnimate ? 'true' : undefined}
 >

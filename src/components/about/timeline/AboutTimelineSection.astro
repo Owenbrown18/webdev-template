@@ -5,7 +5,13 @@ import {
   getAboutTimelineBackgroundTone,
   isAboutTimelineAnimationEnabled,
 } from '../../../config/content';
-import { normalizeBackgroundTone, sectionBackgroundClass } from '../../../utils/background';
+import {
+  normalizeBackgroundTone,
+  normalizeBackgroundColor,
+  sectionBackgroundClass,
+  sectionBackgroundToneAttr,
+  createBackgroundStyle,
+} from '../../../utils/background';
 import AboutTimelineVertical from './AboutTimelineVertical.astro';
 import AboutTimelineSteps from './AboutTimelineSteps.astro';
 
@@ -28,6 +34,9 @@ const milestones = Array.isArray(rawMilestones) ? rawMilestones.filter(Boolean) 
 const fallbackTone = getAboutTimelineBackgroundTone();
 const backgroundTone = normalizeBackgroundTone(props.backgroundTone ?? base.background?.tone ?? fallbackTone);
 const backgroundClass = sectionBackgroundClass(backgroundTone);
+const backgroundToneAttr = sectionBackgroundToneAttr(backgroundTone);
+const backgroundColor = normalizeBackgroundColor(props.backgroundColor ?? base.background?.color);
+const backgroundStyle = createBackgroundStyle(backgroundColor);
 const animationSetting = props.animation ?? base.animation;
 const animationEnabled = animationSetting ?? isAboutTimelineAnimationEnabled();
 ---
@@ -38,6 +47,8 @@ const animationEnabled = animationSetting ?? isAboutTimelineAnimationEnabled();
     eyebrow={eyebrow ?? undefined}
     milestones={milestones}
     backgroundClass={backgroundClass}
+    backgroundTone={backgroundToneAttr}
+    backgroundStyle={backgroundStyle}
     animationEnabled={animationEnabled !== false}
   />
 ) : null}

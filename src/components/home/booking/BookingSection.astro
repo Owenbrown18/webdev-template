@@ -4,9 +4,16 @@ import {
   home,
   getBookingVariant,
   getBookingBackgroundTone,
+  isBookingAnimationEnabled,
 } from '../../../config/content';
 import BookingClassic from './BookingClassic.astro';
-import { normalizeBackgroundTone, sectionBackgroundClass } from '../../../utils/background';
+import {
+  normalizeBackgroundTone,
+  normalizeBackgroundColor,
+  sectionBackgroundClass,
+  sectionBackgroundToneAttr,
+  createBackgroundStyle,
+} from '../../../utils/background';
 
 const variants: Record<string, any> = {
   classic: BookingClassic,
@@ -16,10 +23,21 @@ const variantKey = getBookingVariant();
 const Component = variantKey === 'none' ? null : variants[variantKey] ?? variants.classic;
 const settings = home.booking ?? {};
 const props = (Astro.props ?? {}) as Record<string, any>;
-const { backgroundTone: overrideTone, backgroundClass: overrideClass, ...restProps } = props;
+const {
+  backgroundTone: overrideTone,
+  backgroundColor: overrideColor,
+  backgroundClass: overrideClass,
+  animation: animationOverride,
+  ...restProps
+} = props;
 const fallbackTone = getBookingBackgroundTone();
 const backgroundTone = normalizeBackgroundTone(overrideTone ?? settings.background?.tone ?? fallbackTone);
 const backgroundClass = overrideClass ?? sectionBackgroundClass(backgroundTone);
+const backgroundToneAttr = sectionBackgroundToneAttr(backgroundTone);
+const backgroundColor = normalizeBackgroundColor(overrideColor ?? settings.background?.color);
+const backgroundStyle = createBackgroundStyle(backgroundColor);
+const animationEnabled =
+  animationOverride !== undefined ? animationOverride : isBookingAnimationEnabled();
 ---
 {Component ? (
   <Component
@@ -27,6 +45,9 @@ const backgroundClass = overrideClass ?? sectionBackgroundClass(backgroundTone);
     heading={settings.heading ?? 'Book an Appointment'}
     description={settings.description ?? 'Reserve a time that works best for you.'}
     backgroundClass={backgroundClass}
+    backgroundTone={backgroundToneAttr}
+    backgroundStyle={backgroundStyle}
+    animationEnabled={animationEnabled !== false}
     {...restProps}
   />
 ) : null}

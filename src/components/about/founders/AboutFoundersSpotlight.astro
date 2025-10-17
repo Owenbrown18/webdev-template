@@ -19,6 +19,8 @@ interface Props {
   supporting?: string;
   profiles: Profile[];
   backgroundClass?: string;
+  backgroundTone?: string;
+  backgroundStyle?: string;
 }
 
 const {
@@ -28,6 +30,8 @@ const {
   supporting,
   profiles,
   backgroundClass,
+  backgroundTone,
+  backgroundStyle,
 }: Props = Astro.props as Props;
 
 const formattedProfiles: FormattedProfile[] = profiles.map((profile) => ({
@@ -42,7 +46,12 @@ const formattedProfiles: FormattedProfile[] = profiles.map((profile) => ({
 }));
 const sectionClasses = [backgroundClass, 'section-shell'].filter(Boolean).join(' ');
 ---
-<section class={sectionClasses} id="founders">
+<section
+  class={sectionClasses}
+  data-background-tone={backgroundTone ?? undefined}
+  style={backgroundStyle}
+  id="founders"
+>
   <div class="section-container">
     <div class="section-intro max-w-3xl">
       {eyebrow && <p class="section-eyebrow">{eyebrow}</p>}
