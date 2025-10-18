@@ -47,6 +47,17 @@ const metaDescription = description ?? site.tagline;
 const primaryColor = site.colors?.primary ?? '#2563eb';
 const secondaryColor = site.colors?.secondary ?? '#0f172a';
 const accentColor = site.colors?.accent ?? '#f59e0b';
+const rawBrandLogo = typeof site.brand?.logo === 'string' ? site.brand.logo.trim() : '';
+const brandLogo = rawBrandLogo.length > 0 ? rawBrandLogo : null;
+const brandLogoAlt =
+  typeof site.brand?.logoAlt === 'string' && site.brand.logoAlt?.trim()?.length
+    ? site.brand.logoAlt.trim()
+    : site.name ?? 'Brand logo';
+const hasBrandLogo = Boolean(brandLogo);
+const brandLinkClasses = hasBrandLogo
+  ? 'group inline-flex items-center gap-3 font-semibold text-slate-900 transition hover:text-brand-primary'
+  : 'text-[1.6rem] font-semibold text-slate-900 transition hover:text-brand-primary';
+const brandLinkLabel = site.name ?? 'Home';
 const footerCredit = site.footerCredit;
 const preloadImages = ['/images/home-hero.jpg', '/images/about-hero.jpg'];
 const primaryRgb = hexToRgb(primaryColor);
@@ -158,11 +169,23 @@ const bodyStyle = `
     </a>
     <header class="sticky top-0 z-40 w-full bg-white/90 backdrop-blur supports-[backdrop-filter]:bg-white/80">
       <div class="mx-auto flex h-20 w-full max-w-6xl items-center justify-between border-b border-slate-200/80 px-6">
-        <a
-          href="/"
-          class="text-[1.6rem] font-semibold text-slate-900 transition hover:text-brand-primary"
-        >
-          {site.name}
+        <a href="/" class={brandLinkClasses}>
+          {hasBrandLogo ? (
+            <>
+              <img
+                src={brandLogo ?? ''}
+                alt={brandLogoAlt}
+                class="h-10 w-auto rounded-sm"
+                loading="lazy"
+                decoding="async"
+              />
+              <span class="text-lg font-semibold leading-tight text-slate-900 group-hover:text-inherit">
+                {brandLinkLabel}
+              </span>
+            </>
+          ) : (
+            brandLinkLabel
+          )}
         </a>
         <nav class="flex items-center gap-2 text-sm font-medium text-slate-600">
           {navItems.map(({ href, label }) => {
@@ -203,31 +226,50 @@ const bodyStyle = `
         <slot />
       </main>
       <footer class="border-t border-slate-200 py-8 text-sm text-slate-500">
-        <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-          <p>&copy; {new Date().getFullYear()} {site.name}. All rights reserved.</p>
-          <div class="flex flex-wrap items-center gap-4">
-            {getSocialLinks().map(([key, url]) => (
+        <div class="flex flex-col gap-6">
+          <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            {hasBrandLogo ? (
               <a
-                href={url}
-                class="capitalize transition-colors hover:text-brand-primary"
+                href="/"
+                class="inline-flex items-center gap-3 font-semibold text-slate-700 transition hover:text-brand-primary"
               >
-                {key}
+                <img
+                  src={brandLogo ?? ''}
+                  alt={brandLogoAlt}
+                  class="h-10 w-auto rounded-sm"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <span class="text-base font-semibold leading-tight">{brandLinkLabel}</span>
               </a>
-            ))}
-            {footerCredit?.label && footerCredit?.href && (
-              <span class="hidden h-4 w-px bg-slate-200 sm:inline" aria-hidden="true"></span>
+            ) : (
+              <span class="text-base font-semibold text-slate-700">{brandLinkLabel}</span>
             )}
-            {footerCredit?.label && footerCredit?.href && (
-              <a
-                href={footerCredit.href}
-                class="font-medium text-slate-600 transition-colors hover:text-brand-primary"
-                target="_blank"
-                rel="noreferrer"
-              >
-                {footerCredit.label}
-              </a>
-            )}
+            <div class="flex flex-wrap items-center gap-4">
+              {getSocialLinks().map(([key, url]) => (
+                <a
+                  href={url}
+                  class="capitalize transition-colors hover:text-brand-primary"
+                >
+                  {key}
+                </a>
+              ))}
+              {footerCredit?.label && footerCredit?.href && (
+                <span class="hidden h-4 w-px bg-slate-200 sm:inline" aria-hidden="true"></span>
+              )}
+              {footerCredit?.label && footerCredit?.href && (
+                <a
+                  href={footerCredit.href}
+                  class="font-medium text-slate-600 transition-colors hover:text-brand-primary"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  {footerCredit.label}
+                </a>
+              )}
+            </div>
           </div>
+          <p class="text-xs text-slate-500">&copy; {new Date().getFullYear()} {brandLinkLabel}. All rights reserved.</p>
         </div>
       </footer>
     </div>

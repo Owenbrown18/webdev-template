@@ -1,5 +1,8 @@
 name: "Local Business Co."
 tagline: "Friendly neighborhood experts delivering reliable services with a personal touch."
+brand:
+  logo: "/images/loading-logo.png" # Optional: swap with a client logo (SVG/PNG recommended)
+  logoAlt: "Local Business Co. mark"
 phone: "(555) 123-4567"
 email: "hello@localbusiness.co"
 address:

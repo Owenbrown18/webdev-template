@@ -36,11 +36,21 @@ const items = Array.isArray(services.items) ? services.items : [];
 const sectionClasses = [backgroundClass, 'section-shell'].filter(Boolean).join(' ');
 const shouldAnimate = animationEnabled !== false;
 const animationClasses = shouldAnimate
-  ? 'motion-safe:translate-y-10 motion-safe:opacity-0 motion-safe:transition-all motion-safe:duration-[1200ms] motion-safe:ease-out data-[visible=true]:motion-safe:translate-y-0 data-[visible=true]:motion-safe:opacity-100'
+  ? 'motion-safe:translate-y-6 motion-safe:opacity-0 motion-safe:transition-all motion-safe:duration-[1000ms] motion-safe:ease-out data-[visible=true]:motion-safe:translate-y-0 data-[visible=true]:motion-safe:opacity-100'
   : '';
 const isDetailed = mode === 'detailed';
 const safeHref = typeof itemHrefFallback === 'string' && itemHrefFallback.length > 0 ? itemHrefFallback : undefined;
 
+const toSlug = (value?: string | null) =>
+  value
+    ? value
+        .trim()
+        .toLowerCase()
+        .replace(/[^a-z0-9\s-]/g, '')
+        .replace(/\s+/g, '-')
+        .replace(/-+/g, '-')
+        .replace(/^-|-$/g, '')
+    : '';
 const normalizeImage = (image: ServicesListItem['image']): SpotlightImage | null => {
   if (!image) return null;
   if (typeof image === 'string') {
@@ -95,13 +105,18 @@ const resolveLinkLabel = (item: ServicesListItem) => item.link?.label?.trim();
         const href = resolveHref(item);
         const linkLabel = resolveLinkLabel(item);
         const shouldSwap = !!image && index % 2 === 1;
-        const itemStyle = shouldAnimate ? `transition-delay: ${160 + index * 120}ms;` : undefined;
+        const itemStyle = shouldAnimate ? `transition-delay: ${120 + index * 60}ms;` : undefined;
+        const anchorId =
+          typeof item.slug === 'string' && item.slug.trim().length > 0
+            ? item.slug.trim()
+            : toSlug(typeof item.title === 'string' ? item.title : undefined);
 
         return (
           <article
-            class={`surface-card overflow-hidden p-0 ${animationClasses}`}
+            class={`surface-card overflow-hidden p-0 scroll-mt-24 sm:scroll-mt-28 lg:scroll-mt-32 ${animationClasses}`}
             data-services-spotlight-item
             style={itemStyle}
+            id={anchorId || undefined}
           >
             <div class={`flex flex-col ${image ? 'lg:grid lg:grid-cols-[minmax(0,6fr)_minmax(0,5fr)] lg:items-stretch' : ''}`}>
               <div

@@ -20,6 +20,10 @@ export type SiteContent = {
     provider?: string;
     embedUrl?: string;
   };
+  brand?: {
+    logo?: string | null;
+    logoAlt?: string | null;
+  };
   colors?: {
     primary?: string;
     secondary?: string;
@@ -130,6 +134,7 @@ export type ServicesListItem = {
   duration?: string | null;
   startingPrice?: string | null;
   link?: ServiceLink | null;
+  slug?: string | null;
   image?: string | null | {
     src?: string | null;
     alt?: string | null;

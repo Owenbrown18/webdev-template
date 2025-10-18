@@ -34,12 +34,20 @@ const cardAnimationClasses = shouldAnimate
   ? 'motion-safe:translate-y-6 motion-safe:opacity-0 motion-safe:transition-all motion-safe:duration-[1000ms] motion-safe:ease-out data-[visible=true]:motion-safe:translate-y-0 data-[visible=true]:motion-safe:opacity-100'
   : '';
 const makeSummary = (item: ServicesListItem) => item.summary ?? item.blurb ?? '';
+const slugHref = (item: ServicesListItem) => {
+  const slug = typeof item.slug === 'string' ? item.slug.trim() : '';
+  return slug ? `/services#${slug}` : null;
+};
 const makeMeta = (item: ServicesListItem) =>
   [
     item.duration && { label: item.duration },
     item.startingPrice && { label: item.startingPrice },
   ].filter(Boolean) as Array<{ label: string }>;
 const resolveHref = (item: ServicesListItem) => {
+  if (!isDetailed) {
+    const slugBased = slugHref(item);
+    if (slugBased) return slugBased;
+  }
   const explicit = item.link?.href?.trim();
   if (explicit) return explicit;
   return isDetailed ? undefined : safeHref ?? '/services';

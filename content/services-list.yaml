@@ -1,5 +1,6 @@
 items:
   - title: "Priority Consultations"
+    slug: "priority-consultations"
     summary: |
       Start with a dedicated strategy session tailored to your property. We walk every room, document your wish list, and surface hidden risks before you commit resources.
 
@@ -15,9 +16,9 @@ items:
       label: "Request details"
       href: "/contact"
     image:
-      src: "https://images.unsplash.com/photo-1523419409543-0c1df022bdd7?auto=format&fit=crop&w=1600&q=80"
-      alt: "Consultant reviewing renovation plans with homeowners at a kitchen table"
+      src: "https://images.unsplash.com/photo-1568605114967-8130f3a36994?auto=format&fit=crop&w=1600&q=80"
   - title: "Complete Project Support"
+    slug: "complete-project-support"
     summary: |
       Partner with a team that handles scheduling, crews, and quality control from kickoff through punch list. We manage permits, vendors, and material lead times so the build stays moving.
 
@@ -33,9 +34,10 @@ items:
       label: "Request details"
       href: "/contact"
     image:
-      src: "https://images.unsplash.com/photo-1570126909238-0eafec8c2235?auto=format&fit=crop&w=1600&q=80"
-      alt: "Construction manager coordinating crews on a job site"
+      src: "https://images.unsplash.com/photo-1568605114967-8130f3a36994?auto=format&fit=crop&w=1600&q=80"
+      alt: ""
   - title: "Ongoing Maintenance"
+    slug: "ongoing-maintenance"
     summary: |
       Build a maintenance rhythm that protects warranties and budgets. Our technicians rotate through seasonal checklists, tighten mechanical systems, and document every visit for future reference.
 
@@ -51,9 +53,10 @@ items:
       label: "Request details"
       href: "/contact"
     image:
-      src: "https://images.unsplash.com/photo-1529429617124-aee711a30c42?auto=format&fit=crop&w=1600&q=80"
+      src: "https://images.unsplash.com/photo-1568605114967-8130f3a36994?auto=format&fit=crop&w=1600&q=80"
       alt: "Technician performing maintenance on building equipment"
   - title: "Emergency Callouts"
+    slug: "emergency-callouts"
     summary: |
       When the unexpected happens, our rapid-response crew mobilizes immediately. We stabilize the site, implement temporary fixes, and coordinate follow-up trades so you can focus on the bigger picture.
 
@@ -72,6 +75,7 @@ items:
       src: "https://images.unsplash.com/photo-1568605114967-8130f3a36994?auto=format&fit=crop&w=1600&q=80"
       alt: "Emergency technician working quickly in a dimly lit mechanical room"
   - title: "Seasonal Checkups"
+    slug: "seasonal-checkups"
     summary: |
       Prepare your property for every seasonal shift. We inspect critical systems, test safety devices, and fine-tune performance so heating, cooling, and irrigation switchover days go smoothly.
 
@@ -90,6 +94,7 @@ items:
       src: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1600&q=80"
       alt: "Home exterior checklist being reviewed during a fall inspection"
   - title: "Custom Projects"
+    slug: "custom-projects"
     summary: |
       Have an unconventional scope? We thrive on adaptive reuse, specialized upgrades, and distinctive builds. Discovery workshops surface constraints early, then we assemble a vetted team tailored to the challenge.
 
@@ -105,5 +110,5 @@ items:
       label: "Request details"
       href: "/contact"
     image:
-      src: "https://images.unsplash.com/photo-1529429306209-8b24f4d58828?auto=format&fit=crop&w=1600&q=80"
+      src: "https://images.unsplash.com/photo-1568605114967-8130f3a36994?auto=format&fit=crop&w=1600&q=80"
       alt: "Collaborative design session reviewing custom project concepts"

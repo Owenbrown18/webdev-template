@@ -1,50 +1,65 @@
 # Web Template
 
-A content-driven Astro + Tailwind starter tuned for local-service businesses. The goal is to give you a flexible foundation that can be quickly re-skinned and reconfigured for new projects with minimal code changes.
+A content-driven Astro + Tailwind starter for local-service businesses. The project is built so you can reskin and reconfigure entire pages by editing YAML—no JSX refactors required.
 
 ## Highlights
 
-- **Astro + Tailwind** architecture with reusable, variant-driven sections.
-- **Structured YAML content** per page (`content/home.yaml`, `content/about.yaml`, `content/contact.yaml`) plus shared datasets (`content/general.yaml`, `content/services.yaml`, `content/testimonials.yaml`).
-- **Section registries**: each page component lives under `src/components/<page>/<section>/` with a dispatcher file (e.g., `HeroSection.astro`) and multiple variant implementations (including a `none` option).
-- **Central config helpers** (`src/config/content.ts`) and types (`src/types/content.ts`) keep imports typed and consistent.
-- **Quick theming**: colors and brand info live in `content/general.yaml`; CTA copy, hero images, etc., live in the page YAML files.
+- **Astro + Tailwind** foundation with reusable, variant-driven sections.
+- **Structured YAML content** per page (`content/home.yaml`, `content/about.yaml`, `content/contact.yaml`) plus shared datasets for services, testimonials, and brand info.
+- **Section registries** (`src/components/<page>/<section>/`) that expose dispatcher files and variant implementations—set `variant: none` in YAML to disable a section.
+- **Central config helpers** (`src/config/content.ts`) and shared types (`src/types/content.ts`) so components stay typed and consistent.
+- **Brand-ready navigation** with optional logo support wired into the sticky header, footer, and preloader.
+- **Deep-link ready services catalog** powered by dedicated slugs, including a full-width `spotlight` layout for richer storytelling.
 
 ## Content Files
 
-````
+````text
 content/
-├── general.yaml      # global business info (name, contact, address, colors, booking)
-├── home.yaml         # homepage sections & variant selections
-├── about.yaml        # about page sections
-├── contact.yaml      # contact page info/form settings
-├── services.yaml     # reusable service entries
-└── testimonials.yaml # reusable testimonials
+├── general.yaml        # global business info (name, contact, brand colors, logo, footer)
+├── home.yaml           # homepage sections & variant selections
+├── about.yaml          # about page sections
+├── contact.yaml        # contact page info/form settings
+├── services.yaml       # services page configuration (overview, catalog, highlights, CTA)
+├── services-list.yaml  # reusable service entries (title, summary, slug, media)
+└── testimonials.yaml   # reusable testimonials
 ````
 
-Changing copy or swapping layouts is as simple as editing these YAML files.
+Update copy, imagery, or layout choices directly in these files. When adding new fields, extend the matching type in `src/types/content.ts` and expose helpers from `src/config/content.ts`.
+
+### Service Anchors
+
+Each entry in `content/services-list.yaml` includes a `slug`. Home-page “Our Services” cards link to `/services#<slug>`, and the services catalog assigns matching anchors so visitors land at the exact spotlight card.
+
+### Brand Logo
+
+Set `brand.logo` (and its accompanying `brand.logoAlt`) in `content/general.yaml` to surface a client mark in both the sticky header and footer. SVG assets scale best; transparent PNGs at roughly 160×48px also render cleanly. If no logo is provided, the template gracefully falls back to the business name.
 
 ## Component Structure
 
-````
+````text
 src/components/
 ├── home/
 │   ├── hero/
-│   ├── services/
+│   ├── services/        # grid, list, spotlight variants
 │   ├── video/
 │   ├── testimonials/
 │   └── booking/
+├── services/
+│   ├── catalog/
+│   ├── highlights/
+│   ├── testimonials/
+│   └── cta/
 ├── contact/
 │   └── info-form/
 └── about/
     └── hero/
 ````
 
-Each folder includes a dispatcher and individual variant files. Add new variants by dropping in a component and registering it in the dispatcher.
+Each section folder exports a dispatcher (`*Section.astro`) that picks a variant based on YAML. Add new variants by dropping in a component and registering it in the dispatcher map.
 
 ## Configuration Helpers
 
-Import from `src/config/content.ts` to access typed content and variant getters.
+Import from `src/config/content.ts` to access typed content, variant getters, and convenience utilities.
 
 ```ts
 import {
@@ -53,12 +68,14 @@ import {
   contact,
   about,
   services,
+  servicesPage,
   testimonials,
   getSocialLinks,
   getServices,
   getTestimonials,
   getHeroVariant,
   getServicesVariant,
+  getServicesCatalogVariant,
   getVideoVariant,
   getTestimonialsVariant,
   getBookingVariant,
@@ -67,35 +84,32 @@ import {
 } from '../config/content';
 ```
 
-Extend `src/types/content.ts` and add helpers when introducing additional sections or fields.
-
-
 ## Styling
 
-The template relies on Tailwind CSS 3 with shared design tokens and utilities defined in `tailwind.config.cjs` and `src/styles/globals.css`.
+Tailwind CSS 3 handles styling with shared tokens and utilities declared in `tailwind.config.cjs` and `src/styles/globals.css`.
 
-- Brand colors resolve to the values in `content/general.yaml`, exposed as `text-brand-*`, `bg-brand-*`, and `border-brand-*` utilities.
-- Section scaffolding (`section-shell`, `section-container`, `section-intro`, `section-eyebrow`, etc.) keeps page rhythm consistent across variants.
-- Elevated surfaces (`surface-card` + `surface-card-interactive`) ensure cards, testimonials, and interactive blocks share the same radius, shadow, and focus states.
+- Brand hues (e.g., `text-brand-primary`) originate from `content/general.yaml`.
+- Section scaffolding classes (`section-shell`, `section-container`, `section-eyebrow`, etc.) maintain rhythm and spacing consistency.
+- Elevated surfaces (`surface-card`, `surface-card-interactive`) standardise radius, shadows, and focus states across cards, testimonials, and spotlight sections.
 
-Refer to `docs/ui-guidelines.md` for detailed UI guidance and best practices when creating new variants.
+See `docs/ui-guidelines.md` for detailed design guidance.
 
 ## Usage
 
 1. `npm install`
 2. `npm run dev`
-3. Update YAML content, toggle `variant` values, or set `none` to hide sections.
-4. Add new variants/sections by creating components under `src/components/<page>/<section>/` and wiring their data into the YAML/types.
+3. Update YAML content, choose `variant` values, or set `none` to hide sections.
+4. Add new variants/sections by creating components under `src/components/<page>/<section>/`, updating types, and wiring the data in YAML.
 
 ## Placeholder Assets
 
-- Replace `public/images/hero.jpg` and `public/images/about-hero.jpg` with real imagery.
-- Update the video reference in `content/home.yaml` if you move or replace `/media/mainloop.mp4`.
+- Replace demo imagery under `public/images/` before shipping.
+- Update `content/home.yaml` if you swap out `/media/mainloop.mp4` or switch to an external video provider.
 
 ## Suggested Next Steps
 
-- Flesh out additional About sections (timeline, values, team) using the same variant pattern.
-- Swap placeholder copy and media for project-specific assets.
-- Automate scaffolding if you need to spin up many client sites quickly.
+- Expand the About page with additional sections (timeline, values, team) using the existing variant pattern.
+- Populate `services-list.yaml` with client-specific slugs, imagery, pricing, and CTA destinations.
+- Run the production build (`npm run build`) and Lighthouse/axe checks prior to launch for accessibility and performance validation.
 
-This template is intentionally minimal yet flexible: edit YAML to control layout and messaging, introduce new variants when needed, and keep the codebase clean.
+This template stays deliberately lean so you can move fast: edit YAML to control layout and messaging, introduce new variants when needed, and keep the codebase approachable for future projects.

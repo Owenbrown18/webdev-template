@@ -12,7 +12,7 @@ hero:
   secondaryCtaHref: "#booking"
   image: "/images/home-hero.jpg"
 services:
-  variant: "list" # Options: grid, list, none
+  variant: "list" # Options: grid, list, spotlight, none
   background:
     tone: "none" # Options: none, gradient
     color: null

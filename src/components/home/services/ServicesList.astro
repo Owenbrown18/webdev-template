@@ -44,7 +44,15 @@ const cardClasses = [
   .join(' ');
 const safeHref = typeof itemHrefFallback === 'string' && itemHrefFallback.length > 0 ? itemHrefFallback : undefined;
 const makeSummary = (item: ServicesListItem) => item.summary ?? item.blurb ?? '';
+const slugHref = (item: ServicesListItem) => {
+  const slug = typeof item.slug === 'string' ? item.slug.trim() : '';
+  return slug ? `/services#${slug}` : null;
+};
 const resolveHref = (item: ServicesListItem) => {
+  if (!isDetailed) {
+    const slugBased = slugHref(item);
+    if (slugBased) return slugBased;
+  }
   const explicit = item.link?.href?.trim();
   if (explicit) return explicit;
   return isDetailed ? undefined : safeHref ?? '/services';
