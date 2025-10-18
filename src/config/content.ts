@@ -190,4 +190,5 @@ export const isAboutHeroAnimationEnabled = () => isAnimationEnabled(about.hero?.
 export const isAboutProcessAnimationEnabled = () => isAnimationEnabled(about.process?.animation);
 export const isAboutTimelineAnimationEnabled = () => isAnimationEnabled(about.timeline?.animation);
 export const isAboutCommunityAnimationEnabled = () => isAnimationEnabled(about.community?.animation);
+export const isAboutFoundersAnimationEnabled = () => isAnimationEnabled(about.founders?.animation);
 export const isServicesAnimationEnabled = () => isAnimationEnabled(home.services?.animation);

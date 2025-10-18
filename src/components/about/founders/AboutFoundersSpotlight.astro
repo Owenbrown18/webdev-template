@@ -21,6 +21,7 @@ interface Props {
   backgroundClass?: string;
   backgroundTone?: string;
   backgroundStyle?: string;
+  animationEnabled?: boolean;
 }
 
 const {
@@ -32,6 +33,7 @@ const {
   backgroundClass,
   backgroundTone,
   backgroundStyle,
+  animationEnabled = true,
 }: Props = Astro.props as Props;
 
 const formattedProfiles: FormattedProfile[] = profiles.map((profile) => ({
@@ -45,11 +47,16 @@ const formattedProfiles: FormattedProfile[] = profiles.map((profile) => ({
       : [],
 }));
 const sectionClasses = [backgroundClass, 'section-shell'].filter(Boolean).join(' ');
+const shouldAnimate = animationEnabled !== false;
+const cardAnimationClasses = shouldAnimate
+  ? 'motion-safe:translate-y-6 motion-safe:opacity-0 motion-safe:transition-all motion-safe:duration-[1000ms] motion-safe:ease-out data-[visible=true]:motion-safe:translate-y-0 data-[visible=true]:motion-safe:opacity-100'
+  : '';
 ---
 <section
   class={sectionClasses}
   data-background-tone={backgroundTone ?? undefined}
   style={backgroundStyle}
+  data-founders-root={shouldAnimate ? '' : undefined}
   id="founders"
 >
   <div class="section-container">
@@ -65,8 +72,12 @@ const sectionClasses = [backgroundClass, 'section-shell'].filter(Boolean).join('
     </div>
     <div class="mt-12 space-y-12">
       {formattedProfiles.map(
-        ({ name, role, bio, image, highlight, paragraphs }) => (
-          <article class="surface-card grid gap-8 p-6 transition-shadow duration-200 hover:shadow-card-hover lg:grid-cols-[minmax(0,230px),1fr]">
+        ({ name, role, bio, image, highlight, paragraphs }, index) => (
+          <article
+            class={`surface-card grid gap-8 p-6 transition-shadow duration-200 hover:shadow-card-hover lg:grid-cols-[minmax(0,230px),1fr] ${cardAnimationClasses}`}
+            data-founders-card={shouldAnimate ? '' : undefined}
+            style={shouldAnimate ? `transition-delay: ${120 + index * 80}ms;` : undefined}
+          >
             <div class="relative">
               <div class="aspect-[4/5] w-full overflow-hidden rounded-2xl bg-slate-100 shadow-inner">
                 {image ? (
@@ -113,4 +124,44 @@ const sectionClasses = [backgroundClass, 'section-shell'].filter(Boolean).join('
       )}
     </div>
   </div>
+  {shouldAnimate ? (
+    <script>
+      const roots = Array.from(document.querySelectorAll('[data-founders-root]'));
+      const supportMatchMedia = typeof window !== 'undefined' && typeof window.matchMedia === 'function';
+      const prefersReducedMotion = supportMatchMedia
+        ? window.matchMedia('(prefers-reduced-motion: reduce)').matches
+        : false;
+      const reveal = (el) => {
+        if (el instanceof HTMLElement) {
+          el.dataset.visible = 'true';
+        }
+      };
+
+      roots.forEach((root) => {
+        const cards = Array.from(root.querySelectorAll('[data-founders-card]'));
+        if (cards.length === 0) return;
+
+        if (!prefersReducedMotion && 'IntersectionObserver' in window) {
+          const observer = new IntersectionObserver(
+            (entries, obs) => {
+              entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                  reveal(entry.target);
+                  obs.unobserve(entry.target);
+                }
+              });
+            },
+            {
+              rootMargin: '0px 0px -10% 0px',
+              threshold: 0.12,
+            },
+          );
+
+          cards.forEach((card) => observer.observe(card));
+        } else {
+          cards.forEach((card) => reveal(card));
+        }
+      });
+    </script>
+  ) : null}
 </section>

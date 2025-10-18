@@ -140,6 +140,7 @@ founders:
   background:
     tone: "none" # Options: none, gradient
     color: null
+  animation: true # Toggle reveal animation on/off
   eyebrow: "Founders spotlight"
   title: "Neighbors who started it all"
   intro: "Two lifelong locals who turned weekend repair calls into a trusted, full-service renovation crew."

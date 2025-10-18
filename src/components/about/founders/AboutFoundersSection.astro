@@ -3,6 +3,7 @@ import {
   about,
   getAboutFoundersVariant,
   getAboutFoundersBackgroundTone,
+  isAboutFoundersAnimationEnabled,
 } from '../../../config/content';
 import {
   normalizeBackgroundTone,
@@ -38,6 +39,9 @@ const backgroundClass = sectionBackgroundClass(backgroundTone);
 const backgroundToneAttr = sectionBackgroundToneAttr(backgroundTone);
 const backgroundColor = normalizeBackgroundColor(props.backgroundColor ?? base.background?.color);
 const backgroundStyle = createBackgroundStyle(backgroundColor);
+const animationSetting = props.animation ?? base.animation;
+const animationEnabled =
+  animationSetting !== undefined ? animationSetting !== false : isAboutFoundersAnimationEnabled();
 ---
 {Component && profiles.length > 0 ? (
   <Component
@@ -49,5 +53,6 @@ const backgroundStyle = createBackgroundStyle(backgroundColor);
     backgroundClass={backgroundClass}
     backgroundTone={backgroundToneAttr}
     backgroundStyle={backgroundStyle}
+    animationEnabled={animationEnabled}
   />
 ) : null}

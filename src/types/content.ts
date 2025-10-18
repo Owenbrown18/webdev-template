@@ -361,6 +361,7 @@ export type AboutContent = {
       tone?: string | null; // Options: none, gradient
       color?: string | null;
     };
+    animation?: boolean | null;
     eyebrow?: string | null;
     title?: string | null;
     intro?: string | null;

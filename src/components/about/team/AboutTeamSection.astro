@@ -34,15 +34,22 @@ const backgroundClass = sectionBackgroundClass(backgroundTone);
 const backgroundToneAttr = sectionBackgroundToneAttr(backgroundTone);
 const backgroundColor = normalizeBackgroundColor(props.backgroundColor ?? base.background?.color);
 const backgroundStyle = createBackgroundStyle(backgroundColor);
+const defaultGradientColor = '#dbe4f3';
+const fadeColor =
+  backgroundTone === 'gradient'
+    ? backgroundColor ?? defaultGradientColor
+    : 'rgb(var(--surface-base-rgb))';
+const componentProps = {
+  title,
+  intro,
+  eyebrow: eyebrow ?? undefined,
+  members,
+  backgroundClass,
+  backgroundTone: backgroundToneAttr,
+  backgroundStyle,
+  ...(Component === AboutTeamCarousel ? { fadeColor } : {}),
+};
 ---
 {Component && members.length > 0 ? (
-  <Component
-    title={title}
-    intro={intro}
-    eyebrow={eyebrow ?? undefined}
-    members={members}
-    backgroundClass={backgroundClass}
-    backgroundTone={backgroundToneAttr}
-    backgroundStyle={backgroundStyle}
-  />
+  <Component {...componentProps} />
 ) : null}

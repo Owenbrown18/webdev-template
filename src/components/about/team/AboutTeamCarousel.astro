@@ -15,6 +15,7 @@ interface Props {
   backgroundClass?: string;
   backgroundTone?: string;
   backgroundStyle?: string;
+  fadeColor?: string;
 }
 
 const {
@@ -25,16 +26,22 @@ const {
   backgroundClass,
   backgroundTone,
   backgroundStyle,
+  fadeColor,
 }: Props = Astro.props as Props;
 
 const teamMembers = Array.isArray(members) ? members.filter(Boolean) : [];
 
 const sectionClasses = ['section-shell', backgroundClass ?? ''].filter(Boolean).join(' ');
+const fallbackFadeColor = 'rgb(var(--surface-base-rgb))';
+const resolvedFadeColor =
+  typeof fadeColor === 'string' && fadeColor.trim().length > 0 ? fadeColor.trim() : fallbackFadeColor;
+const sectionStyleParts = [backgroundStyle, `--team-carousel-fade-color: ${resolvedFadeColor}`].filter(Boolean);
+const sectionStyle = sectionStyleParts.length > 0 ? sectionStyleParts.join('; ') : undefined;
 ---
 <section
   class={sectionClasses}
   data-background-tone={backgroundTone ?? undefined}
-  style={backgroundStyle}
+  style={sectionStyle}
   data-team-carousel
 >
   <div class="section-container">
@@ -43,52 +50,54 @@ const sectionClasses = ['section-shell', backgroundClass ?? ''].filter(Boolean).
       <h2 class="section-heading">{title}</h2>
       {intro && <p class="section-subtitle leading-7">{intro}</p>}
     </div>
-    <div class="team-carousel-viewport" data-carousel-viewport>
-      <div
-        class="team-carousel-track"
-        data-carousel-track
-        role="group"
-        aria-roledescription="carousel"
-        aria-label="Team members"
-      >
-        {teamMembers.map(({ name, role, bio, image, highlight }) => (
-          <article class="team-carousel-card surface-card flex h-full min-h-[20rem] flex-col p-5 transition-shadow duration-200 hover:shadow-card-hover" data-carousel-card>
-            <div class="relative">
-              <div class="aspect-[3/4] w-full overflow-hidden rounded-xl bg-slate-100 shadow-inner">
-                {image ? (
-                  <img
-                    src={image}
-                    alt={name ? `${name} headshot` : ''}
-                    class="h-full w-full object-cover"
-                    loading="lazy"
-                    decoding="async"
-                  />
-                ) : (
-                  <div class="flex h-full w-full items-center justify-center bg-gradient-to-br from-slate-200 via-white to-slate-100 text-3xl font-semibold text-slate-400">
-                    {name
-                      ?.split(' ')
-                      .map((part) => part[0])
-                      .filter(Boolean)
-                      .slice(0, 2)
-                      .join('') ?? 'NB'}
-                  </div>
+    <div class="team-carousel-shell">
+      <div class="team-carousel-viewport" data-carousel-viewport>
+        <div
+          class="team-carousel-track"
+          data-carousel-track
+          role="group"
+          aria-roledescription="carousel"
+          aria-label="Team members"
+        >
+          {teamMembers.map(({ name, role, bio, image, highlight }) => (
+            <article class="team-carousel-card surface-card flex h-full min-h-[20rem] flex-col p-5 transition-shadow duration-200 hover:shadow-card-hover" data-carousel-card>
+              <div class="relative">
+                <div class="aspect-[3/4] w-full overflow-hidden rounded-xl bg-slate-100 shadow-inner">
+                  {image ? (
+                    <img
+                      src={image}
+                      alt={name ? `${name} headshot` : ''}
+                      class="h-full w-full object-cover"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  ) : (
+                    <div class="flex h-full w-full items-center justify-center bg-gradient-to-br from-slate-200 via-white to-slate-100 text-3xl font-semibold text-slate-400">
+                      {name
+                        ?.split(' ')
+                        .map((part) => part[0])
+                        .filter(Boolean)
+                        .slice(0, 2)
+                        .join('') ?? 'NB'}
+                    </div>
+                  )}
+                </div>
+                {highlight && (
+                  <span class="absolute bottom-4 left-4 inline-flex rounded-full bg-brand-primary/90 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-white">
+                    {highlight}
+                  </span>
                 )}
               </div>
-              {highlight && (
-                <span class="absolute bottom-4 left-4 inline-flex rounded-full bg-brand-primary/90 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-white">
-                  {highlight}
-                </span>
-              )}
-            </div>
-            <div class="mt-5 space-y-2">
-              <div>
-                <h3 class="text-lg font-semibold text-slate-900">{name}</h3>
-                {role && <p class="text-sm font-medium text-brand-primary/80">{role}</p>}
+              <div class="mt-5 space-y-2">
+                <div>
+                  <h3 class="text-lg font-semibold text-slate-900">{name}</h3>
+                  {role && <p class="text-sm font-medium text-brand-primary/80">{role}</p>}
+                </div>
+                {bio && <p class="text-sm leading-6 text-slate-600 line-clamp-4">{bio}</p>}
               </div>
-              {bio && <p class="text-sm leading-6 text-slate-600 line-clamp-4">{bio}</p>}
-            </div>
-          </article>
-        ))}
+            </article>
+          ))}
+        </div>
       </div>
     </div>
   </div>
@@ -237,12 +246,45 @@ const sectionClasses = ['section-shell', backgroundClass ?? ''].filter(Boolean).
     will-change: transform;
   }
 
+  .team-carousel-shell {
+    margin-top: clamp(2rem, 5vw, 2.75rem);
+    position: relative;
+    border-radius: clamp(2.25rem, 5vw, 3rem);
+    padding: clamp(1.25rem, 3vw, 2.25rem);
+    background: linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0.98) 0%,
+      rgba(255, 255, 255, 0.94) 48%,
+      rgba(255, 255, 255, 0.9) 100%
+    );
+    box-shadow:
+      0 26px 60px -40px rgba(15, 23, 42, 0.32),
+      0 18px 36px -42px rgba(15, 23, 42, 0.18);
+    overflow: hidden;
+    mask-image: linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%);
+  }
+
+  .team-carousel-shell::before {
+    content: '';
+    position: absolute;
+    inset: -12% -18% calc(68% * -1) -18%;
+    background:
+      radial-gradient(120% 80% at 50% 0%, rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0) 70%);
+    pointer-events: none;
+    opacity: 0.85;
+  }
+
   .team-carousel-viewport {
-    margin-top: 2rem;
     overflow: hidden;
     position: relative;
-    --team-carousel-fade-edge: var(--section-background-edge, rgba(248, 250, 252, 1));
-    --team-carousel-fade-top: var(--section-background-top, rgba(248, 250, 252, 1));
+    border-radius: clamp(1.75rem, 4vw, 2.5rem);
+    background: rgba(255, 255, 255, 0.96);
+    --team-carousel-fade-base: var(--team-carousel-fade-color, rgba(248, 250, 252, 1));
+    --team-carousel-fade-edge: var(--section-background-edge, var(--team-carousel-fade-base));
+    --team-carousel-fade-highlight: var(--section-background-top, var(--team-carousel-fade-base));
+    --team-carousel-fade-mid: color-mix(in srgb, var(--team-carousel-fade-edge) 62%, transparent);
+    --team-carousel-fade-soft: color-mix(in srgb, var(--team-carousel-fade-highlight) 54%, transparent);
   }
 
   .team-carousel-card {
@@ -255,20 +297,4 @@ const sectionClasses = ['section-shell', backgroundClass ?? ''].filter(Boolean).
       0 10px 28px -32px rgba(15, 23, 42, 0.14);
   }
 
-  .team-carousel-viewport::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    z-index: 2;
-    opacity: 0.85;
-    background-image:
-      radial-gradient(130% 180% at 0% 50%, color-mix(in srgb, var(--team-carousel-fade-edge) 65%, rgba(248, 250, 252, 0) 35%), rgba(248, 250, 252, 0) 70%),
-      radial-gradient(130% 180% at 100% 50%, color-mix(in srgb, var(--team-carousel-fade-edge) 65%, rgba(248, 250, 252, 0) 35%), rgba(248, 250, 252, 0) 70%),
-      radial-gradient(160% 90% at 50% 0%, color-mix(in srgb, var(--team-carousel-fade-top) 60%, rgba(248, 250, 252, 0) 40%), rgba(248, 250, 252, 0) 82%);
-    background-size: 30% 100%, 30% 100%, 100% 120%;
-    background-repeat: no-repeat;
-    background-position: left center, right center, center -20%;
-    filter: blur(6px);
-  }
 </style>
