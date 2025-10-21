@@ -93,9 +93,21 @@ export const isServicesCtaAnimationEnabled = () => isAnimationEnabled(servicesPa
 /** Returns the hero layout key specified in home content, defaulting to "classic". */
 export const getHeroVariant = () => home.hero?.variant?.trim?.().toLowerCase?.() || 'classic';
 
+/** Returns the statement layout key specified in home content, defaulting to "centered". */
+export const getStatementVariant = () => {
+  const raw = home.statement?.variant?.trim?.().toLowerCase?.() || 'centered';
+  return raw === 'none' ? 'none' : raw;
+};
+
 /** Returns the services layout key specified in home content, or "grid" by default. */
 export const getServicesVariant = () => {
   const raw = home.services?.variant?.trim?.().toLowerCase?.() || 'grid';
+  return raw === 'none' ? 'none' : raw;
+};
+
+/** Returns the services hero layout key, defaulting to "showcase". */
+export const getServicesHeroVariant = () => {
+  const raw = servicesPage.hero?.variant?.trim?.().toLowerCase?.() || 'showcase';
   return raw === 'none' ? 'none' : raw;
 };
 
@@ -169,11 +181,13 @@ export const getAboutTeamVariant = () => {
 };
 
 export const getHeroBackgroundTone = () => getBackgroundTone(home.hero?.background?.tone);
+export const getStatementBackgroundTone = () => getBackgroundTone(home.statement?.background?.tone);
 export const getServicesBackgroundTone = () => getBackgroundTone(home.services?.background?.tone);
 export const getVideoBackgroundTone = () => getBackgroundTone(home.video?.background?.tone);
 export const getTestimonialsBackgroundTone = () => getBackgroundTone(home.testimonials?.background?.tone);
 export const getBookingBackgroundTone = () => getBackgroundTone(home.booking?.background?.tone);
 export const isHeroAnimationEnabled = () => isAnimationEnabled(home.hero?.animation);
+export const isStatementAnimationEnabled = () => isAnimationEnabled(home.statement?.animation);
 export const isVideoAnimationEnabled = () => isAnimationEnabled(home.video?.animation);
 export const isTestimonialsAnimationEnabled = () => isAnimationEnabled(home.testimonials?.animation);
 export const isBookingAnimationEnabled = () => isAnimationEnabled(home.booking?.animation);

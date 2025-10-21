@@ -1,0 +1,178 @@
+---
+import type { SiteContent } from '../../../types/content';
+
+interface Props {
+  site: SiteContent;
+  hero?: {
+    title?: string | null;
+    subtitle?: string | null;
+    primaryCtaLabel?: string | null;
+    primaryCtaHref?: string | null;
+    secondaryCtaLabel?: string | null;
+    secondaryCtaHref?: string | null;
+    image?: string | null;
+    stats?: Array<{ label?: string; value?: string }>;
+  };
+  backgroundClass?: string;
+  backgroundTone?: string;
+  backgroundStyle?: string;
+  animationEnabled?: boolean;
+}
+
+const {
+  site,
+  hero = {},
+  backgroundClass,
+  backgroundTone,
+  backgroundStyle,
+  animationEnabled = true,
+}: Props =
+  Astro.props as Props;
+
+const title = hero.title ?? site.name;
+const tagline = hero.subtitle ?? site.tagline;
+const primaryLabel = hero.primaryCtaLabel ?? 'Contact Us';
+const primaryHref = hero.primaryCtaHref ?? '/contact';
+const showSecondary = Boolean(hero.secondaryCtaLabel && hero.secondaryCtaHref);
+const secondaryLabel = hero.secondaryCtaLabel ?? 'Book now';
+const secondaryHref = hero.secondaryCtaHref ?? '#booking';
+const image = hero.image ?? '/images/hero.jpg';
+const stats = Array.isArray(hero.stats) ? hero.stats : [];
+const showBookingCta = Boolean(site.booking?.embedUrl) && !showSecondary;
+const bookingLabel = site.booking?.provider
+  ? `Book with ${site.booking.provider}`
+  : 'Book Now';
+const shouldAnimate = animationEnabled !== false;
+const heroViewportHeight = 'calc(100dvh - var(--header-height, 5rem))';
+const sectionClasses = [
+  backgroundClass,
+  'full-bleed',
+  'relative isolate overflow-hidden bg-slate-900 text-white shadow-xl',
+]
+  .filter(Boolean)
+  .join(' ');
+const textClasses = [
+  'mx-auto max-w-3xl space-y-6 text-center px-4 sm:px-0',
+  shouldAnimate
+    ? 'motion-safe:opacity-0 motion-safe:translate-y-6 motion-safe:transition-all motion-safe:duration-[900ms] motion-safe:ease-out data-[visible=true]:motion-safe:opacity-100 data-[visible=true]:motion-safe:translate-y-0'
+    : '',
+]
+  .filter(Boolean)
+  .join(' ');
+const imageWrapperClasses = [
+  'absolute inset-0',
+  shouldAnimate
+    ? 'motion-safe:scale-[1.04] motion-safe:transition-transform motion-safe:duration-[1400ms] motion-safe:ease-out data-[visible=true]:motion-safe:scale-100'
+    : '',
+]
+  .filter(Boolean)
+  .join(' ');
+const sectionStyle = backgroundStyle
+  ? `${backgroundStyle}; min-height: ${heroViewportHeight};`
+  : `min-height: ${heroViewportHeight};`;
+---
+<section
+  class={sectionClasses}
+  data-background-tone={backgroundTone ?? undefined}
+  style={sectionStyle}
+  data-hero-root
+  data-animate={shouldAnimate ? 'true' : undefined}
+  data-fullscreen-hero="true"
+>
+  <div class={imageWrapperClasses} data-hero-image>
+    <img
+      src={image}
+      alt=""
+      class="h-full w-full object-cover"
+      loading="lazy"
+      decoding="async"
+    />
+    <div class="absolute inset-0 bg-slate-900/70" aria-hidden="true"></div>
+  </div>
+  <div
+    class="section-container relative flex box-border items-center justify-center py-24 sm:py-32"
+    style={`min-height: ${heroViewportHeight};`}
+  >
+    <div class={textClasses} data-hero-text>
+      <p class="text-sm font-semibold uppercase tracking-[0.28em] text-white/70">Welcome</p>
+      <h1 class="text-4xl font-semibold tracking-tight sm:text-5xl">{title}</h1>
+      {tagline && <p class="text-lg text-white/80">{tagline}</p>}
+      <div class="flex flex-wrap justify-center gap-4">
+        <a
+          href={primaryHref}
+          class="inline-flex items-center justify-center rounded-full bg-white px-6 py-3 text-base font-semibold text-slate-900 shadow-lg transition hover:bg-slate-100"
+        >
+          {primaryLabel}
+        </a>
+        {showSecondary ? (
+          <a
+            href={secondaryHref}
+            class="inline-flex items-center justify-center rounded-full border border-white/60 px-6 py-3 text-base font-semibold text-white transition hover:border-white hover:bg-white/10"
+          >
+            {secondaryLabel}
+          </a>
+        ) : (
+          showBookingCta && (
+            <a
+              href="#booking"
+              class="inline-flex items-center justify-center rounded-full border border-white/60 px-6 py-3 text-base font-semibold text-white transition hover:border-white hover:bg-white/10"
+            >
+              {bookingLabel}
+            </a>
+          )
+        )}
+      </div>
+      {stats.length > 0 && (
+        <dl class="grid gap-6 sm:grid-cols-3">
+          {stats.map(({ label, value }) => (
+            <div class="rounded-2xl border border-white/10 bg-white/5 p-4 text-center shadow-sm backdrop-blur">
+              <dt class="text-sm font-medium text-white/70">{label}</dt>
+              <dd class="text-2xl font-semibold text-white">{value}</dd>
+            </div>
+          ))}
+        </dl>
+      )}
+    </div>
+  </div>
+  {shouldAnimate ? (
+    <script>
+      const roots = Array.from(document.querySelectorAll('[data-hero-root][data-animate="true"]'));
+      const supportMatchMedia = typeof window !== 'undefined' && typeof window.matchMedia === 'function';
+      const prefersReducedMotion = supportMatchMedia
+        ? window.matchMedia('(prefers-reduced-motion: reduce)').matches
+        : false;
+      const reveal = (el: Element | null) => {
+        if (el instanceof HTMLElement) {
+          el.dataset.visible = 'true';
+        }
+      };
+
+      roots.forEach((root) => {
+        if (!(root instanceof HTMLElement)) {
+          return;
+        }
+
+        if (root.dataset.heroAnimated === 'true') {
+          return;
+        }
+
+        root.dataset.heroAnimated = 'true';
+        const text = root.querySelector('[data-hero-text]');
+        const image = root.querySelector('[data-hero-image]');
+
+        if (prefersReducedMotion) {
+          reveal(text);
+          reveal(image);
+          return;
+        }
+
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            reveal(text);
+            reveal(image);
+          });
+        });
+      });
+    </script>
+  ) : null}
+</section>

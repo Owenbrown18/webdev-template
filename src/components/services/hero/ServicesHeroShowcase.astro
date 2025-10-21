@@ -1,0 +1,55 @@
+---
+import ShowcaseHero from '../../shared/hero/ShowcaseHero.astro';
+import type { ServicesPageContent } from '../../../types/content';
+
+type HeroContent = NonNullable<ServicesPageContent['hero']>;
+
+interface Props {
+  hero: HeroContent;
+  metadata: Record<string, any>;
+  backgroundClass?: string;
+  backgroundTone?: string;
+  backgroundStyle?: string;
+  animationEnabled?: boolean;
+}
+
+const {
+  hero,
+  metadata,
+  backgroundClass,
+  backgroundTone,
+  backgroundStyle,
+  animationEnabled = true,
+  ...restProps
+} = Astro.props as Props & Record<string, any>;
+
+const primaryCta =
+  hero.primaryCtaLabel && hero.primaryCtaHref
+    ? { label: hero.primaryCtaLabel, href: hero.primaryCtaHref }
+    : null;
+const secondaryCta =
+  hero.secondaryCtaLabel && hero.secondaryCtaHref
+    ? { label: hero.secondaryCtaLabel, href: hero.secondaryCtaHref }
+    : null;
+
+const heroDetails = Array.isArray(hero.details) ? hero.details : [];
+const heroAlt = (metadata?.heroImageAlt as string | null | undefined) ?? '';
+---
+<ShowcaseHero
+  tagLabel={hero.tagLabel ?? 'Services'}
+  title={hero.title ?? 'Reliable, end-to-end care for every project'}
+  subtitle={
+    hero.subtitle ??
+      'Whether you need a one-off consult or an ongoing partner, our team brings seasoned expertise to every engagement.'
+  }
+  primaryCta={primaryCta}
+  secondaryCta={secondaryCta}
+  image={hero.image ?? '/images/about-hero.jpg'}
+  heroImageAlt={heroAlt}
+  details={heroDetails}
+  backgroundClass={backgroundClass}
+  backgroundTone={backgroundTone}
+  backgroundStyle={backgroundStyle}
+  animationEnabled={animationEnabled}
+  {...restProps}
+/>

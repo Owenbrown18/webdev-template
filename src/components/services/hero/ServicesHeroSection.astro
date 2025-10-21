@@ -1,8 +1,8 @@
 ---
-import ShowcaseHero from '../../shared/hero/ShowcaseHero.astro';
 import {
   servicesPage,
   getServicesPageMetadata,
+  getServicesHeroVariant,
   getServicesHeroBackgroundTone,
   isServicesHeroAnimationEnabled,
 } from '../../../config/content';
@@ -13,10 +13,15 @@ import {
   sectionBackgroundToneAttr,
   createBackgroundStyle,
 } from '../../../utils/background';
+import ServicesHeroShowcase from './ServicesHeroShowcase.astro';
+import ServicesHeroFullscreen from './ServicesHeroFullscreen.astro';
 
 const hero = servicesPage.hero ?? {};
 const metadata = getServicesPageMetadata();
 const rawProps = (Astro.props ?? {}) as Record<string, any>;
+const variantValue = rawProps.variant;
+const variantOverride =
+  typeof variantValue === 'string' ? variantValue.trim().toLowerCase() : undefined;
 const {
   backgroundTone: overrideTone,
   backgroundColor: overrideColor,
@@ -24,6 +29,7 @@ const {
   animation: animationOverride,
   ...restProps
 } = rawProps;
+delete restProps.variant;
 delete restProps.backgroundTone;
 delete restProps.backgroundColor;
 delete restProps.backgroundClass;
@@ -38,33 +44,20 @@ const backgroundStyle = createBackgroundStyle(backgroundColor);
 const animationSetting = animationOverride ?? hero.animation;
 const animationEnabled = animationSetting ?? isServicesHeroAnimationEnabled();
 
-const primaryCta =
-  hero.primaryCtaLabel && hero.primaryCtaHref
-    ? { label: hero.primaryCtaLabel, href: hero.primaryCtaHref }
-    : null;
-const secondaryCta =
-  hero.secondaryCtaLabel && hero.secondaryCtaHref
-    ? { label: hero.secondaryCtaLabel, href: hero.secondaryCtaHref }
-    : null;
+const variants: Record<string, any> = {
+  showcase: ServicesHeroShowcase,
+  fullscreen: ServicesHeroFullscreen,
+};
 
-const heroDetails = Array.isArray(hero.details) ? hero.details : [];
-const heroAlt = metadata.heroImageAlt ?? '';
+const variantKey = variantOverride ?? getServicesHeroVariant();
+const Component = variantKey === 'none' ? null : variants[variantKey] ?? variants.showcase;
+const componentProps = {
+  hero,
+  metadata,
+  backgroundClass,
+  backgroundTone: backgroundToneAttr,
+  backgroundStyle,
+  animationEnabled: animationEnabled !== false,
+};
 ---
-<ShowcaseHero
-  tagLabel={hero.tagLabel ?? 'Services'}
-  title={hero.title ?? 'Reliable, end-to-end care for every project'}
-  subtitle={
-    hero.subtitle ??
-      'Whether you need a one-off consult or an ongoing partner, our team brings seasoned expertise to every engagement.'
-  }
-  primaryCta={primaryCta}
-  secondaryCta={secondaryCta}
-  image={hero.image ?? '/images/about-hero.jpg'}
-  heroImageAlt={heroAlt}
-  details={heroDetails}
-  backgroundClass={backgroundClass}
-  backgroundTone={backgroundToneAttr}
-  backgroundStyle={backgroundStyle}
-  animationEnabled={animationEnabled}
-  {...restProps}
-/>
+{Component ? <Component {...componentProps} {...restProps} /> : null}

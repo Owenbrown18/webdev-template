@@ -1,0 +1,121 @@
+---
+type Props = {
+  eyebrow?: string;
+  title?: string;
+  intro?: string;
+  animationEnabled?: boolean;
+  backgroundClass?: string;
+  backgroundTone?: string;
+  backgroundStyle?: string;
+};
+
+const {
+  eyebrow,
+  title,
+  intro,
+  animationEnabled = true,
+  backgroundClass,
+  backgroundTone,
+  backgroundStyle,
+  ...restProps
+} = Astro.props as Props & Record<string, any>;
+
+const hasContent = Boolean(eyebrow || title || intro);
+const extraClass = typeof restProps.class === 'string' ? restProps.class : undefined;
+if (extraClass) {
+  delete restProps.class;
+}
+
+const inlineStyle = (() => {
+  const userStyle = typeof restProps.style === 'string' ? restProps.style : undefined;
+  if (userStyle) {
+    delete restProps.style;
+  }
+  if (backgroundStyle && userStyle) {
+    return `${backgroundStyle}; ${userStyle}`;
+  }
+  return backgroundStyle ?? userStyle ?? undefined;
+})();
+
+const sectionClasses = ['section-shell', backgroundClass, extraClass].filter(Boolean).join(' ');
+const shouldAnimate = animationEnabled !== false;
+const contentClasses = [
+  'section-container max-w-5xl',
+  shouldAnimate
+    ? 'motion-safe:translate-y-6 motion-safe:opacity-0 motion-safe:transition-all motion-safe:duration-[900ms] motion-safe:ease-out data-[visible=true]:motion-safe:translate-y-0 data-[visible=true]:motion-safe:opacity-100'
+    : '',
+].filter(Boolean);
+const combinedContentClasses = contentClasses.join(' ');
+const innerClasses = 'mx-auto max-w-3xl space-y-6 text-center';
+---
+{hasContent ? (
+  <section
+    class={sectionClasses}
+    data-background-tone={backgroundTone ?? undefined}
+    style={inlineStyle}
+    data-statement-root={shouldAnimate ? 'true' : undefined}
+    {...restProps}
+  >
+    <div class={combinedContentClasses} data-statement-content>
+      <div class={innerClasses}>
+        {eyebrow && <p class="section-eyebrow">{eyebrow}</p>}
+        {title && <h2 class="section-heading">{title}</h2>}
+        {intro && <p class="section-subtitle mx-auto max-w-2xl">{intro}</p>}
+      </div>
+    </div>
+    {shouldAnimate ? (
+      <script>
+        const roots = Array.from(document.querySelectorAll('[data-statement-root="true"]'));
+        const supportMatchMedia = typeof window !== 'undefined' && typeof window.matchMedia === 'function';
+        const prefersReducedMotion = supportMatchMedia
+          ? window.matchMedia('(prefers-reduced-motion: reduce)').matches
+          : false;
+
+        const reveal = (el) => {
+          if (el instanceof HTMLElement) {
+            el.dataset.visible = 'true';
+          }
+        };
+
+        roots.forEach((root) => {
+          if (!(root instanceof HTMLElement)) {
+            return;
+          }
+
+          if (root.dataset.statementAnimated === 'true') {
+            return;
+          }
+
+          const content = root.querySelector('[data-statement-content]');
+          if (!(content instanceof HTMLElement)) {
+            return;
+          }
+
+          root.dataset.statementAnimated = 'true';
+
+          if (prefersReducedMotion || !('IntersectionObserver' in window)) {
+            reveal(content);
+            return;
+          }
+
+          const observer = new IntersectionObserver(
+            (entries, obs) => {
+              entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                  reveal(entry.target);
+                  obs.unobserve(entry.target);
+                }
+              });
+            },
+            {
+              rootMargin: '0px 0px -10% 0px',
+              threshold: 0.2,
+            },
+          );
+
+          observer.observe(content);
+        });
+      </script>
+    ) : null}
+  </section>
+) : null}

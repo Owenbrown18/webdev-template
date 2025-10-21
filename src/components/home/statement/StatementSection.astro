@@ -1,0 +1,67 @@
+---
+import {
+  home,
+  getStatementVariant,
+  getStatementBackgroundTone,
+  isStatementAnimationEnabled,
+} from '../../../config/content';
+import {
+  normalizeBackgroundTone,
+  normalizeBackgroundColor,
+  sectionBackgroundClass,
+  sectionBackgroundToneAttr,
+  createBackgroundStyle,
+} from '../../../utils/background';
+import StatementCentered from './StatementCentered.astro';
+
+const variants: Record<string, any> = {
+  centered: StatementCentered,
+};
+
+const settings = home.statement ?? {};
+const props = (Astro.props ?? {}) as Record<string, any>;
+const variantValue = props.variant;
+const variantOverride =
+  typeof variantValue === 'string' ? variantValue.trim().toLowerCase() : undefined;
+const {
+  backgroundTone: overrideTone,
+  backgroundColor: overrideColor,
+  backgroundClass: overrideClass,
+  animation: animationOverride,
+  eyebrow: eyebrowOverride,
+  title: titleOverride,
+  intro: introOverride,
+  ...restProps
+} = props;
+if ('variant' in restProps) {
+  delete restProps.variant;
+}
+
+const variantKey = variantOverride ?? getStatementVariant();
+const Component = variantKey === 'none' ? null : variants[variantKey] ?? variants.centered;
+const eyebrow = (eyebrowOverride ?? settings.eyebrow ?? undefined) as string | undefined;
+const title = (titleOverride ?? settings.title ?? undefined) as string | undefined;
+const intro = (introOverride ?? settings.intro ?? undefined) as string | undefined;
+const fallbackTone = getStatementBackgroundTone();
+const backgroundTone = normalizeBackgroundTone(
+  overrideTone ?? settings.background?.tone ?? fallbackTone,
+);
+const backgroundClass = overrideClass ?? sectionBackgroundClass(backgroundTone);
+const backgroundToneAttr = sectionBackgroundToneAttr(backgroundTone);
+const backgroundColor = normalizeBackgroundColor(overrideColor ?? settings.background?.color);
+const backgroundStyle = createBackgroundStyle(backgroundColor);
+const animationSetting = animationOverride ?? settings.animation;
+const animationEnabled = animationSetting ?? isStatementAnimationEnabled();
+---
+{Component ? (
+  <Component
+    eyebrow={eyebrow}
+    title={title}
+    intro={intro}
+    backgroundClass={backgroundClass}
+    backgroundTone={backgroundToneAttr}
+    backgroundStyle={backgroundStyle}
+    animationEnabled={animationEnabled !== false}
+    {...restProps}
+  />
+) : null}

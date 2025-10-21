@@ -15,10 +15,12 @@ import {
 } from '../../../utils/background';
 import AboutHeroClassic from './AboutHeroClassic.astro';
 import AboutHeroShowcase from './AboutHeroShowcase.astro';
+import AboutHeroFullscreen from './AboutHeroFullscreen.astro';
 
 const variants: Record<string, any> = {
   classic: AboutHeroClassic,
   showcase: AboutHeroShowcase,
+  fullscreen: AboutHeroFullscreen,
 };
 
 const variantKey = getAboutHeroVariant();

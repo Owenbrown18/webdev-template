@@ -61,6 +61,17 @@ export type HomeContent = {
       value?: string;
     }>;
   };
+  statement?: {
+    variant?: string;
+    background?: {
+      tone?: string | null; // Options: none, gradient
+      color?: string | null;
+    };
+    animation?: boolean | null;
+    eyebrow?: string | null;
+    title?: string | null;
+    intro?: string | null;
+  };
   services?: {
     variant?: string;
     background?: {
@@ -152,6 +163,7 @@ export type ServicesPageContent = {
     heroImageAlt?: string | null;
   };
   hero?: {
+    variant?: string;
     background?: {
       tone?: string | null; // Options: none, gradient
       color?: string | null;

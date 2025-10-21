@@ -1,0 +1,168 @@
+---
+import type { ServicesPageContent } from '../../../types/content';
+
+type HeroContent = NonNullable<ServicesPageContent['hero']>;
+
+interface Props {
+  hero: HeroContent;
+  metadata: Record<string, any>;
+  backgroundClass?: string;
+  backgroundTone?: string;
+  backgroundStyle?: string;
+  animationEnabled?: boolean;
+}
+
+const {
+  hero,
+  metadata,
+  backgroundClass,
+  backgroundTone,
+  backgroundStyle,
+  animationEnabled = true,
+  ...restProps
+} = Astro.props as Props & Record<string, any>;
+
+const image = hero.image ?? '/images/about-hero.jpg';
+const heroAlt = (metadata?.heroImageAlt as string | null | undefined) ?? '';
+const primaryCta =
+  hero.primaryCtaLabel && hero.primaryCtaHref
+    ? { label: hero.primaryCtaLabel, href: hero.primaryCtaHref }
+    : null;
+const secondaryCta =
+  hero.secondaryCtaLabel && hero.secondaryCtaHref
+    ? { label: hero.secondaryCtaLabel, href: hero.secondaryCtaHref }
+    : null;
+const details = Array.isArray(hero.details) ? hero.details : [];
+const shouldAnimate = animationEnabled !== false;
+const heroViewportHeight = 'calc(100dvh - var(--header-height, 5rem))';
+const sectionClasses = [
+  backgroundClass,
+  'relative isolate overflow-hidden bg-slate-900 text-white shadow-xl full-bleed',
+]
+  .filter(Boolean)
+  .join(' ');
+const textClasses = [
+  'mx-auto max-w-3xl space-y-6 text-center px-4 sm:px-0',
+  shouldAnimate
+    ? 'motion-safe:opacity-0 motion-safe:translate-y-6 motion-safe:transition-all motion-safe:duration-[900ms] motion-safe:ease-out data-[visible=true]:motion-safe:opacity-100 data-[visible=true]:motion-safe:translate-y-0'
+    : '',
+]
+  .filter(Boolean)
+  .join(' ');
+const imageClasses = [
+  'absolute inset-0',
+  shouldAnimate
+    ? 'motion-safe:scale-[1.04] motion-safe:transition-transform motion-safe:duration-[1400ms] motion-safe:ease-out data-[visible=true]:motion-safe:scale-100'
+    : '',
+]
+  .filter(Boolean)
+  .join(' ');
+const sectionStyle = backgroundStyle
+  ? `${backgroundStyle}; min-height: ${heroViewportHeight};`
+  : `min-height: ${heroViewportHeight};`;
+---
+<section
+  class={sectionClasses}
+  data-background-tone={backgroundTone ?? undefined}
+  style={sectionStyle}
+  data-hero-root
+  data-animate={shouldAnimate ? 'true' : undefined}
+  data-fullscreen-hero="true"
+  {...restProps}
+>
+  <div class={imageClasses} data-hero-image>
+    <img
+      src={image}
+      alt={heroAlt}
+      class="absolute inset-0 h-full w-full object-cover"
+      loading="lazy"
+      decoding="async"
+    />
+    <div class="absolute inset-0 bg-slate-900/70" aria-hidden="true"></div>
+  </div>
+  <div
+    class="section-container relative flex box-border items-center justify-center py-24 sm:py-32"
+    style={`min-height: ${heroViewportHeight};`}
+  >
+    <div class={textClasses} data-hero-text>
+      {hero.tagLabel && (
+        <p class="text-sm font-semibold uppercase tracking-[0.28em] text-white/70">
+          {hero.tagLabel}
+        </p>
+      )}
+      {hero.title && <h1 class="text-4xl font-semibold tracking-tight sm:text-5xl">{hero.title}</h1>}
+      {hero.subtitle && <p class="text-lg text-white/80">{hero.subtitle}</p>}
+      {(primaryCta || secondaryCta) && (
+        <div class="flex flex-wrap justify-center gap-4">
+          {primaryCta && (
+            <a
+              href={primaryCta.href}
+              class="inline-flex items-center justify-center rounded-full bg-white px-6 py-3 text-base font-semibold text-slate-900 shadow-lg transition hover:bg-slate-100"
+            >
+              {primaryCta.label}
+            </a>
+          )}
+          {secondaryCta && (
+            <a
+              href={secondaryCta.href}
+              class="inline-flex items-center justify-center rounded-full border border-white/60 px-6 py-3 text-base font-semibold text-white transition hover:border-white hover:bg-white/10"
+            >
+              {secondaryCta.label}
+            </a>
+          )}
+        </div>
+      )}
+      {details.length > 0 && (
+        <dl class="grid gap-6 sm:grid-cols-3">
+          {details.map(({ label, value }) => (
+            <div class="rounded-2xl border border-white/10 bg-white/5 p-4 text-center shadow-sm backdrop-blur">
+              <dt class="text-sm font-medium text-white/70">{label}</dt>
+              <dd class="text-2xl font-semibold text-white">{value}</dd>
+            </div>
+          ))}
+        </dl>
+      )}
+    </div>
+  </div>
+  {shouldAnimate ? (
+    <script>
+      const roots = Array.from(document.querySelectorAll('[data-hero-root][data-animate="true"]'));
+      const supportMatchMedia = typeof window !== 'undefined' && typeof window.matchMedia === 'function';
+      const prefersReducedMotion = supportMatchMedia
+        ? window.matchMedia('(prefers-reduced-motion: reduce)').matches
+        : false;
+      const reveal = (el: Element | null) => {
+        if (el instanceof HTMLElement) {
+          el.dataset.visible = 'true';
+        }
+      };
+
+      roots.forEach((root) => {
+        if (!(root instanceof HTMLElement)) {
+          return;
+        }
+
+        if (root.dataset.heroAnimated === 'true') {
+          return;
+        }
+
+        root.dataset.heroAnimated = 'true';
+        const text = root.querySelector('[data-hero-text]');
+        const image = root.querySelector('[data-hero-image]');
+
+        if (prefersReducedMotion) {
+          reveal(text);
+          reveal(image);
+          return;
+        }
+
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            reveal(text);
+            reveal(image);
+          });
+        });
+      });
+    </script>
+  ) : null}
+</section>

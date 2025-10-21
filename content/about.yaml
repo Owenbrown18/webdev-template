@@ -1,5 +1,5 @@
 hero:
-  variant: "showcase" # Options: classic, showcase, none
+  variant: "fullscreen" # Options: classic, showcase, fullscreen, none
   background:
     tone: "none" # Options: none, gradient
     color: null # Optional CSS color to override the gradient palette

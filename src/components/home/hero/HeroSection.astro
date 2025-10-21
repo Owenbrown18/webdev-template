@@ -16,10 +16,12 @@ import {
 import type { SiteContent } from '../../../types/content';
 import HeroClassic from './HeroClassic.astro';
 import HeroSplit from './HeroSplit.astro';
+import HeroFullscreen from './HeroFullscreen.astro';
 
 const variants: Record<string, any> = {
   classic: HeroClassic,
   split: HeroSplit,
+  fullscreen: HeroFullscreen,
 };
 
 const variantKey = getHeroVariant();

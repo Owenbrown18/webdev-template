@@ -1,15 +1,20 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/home/hero/HeroSection.astro';
+import StatementSection from '../components/home/statement/StatementSection.astro';
 import ServicesSection from '../components/home/services/ServicesSection.astro';
 import VideoSection from '../components/home/video/VideoSection.astro';
 import TestimonialsSection from '../components/home/testimonials/TestimonialsSection.astro';
 import BookingSection from '../components/home/booking/BookingSection.astro';
-import { site } from '../config/content';
+import { site, getHeroVariant } from '../config/content';
+
+const heroVariant = getHeroVariant();
+const heroIsFullscreen = heroVariant === 'fullscreen';
 ---
-<BaseLayout description={site.tagline}>
+<BaseLayout description={site.tagline} heroIsFullscreen={heroIsFullscreen}>
   <div class="space-y-16 sm:space-y-20">
     <Hero />
+    <StatementSection />
     <ServicesSection />
     <VideoSection />
     <TestimonialsSection />

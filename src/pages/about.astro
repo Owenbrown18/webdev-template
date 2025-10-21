@@ -7,9 +7,12 @@ import AboutTimelineSection from '../components/about/timeline/AboutTimelineSect
 import AboutCommunitySection from '../components/about/community/AboutCommunitySection.astro';
 import AboutFoundersSection from '../components/about/founders/AboutFoundersSection.astro';
 import AboutTeamSection from '../components/about/team/AboutTeamSection.astro';
-import { site } from '../config/content';
+import { site, getAboutHeroVariant } from '../config/content';
+
+const heroVariant = getAboutHeroVariant();
+const heroIsFullscreen = heroVariant === 'fullscreen';
 ---
-<BaseLayout title="About" description={`Learn more about ${site.name}`}>
+<BaseLayout title="About" description={`Learn more about ${site.name}`} heroIsFullscreen={heroIsFullscreen}>
   <div class="space-y-16 sm:space-y-20">
     <AboutHeroSection />
     <AboutValuesSection />

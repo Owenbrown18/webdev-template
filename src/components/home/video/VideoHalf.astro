@@ -39,13 +39,14 @@ const shouldRender = useLocalVideo || hasEmbed;
 const sectionClasses = [backgroundClass, 'section-shell'].filter(Boolean).join(' ');
 const shouldAnimate = animationEnabled !== false;
 const figureClasses = [
-  'surface-card surface-card-static overflow-hidden',
+  'surface-card surface-card-static overflow-hidden mx-auto',
   shouldAnimate
     ? 'motion-safe:opacity-0 motion-safe:translate-y-6 motion-safe:transition-all motion-safe:duration-[1400ms] motion-safe:ease-out data-[visible=true]:motion-safe:opacity-100 data-[visible=true]:motion-safe:translate-y-0'
     : '',
 ]
   .filter(Boolean)
   .join(' ');
+const containerClasses = 'section-container max-w-5xl';
 ---
 {shouldRender && (
   <section
@@ -54,7 +55,7 @@ const figureClasses = [
     style={backgroundStyle}
     data-video-root={shouldAnimate ? '' : undefined}
   >
-    <div class="section-container max-w-5xl">
+    <div class={containerClasses}>
       {(eyebrow || title || intro) && (
         <div class="section-intro max-w-3xl pb-10">
           {eyebrow && <p class="section-eyebrow">{eyebrow}</p>}

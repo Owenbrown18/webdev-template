@@ -3,6 +3,7 @@ metadata:
   description: "Explore our complete catalog of services, from discovery and planning to hands-on delivery and ongoing maintenance."
   heroImageAlt: "Technician reviewing plans with a homeowner"
 hero:
+  variant: "fullscreen" # Options: showcase, fullscreen, none
   background:
     tone: "gradient"
     color: "#0f172a"

@@ -28,7 +28,12 @@ const hexToRgb = (value: string): string => {
   return `${r} ${g} ${b}`;
 };
 
-const { title, description, showTagline = true } = Astro.props;
+const { title, description, showTagline, heroIsFullscreen = false } = Astro.props as {
+  title?: string;
+  description?: string;
+  showTagline?: boolean;
+  heroIsFullscreen?: boolean;
+};
 const normalizePath = (value: string | undefined) => {
   if (!value) return '/';
   const trimmed = value.trim();
@@ -66,7 +71,8 @@ const accentRgb = hexToRgb(accentColor);
 const surfaceBaseRgb = '248 250 252';
 const surfaceCardRgb = '255 255 255';
 const surfaceMutedRgb = '241 245 249';
-const shouldRenderTagline = Boolean(showTagline && site.tagline?.trim());
+const showTaglineSetting = showTagline ?? true;
+const shouldRenderTagline = !heroIsFullscreen && Boolean(showTaglineSetting && site.tagline?.trim());
 const preloaderConfig = site.preloader ?? {};
 const isPreloaderEnabled = preloaderConfig.enabled === true;
 const preloaderBackgroundColor =
@@ -126,6 +132,15 @@ const bodyStyle = `
   --surface-card-rgb: ${surfaceCardRgb};
   --surface-muted-rgb: ${surfaceMutedRgb};
 `;
+const headerClasses =
+  'site-header sticky top-0 left-0 right-0 z-40 w-full bg-white/90 backdrop-blur supports-[backdrop-filter]:bg-white/80 border-b border-slate-200/80 shadow-sm';
+const mainClassList = {
+  'flex-1': true,
+  'pb-16': true,
+  'pt-0': heroIsFullscreen,
+  'pt-6': !heroIsFullscreen && shouldRenderTagline,
+  'pt-12': !heroIsFullscreen && !shouldRenderTagline,
+};
 ---
 <!DOCTYPE html>
 <html lang="en">
@@ -167,7 +182,7 @@ const bodyStyle = `
     <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:rounded focus:bg-white focus:px-4 focus:py-2 focus:text-sm focus:font-medium focus:text-slate-900">
       Skip to content
     </a>
-    <header class="sticky top-0 z-40 w-full bg-white/90 backdrop-blur supports-[backdrop-filter]:bg-white/80">
+    <header class={headerClasses} style="--header-height: 5rem;">
       <div class="mx-auto flex h-20 w-full max-w-6xl items-center justify-between border-b border-slate-200/80 px-6">
         <a href="/" class={brandLinkClasses}>
           {hasBrandLogo ? (
@@ -214,15 +229,7 @@ const bodyStyle = `
           {site.tagline}
         </p>
       )}
-      <main
-        id="main"
-        class:list={{
-      'flex-1': true,
-      'pb-16': true,
-      'pt-6': shouldRenderTagline,
-      'pt-12': !shouldRenderTagline,
-    }}
-  >
+      <main id="main" class:list={mainClassList}>
         <slot />
       </main>
       <footer class="border-t border-slate-200 py-8 text-sm text-slate-500">
