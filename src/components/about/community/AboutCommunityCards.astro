@@ -73,7 +73,7 @@ const sectionClasses = [backgroundClass, 'section-shell'].filter(Boolean).join('
 const shouldAnimate = animationEnabled !== false;
 const animateAttr = shouldAnimate ? 'true' : 'false';
 const statClasses = [
-  'surface-card relative h-full overflow-hidden rounded-2xl border border-white/40 bg-white/70 px-6 py-5 text-center shadow-sm backdrop-blur-sm transition-shadow duration-200 hover:shadow-card-hover',
+  'surface-card surface-card-static relative h-full overflow-hidden rounded-2xl border border-white/40 bg-white/70 px-6 py-5 text-center backdrop-blur-sm',
   shouldAnimate
     ? 'motion-safe:opacity-0 motion-safe:translate-y-4 motion-safe:transition-all motion-safe:duration-[1000ms] motion-safe:ease-out data-[visible=true]:motion-safe:translate-y-0 data-[visible=true]:motion-safe:opacity-100'
     : '',
@@ -81,7 +81,7 @@ const statClasses = [
   .filter(Boolean)
   .join(' ');
 const cardClasses = [
-  'surface-card relative h-full overflow-hidden rounded-3xl border border-white/35 bg-white/75 p-6 shadow-md backdrop-blur transition-shadow duration-200 hover:shadow-card-hover sm:p-8',
+  'surface-card surface-card-static relative h-full overflow-hidden rounded-3xl border border-white/35 bg-white/75 p-6 backdrop-blur sm:p-8',
   shouldAnimate
     ? 'motion-safe:opacity-0 motion-safe:translate-y-6 motion-safe:transition-all motion-safe:duration-[1200ms] motion-safe:ease-out data-[visible=true]:motion-safe:translate-y-0 data-[visible=true]:motion-safe:opacity-100'
     : '',

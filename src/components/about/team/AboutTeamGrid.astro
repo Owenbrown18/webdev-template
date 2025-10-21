@@ -42,7 +42,7 @@ const sectionClasses = [backgroundClass, 'section-shell'].filter(Boolean).join('
     </div>
     <div class="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
       {members.map(({ name, role, bio, image, highlight }) => (
-        <article class="surface-card flex h-full flex-col p-6 transition-shadow duration-200 hover:shadow-card-hover">
+        <article class="surface-card surface-card-static flex h-full flex-col p-6">
           <div class="relative">
             <div class="aspect-[3/4] w-full overflow-hidden rounded-2xl bg-slate-100 shadow-inner">
               {image ? (

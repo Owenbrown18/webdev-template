@@ -68,7 +68,7 @@ const itemAnimationClass = shouldAnimate
       <dl class="space-y-6" data-faq-list>
         {items.map((item, index) => (
           <div
-            class={`surface-card p-6 sm:p-7 ${itemAnimationClass}`}
+            class={`surface-card surface-card-static p-6 sm:p-7 ${itemAnimationClass}`}
             data-faq-item
             data-index={index}
             style={shouldAnimate ? `transition-delay: ${index * 80}ms;` : undefined}

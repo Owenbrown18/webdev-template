@@ -128,7 +128,7 @@ const resolveLinkLabel = (item: ServicesListItem) => item.link?.label?.trim();
           </a>
         ) : (
           <div
-            class={`surface-card flex h-full flex-col p-6 sm:p-7 ${cardAnimationClasses}`}
+            class={`surface-card surface-card-static flex h-full flex-col p-6 sm:p-7 ${cardAnimationClasses}`}
             data-services-grid-card
             style={shouldAnimate ? `transition-delay: ${120 + index * 60}ms;` : undefined}
           >

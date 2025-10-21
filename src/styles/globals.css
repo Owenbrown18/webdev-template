@@ -47,11 +47,15 @@ body {
   }
 
   .surface-card {
-    @apply rounded-surface border border-slate-200/70 bg-white/95 shadow-card backdrop-blur-[0px];
+    @apply rounded-surface border border-slate-200/70 bg-white/95 backdrop-blur-[0px];
+  }
+
+  .surface-card-static {
+    @apply shadow-card-soft transition-shadow duration-200 hover:shadow-card;
   }
 
   .surface-card-interactive {
-    @apply transition-transform duration-200 hover:-translate-y-1 hover:shadow-card-hover focus-visible:-translate-y-1 focus-visible:shadow-card-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary/25 focus-visible:ring-offset-2 focus-visible:ring-offset-white;
+    @apply shadow-card transition-transform transition-shadow duration-200 hover:-translate-y-1 hover:shadow-card-hover focus-visible:-translate-y-1 focus-visible:shadow-card-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary/25 focus-visible:ring-offset-2 focus-visible:ring-offset-white;
   }
 
   .full-bleed {

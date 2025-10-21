@@ -52,7 +52,7 @@ const hasContent = Boolean(title || intro || primaryCta || secondaryCta);
 const shouldAnimate = animationEnabled !== false;
 const sectionClasses = [backgroundClass, 'section-shell'].filter(Boolean).join(' ');
 const cardClasses = [
-  'surface-card relative overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-card',
+  'surface-card surface-card-static relative overflow-hidden rounded-3xl border border-slate-200 bg-white',
   shouldAnimate
     ? 'motion-safe:opacity-0 motion-safe:translate-y-6 motion-safe:transition-all motion-safe:duration-[1200ms] motion-safe:ease-out data-[visible=true]:motion-safe:opacity-100 data-[visible=true]:motion-safe:translate-y-0'
     : '',

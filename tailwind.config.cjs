@@ -26,6 +26,7 @@ module.exports = {
         pill: '999px',
       },
       boxShadow: {
+        'card-soft': '0 14px 32px -22px rgb(15 23 42 / 0.18)',
         card: '0 18px 40px -18px rgb(15 23 42 / 0.28)',
         'card-hover': '0 22px 45px -20px rgb(15 23 42 / 0.32)',
         'brand-glow': '0 18px 42px -16px rgb(var(--color-primary-rgb) / 0.45)',

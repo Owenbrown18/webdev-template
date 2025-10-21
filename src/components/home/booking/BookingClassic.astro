@@ -26,7 +26,7 @@ const provider = site.booking?.provider;
 const sectionClasses = [backgroundClass, 'section-shell'].filter(Boolean).join(' ');
 const shouldAnimate = animationEnabled !== false;
 const frameWrapperClasses = [
-  'mt-10 surface-card overflow-hidden',
+  'mt-10 surface-card surface-card-static overflow-hidden',
   shouldAnimate
     ? 'motion-safe:opacity-0 motion-safe:translate-y-6 motion-safe:transition-all motion-safe:duration-[1600ms] motion-safe:ease-out data-[visible=true]:motion-safe:opacity-100 data-[visible=true]:motion-safe:translate-y-0'
     : '',
