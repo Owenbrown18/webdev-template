@@ -98,7 +98,7 @@ faq:
 cta:
   background:
     tone: "gradient"
-    color: "#111112"
+    color: "#0002"
   animation: true
   eyebrow: "Next steps"
   title: "Build your tailored service plan"
