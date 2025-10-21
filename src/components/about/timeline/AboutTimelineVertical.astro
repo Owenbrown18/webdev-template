@@ -43,7 +43,7 @@ const sectionClasses = [backgroundClass, 'section-shell'].filter(Boolean).join('
       <div class="absolute left-[1.1rem] top-0 hidden h-full w-px bg-slate-200 lg:block" aria-hidden="true"></div>
       <div class="space-y-10">
         {milestones.map(({ year, title, description, image }, index) => (
-          <article class="surface-card relative flex flex-col gap-4 p-6 transition-shadow duration-200 hover:shadow-card-hover lg:flex-row lg:items-center">
+          <article class="surface-card surface-card-static relative flex flex-col gap-4 p-6 lg:flex-row lg:items-center">
             <div class="relative flex items-start gap-3 lg:w-48 lg:flex-col lg:items-start">
               <span class="absolute -left-3 hidden h-8 w-8 rounded-full border-2 border-brand-primary bg-white lg:flex lg:items-center lg:justify-center">
                 <span class="h-2 w-2 rounded-full bg-brand-primary"></span>

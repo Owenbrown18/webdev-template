@@ -42,7 +42,7 @@ const animationClasses = shouldAnimate
   ? 'motion-safe:translate-y-6 motion-safe:opacity-0 motion-safe:transition-all motion-safe:duration-[1400ms] motion-safe:ease-out data-[visible=true]:motion-safe:translate-y-0 data-[visible=true]:motion-safe:opacity-100'
   : '';
 const cardClasses = [
-  'surface-card p-6 transition-shadow duration-200 hover:shadow-card-hover',
+  'surface-card surface-card-static p-6',
   animationClasses,
 ]
   .filter(Boolean)

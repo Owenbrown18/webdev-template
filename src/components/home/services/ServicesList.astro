@@ -37,7 +37,7 @@ const isDetailed = mode === 'detailed';
 const baseCardClasses = ['surface-card', 'block', 'p-6', 'sm:p-7'];
 const cardClasses = [
   ...baseCardClasses,
-  !isDetailed ? 'surface-card-interactive' : '',
+  !isDetailed ? 'surface-card-interactive' : 'surface-card-static',
   animationClasses,
 ]
   .filter(Boolean)

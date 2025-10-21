@@ -74,7 +74,7 @@ const cardAnimationClasses = shouldAnimate
       {formattedProfiles.map(
         ({ name, role, bio, image, highlight, paragraphs }, index) => (
           <article
-            class={`surface-card grid gap-8 p-6 transition-shadow duration-200 hover:shadow-card-hover lg:grid-cols-[minmax(0,230px),1fr] ${cardAnimationClasses}`}
+            class={`surface-card surface-card-static grid gap-8 p-6 lg:grid-cols-[minmax(0,230px),1fr] ${cardAnimationClasses}`}
             data-founders-card={shouldAnimate ? '' : undefined}
             style={shouldAnimate ? `transition-delay: ${120 + index * 80}ms;` : undefined}
           >

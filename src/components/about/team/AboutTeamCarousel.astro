@@ -60,7 +60,7 @@ const sectionStyle = sectionStyleParts.length > 0 ? sectionStyleParts.join('; ')
           aria-label="Team members"
         >
           {teamMembers.map(({ name, role, bio, image, highlight }) => (
-            <article class="team-carousel-card surface-card flex h-full min-h-[20rem] flex-col p-5 transition-shadow duration-200 hover:shadow-card-hover" data-carousel-card>
+            <article class="team-carousel-card surface-card surface-card-static flex h-full min-h-[20rem] flex-col p-5" data-carousel-card>
               <div class="relative">
                 <div class="aspect-[3/4] w-full overflow-hidden rounded-xl bg-slate-100 shadow-inner">
                   {image ? (
