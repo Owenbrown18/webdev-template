@@ -40,7 +40,7 @@ const backgroundTone = normalizeBackgroundTone(overrideTone ?? hero.background?.
 const backgroundClass = overrideClass ?? sectionBackgroundClass(backgroundTone);
 const backgroundToneAttr = sectionBackgroundToneAttr(backgroundTone);
 const backgroundColor = normalizeBackgroundColor(overrideColor ?? hero.background?.color);
-const backgroundStyle = createBackgroundStyle(backgroundColor);
+const backgroundStyle = createBackgroundStyle(backgroundColor, backgroundTone);
 const animationSetting = animationOverride ?? hero.animation;
 const animationEnabled = animationSetting ?? isHeroAnimationEnabled();
 ---

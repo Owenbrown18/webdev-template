@@ -47,7 +47,7 @@ const backgroundTone = normalizeBackgroundTone(overrideTone ?? settings.backgrou
 const backgroundClass = overrideClass ?? sectionBackgroundClass(backgroundTone);
 const backgroundToneAttr = sectionBackgroundToneAttr(backgroundTone);
 const backgroundColor = normalizeBackgroundColor(overrideColor ?? settings.background?.color);
-const backgroundStyle = createBackgroundStyle(backgroundColor);
+const backgroundStyle = createBackgroundStyle(backgroundColor, backgroundTone);
 const animationEnabled =
   animationOverride !== undefined ? animationOverride : isTestimonialsAnimationEnabled();
 ---

@@ -27,7 +27,7 @@ const backgroundTone = normalizeBackgroundTone(overrideTone ?? overview.backgrou
 const backgroundClass = overrideClass ?? sectionBackgroundClass(backgroundTone);
 const backgroundToneAttr = sectionBackgroundToneAttr(backgroundTone);
 const backgroundColor = normalizeBackgroundColor(overrideColor ?? overview.background?.color);
-const backgroundStyle = createBackgroundStyle(backgroundColor);
+const backgroundStyle = createBackgroundStyle(backgroundColor, backgroundTone);
 const animationSetting = animationOverride ?? overview.animation;
 const animationEnabled = animationSetting ?? isServicesOverviewAnimationEnabled();
 

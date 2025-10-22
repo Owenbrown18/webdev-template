@@ -108,6 +108,18 @@ body {
     z-index: 2;
   }
 
+  .section-background-solid {
+    @apply full-bleed;
+    position: relative;
+    isolation: isolate;
+    background-color: var(--section-background-solid-color, rgba(var(--surface-base-rgb), 1));
+  }
+
+  .section-background-solid > .section-container {
+    position: relative;
+    z-index: 1;
+  }
+
   .min-h-hero {
     height: 34rem;
   }

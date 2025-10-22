@@ -1,7 +1,7 @@
 hero:
   variant: "fullscreen" # Options: classic, showcase, fullscreen, none
   background:
-    tone: "none" # Options: none, gradient
+    tone: "none" # Options: none, gradient, solid
     color: null # Optional CSS color to override the gradient palette
   animation: true # Toggle hero animation on/off
   title: "Built by neighbors, for neighbors"
@@ -41,7 +41,7 @@ values:
 process:
   variant: "steps" # Options: steps, none
   background:
-    tone: "gradient" # Options: none, gradient
+    tone: "gradient" # Options: none, gradient, solid
     color: "#0002"
   animation: true # Toggle reveal animation on/off
   eyebrow: "How we work"
@@ -61,7 +61,7 @@ process:
 timeline:
   variant: "steps" # Options: steps, vertical, none
   background:
-    tone: "none" # Options: none, gradient
+    tone: "none" # Options: none, gradient, solid
     color: null
   animation: true # Toggle reveal animation on/off
   eyebrow: "Our journey"
@@ -138,7 +138,7 @@ community:
 founders:
   variant: "spotlight" # Options: spotlight, none
   background:
-    tone: "none" # Options: none, gradient
+    tone: "none" # Options: none, gradient, solid
     color: null
   animation: true # Toggle reveal animation on/off
   eyebrow: "Founders spotlight"

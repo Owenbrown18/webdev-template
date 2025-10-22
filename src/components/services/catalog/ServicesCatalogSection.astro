@@ -43,7 +43,7 @@ const backgroundTone = normalizeBackgroundTone(overrideTone ?? catalog.backgroun
 const backgroundClass = overrideClass ?? sectionBackgroundClass(backgroundTone);
 const backgroundToneAttr = sectionBackgroundToneAttr(backgroundTone);
 const backgroundColor = normalizeBackgroundColor(overrideColor ?? catalog.background?.color);
-const backgroundStyle = createBackgroundStyle(backgroundColor);
+const backgroundStyle = createBackgroundStyle(backgroundColor, backgroundTone);
 const animationSetting = animationOverride ?? catalog.animation;
 const animationEnabled = animationSetting ?? isServicesCatalogAnimationEnabled();
 const variant = typeof variantOverride === 'string' ? variantOverride : getServicesCatalogVariant();

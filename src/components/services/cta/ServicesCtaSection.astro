@@ -27,7 +27,7 @@ const backgroundTone = normalizeBackgroundTone(overrideTone ?? base.background?.
 const backgroundClass = overrideClass ?? sectionBackgroundClass(backgroundTone);
 const backgroundToneAttr = sectionBackgroundToneAttr(backgroundTone);
 const backgroundColor = normalizeBackgroundColor(overrideColor ?? base.background?.color);
-const backgroundStyle = createBackgroundStyle(backgroundColor);
+const backgroundStyle = createBackgroundStyle(backgroundColor, backgroundTone);
 const animationSetting = animationOverride ?? base.animation;
 const animationEnabled = animationSetting ?? isServicesCtaAnimationEnabled();
 

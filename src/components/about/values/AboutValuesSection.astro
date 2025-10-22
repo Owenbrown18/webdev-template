@@ -39,7 +39,7 @@ const backgroundTone = normalizeBackgroundTone(
 const backgroundClass = sectionBackgroundClass(backgroundTone);
 const backgroundToneAttr = sectionBackgroundToneAttr(backgroundTone);
 const backgroundColor = normalizeBackgroundColor(props.backgroundColor ?? base.background?.color);
-const backgroundStyle = createBackgroundStyle(backgroundColor);
+const backgroundStyle = createBackgroundStyle(backgroundColor, backgroundTone);
 const animationOverride = props.animation;
 const animationEnabled = animationOverride !== undefined ? animationOverride !== false : isAboutValuesAnimationEnabled();
 ---

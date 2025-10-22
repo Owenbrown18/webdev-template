@@ -43,7 +43,7 @@ const backgroundTone = normalizeBackgroundTone(overrideTone ?? (home.video?.back
 const backgroundClass = overrideClass ?? sectionBackgroundClass(backgroundTone);
 const backgroundToneAttr = sectionBackgroundToneAttr(backgroundTone);
 const backgroundColor = normalizeBackgroundColor(overrideColor ?? home.video?.background?.color);
-const backgroundStyle = createBackgroundStyle(backgroundColor);
+const backgroundStyle = createBackgroundStyle(backgroundColor, backgroundTone);
 const animationEnabled = animationOverride !== undefined ? animationOverride : isVideoAnimationEnabled();
 ---
 {Component ? (
