@@ -3,6 +3,12 @@ tagline: "Friendly neighborhood experts delivering reliable services with a pers
 brand:
   logo: "/images/loading-logo.png" # Optional: swap with a client logo (SVG/PNG recommended)
   logoAlt: "Local Business Co. mark"
+header:
+  showLogo: true
+  showBusinessName: false
+footer:
+  showLogo: true
+  showBusinessName: true
 phone: "(555) 123-4567"
 email: "hello@localbusiness.co"
 address:

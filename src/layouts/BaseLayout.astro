@@ -34,6 +34,14 @@ const { title, description, showTagline, heroIsFullscreen = false } = Astro.prop
   showTagline?: boolean;
   heroIsFullscreen?: boolean;
 };
+const headerSettings = site.header ?? {};
+const footerSettings = site.footer ?? {};
+const showLogoSetting = headerSettings.showLogo !== false;
+const showBusinessNameSetting = headerSettings.showBusinessName !== false;
+const showFooterLogoSetting = footerSettings.showLogo !== false;
+const showFooterBusinessNameSetting = footerSettings.showBusinessName !== false;
+const headerLogoHeightClass = showBusinessNameSetting ? 'h-[5.25rem]' : 'h-24';
+const footerLogoHeightClass = showFooterBusinessNameSetting ? 'h-[5.25rem]' : 'h-24';
 const normalizePath = (value: string | undefined) => {
   if (!value) return '/';
   const trimmed = value.trim();
@@ -58,8 +66,14 @@ const brandLogoAlt =
   typeof site.brand?.logoAlt === 'string' && site.brand.logoAlt?.trim()?.length
     ? site.brand.logoAlt.trim()
     : site.name ?? 'Brand logo';
-const hasBrandLogo = Boolean(brandLogo);
-const brandLinkClasses = hasBrandLogo
+const headerHasLogo = showLogoSetting && Boolean(brandLogo);
+const footerHasLogo = showFooterLogoSetting && Boolean(brandLogo);
+const effectiveHeaderShowName = showBusinessNameSetting || !headerHasLogo;
+const effectiveFooterShowName = showFooterBusinessNameSetting || !footerHasLogo;
+const headerNameClasses = headerHasLogo
+  ? 'text-lg font-semibold leading-tight text-slate-900 group-hover:text-inherit'
+  : 'text-[1.6rem] font-semibold text-slate-900 transition hover:text-brand-primary';
+const brandLinkClasses = headerHasLogo
   ? 'group inline-flex items-center gap-3 font-semibold text-slate-900 transition hover:text-brand-primary'
   : 'text-[1.6rem] font-semibold text-slate-900 transition hover:text-brand-primary';
 const brandLinkLabel = site.name ?? 'Home';
@@ -185,21 +199,19 @@ const mainClassList = {
     <header class={headerClasses} style="--header-height: 5rem;">
       <div class="mx-auto flex h-20 w-full max-w-6xl items-center justify-between border-b border-slate-200/80 px-6">
         <a href="/" class={brandLinkClasses}>
-          {hasBrandLogo ? (
-            <>
-              <img
-                src={brandLogo ?? ''}
-                alt={brandLogoAlt}
-                class="h-10 w-auto rounded-sm"
-                loading="lazy"
-                decoding="async"
-              />
-              <span class="text-lg font-semibold leading-tight text-slate-900 group-hover:text-inherit">
-                {brandLinkLabel}
-              </span>
-            </>
-          ) : (
-            brandLinkLabel
+          {headerHasLogo ? (
+            <img
+              src={brandLogo ?? ''}
+              alt={brandLinkLabel}
+              class={`rounded-sm ${headerLogoHeightClass} w-auto transition`}
+              loading="lazy"
+              decoding="async"
+            />
+          ) : null}
+          {effectiveHeaderShowName && (
+            <span class={headerNameClasses}>
+              {brandLinkLabel}
+            </span>
           )}
         </a>
         <nav class="flex items-center gap-2 text-sm font-medium text-slate-600">
@@ -235,7 +247,7 @@ const mainClassList = {
       <footer class="border-t border-slate-200 py-8 text-sm text-slate-500">
         <div class="flex flex-col gap-6">
           <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-            {hasBrandLogo ? (
+            {footerHasLogo && (
               <a
                 href="/"
                 class="inline-flex items-center gap-3 font-semibold text-slate-700 transition hover:text-brand-primary"
@@ -243,13 +255,16 @@ const mainClassList = {
                 <img
                   src={brandLogo ?? ''}
                   alt={brandLogoAlt}
-                  class="h-10 w-auto rounded-sm"
+                  class={`rounded-sm ${footerLogoHeightClass} w-auto transition`}
                   loading="lazy"
                   decoding="async"
                 />
-                <span class="text-base font-semibold leading-tight">{brandLinkLabel}</span>
+                {effectiveFooterShowName && (
+                  <span class="text-base font-semibold leading-tight">{brandLinkLabel}</span>
+                )}
               </a>
-            ) : (
+            )}
+            {!footerHasLogo && effectiveFooterShowName && (
               <span class="text-base font-semibold text-slate-700">{brandLinkLabel}</span>
             )}
             <div class="flex flex-wrap items-center gap-4">

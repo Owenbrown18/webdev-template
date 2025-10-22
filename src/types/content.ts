@@ -24,6 +24,10 @@ export type SiteContent = {
     logo?: string | null;
     logoAlt?: string | null;
   };
+  header?: {
+    showBusinessName?: boolean | null;
+    showLogo?: boolean | null;
+  };
   colors?: {
     primary?: string;
     secondary?: string;
@@ -32,6 +36,10 @@ export type SiteContent = {
   footerCredit?: {
     label?: string;
     href?: string;
+  };
+  footer?: {
+    showBusinessName?: boolean | null;
+    showLogo?: boolean | null;
   };
   preloader?: {
     enabled?: boolean;
