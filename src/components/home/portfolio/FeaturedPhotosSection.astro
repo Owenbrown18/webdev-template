@@ -1,0 +1,132 @@
+---
+import { home, getFeaturedPhotosBackgroundTone, isFeaturedPhotosAnimationEnabled } from '../../../config/content';
+import {
+  normalizeBackgroundTone,
+  normalizeBackgroundColor,
+  sectionBackgroundClass,
+  sectionBackgroundToneAttr,
+  createBackgroundStyle,
+} from '../../../utils/background';
+
+const settings = home.featuredPhotos ?? {};
+const props = (Astro.props ?? {}) as Record<string, any>;
+const {
+  backgroundTone: overrideTone,
+  backgroundColor: overrideColor,
+  backgroundClass: overrideClass,
+  animation: animationOverride,
+  items: itemsOverride,
+  ...restProps
+} = props;
+
+const fallbackTone = getFeaturedPhotosBackgroundTone();
+const backgroundTone = normalizeBackgroundTone(overrideTone ?? settings.background?.tone ?? fallbackTone);
+const backgroundClass = overrideClass ?? sectionBackgroundClass(backgroundTone);
+const backgroundToneAttr = sectionBackgroundToneAttr(backgroundTone);
+const backgroundColor = normalizeBackgroundColor(overrideColor ?? settings.background?.color);
+const backgroundStyle = createBackgroundStyle(backgroundColor, backgroundTone);
+const animationSetting = animationOverride ?? settings.animation;
+const animationEnabled = animationSetting ?? isFeaturedPhotosAnimationEnabled();
+const items = Array.isArray(itemsOverride ?? settings.items) ? (itemsOverride ?? settings.items) : [];
+const filteredItems = items.filter((item) => Boolean(item?.src));
+const shouldRender = filteredItems.length > 0;
+const shouldAnimate = animationEnabled !== false;
+const sectionClasses = [backgroundClass, 'section-shell pt-10 pb-10 sm:pt-14 sm:pb-14'].filter(Boolean).join(' ');
+const containerClasses = [
+  'section-container max-w-7xl',
+  shouldAnimate
+    ? 'motion-safe:opacity-0 motion-safe:-translate-y-4 motion-safe:transition-all motion-safe:duration-[900ms] motion-safe:ease-out data-[visible=true]:motion-safe:translate-y-0 data-[visible=true]:motion-safe:opacity-100'
+    : '',
+]
+  .filter(Boolean)
+  .join(' ');
+const animationAttr = shouldAnimate ? 'true' : 'false';
+
+const gridClass = (() => {
+  const count = filteredItems.length;
+  if (count <= 1) return 'grid justify-center gap-12';
+  if (count === 2) return 'grid gap-12 sm:grid-cols-2 lg:grid-cols-2 justify-items-center';
+  return 'grid gap-12 sm:grid-cols-2 lg:grid-cols-3';
+})();
+---
+{shouldRender ? (
+  <section
+    class={sectionClasses}
+    data-background-tone={backgroundToneAttr ?? undefined}
+    style={backgroundStyle}
+    data-featured-photos-root={animationAttr}
+    {...restProps}
+  >
+    <div class={containerClasses} data-featured-photos-container>
+      <div class={`${gridClass}`}>
+        {filteredItems.map(({ src, alt }, index) => (
+          <figure
+            class="surface-card surface-card-static overflow-hidden rounded-xl border border-slate-200/60 bg-white shadow-card-soft"
+            style={shouldAnimate ? `transition-delay: ${index * 80}ms;` : undefined}
+            data-featured-photo
+          >
+            <div class="aspect-[16/9] w-full">
+              <img
+                src={src ?? ''}
+                alt={alt ?? ''}
+                class="h-full w-full object-cover"
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
+          </figure>
+        ))}
+      </div>
+    </div>
+    {shouldAnimate ? (
+      <script>
+        const roots = Array.from(document.querySelectorAll('[data-featured-photos-root="true"]'));
+        const supportMatchMedia = typeof window !== 'undefined' && typeof window.matchMedia === 'function';
+        const prefersReducedMotion = supportMatchMedia
+          ? window.matchMedia('(prefers-reduced-motion: reduce)').matches
+          : false;
+        const reveal = (el) => {
+          if (el instanceof HTMLElement) {
+            el.dataset.visible = 'true';
+          }
+        };
+
+        roots.forEach((root) => {
+          if (!(root instanceof HTMLElement)) return;
+          if (root.dataset.featuredPhotosAnimated === 'true') return;
+
+          const container = root.querySelector('[data-featured-photos-container]');
+          const photos = Array.from(root.querySelectorAll('[data-featured-photo]'));
+          root.dataset.featuredPhotosAnimated = 'true';
+
+          const targets = [container, ...photos];
+          if (prefersReducedMotion || !('IntersectionObserver' in window)) {
+            targets.forEach(reveal);
+            return;
+          }
+
+          const observer = new IntersectionObserver(
+            (entries, obs) => {
+              entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                  reveal(entry.target);
+                  obs.unobserve(entry.target);
+                }
+              });
+            },
+            {
+              rootMargin: '0px 0px -10% 0px',
+              threshold: 0.1,
+            },
+          );
+
+          targets.forEach((target) => {
+            if (target instanceof HTMLElement) {
+              observer.observe(target);
+            }
+          });
+        });
+      </script>
+    ) : null}
+  </section>
+) : null}

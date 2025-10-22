@@ -25,13 +25,45 @@ services:
   variant: "brief" # Options: grid, list, spotlight, brief, none
   background:
     tone: "solid" # Options: none, gradient, solid
-    color: "#f3f4f6"
+    color: "#add8e6"
   animation: true # Toggle reveal animation on/off
   eyebrow: "What we do"
   title: "Our Services"
   intro: "Support tailored to your needs."
+featuredPhotos:
+  background:
+    tone: "none" # Options: none, gradient, solid
+    color: null
+  animation: true
+  items:
+    - src: "https://images.unsplash.com/photo-1523475472560-d2df97ec485c?auto=format&fit=crop&w=1200&q=80"
+      alt: "Vitamin supplement eCommerce"
+    - src: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=1200&q=80"
+      alt: "Roofing services website"
+    - src: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1200&q=80"
+      alt: "Community services portal"
+portfolioStatement:
+  background:
+    tone: "solid" # Options: none, gradient, solid
+    color: "#add8e6"
+  animation: true
+  eyebrow: "Portfolio"
+  title: "Beautiful, fast, mobile-responsive websites"
+  intro: "From landing pages to full eCommerce builds, we craft modern web experiences that load fast and convert customers on every device."
+  ctaLabel: "Browse our Portfolio"
+  ctaHref: "/portfolio"
+cta:
+  background:
+    tone: "solid" # Options: none, gradient, solid
+    color: "#add8e6"
+  animation: true
+  eyebrow: "Ready to start?"
+  title: "Let’s design a website that works for your business"
+  intro: "Share your goals and we’ll build a tailored plan—from first concept to launch day and beyond."
+  ctaLabel: "Book a call"
+  ctaHref: "/contact"
 video:
-  variant: "full" # Options: half, full, none
+  variant: "none" # Options: half, full, none
   background:
     tone: "gradient" # Options: none, gradient, solid
     color: null
@@ -53,7 +85,7 @@ testimonials:
   title: "Kind Words"
   intro: "Real feedback from neighbors who trusted Local Business Co."
 booking:
-  variant: "classic" # Options: classic, none
+  variant: "none" # Options: classic, none
   background:
     tone: "gradient" # Options: none, gradient
     color: null

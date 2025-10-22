@@ -73,13 +73,48 @@ export type HomeContent = {
   statement?: {
     variant?: string;
     background?: {
-      tone?: string | null; // Options: none, gradient
+      tone?: string | null; // Options: none, gradient, solid
       color?: string | null;
     };
     animation?: boolean | null;
     eyebrow?: string | null;
     title?: string | null;
     intro?: string | null;
+  };
+  featuredPhotos?: {
+    background?: {
+      tone?: string | null; // Options: none, gradient, solid
+      color?: string | null;
+    };
+    animation?: boolean | null;
+    items?: Array<{
+      src?: string | null;
+      alt?: string | null;
+    }>;
+  };
+  portfolioStatement?: {
+    background?: {
+      tone?: string | null; // Options: none, gradient, solid
+      color?: string | null;
+    };
+    animation?: boolean | null;
+    eyebrow?: string | null;
+    title?: string | null;
+    intro?: string | null;
+    ctaLabel?: string | null;
+    ctaHref?: string | null;
+  };
+  cta?: {
+    background?: {
+      tone?: string | null; // Options: none, gradient, solid
+      color?: string | null;
+    };
+    animation?: boolean | null;
+    eyebrow?: string | null;
+    title?: string | null;
+    intro?: string | null;
+    ctaLabel?: string | null;
+    ctaHref?: string | null;
   };
   services?: {
     variant?: string;

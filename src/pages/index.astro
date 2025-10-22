@@ -3,6 +3,9 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/home/hero/HeroSection.astro';
 import StatementSection from '../components/home/statement/StatementSection.astro';
 import ServicesSection from '../components/home/services/ServicesSection.astro';
+import FeaturedPhotosSection from '../components/home/portfolio/FeaturedPhotosSection.astro';
+import PortfolioStatementSection from '../components/home/portfolio/PortfolioStatementSection.astro';
+import CallToActionSection from '../components/home/cta/CallToActionSection.astro';
 import VideoSection from '../components/home/video/VideoSection.astro';
 import TestimonialsSection from '../components/home/testimonials/TestimonialsSection.astro';
 import BookingSection from '../components/home/booking/BookingSection.astro';
@@ -16,8 +19,11 @@ const heroIsFullscreen = heroVariant === 'fullscreen';
     <Hero />
     <StatementSection />
     <ServicesSection />
+    <FeaturedPhotosSection />
+    <PortfolioStatementSection />
     <VideoSection />
     <TestimonialsSection />
     <BookingSection />
+    <CallToActionSection />
   </div>
 </BaseLayout>
