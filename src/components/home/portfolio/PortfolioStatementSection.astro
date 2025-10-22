@@ -78,7 +78,7 @@ const containerClasses = [
         const prefersReducedMotion = supportMatchMedia
           ? window.matchMedia('(prefers-reduced-motion: reduce)').matches
           : false;
-        const reveal = (el) => {
+        const reveal = (el: Element | null): void => {
           if (el instanceof HTMLElement) {
             el.dataset.visible = 'true';
           }

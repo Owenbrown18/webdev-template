@@ -45,11 +45,14 @@ const bookingLabel = site.booking?.provider
   ? `Book with ${site.booking.provider}`
   : 'Book Now';
 const shouldAnimate = animationEnabled !== false;
+const isAuroraBackground = backgroundTone === 'aurora';
 const heroViewportHeight = 'calc(100dvh - var(--header-height, 5rem))';
 const sectionClasses = [
   backgroundClass,
   'full-bleed',
-  'relative isolate overflow-hidden bg-slate-900 text-white shadow-xl',
+  isAuroraBackground
+    ? 'relative isolate overflow-hidden text-white shadow-xl'
+    : 'relative isolate overflow-hidden bg-slate-900 text-white shadow-xl',
 ]
   .filter(Boolean)
   .join(' ');
@@ -61,14 +64,17 @@ const textClasses = [
 ]
   .filter(Boolean)
   .join(' ');
-const imageWrapperClasses = [
-  'absolute inset-0',
-  shouldAnimate
-    ? 'motion-safe:scale-[1.04] motion-safe:transition-transform motion-safe:duration-[1400ms] motion-safe:ease-out data-[visible=true]:motion-safe:scale-100'
-    : '',
-]
-  .filter(Boolean)
-  .join(' ');
+const showImageLayer = !isAuroraBackground && typeof image === 'string' && image.trim().length > 0;
+const imageWrapperClasses = showImageLayer
+  ? [
+      'absolute inset-0',
+      shouldAnimate
+        ? 'motion-safe:scale-[1.04] motion-safe:transition-transform motion-safe:duration-[1400ms] motion-safe:ease-out data-[visible=true]:motion-safe:scale-100'
+        : '',
+    ]
+      .filter(Boolean)
+      .join(' ')
+  : undefined;
 const sectionStyle = backgroundStyle
   ? `${backgroundStyle}; min-height: ${heroViewportHeight};`
   : `min-height: ${heroViewportHeight};`;
@@ -81,16 +87,18 @@ const sectionStyle = backgroundStyle
   data-animate={shouldAnimate ? 'true' : undefined}
   data-fullscreen-hero="true"
 >
-  <div class={imageWrapperClasses} data-hero-image>
-    <img
-      src={image}
-      alt=""
-      class="h-full w-full object-cover"
-      loading="lazy"
-      decoding="async"
-    />
-    <div class="absolute inset-0 bg-slate-900/70" aria-hidden="true"></div>
-  </div>
+  {showImageLayer ? (
+    <div class={imageWrapperClasses} data-hero-image>
+      <img
+        src={image}
+        alt=""
+        class="h-full w-full object-cover"
+        loading="lazy"
+        decoding="async"
+      />
+      <div class="absolute inset-0 bg-slate-900/70" aria-hidden="true"></div>
+    </div>
+  ) : null}
   <div
     class="section-container relative flex box-border items-center justify-center py-24 sm:py-32"
     style={`min-height: ${heroViewportHeight};`}

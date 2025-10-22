@@ -53,8 +53,8 @@ export type HomeContent = {
   hero?: {
     variant?: string;
     background?: {
-      tone?: string | null; // Options: none, gradient
-      color?: string | null; // Optional CSS color used when tone is "gradient"
+      tone?: string | null; // Options: none, gradient, solid, aurora
+      color?: string | null; // Optional CSS color used by gradient, solid, or aurora tones
     };
     animation?: boolean | null;
     title?: string | null;
@@ -209,8 +209,8 @@ export type ServicesPageContent = {
   hero?: {
     variant?: string;
     background?: {
-      tone?: string | null; // Options: none, gradient
-      color?: string | null;
+      tone?: string | null; // Options: none, gradient, solid, aurora
+      color?: string | null; // Optional CSS color used when tone is "gradient", "solid", or "aurora"
     };
     animation?: boolean | null;
     tagLabel?: string | null;
@@ -322,8 +322,8 @@ export type AboutContent = {
   hero?: {
     variant?: string;
     background?: {
-      tone?: string | null; // Options: none, gradient
-      color?: string | null; // Optional CSS color used when tone is "gradient"
+      tone?: string | null; // Options: none, gradient, solid, aurora
+      color?: string | null; // Optional CSS color used when tone is "gradient", "solid", or "aurora"
     };
     animation?: boolean | null;
     title?: string;

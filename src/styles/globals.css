@@ -120,6 +120,102 @@ body {
     z-index: 1;
   }
 
+  .section-background-aurora {
+    @apply full-bleed;
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    --section-background-aurora-base: var(--section-background-aurora-color, #103529);
+    --section-background-aurora-dark: color-mix(in srgb, var(--section-background-aurora-base) 82%, rgb(5 9 8) 18%);
+    --section-background-aurora-soft: color-mix(in srgb, var(--section-background-aurora-base) 46%, rgba(255, 255, 255, 0));
+    --section-background-aurora-bright: color-mix(in srgb, var(--section-background-aurora-base) 34%, rgb(255 255 255) 36%);
+    --section-background-aurora-glow: color-mix(in srgb, var(--section-background-aurora-base) 18%, rgb(255 255 255) 68%);
+    background:
+      radial-gradient(165% 150% at 18% 8%, color-mix(in srgb, var(--section-background-aurora-bright) 65%, transparent), transparent 74%),
+      radial-gradient(145% 145% at 84% 18%, color-mix(in srgb, var(--section-background-aurora-soft) 60%, transparent), transparent 78%),
+      radial-gradient(140% 150% at 52% 86%, color-mix(in srgb, var(--section-background-aurora-soft) 58%, transparent), transparent 80%),
+      radial-gradient(140% 160% at 50% 52%, var(--section-background-aurora-dark), color-mix(in srgb, var(--section-background-aurora-dark) 46%, rgb(6 10 9) 54%));
+  }
+
+  .section-background-aurora::before {
+    content: '';
+    position: absolute;
+    inset: -25%;
+    z-index: 1;
+    pointer-events: none;
+    background:
+      linear-gradient(135deg, transparent 10%, color-mix(in srgb, var(--section-background-aurora-glow) 85%, transparent) 45%, transparent 70%),
+      linear-gradient(305deg, transparent 15%, color-mix(in srgb, var(--section-background-aurora-bright) 65%, transparent) 52%, transparent 78%),
+      radial-gradient(110% 120% at 50% 50%, color-mix(in srgb, var(--section-background-aurora-soft) 55%, transparent), transparent 70%);
+    filter: blur(26px);
+    opacity: 0.75;
+    mix-blend-mode: screen;
+    animation: aurora-pan 26s ease-in-out infinite alternate;
+    will-change: transform, opacity;
+  }
+
+  .section-background-aurora::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+    background-image:
+      radial-gradient(1px 1px at 12px 18px, rgba(255, 255, 255, 0.35) 0, transparent 60%),
+      radial-gradient(1px 1px at 80px 140px, rgba(255, 255, 255, 0.22) 0, transparent 70%),
+      radial-gradient(2px 2px at 220px 96px, rgba(255, 255, 255, 0.2) 0, transparent 60%),
+      radial-gradient(2px 2px at 140px 260px, rgba(255, 255, 255, 0.16) 0, transparent 68%);
+    background-size: 180px 180px, 260px 260px, 340px 340px, 420px 420px;
+    background-repeat: repeat;
+    opacity: 0.38;
+    mix-blend-mode: screen;
+    animation: aurora-stars 18s ease-in-out infinite alternate;
+    will-change: opacity, transform;
+  }
+
+  .section-background-aurora > .section-container {
+    position: relative;
+    z-index: 3;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .section-background-aurora::before,
+    .section-background-aurora::after {
+      animation: none;
+      transform: none;
+    }
+  }
+
+  @keyframes aurora-pan {
+    0% {
+      transform: translate3d(-6%, -4%, 0) scale(1.05);
+      opacity: 0.68;
+    }
+    50% {
+      transform: translate3d(4%, 3%, 0) scale(1.1);
+      opacity: 0.82;
+    }
+    100% {
+      transform: translate3d(-3%, 5%, 0) scale(1.04);
+      opacity: 0.72;
+    }
+  }
+
+  @keyframes aurora-stars {
+    0% {
+      opacity: 0.32;
+      transform: translate3d(0, 0, 0);
+    }
+    50% {
+      opacity: 0.48;
+      transform: translate3d(-1.5%, -1%, 0);
+    }
+    100% {
+      opacity: 0.36;
+      transform: translate3d(1%, 1.5%, 0);
+    }
+  }
+
   .min-h-hero {
     height: 34rem;
   }

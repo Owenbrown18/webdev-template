@@ -1,8 +1,8 @@
 hero:
   variant: "fullscreen" # Options: classic, showcase, fullscreen, none
   background:
-    tone: "none" # Options: none, gradient, solid
-    color: null # Optional CSS color to override the gradient palette
+    tone: "aurora" # Options: none, gradient, solid, aurora
+    color: null # Optional CSS color to override the gradient/aurora palette
   animation: true # Toggle hero animation on/off
   title: "Built by neighbors, for neighbors"
   subtitle: "We started as a two-person crew with a shared belief: every project deserves personal care and reliable craftsmanship."

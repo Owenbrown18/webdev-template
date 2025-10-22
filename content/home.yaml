@@ -1,8 +1,8 @@
 hero:
   variant: "fullscreen" # Options: classic, split, fullscreen, none
   background:
-    tone: "none" # Options: none, gradient, solid
-    color: null # Optional CSS color (hex, rgb, etc.)
+    tone: "aurora" # Options: none, gradient, solid, aurora
+    color: "#103529" # Optional CSS color (hex, rgb, etc.)
   animation: true # Toggle hero animation on/off
   eyebrow: "Welcome"
   title: null
@@ -11,7 +11,7 @@ hero:
   primaryCtaHref: "/contact"
   secondaryCtaLabel: "Book a consult"
   secondaryCtaHref: "#booking"
-  image: "/images/home-hero.jpg"
+  image: "" #"/images/home-hero.jpg"
 statement:
   variant: "centered" # Options: centered, none
   background:

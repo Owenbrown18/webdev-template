@@ -35,12 +35,6 @@ const secondaryCta =
 const details = Array.isArray(hero.details) ? hero.details : [];
 const shouldAnimate = animationEnabled !== false;
 const heroViewportHeight = 'calc(100dvh - var(--header-height, 5rem))';
-const sectionClasses = [
-  backgroundClass,
-  'relative isolate overflow-hidden bg-slate-900 text-white shadow-xl full-bleed',
-]
-  .filter(Boolean)
-  .join(' ');
 const textClasses = [
   'mx-auto max-w-3xl space-y-6 text-center px-4 sm:px-0',
   shouldAnimate
@@ -49,20 +43,30 @@ const textClasses = [
 ]
   .filter(Boolean)
   .join(' ');
-const imageClasses = [
-  'absolute inset-0',
-  shouldAnimate
-    ? 'motion-safe:scale-[1.04] motion-safe:transition-transform motion-safe:duration-[1400ms] motion-safe:ease-out data-[visible=true]:motion-safe:scale-100'
-    : '',
-]
-  .filter(Boolean)
-  .join(' ');
 const sectionStyle = backgroundStyle
   ? `${backgroundStyle}; min-height: ${heroViewportHeight};`
   : `min-height: ${heroViewportHeight};`;
+const isAuroraBackground = backgroundTone === 'aurora';
+const showImageLayer = !isAuroraBackground && typeof image === 'string' && image.trim().length > 0;
+const imageClasses = showImageLayer
+  ? [
+      'absolute inset-0',
+      shouldAnimate
+        ? 'motion-safe:scale-[1.04] motion-safe:transition-transform motion-safe:duration-[1400ms] motion-safe:ease-out data-[visible=true]:motion-safe:scale-100'
+        : '',
+    ]
+      .filter(Boolean)
+      .join(' ')
+  : undefined;
 ---
 <section
-  class={sectionClasses}
+  class={[
+    backgroundClass,
+    'relative isolate overflow-hidden text-white shadow-xl full-bleed',
+    !isAuroraBackground ? 'bg-slate-900' : '',
+  ]
+    .filter(Boolean)
+    .join(' ')}
   data-background-tone={backgroundTone ?? undefined}
   style={sectionStyle}
   data-hero-root
@@ -70,16 +74,18 @@ const sectionStyle = backgroundStyle
   data-fullscreen-hero="true"
   {...restProps}
 >
-  <div class={imageClasses} data-hero-image>
-    <img
-      src={image}
-      alt={heroAlt}
-      class="absolute inset-0 h-full w-full object-cover"
-      loading="lazy"
-      decoding="async"
-    />
-    <div class="absolute inset-0 bg-slate-900/70" aria-hidden="true"></div>
-  </div>
+  {showImageLayer ? (
+    <div class={imageClasses} data-hero-image>
+      <img
+        src={image}
+        alt={heroAlt}
+        class="absolute inset-0 h-full w-full object-cover"
+        loading="lazy"
+        decoding="async"
+      />
+      <div class="absolute inset-0 bg-slate-900/70" aria-hidden="true"></div>
+    </div>
+  ) : null}
   <div
     class="section-container relative flex box-border items-center justify-center py-24 sm:py-32"
     style={`min-height: ${heroViewportHeight};`}
