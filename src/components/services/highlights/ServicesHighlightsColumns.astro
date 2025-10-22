@@ -44,7 +44,7 @@ const safeItems = Array.isArray(items)
 const shouldAnimate = animationEnabled !== false;
 const sectionClasses = [backgroundClass, 'section-shell'].filter(Boolean).join(' ');
 const contentClasses = [
-  'section-container space-y-12',
+  'section-container max-w-5xl space-y-12',
   shouldAnimate
     ? 'motion-safe:translate-y-6 motion-safe:opacity-0 motion-safe:transition-all motion-safe:duration-[900ms] motion-safe:ease-out data-[visible=true]:motion-safe:translate-y-0 data-[visible=true]:motion-safe:opacity-100'
     : '',

@@ -46,7 +46,7 @@ const contentClasses = [
     : '',
 ].filter(Boolean);
 const combinedContentClasses = contentClasses.join(' ');
-const innerClasses = 'mx-auto max-w-3xl space-y-6 text-center';
+const innerClasses = 'mx-auto max-w-5xl space-y-6 text-center';
 ---
 {hasContent ? (
   <section
@@ -60,7 +60,7 @@ const innerClasses = 'mx-auto max-w-3xl space-y-6 text-center';
       <div class={innerClasses}>
         {eyebrow && <p class="section-eyebrow">{eyebrow}</p>}
         {title && <h2 class="section-heading">{title}</h2>}
-        {intro && <p class="section-subtitle mx-auto max-w-2xl">{intro}</p>}
+        {intro && <p class="section-subtitle mx-auto max-w-5xl">{intro}</p>}
       </div>
     </div>
     {shouldAnimate ? (

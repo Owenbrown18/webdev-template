@@ -21,6 +21,8 @@ hero:
       value: "< 24 hrs"
     - label: "Projects delivered"
       value: "450+"
+    - label: "Average rating"
+      value: "4.9/5"
 overview:
   background:
     tone: "none"

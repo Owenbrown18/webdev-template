@@ -44,7 +44,7 @@ const cardClasses = [
   .filter(Boolean)
   .join(' ');
 const contentClasses = [
-  'section-container max-w-3xl space-y-6',
+  'section-container max-w-5xl space-y-6',
   shouldAnimate
     ? 'motion-safe:translate-y-6 motion-safe:opacity-0 motion-safe:transition-all motion-safe:duration-[900ms] motion-safe:ease-out data-[visible=true]:motion-safe:translate-y-0 data-[visible=true]:motion-safe:opacity-100'
     : '',
@@ -60,10 +60,12 @@ const contentClasses = [
     data-overview-root={shouldAnimate ? 'true' : undefined}
   >
     <div class={contentClasses} data-overview-content>
-      {eyebrow && <p class="section-eyebrow">{eyebrow}</p>}
-      {title && <h2 class="section-heading">{title}</h2>}
-      {intro && <p class="section-subtitle">{intro}</p>}
-      {supporting && <p class="text-base leading-relaxed text-slate-600">{supporting}</p>}
+      <div class="mx-auto max-w-5xl text-center space-y-6">
+        {eyebrow && <p class="section-eyebrow">{eyebrow}</p>}
+        {title && <h2 class="section-heading">{title}</h2>}
+        {intro && <p class="section-subtitle">{intro}</p>}
+        {supporting && <p class="text-base leading-relaxed text-slate-600">{supporting}</p>}
+      </div>
     </div>
     {shouldAnimate ? (
       <script>

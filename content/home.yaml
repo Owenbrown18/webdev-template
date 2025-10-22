@@ -4,6 +4,7 @@ hero:
     tone: "none" # Options: none, gradient
     color: null # Optional CSS color (hex, rgb, etc.)
   animation: true # Toggle hero animation on/off
+  eyebrow: "Welcome"
   title: null
   subtitle: null
   primaryCtaLabel: "Contact Us"
@@ -21,7 +22,7 @@ statement:
   title: "Powered by talent, teamwork, and creativity"
   intro: "Caorda is a mid-sized, multi-disciplined team of web specialists located in Victoria, BC. We are a you-focused, results-driven company that works together to create functional, meaningful and measurable web solutions. Collaboration is at the heart of everything we do. Your projects receive the full benefit of our experienced, cooperative, and talented team approach. Caorda provides full end-to-end service, and will support you and your project after it launches; this sets us apart from the crowd. This includes project management, requirements analysis, digital marketing, design, development, and testing, right through to ongoing web hosting and support. Our delivery and engagement process ensures our clients receive the highest level of quality and service."
 services:
-  variant: "grid" # Options: grid, list, spotlight, none
+  variant: "list" # Options: grid, list, spotlight, none
   background:
     tone: "gradient" # Options: none, gradient
     color: ""

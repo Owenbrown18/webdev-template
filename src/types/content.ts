@@ -51,6 +51,7 @@ export type HomeContent = {
     animation?: boolean | null;
     title?: string | null;
     subtitle?: string | null;
+    eyebrow?: string | null;
     primaryCtaLabel?: string | null;
     primaryCtaHref?: string | null;
     secondaryCtaLabel?: string | null;

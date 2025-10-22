@@ -11,6 +11,7 @@ interface Props {
     secondaryCtaLabel?: string | null;
     secondaryCtaHref?: string | null;
     image?: string | null;
+    eyebrow?: string | null;
     stats?: Array<{ label?: string; value?: string }>;
   };
   backgroundClass?: string;
@@ -37,6 +38,7 @@ const showSecondary = Boolean(hero.secondaryCtaLabel && hero.secondaryCtaHref);
 const secondaryLabel = hero.secondaryCtaLabel ?? 'Book now';
 const secondaryHref = hero.secondaryCtaHref ?? '#booking';
 const image = hero.image ?? '/images/hero.jpg';
+const eyebrow = typeof hero.eyebrow === 'string' && hero.eyebrow?.trim()?.length ? hero.eyebrow.trim() : 'Welcome';
 const stats = Array.isArray(hero.stats) ? hero.stats : [];
 const showBookingCta = Boolean(site.booking?.embedUrl) && !showSecondary;
 const bookingLabel = site.booking?.provider
@@ -94,7 +96,7 @@ const sectionStyle = backgroundStyle
     style={`min-height: ${heroViewportHeight};`}
   >
     <div class={textClasses} data-hero-text>
-      <p class="text-sm font-semibold uppercase tracking-[0.28em] text-white/70">Welcome</p>
+      {eyebrow && <p class="text-sm font-semibold uppercase tracking-[0.28em] text-white/70">{eyebrow}</p>}
       <h1 class="text-4xl font-semibold tracking-tight sm:text-5xl">{title}</h1>
       {tagline && <p class="text-lg text-white/80">{tagline}</p>}
       <div class="flex flex-wrap justify-center gap-4">

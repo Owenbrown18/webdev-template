@@ -41,7 +41,7 @@ const shouldRender = Boolean((eyebrow || title || intro) && items.length > 0);
 const shouldAnimate = animationEnabled !== false;
 const sectionClasses = [backgroundClass, 'section-shell'].filter(Boolean).join(' ');
 const introClasses = [
-  'section-intro max-w-3xl',
+  'section-intro mx-auto max-w-5xl',
   shouldAnimate
     ? 'motion-safe:translate-y-6 motion-safe:opacity-0 motion-safe:transition-all motion-safe:duration-[900ms] motion-safe:ease-out data-[visible=true]:motion-safe:translate-y-0 data-[visible=true]:motion-safe:opacity-100'
     : '',
@@ -59,7 +59,7 @@ const itemAnimationClass = shouldAnimate
     style={backgroundStyle}
     data-faq-root={shouldAnimate ? 'true' : undefined}
   >
-    <div class="section-container max-w-4xl space-y-10">
+    <div class="section-container max-w-5xl space-y-10">
       <div class={introClasses} data-faq-intro>
         {eyebrow && <p class="section-eyebrow">{eyebrow}</p>}
         {title && <h2 class="section-heading">{title}</h2>}
