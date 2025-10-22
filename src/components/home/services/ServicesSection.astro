@@ -17,11 +17,13 @@ import {
 import ServicesGrid from './ServicesGrid.astro';
 import ServicesList from './ServicesList.astro';
 import ServicesSpotlight from './ServicesSpotlight.astro';
+import ServicesBrief from './ServicesBrief.astro';
 
 const variants: Record<string, any> = {
   grid: ServicesGrid,
   list: ServicesList,
   spotlight: ServicesSpotlight,
+  brief: ServicesBrief,
 };
 
 const settings = home.services ?? {};
