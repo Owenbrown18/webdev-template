@@ -15,7 +15,7 @@ hero:
 statement:
   variant: "centered" # Options: centered, none
   background:
-    tone: "none" # Options: none, gradient, solid
+    tone: "none" # Options: none, gradient, solid, aurora
     color: null
   animation: true # Toggle reveal animation on/off
   eyebrow: "What drives us"
@@ -24,15 +24,15 @@ statement:
 services:
   variant: "brief" # Options: grid, list, spotlight, brief, none
   background:
-    tone: "solid" # Options: none, gradient, solid
-    color: "#add8e6"
+    tone: "aurora" # Options: none, gradient, solid, aurora
+    color: "#103529"
   animation: true # Toggle reveal animation on/off
   eyebrow: "What we do"
   title: "Our Services"
   intro: "Support tailored to your needs."
 featuredPhotos:
   background:
-    tone: "none" # Options: none, gradient, solid
+    tone: "none" # Options: none, gradient, solid, aurora
     color: null
   animation: true
   items:
@@ -44,8 +44,8 @@ featuredPhotos:
       alt: "Community services portal"
 portfolioStatement:
   background:
-    tone: "solid" # Options: none, gradient, solid
-    color: "#add8e6"
+    tone: "aurora" # Options: none, gradient, solid, aurora
+    color: "#103529"
   animation: true
   eyebrow: "Portfolio"
   title: "Beautiful, fast, mobile-responsive websites"
@@ -54,8 +54,8 @@ portfolioStatement:
   ctaHref: "/portfolio"
 cta:
   background:
-    tone: "solid" # Options: none, gradient, solid
-    color: "#add8e6"
+    tone: "aurora" # Options: none, gradient, solid, aurora
+    color: "#103529"
   animation: true
   eyebrow: "Ready to start?"
   title: "Let’s design a website that works for your business"
@@ -65,7 +65,7 @@ cta:
 video:
   variant: "none" # Options: half, full, none
   background:
-    tone: "gradient" # Options: none, gradient, solid
+    tone: "gradient" # Options: none, gradient, solid, aurora
     color: null
   animation: true # Toggle video animation on/off
   eyebrow: "See us in action"
@@ -78,7 +78,7 @@ video:
 testimonials:
   variant: "grid" # Options: grid, stack, none
   background:
-    tone: "none" # Options: none, gradient
+    tone: "none" # Options: none, gradient, aurora
     color: null
   animation: true # Toggle testimonials animation on/off
   eyebrow: "What clients say"
@@ -87,7 +87,7 @@ testimonials:
 booking:
   variant: "none" # Options: classic, none
   background:
-    tone: "gradient" # Options: none, gradient
+    tone: "gradient" # Options: none, gradient, aurora
     color: null
   animation: true # Toggle booking animation on/off
   heading: "Book an Appointment"

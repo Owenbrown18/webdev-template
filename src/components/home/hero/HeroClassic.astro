@@ -44,10 +44,12 @@ const bookingLabel = site.booking?.provider
   ? `Book with ${site.booking.provider}`
   : 'Book Now';
 const shouldAnimate = animationEnabled !== false;
+const isAuroraBackground = backgroundTone === 'aurora';
 const sectionClasses = [
   backgroundClass,
   'full-bleed',
-  'section-shell min-h-hero relative isolate overflow-hidden rounded-3xl bg-slate-900 text-white shadow-xl',
+  'section-shell min-h-hero relative isolate overflow-hidden rounded-3xl text-white shadow-xl',
+  isAuroraBackground ? '' : 'bg-slate-900',
 ]
   .filter(Boolean)
   .join(' ');
@@ -59,14 +61,17 @@ const textClasses = [
 ]
   .filter(Boolean)
   .join(' ');
-const imageWrapperClasses = [
-  'absolute inset-0',
-  shouldAnimate
-    ? 'motion-safe:scale-[1.04] motion-safe:transition-transform motion-safe:duration-[1400ms] motion-safe:ease-out data-[visible=true]:motion-safe:scale-100'
-    : '',
-]
-  .filter(Boolean)
-  .join(' ');
+const showImageLayer = !isAuroraBackground && typeof image === 'string' && image.trim().length > 0;
+const imageWrapperClasses = showImageLayer
+  ? [
+      'absolute inset-0',
+      shouldAnimate
+        ? 'motion-safe:scale-[1.04] motion-safe:transition-transform motion-safe:duration-[1400ms] motion-safe:ease-out data-[visible=true]:motion-safe:scale-100'
+        : '',
+    ]
+      .filter(Boolean)
+      .join(' ')
+  : undefined;
 ---
 <section
   class={sectionClasses}
@@ -75,16 +80,18 @@ const imageWrapperClasses = [
   data-hero-root
   data-animate={shouldAnimate ? 'true' : undefined}
 >
-  <div class={imageWrapperClasses} data-hero-image>
-    <img
-      src={image}
-      alt=""
-      class="h-full w-full object-cover"
-      loading="lazy"
-      decoding="async"
-    />
-    <div class="absolute inset-0 bg-slate-900/70" aria-hidden="true"></div>
-  </div>
+  {showImageLayer ? (
+    <div class={imageWrapperClasses} data-hero-image>
+      <img
+        src={image}
+        alt=""
+        class="h-full w-full object-cover"
+        loading="lazy"
+        decoding="async"
+      />
+      <div class="absolute inset-0 bg-slate-900/70" aria-hidden="true"></div>
+    </div>
+  ) : null}
   <div class="section-container relative py-24 sm:py-28">
     <div class="mx-auto max-w-5xl">
       <div class={textClasses} data-hero-text>

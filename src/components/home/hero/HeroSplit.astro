@@ -38,6 +38,8 @@ const secondaryHref = hero.secondaryCtaHref ?? '#booking';
 const image = hero.image ?? '/images/hero.jpg';
 const showBookingCta = Boolean(site.booking?.embedUrl) && !showSecondary;
 const shouldAnimate = animationEnabled !== false;
+const isAuroraBackground = backgroundTone === 'aurora';
+const hasImage = typeof image === 'string' && image.trim().length > 0;
 const sectionClasses = [backgroundClass, 'section-shell'].filter(Boolean).join(' ');
 const textClasses = [
   'flex flex-col justify-center gap-6',
@@ -48,7 +50,8 @@ const textClasses = [
   .filter(Boolean)
   .join(' ');
 const imageWrapperClasses = [
-  'relative h-full w-full overflow-hidden rounded-2xl bg-slate-900',
+  'relative h-full w-full overflow-hidden rounded-2xl',
+  isAuroraBackground ? 'border border-white/15 bg-white/10 backdrop-blur-sm text-white' : 'bg-slate-900',
   shouldAnimate
     ? 'motion-safe:scale-[1.04] motion-safe:transition-transform motion-safe:duration-[1400ms] motion-safe:ease-out data-[visible=true]:motion-safe:scale-100'
     : '',
@@ -98,14 +101,18 @@ const imageWrapperClasses = [
         </div>
       </div>
       <div class={imageWrapperClasses} data-hero-image>
-        <img
-          src={image}
-          alt=""
-          class="h-full w-full object-cover"
-          loading="lazy"
-          decoding="async"
-        />
-        <div class="absolute inset-0 bg-slate-900/40" aria-hidden="true"></div>
+        {hasImage && !isAuroraBackground ? (
+          <>
+            <img
+              src={image}
+              alt=""
+              class="h-full w-full object-cover"
+              loading="lazy"
+              decoding="async"
+            />
+            <div class="absolute inset-0 bg-slate-900/40" aria-hidden="true"></div>
+          </>
+        ) : null}
         <div class="absolute bottom-6 left-6 right-6 rounded-2xl border border-white/15 bg-white/10 p-6 text-slate-50 shadow-card backdrop-blur">
           <p class="text-sm font-semibold text-white">Visit our showroom</p>
           <p class="mt-1 text-sm text-white/80">

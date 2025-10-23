@@ -19,9 +19,12 @@ const { backgroundClass, backgroundTone, backgroundStyle, animationEnabled = tru
 };
 
 const shouldAnimate = animationEnabled !== false;
+const isAuroraBackground = backgroundTone === 'aurora';
+const hasImage = typeof image === 'string' && image.trim().length > 0;
 const sectionClasses = [backgroundClass, 'section-shell'].filter(Boolean).join(' ');
 const textClasses = [
   'space-y-6',
+  isAuroraBackground ? 'rounded-3xl border border-white/15 bg-white/80 p-8 text-slate-900 shadow-lg backdrop-blur' : '',
   shouldAnimate
     ? 'motion-safe:opacity-0 motion-safe:-translate-y-4 motion-safe:transition-all motion-safe:duration-[900ms] motion-safe:ease-out data-[visible=true]:motion-safe:opacity-100 data-[visible=true]:motion-safe:translate-y-0'
     : '',
@@ -29,7 +32,8 @@ const textClasses = [
   .filter(Boolean)
   .join(' ');
 const imageClasses = [
-  'relative h-full overflow-hidden rounded-3xl border border-slate-200 bg-slate-900 shadow-lg',
+  'relative h-full overflow-hidden rounded-3xl',
+  isAuroraBackground ? 'border border-white/15 bg-white/10 backdrop-blur-sm' : 'border border-slate-200 bg-slate-900 shadow-lg',
   shouldAnimate
     ? 'motion-safe:scale-[1.03] motion-safe:transition-transform motion-safe:duration-[1400ms] motion-safe:ease-out data-[visible=true]:motion-safe:scale-100'
     : '',
@@ -74,8 +78,12 @@ const imageClasses = [
       )}
     </div>
     <div class={imageClasses} data-hero-image>
-      <img src={image} alt="" class="h-full w-full object-cover" loading="lazy" decoding="async" />
-      <div class="absolute inset-0 bg-slate-900/20" aria-hidden="true"></div>
+      {hasImage && !isAuroraBackground ? (
+        <>
+          <img src={image} alt="" class="h-full w-full object-cover" loading="lazy" decoding="async" />
+          <div class="absolute inset-0 bg-slate-900/20" aria-hidden="true"></div>
+        </>
+      ) : null}
     </div>
   </div>
   {shouldAnimate ? (

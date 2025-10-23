@@ -73,7 +73,7 @@ export type HomeContent = {
   statement?: {
     variant?: string;
     background?: {
-      tone?: string | null; // Options: none, gradient, solid
+      tone?: string | null; // Options: none, gradient, solid, aurora
       color?: string | null;
     };
     animation?: boolean | null;
@@ -83,7 +83,7 @@ export type HomeContent = {
   };
   featuredPhotos?: {
     background?: {
-      tone?: string | null; // Options: none, gradient, solid
+      tone?: string | null; // Options: none, gradient, solid, aurora
       color?: string | null;
     };
     animation?: boolean | null;
@@ -94,7 +94,7 @@ export type HomeContent = {
   };
   portfolioStatement?: {
     background?: {
-      tone?: string | null; // Options: none, gradient, solid
+      tone?: string | null; // Options: none, gradient, solid, aurora
       color?: string | null;
     };
     animation?: boolean | null;
@@ -106,7 +106,7 @@ export type HomeContent = {
   };
   cta?: {
     background?: {
-      tone?: string | null; // Options: none, gradient, solid
+      tone?: string | null; // Options: none, gradient, solid, aurora
       color?: string | null;
     };
     animation?: boolean | null;
@@ -119,7 +119,7 @@ export type HomeContent = {
   services?: {
     variant?: string;
     background?: {
-      tone?: string | null; // Options: none, gradient
+      tone?: string | null; // Options: none, gradient, aurora
       color?: string | null;
     };
     animation?: boolean | null;
@@ -130,7 +130,7 @@ export type HomeContent = {
   video?: {
     variant?: string;
     background?: {
-      tone?: string | null; // Options: none, gradient
+      tone?: string | null; // Options: none, gradient, aurora
       color?: string | null;
     };
     animation?: boolean | null;
@@ -145,7 +145,7 @@ export type HomeContent = {
   testimonials?: {
     variant?: string;
     background?: {
-      tone?: string | null; // Options: none, gradient
+      tone?: string | null; // Options: none, gradient, aurora
       color?: string | null;
     };
     animation?: boolean | null;
@@ -156,7 +156,7 @@ export type HomeContent = {
   booking?: {
     variant?: string;
     background?: {
-      tone?: string | null; // Options: none, gradient
+      tone?: string | null; // Options: none, gradient, aurora
       color?: string | null;
     };
     animation?: boolean | null;
@@ -228,7 +228,7 @@ export type ServicesPageContent = {
   };
   overview?: {
     background?: {
-      tone?: string | null; // Options: none, gradient
+      tone?: string | null; // Options: none, gradient, aurora
       color?: string | null;
     };
     animation?: boolean | null;
@@ -240,7 +240,7 @@ export type ServicesPageContent = {
   catalog?: {
     variant?: string;
     background?: {
-      tone?: string | null; // Options: none, gradient
+      tone?: string | null; // Options: none, gradient, aurora
       color?: string | null;
     };
     animation?: boolean | null;
@@ -251,7 +251,7 @@ export type ServicesPageContent = {
   highlights?: {
     variant?: string;
     background?: {
-      tone?: string | null; // Options: none, gradient
+      tone?: string | null; // Options: none, gradient, aurora
       color?: string | null;
     };
     animation?: boolean | null;
@@ -269,7 +269,7 @@ export type ServicesPageContent = {
   testimonials?: {
     variant?: string;
     background?: {
-      tone?: string | null; // Options: none, gradient
+      tone?: string | null; // Options: none, gradient, aurora
       color?: string | null;
     };
     animation?: boolean | null;
@@ -283,7 +283,7 @@ export type ServicesPageContent = {
   };
   faq?: {
     background?: {
-      tone?: string | null; // Options: none, gradient
+      tone?: string | null; // Options: none, gradient, aurora
       color?: string | null;
     };
     animation?: boolean | null;
@@ -297,7 +297,7 @@ export type ServicesPageContent = {
   };
   cta?: {
     background?: {
-      tone?: string | null; // Options: none, gradient
+      tone?: string | null; // Options: none, gradient, aurora
       color?: string | null;
     };
     animation?: boolean | null;
@@ -341,7 +341,7 @@ export type AboutContent = {
   values?: {
     variant?: string;
     background?: {
-      tone?: string | null; // Options: none, gradient
+      tone?: string | null; // Options: none, gradient, aurora
       color?: string | null;
     };
     animation?: boolean | null;
@@ -358,7 +358,7 @@ export type AboutContent = {
   process?: {
     variant?: string;
     background?: {
-      tone?: string | null; // Options: none, gradient
+      tone?: string | null; // Options: none, gradient, aurora
       color?: string | null;
     };
     animation?: boolean | null;
@@ -373,7 +373,7 @@ export type AboutContent = {
   timeline?: {
     variant?: string;
     background?: {
-      tone?: string | null; // Options: none, gradient
+      tone?: string | null; // Options: none, gradient, aurora
       color?: string | null;
     };
     animation?: boolean | null;
@@ -390,7 +390,7 @@ export type AboutContent = {
   community?: {
     variant?: string;
     background?: {
-      tone?: string | null; // Options: none, gradient
+      tone?: string | null; // Options: none, gradient, aurora
       color?: string | null;
     };
     animation?: boolean | null;
@@ -414,7 +414,7 @@ export type AboutContent = {
   founders?: {
     variant?: string;
     background?: {
-      tone?: string | null; // Options: none, gradient
+      tone?: string | null; // Options: none, gradient, aurora
       color?: string | null;
     };
     animation?: boolean | null;
@@ -434,7 +434,7 @@ export type AboutContent = {
   team?: {
     variant?: string;
     background?: {
-      tone?: string | null; // Options: none, gradient
+      tone?: string | null; // Options: none, gradient, aurora
       color?: string | null;
     };
     eyebrow?: string | null;

@@ -21,7 +21,7 @@ hero:
 values:
   variant: "grid" # Options: grid, list, none
   background:
-    tone: "none" # Options: none, gradient
+    tone: "none" # Options: none, gradient, aurora
     color: null
   animation: true # Toggle values animation on/off
   eyebrow: "Our values"
@@ -41,7 +41,7 @@ values:
 process:
   variant: "steps" # Options: steps, none
   background:
-    tone: "gradient" # Options: none, gradient, solid
+    tone: "gradient" # Options: none, gradient, solid, aurora
     color: "#0002"
   animation: true # Toggle reveal animation on/off
   eyebrow: "How we work"
@@ -61,7 +61,7 @@ process:
 timeline:
   variant: "steps" # Options: steps, vertical, none
   background:
-    tone: "none" # Options: none, gradient, solid
+    tone: "none" # Options: none, gradient, solid, aurora
     color: null
   animation: true # Toggle reveal animation on/off
   eyebrow: "Our journey"
@@ -87,7 +87,7 @@ timeline:
 community:
   variant: "cards" # Options: cards, none
   background:
-    tone: "gradient" # Options: none, gradient
+    tone: "gradient" # Options: none, gradient, aurora
     color: "#0002"
   animation: true # Toggle reveal animation on/off
   eyebrow: "Community impact"
@@ -138,7 +138,7 @@ community:
 founders:
   variant: "spotlight" # Options: spotlight, none
   background:
-    tone: "none" # Options: none, gradient, solid
+    tone: "none" # Options: none, gradient, solid, aurora
     color: null
   animation: true # Toggle reveal animation on/off
   eyebrow: "Founders spotlight"
@@ -165,7 +165,7 @@ founders:
 team:
   variant: "carousel" # Options: grid, list, carousel, none
   background:
-    tone: "gradient" # Options: none, gradient
+    tone: "gradient" # Options: none, gradient, aurora
     color: "#0002"
   eyebrow: "The team"
   title: "Neighbors who bring the plan to life"

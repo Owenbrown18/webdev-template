@@ -37,11 +37,10 @@ const {
 } = props;
 const fallbackTone = getHeroBackgroundTone();
 const normalizedTone = normalizeBackgroundTone(overrideTone ?? hero.background?.tone ?? fallbackTone);
-const effectiveTone = normalizedTone === 'aurora' && variantKey !== 'fullscreen' ? 'gradient' : normalizedTone;
-const backgroundClass = overrideClass ?? sectionBackgroundClass(effectiveTone);
-const backgroundToneAttr = sectionBackgroundToneAttr(effectiveTone);
+const backgroundClass = overrideClass ?? sectionBackgroundClass(normalizedTone);
+const backgroundToneAttr = sectionBackgroundToneAttr(normalizedTone);
 const backgroundColor = normalizeBackgroundColor(overrideColor ?? hero.background?.color);
-const backgroundStyle = createBackgroundStyle(backgroundColor, effectiveTone);
+const backgroundStyle = createBackgroundStyle(backgroundColor, normalizedTone);
 const animationSetting = animationOverride ?? hero.animation;
 const animationEnabled = animationSetting ?? isHeroAnimationEnabled();
 ---

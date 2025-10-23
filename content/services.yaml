@@ -25,7 +25,7 @@ hero:
       value: "4.9/5"
 overview:
   background:
-    tone: "none"
+    tone: "none" # Options: none, gradient, aurora
   animation: true
   eyebrow: "Why partner with us"
   title: "Expert support at every stage"
@@ -34,7 +34,7 @@ overview:
 catalog:
   variant: "spotlight" # Options: grid, list, spotlight, none
   background:
-    tone: "gradient"
+    tone: "gradient" # Options: none, gradient, aurora
     color: "#0002"
   animation: true
   eyebrow: "Service catalog"
@@ -43,7 +43,7 @@ catalog:
 highlights:
   variant: "columns" # Options: columns, none
   background:
-    tone: "none"
+    tone: "none" # Options: none, gradient, aurora
     color: "#0b3c74"
   animation: true
   eyebrow: "Featured capabilities"
@@ -71,7 +71,7 @@ highlights:
 testimonials:
   variant: "grid" # Options: grid, stack, none
   background:
-    tone: "gradient"
+    tone: "gradient" # Options: none, gradient, aurora
     color: "#0002"
   animation: true
   eyebrow: "Testimonials"
@@ -86,7 +86,7 @@ testimonials:
       author: "Lena K., operations lead"
 faq:
   background:
-    tone: "none"
+    tone: "none" # Options: none, gradient, aurora
   animation: true
   eyebrow: "FAQ"
   title: "Answers before we get started"
@@ -100,7 +100,7 @@ faq:
       answer: "Yes. We can collaborate with existing partners or recommend specialists from our vetted network."
 cta:
   background:
-    tone: "gradient"
+    tone: "gradient" # Options: none, gradient, aurora
     color: "#0002"
   animation: true
   eyebrow: "Next steps"

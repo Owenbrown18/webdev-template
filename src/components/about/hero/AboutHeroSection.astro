@@ -37,12 +37,11 @@ delete restProps.backgroundClass;
 delete restProps.animation;
 const fallbackTone = getAboutHeroBackgroundTone();
 const normalizedTone = normalizeBackgroundTone(overrideTone ?? fallbackTone);
-const effectiveTone = normalizedTone === 'aurora' && variantKey !== 'fullscreen' ? 'gradient' : normalizedTone;
-const backgroundClass = overrideClass ?? sectionBackgroundClass(effectiveTone);
-const backgroundToneAttr = sectionBackgroundToneAttr(effectiveTone);
+const backgroundClass = overrideClass ?? sectionBackgroundClass(normalizedTone);
+const backgroundToneAttr = sectionBackgroundToneAttr(normalizedTone);
 const heroContent = about.hero ?? {};
 const backgroundColor = normalizeBackgroundColor(overrideColor ?? heroContent.background?.color);
-const backgroundStyle = createBackgroundStyle(backgroundColor, effectiveTone);
+const backgroundStyle = createBackgroundStyle(backgroundColor, normalizedTone);
 const animationEnabled =
   animationOverride !== undefined ? animationOverride : isAboutHeroAnimationEnabled();
 ---
