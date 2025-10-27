@@ -35,7 +35,7 @@ booking:
   provider: "Calendly"
   embedUrl: "https://calendly.com/your-business/consultation"
 colors:
-  primary: "#2563eb"
+  primary: "#103529"
   secondary: "#0f172a"
   accent: "#f59e0b"
 footerCredit:

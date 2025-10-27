@@ -6,7 +6,7 @@ hero:
   variant: "fullscreen" # Options: showcase, fullscreen, none
   background:
     tone: "aurora" # Options: none, gradient, solid, aurora
-    color: "#0f172a" # Optional CSS color to tint gradient/aurora tones
+    color: "#103529" # Optional CSS color to tint gradient/aurora tones
   animation: true
   tagLabel: "Services"
   title: "Reliable, end-to-end care for every project"

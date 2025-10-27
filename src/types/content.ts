@@ -49,6 +49,58 @@ export type SiteContent = {
   };
 };
 
+export type DesignTypographyScale = {
+  size?: {
+    mobile?: string;
+    tablet?: string;
+    desktop?: string;
+  };
+  lineHeight?: string | number;
+  weight?: number;
+  letterSpacing?: string;
+  uppercase?: boolean | null;
+};
+
+export type DesignTokensContent = {
+  colors?: {
+    brand?: {
+      primary?: string;
+      secondary?: string;
+      accent?: string;
+    };
+    text?: {
+      primary?: string;
+      secondary?: string;
+      muted?: string;
+      inverse?: string;
+      inverseMuted?: string;
+    };
+    surface?: {
+      base?: string;
+      card?: string;
+      muted?: string;
+    };
+    border?: {
+      subtle?: string;
+      strong?: string;
+    };
+  };
+  typography?: {
+    fontFamily?: {
+      heading?: string;
+      body?: string;
+    };
+    scale?: {
+      display?: DesignTypographyScale;
+      heading?: DesignTypographyScale;
+      subheading?: DesignTypographyScale;
+      body?: DesignTypographyScale;
+      eyebrow?: DesignTypographyScale;
+      finePrint?: DesignTypographyScale;
+    };
+  };
+};
+
 export type HomeContent = {
   hero?: {
     variant?: string;

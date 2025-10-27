@@ -1,6 +1,7 @@
 import type {
   AboutContent,
   ContactContent,
+  DesignTokensContent,
   HomeContent,
   ServicesListContent,
   ServicesPageContent,
@@ -14,6 +15,7 @@ import aboutSource from '../../content/about.yaml';
 import servicesListSource from '../../content/services-list.yaml';
 import servicesPageSource from '../../content/services.yaml';
 import testimonialsSource from '../../content/testimonials.yaml';
+import designSource from '../../content/design.yaml';
 import { normalizeBackgroundTone } from '../utils/background';
 
 /**
@@ -28,6 +30,9 @@ export const about = aboutSource as AboutContent;
 export const services = servicesListSource as ServicesListContent;
 export const servicesPage = servicesPageSource as ServicesPageContent;
 export const testimonials = testimonialsSource as TestimonialsContent;
+export const design = designSource as DesignTokensContent;
+
+export const getDesignTokens = () => design ?? {};
 
 /**
  * Returns social entries as [key, url] tuples. Use for rendering the footer or contact sections.

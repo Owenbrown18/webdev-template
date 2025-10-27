@@ -18,7 +18,10 @@ body {
   }
 
   body {
-    background-color: rgb(var(--surface-base-rgb));
+    background-color: var(--surface-base, rgb(var(--surface-base-rgb)));
+    color: var(--color-text-primary, rgb(var(--color-text-primary-rgb)));
+    font-family: var(--font-family-body, 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif);
+    line-height: var(--font-body-line-height, 1.7);
   }
 }
 
@@ -35,20 +38,173 @@ body {
     @apply mx-auto max-w-3xl text-center;
   }
 
+  .type-display {
+    font-family: var(--font-family-heading, var(--font-family-body, 'Inter', system-ui, sans-serif));
+    font-size: var(--font-display-size-mobile, 2.75rem);
+    line-height: var(--font-display-line-height, 1.1);
+    font-weight: var(--font-display-weight, 600);
+    letter-spacing: var(--font-display-letter-spacing, normal);
+    text-transform: var(--font-display-text-transform, none);
+  }
+
+  .type-heading {
+    font-family: var(--font-family-heading, var(--font-family-body, 'Inter', system-ui, sans-serif));
+    font-size: var(--font-heading-size-mobile, 2rem);
+    line-height: var(--font-heading-line-height, 1.2);
+    font-weight: var(--font-heading-weight, 600);
+    letter-spacing: var(--font-heading-letter-spacing, -0.01em);
+    text-transform: var(--font-heading-text-transform, none);
+  }
+
+  .type-subheading {
+    font-family: var(--font-family-heading, var(--font-family-body, 'Inter', system-ui, sans-serif));
+    font-size: var(--font-subheading-size-mobile, 1.25rem);
+    line-height: var(--font-subheading-line-height, 1.5);
+    font-weight: var(--font-subheading-weight, 500);
+    letter-spacing: var(--font-subheading-letter-spacing, -0.005em);
+    text-transform: var(--font-subheading-text-transform, none);
+  }
+
+  .type-body {
+    font-family: var(--font-family-body, 'Inter', system-ui, sans-serif);
+    font-size: var(--font-body-size-mobile, 1rem);
+    line-height: var(--font-body-line-height, 1.7);
+    font-weight: var(--font-body-weight, 400);
+    letter-spacing: var(--font-body-letter-spacing, 0em);
+    text-transform: var(--font-body-text-transform, none);
+  }
+
+  .type-eyebrow {
+    font-family: var(--font-family-heading, var(--font-family-body, 'Inter', system-ui, sans-serif));
+    font-size: var(--font-eyebrow-size-mobile, 0.75rem);
+    line-height: var(--font-eyebrow-line-height, 1.4);
+    font-weight: var(--font-eyebrow-weight, 600);
+    letter-spacing: var(--font-eyebrow-letter-spacing, 0.28em);
+    text-transform: var(--font-eyebrow-text-transform, uppercase);
+  }
+
+  .type-fine-print {
+    font-family: var(--font-family-body, 'Inter', system-ui, sans-serif);
+    font-size: var(--font-fine-print-size-mobile, 0.875rem);
+    line-height: var(--font-fine-print-line-height, 1.6);
+    font-weight: var(--font-fine-print-weight, 500);
+    letter-spacing: var(--font-fine-print-letter-spacing, 0.08em);
+    text-transform: var(--font-fine-print-text-transform, none);
+  }
+
+  @screen md {
+    .type-display {
+      font-size: var(--font-display-size-tablet, var(--font-display-size-mobile, 2.75rem));
+    }
+
+    .type-heading {
+      font-size: var(--font-heading-size-tablet, var(--font-heading-size-mobile, 2rem));
+    }
+
+    .type-subheading {
+      font-size: var(--font-subheading-size-tablet, var(--font-subheading-size-mobile, 1.25rem));
+    }
+
+    .type-body {
+      font-size: var(--font-body-size-tablet, var(--font-body-size-mobile, 1rem));
+    }
+
+    .type-eyebrow {
+      font-size: var(--font-eyebrow-size-tablet, var(--font-eyebrow-size-mobile, 0.75rem));
+    }
+
+    .type-fine-print {
+      font-size: var(--font-fine-print-size-tablet, var(--font-fine-print-size-mobile, 0.875rem));
+    }
+  }
+
+  @screen lg {
+    .type-display {
+      font-size: var(--font-display-size-desktop, var(--font-display-size-tablet, 3.25rem));
+    }
+
+    .type-heading {
+      font-size: var(--font-heading-size-desktop, var(--font-heading-size-tablet, 2.5rem));
+    }
+
+    .type-subheading {
+      font-size: var(--font-subheading-size-desktop, var(--font-subheading-size-tablet, 1.5rem));
+    }
+
+    .type-body {
+      font-size: var(--font-body-size-desktop, var(--font-body-size-tablet, 1.0625rem));
+    }
+
+    .type-eyebrow {
+      font-size: var(--font-eyebrow-size-desktop, var(--font-eyebrow-size-tablet, 0.75rem));
+    }
+
+    .type-fine-print {
+      font-size: var(--font-fine-print-size-desktop, var(--font-fine-print-size-tablet, 0.875rem));
+    }
+  }
+
   .section-eyebrow {
-    @apply text-xs font-semibold uppercase tracking-[0.28em] text-brand-primary/75 sm:text-sm;
+    @apply type-eyebrow;
+    color: rgb(var(--color-primary-rgb, 16 53 41) / 0.75);
   }
 
   .section-heading {
-    @apply mt-2 text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl;
+    @apply type-heading;
+    margin-top: 0.5rem;
+    color: var(--color-text-primary, rgb(var(--color-text-primary-rgb)));
   }
 
   .section-subtitle {
-    @apply mt-4 text-base text-slate-600;
+    @apply type-subheading;
+    margin-top: 1rem;
+    color: var(--color-text-muted, rgb(var(--color-text-muted-rgb)));
+  }
+
+  .text-surface {
+    color: var(--color-text-primary, rgb(var(--color-text-primary-rgb)));
+  }
+
+  .text-secondary {
+    color: var(--color-text-secondary, rgb(var(--color-text-secondary-rgb)));
+  }
+
+  .text-muted {
+    color: var(--color-text-muted, rgb(var(--color-text-muted-rgb)));
+  }
+
+  .text-inverse {
+    color: var(--color-text-inverse, rgb(var(--color-text-inverse-rgb)));
+  }
+
+  .text-inverse-muted {
+    color: var(--color-text-inverse-muted, rgb(var(--color-text-inverse-muted-rgb)));
+  }
+
+  .bg-surface-base {
+    background-color: var(--surface-base, rgb(var(--surface-base-rgb)));
+  }
+
+  .bg-surface-card {
+    background-color: var(--surface-card, rgb(var(--surface-card-rgb)));
+  }
+
+  .bg-surface-muted {
+    background-color: var(--surface-muted, rgb(var(--surface-muted-rgb)));
+  }
+
+  .border-subtle {
+    border-color: var(--border-color-subtle, rgba(15, 23, 42, 0.08));
+  }
+
+  .border-strong {
+    border-color: var(--border-color-strong, rgba(15, 23, 42, 0.18));
   }
 
   .surface-card {
-    @apply rounded-surface border border-slate-200/70 bg-white/95 backdrop-blur-[0px];
+    @apply rounded-surface backdrop-blur-[0px];
+    background-color: rgb(var(--surface-card-rgb) / 0.95);
+    border: 1px solid var(--border-color-subtle, rgba(15, 23, 42, 0.08));
   }
 
   .surface-card-static {

@@ -41,8 +41,8 @@ values:
 process:
   variant: "steps" # Options: steps, none
   background:
-    tone: "gradient" # Options: none, gradient, solid, aurora
-    color: "#0002"
+    tone: "aurora" # Options: none, gradient, solid, aurora
+    color: "#103529"
   animation: true # Toggle reveal animation on/off
   eyebrow: "How we work"
   title: "A clear path from hello to handoff"
@@ -87,8 +87,8 @@ timeline:
 community:
   variant: "cards" # Options: cards, none
   background:
-    tone: "gradient" # Options: none, gradient, aurora
-    color: "#0002"
+    tone: "aurora" # Options: none, gradient, aurora
+    color: "#103529"
   animation: true # Toggle reveal animation on/off
   eyebrow: "Community impact"
   title: "Investing time and skill back into Hometown"
@@ -163,7 +163,7 @@ founders:
         Rowan brings a background in architectural drafting and neighborhood organizing, blending design sensibility with people-first service.
         They make sure every homeowner knows the plan, feels heard, and ends the project excited to show off the results.
 team:
-  variant: "carousel" # Options: grid, list, carousel, none
+  variant: "none" # Options: grid, list, carousel, none
   background:
     tone: "gradient" # Options: none, gradient, aurora
     color: "#0002"

@@ -51,15 +51,34 @@ const imageClasses = showImageLayer
       .filter(Boolean)
       .join(' ')
   : undefined;
+const sectionClasses = [
+  backgroundClass,
+  'relative isolate overflow-hidden shadow-xl full-bleed',
+  isAuroraBackground ? 'text-slate-900' : 'bg-slate-900 text-white',
+]
+  .filter(Boolean)
+  .join(' ');
+const eyebrowClass = isAuroraBackground ? 'section-eyebrow text-surface' : 'type-eyebrow text-inverse-muted';
+const titleClass = isAuroraBackground ? 'type-display text-surface' : 'type-display text-inverse';
+const subtitleClass = isAuroraBackground ? 'type-subheading text-muted' : 'type-subheading text-inverse-muted';
+const primaryButtonClass = isAuroraBackground
+  ? 'inline-flex items-center justify-center rounded-full bg-brand-primary px-6 py-3 type-body font-semibold text-white shadow-brand-glow transition hover:bg-brand-primary/90 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary/60 focus-visible:ring-offset-2 focus-visible:ring-offset-white'
+  : 'inline-flex items-center justify-center rounded-full bg-white px-6 py-3 type-body font-semibold text-slate-900 shadow-lg transition hover:bg-slate-100';
+const secondaryButtonClass = isAuroraBackground
+  ? 'inline-flex items-center justify-center rounded-full border border-brand-primary/30 bg-brand-primary/5 px-6 py-3 type-body font-semibold text-brand-primary transition hover:border-brand-primary/60 hover:bg-brand-primary/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary/40 focus-visible:ring-offset-2 focus-visible:ring-offset-white'
+  : 'inline-flex items-center justify-center rounded-full border border-white/60 px-6 py-3 type-body font-semibold text-white transition hover:border-white hover:bg-white/10';
+const statContainerClass = isAuroraBackground
+  ? 'rounded-2xl border border-brand-primary/15 bg-white/80 p-4 text-center shadow-sm backdrop-blur'
+  : 'rounded-2xl border border-white/10 bg-white/5 p-4 text-center shadow-sm backdrop-blur';
+const statLabelClass = isAuroraBackground
+  ? 'type-eyebrow text-brand-primary/70'
+  : 'type-eyebrow text-inverse-muted';
+const statValueClass = isAuroraBackground
+  ? 'type-heading text-surface'
+  : 'type-heading text-inverse';
 ---
 <section
-  class={[
-    backgroundClass,
-    'relative isolate overflow-hidden text-white shadow-xl full-bleed',
-    !isAuroraBackground ? 'bg-slate-900' : '',
-  ]
-    .filter(Boolean)
-    .join(' ')}
+  class={sectionClasses}
   data-background-tone={backgroundTone ?? undefined}
   style={sectionStyle}
   data-hero-root
@@ -77,20 +96,20 @@ const imageClasses = showImageLayer
     style={`min-height: ${heroViewportHeight};`}
   >
     <div class={textClasses} data-hero-text>
-      <p class="text-sm font-semibold uppercase tracking-[0.28em] text-white/70">About Us</p>
-      <h1 class="text-4xl font-semibold tracking-tight sm:text-5xl">{title}</h1>
-      {subtitle && <p class="text-lg text-white/80">{subtitle}</p>}
+      <p class={eyebrowClass}>About Us</p>
+      <h1 class={titleClass}>{title}</h1>
+      {subtitle && <p class={subtitleClass}>{subtitle}</p>}
       <div class="flex flex-wrap justify-center gap-4">
         <a
           href={ctaHref}
-          class="inline-flex items-center justify-center rounded-full bg-white px-6 py-3 text-base font-semibold text-slate-900 shadow-lg transition hover:bg-slate-100"
+          class={primaryButtonClass}
         >
           {ctaLabel}
         </a>
         {secondaryCta?.label && secondaryCta?.href ? (
           <a
             href={secondaryCta.href}
-            class="inline-flex items-center justify-center rounded-full border border-white/60 px-6 py-3 text-base font-semibold text-white transition hover:border-white hover:bg-white/10"
+            class={secondaryButtonClass}
           >
             {secondaryCta.label}
           </a>
@@ -99,9 +118,9 @@ const imageClasses = showImageLayer
       {Array.isArray(stats) && stats.length > 0 && (
         <dl class="grid gap-6 sm:grid-cols-3">
           {stats.map(({ label, value }) => (
-            <div class="rounded-2xl border border-white/10 bg-white/5 p-4 text-center shadow-sm backdrop-blur">
-              <dt class="text-sm font-medium text-white/70">{label}</dt>
-              <dd class="text-2xl font-semibold text-white">{value}</dd>
+            <div class={statContainerClass}>
+              <dt class={statLabelClass}>{label}</dt>
+              <dd class={statValueClass}>{value}</dd>
             </div>
           ))}
         </dl>
