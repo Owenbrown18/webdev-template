@@ -1,0 +1,131 @@
+---
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  intro?: string;
+  image?: {
+    src?: string | null;
+    alt?: string | null;
+  } | null;
+  backgroundClass?: string;
+  backgroundTone?: string;
+  backgroundStyle?: string;
+  animationEnabled?: boolean;
+}
+
+const {
+  eyebrow,
+  title,
+  intro,
+  image,
+  backgroundClass,
+  backgroundTone,
+  backgroundStyle,
+  animationEnabled = true,
+}: Props = Astro.props as Props;
+
+const hasIntro = typeof intro === 'string' && intro.trim().length > 0;
+const imageSrc =
+  typeof image === 'object' && image
+    ? image.src ?? undefined
+    : undefined;
+const imageAlt =
+  typeof image === 'object' && image
+    ? image.alt ?? ''
+    : '';
+const shouldAnimate = animationEnabled !== false;
+const sectionClasses = [backgroundClass, 'section-shell'].filter(Boolean).join(' ');
+const containerClasses = [
+  'section-container max-w-5xl space-y-10 text-center',
+  shouldAnimate
+    ? 'motion-safe:opacity-0 motion-safe:translate-y-6 motion-safe:transition-all motion-safe:duration-[900ms] motion-safe:ease-out data-[visible=true]:motion-safe:translate-y-0 data-[visible=true]:motion-safe:opacity-100'
+    : '',
+]
+  .filter(Boolean)
+  .join(' ');
+const bodyClasses = [
+  'mx-auto grid gap-10 items-start sm:grid-cols-2 sm:text-left',
+  imageSrc ? '' : 'sm:grid-cols-1',
+]
+  .filter(Boolean)
+  .join(' ');
+---
+{title || intro || imageSrc ? (
+  <section
+    class={sectionClasses}
+    data-background-tone={backgroundTone ?? undefined}
+    style={backgroundStyle}
+    data-statement-root={shouldAnimate ? 'true' : undefined}
+  >
+    <div class={containerClasses} data-statement>
+      <div class="space-y-3">
+        {eyebrow && <p class="section-eyebrow">{eyebrow}</p>}
+        {title && <h2 class="section-heading text-center">{title}</h2>}
+      </div>
+      <div class={bodyClasses}>
+        {hasIntro && (
+          <div class="space-y-4 text-left">
+            <p class="section-subtitle text-left">{intro}</p>
+          </div>
+        )}
+        {imageSrc ? (
+          <div class="relative aspect-[4/3] overflow-hidden rounded-3xl border border-subtle bg-surface-card shadow-card-soft">
+            <img
+              src={imageSrc}
+              alt={imageAlt ?? ''}
+              class="h-full w-full object-cover"
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
+        ) : null}
+      </div>
+    </div>
+    {shouldAnimate ? (
+      <script>
+        const roots = Array.from(document.querySelectorAll('[data-statement-root="true"]'));
+        const supportMatchMedia = typeof window !== 'undefined' && typeof window.matchMedia === 'function';
+        const prefersReducedMotion = supportMatchMedia
+          ? window.matchMedia('(prefers-reduced-motion: reduce)').matches
+          : false;
+        const reveal = (el: Element | null) => {
+          if (el instanceof HTMLElement) {
+            el.dataset.visible = 'true';
+          }
+        };
+
+        roots.forEach((root) => {
+          if (!(root instanceof HTMLElement)) return;
+          if (root.dataset.statementAnimated === 'true') return;
+
+          root.dataset.statementAnimated = 'true';
+          const container = root.querySelector('[data-statement]');
+
+          if (prefersReducedMotion || !('IntersectionObserver' in window)) {
+            reveal(container);
+            return;
+          }
+
+          const observer = new IntersectionObserver(
+            (entries, obs) => {
+              entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                  reveal(entry.target);
+                  obs.unobserve(entry.target);
+                }
+              });
+            },
+            {
+              rootMargin: '0px 0px -10% 0px',
+              threshold: 0.15,
+            },
+          );
+
+          if (container instanceof HTMLElement) {
+            observer.observe(container);
+          }
+        });
+      </script>
+    ) : null}
+  </section>
+) : null}

@@ -132,6 +132,10 @@ export type HomeContent = {
     eyebrow?: string | null;
     title?: string | null;
     intro?: string | null;
+    image?: {
+      src?: string | null;
+      alt?: string | null;
+    } | null;
   };
   featuredPhotos?: {
     background?: {
@@ -389,6 +393,33 @@ export type AboutContent = {
       label?: string;
       value?: string;
     }>;
+  };
+  statement?: {
+    variant?: string;
+    background?: {
+      tone?: string | null; // Options: none, gradient, solid, aurora
+      color?: string | null;
+    };
+    animation?: boolean | null;
+    eyebrow?: string | null;
+    title?: string | null;
+    intro?: string | null;
+    image?: {
+      src?: string | null;
+      alt?: string | null;
+    } | null;
+  };
+  cta?: {
+    background?: {
+      tone?: string | null; // Options: none, gradient, solid, aurora
+      color?: string | null;
+    };
+    animation?: boolean | null;
+    eyebrow?: string | null;
+    title?: string | null;
+    intro?: string | null;
+    ctaLabel?: string | null;
+    ctaHref?: string | null;
   };
   values?: {
     variant?: string;

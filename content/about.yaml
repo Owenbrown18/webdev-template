@@ -18,6 +18,28 @@ hero:
       value: "450+"
     - label: "Average rating"
       value: "4.9/5"
+statement:
+  variant: "split" # Options: centered, split, none
+  background:
+    tone: "none" # Options: none, gradient, solid, aurora
+    color: null
+  animation: true
+  eyebrow: "Why we show up"
+  title: "Crafting dependable work for the people we call neighbors"
+  intro: "Our crew grew from friends helping friends into a trusted local team. We still bring that same care to every engagement—listening first, planning thoughtfully, and following through with craftsmanship that lasts."
+  image:
+    src: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=1200&q=80"
+    alt: "Team collaborating on renovation plans"
+cta:
+  background:
+    tone: "aurora" # Options: none, gradient, solid, aurora
+    color: "#103529"
+  animation: true
+  eyebrow: "Ready to collaborate?"
+  title: "Let’s design the next chapter of your project together"
+  intro: "Share your goals and we’ll craft a plan that fits your timeline, budget, and vision—supported by the same dependable crew our neighbors trust."
+  ctaLabel: "Plan a consultation"
+  ctaHref: "/contact"
 values:
   variant: "grid" # Options: grid, list, none
   background:

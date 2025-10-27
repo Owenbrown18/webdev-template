@@ -1,0 +1,125 @@
+---
+import {
+  about,
+  getAboutCtaBackgroundTone,
+  isAboutCtaAnimationEnabled,
+} from '../../../config/content';
+import {
+  normalizeBackgroundTone,
+  normalizeBackgroundColor,
+  sectionBackgroundClass,
+  sectionBackgroundToneAttr,
+  createBackgroundStyle,
+} from '../../../utils/background';
+
+const settings = about.cta ?? {};
+const props = (Astro.props ?? {}) as Record<string, any>;
+const {
+  backgroundTone: overrideTone,
+  backgroundColor: overrideColor,
+  backgroundClass: overrideClass,
+  animation: animationOverride,
+  eyebrow: eyebrowOverride,
+  title: titleOverride,
+  intro: introOverride,
+  ctaLabel: ctaLabelOverride,
+  ctaHref: ctaHrefOverride,
+  ...restProps
+} = props;
+
+const fallbackTone = getAboutCtaBackgroundTone();
+const backgroundTone = normalizeBackgroundTone(overrideTone ?? settings.background?.tone ?? fallbackTone);
+const backgroundClass = overrideClass ?? sectionBackgroundClass(backgroundTone);
+const backgroundToneAttr = sectionBackgroundToneAttr(backgroundTone);
+const backgroundColor = normalizeBackgroundColor(overrideColor ?? settings.background?.color);
+const backgroundStyle = createBackgroundStyle(backgroundColor, backgroundTone);
+const animationSetting = animationOverride ?? settings.animation;
+const animationEnabled = animationSetting ?? isAboutCtaAnimationEnabled();
+const eyebrow = (eyebrowOverride ?? settings.eyebrow ?? undefined) as string | undefined;
+const title = (titleOverride ?? settings.title ?? undefined) as string | undefined;
+const intro = (introOverride ?? settings.intro ?? undefined) as string | undefined;
+const ctaLabel = (ctaLabelOverride ?? settings.ctaLabel ?? 'Start your next project') as string | undefined;
+const ctaHref = (ctaHrefOverride ?? settings.ctaHref ?? '/contact') as string | undefined;
+const hasContent = Boolean(eyebrow || title || intro || ctaLabel);
+const shouldAnimate = animationEnabled !== false;
+const sectionClasses = [backgroundClass, 'section-shell pt-12 pb-14'].filter(Boolean).join(' ');
+const containerClasses = [
+  'section-container max-w-4xl space-y-6 text-center',
+  shouldAnimate
+    ? 'motion-safe:opacity-0 motion-safe:translate-y-6 motion-safe:transition-all motion-safe:duration-[900ms] motion-safe:ease-out data-[visible=true]:motion-safe:translate-y-0 data-[visible=true]:motion-safe:opacity-100'
+    : '',
+]
+  .filter(Boolean)
+  .join(' ');
+---
+{hasContent ? (
+  <section
+    class={sectionClasses}
+    data-background-tone={backgroundToneAttr ?? undefined}
+    style={backgroundStyle}
+    data-about-cta-root={shouldAnimate ? 'true' : undefined}
+    {...restProps}
+  >
+    <div class={containerClasses} data-about-cta-content>
+      {eyebrow && <p class="section-eyebrow">{eyebrow}</p>}
+      {title && <h2 class="section-heading">{title}</h2>}
+      {intro && <p class="section-subtitle mx-auto max-w-3xl">{intro}</p>}
+      {ctaLabel && ctaHref && (
+        <div class="pt-2">
+          <a
+            href={ctaHref}
+            class="inline-flex items-center justify-center rounded-full bg-brand-primary px-6 py-3 text-base font-semibold text-white shadow-brand-glow transition hover:bg-brand-primary/90 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary/60 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
+          >
+            {ctaLabel}
+          </a>
+        </div>
+      )}
+    </div>
+    {shouldAnimate ? (
+      <script>
+        const roots = Array.from(document.querySelectorAll('[data-about-cta-root="true"]'));
+        const supportMatchMedia = typeof window !== 'undefined' && typeof window.matchMedia === 'function';
+        const prefersReducedMotion = supportMatchMedia
+          ? window.matchMedia('(prefers-reduced-motion: reduce)').matches
+          : false;
+        const reveal = (el: Element | null) => {
+          if (el instanceof HTMLElement) {
+            el.dataset.visible = 'true';
+          }
+        };
+
+        roots.forEach((root) => {
+          if (!(root instanceof HTMLElement)) return;
+          if (root.dataset.aboutCtaAnimated === 'true') return;
+
+          const content = root.querySelector('[data-about-cta-content]');
+          root.dataset.aboutCtaAnimated = 'true';
+
+          if (prefersReducedMotion || !('IntersectionObserver' in window)) {
+            reveal(content);
+            return;
+          }
+
+          if (!(content instanceof HTMLElement)) return;
+
+          const observer = new IntersectionObserver(
+            (entries, obs) => {
+              entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                  reveal(entry.target);
+                  obs.unobserve(entry.target);
+                }
+              });
+            },
+            {
+              rootMargin: '0px 0px -10% 0px',
+              threshold: 0.15,
+            },
+          );
+
+          observer.observe(content);
+        });
+      </script>
+    ) : null}
+  </section>
+) : null}

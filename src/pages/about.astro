@@ -1,12 +1,14 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import AboutHeroSection from '../components/about/hero/AboutHeroSection.astro';
+import AboutStatementSection from '../components/about/statement/AboutStatementSection.astro';
 import AboutValuesSection from '../components/about/values/AboutValuesSection.astro';
 import AboutProcessSection from '../components/about/process/AboutProcessSection.astro';
 import AboutTimelineSection from '../components/about/timeline/AboutTimelineSection.astro';
 import AboutCommunitySection from '../components/about/community/AboutCommunitySection.astro';
 import AboutFoundersSection from '../components/about/founders/AboutFoundersSection.astro';
 import AboutTeamSection from '../components/about/team/AboutTeamSection.astro';
+import AboutCallToActionSection from '../components/about/cta/AboutCallToActionSection.astro';
 import { site, getAboutHeroVariant } from '../config/content';
 
 const heroVariant = getAboutHeroVariant();
@@ -15,11 +17,13 @@ const heroIsFullscreen = heroVariant === 'fullscreen';
 <BaseLayout title="About" description={`Learn more about ${site.name}`} heroIsFullscreen={heroIsFullscreen}>
   <div class="space-y-16 sm:space-y-20">
     <AboutHeroSection />
+    <AboutStatementSection />
     <AboutValuesSection />
     <AboutProcessSection />
     <AboutTimelineSection />
     <AboutCommunitySection />
     <AboutFoundersSection />
     <AboutTeamSection />
+    <AboutCallToActionSection />
   </div>
 </BaseLayout>

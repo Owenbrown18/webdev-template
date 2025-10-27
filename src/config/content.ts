@@ -149,6 +149,20 @@ export const getAboutHeroVariant = () => {
   return raw === 'none' ? 'none' : raw || 'classic';
 };
 
+/** Returns the about statement layout key, defaulting to "centered". */
+export const getAboutStatementVariant = () => {
+  const raw = about.statement?.variant?.trim?.().toLowerCase?.() || 'centered';
+  return raw === 'none' ? 'none' : raw;
+};
+
+export const getAboutStatementBackgroundTone = () =>
+  getBackgroundTone(about.statement?.background?.tone);
+export const isAboutStatementAnimationEnabled = () =>
+  isAnimationEnabled(about.statement?.animation);
+
+export const getAboutCtaBackgroundTone = () => getBackgroundTone(about.cta?.background?.tone);
+export const isAboutCtaAnimationEnabled = () => isAnimationEnabled(about.cta?.animation);
+
 /** Returns the about values layout key, defaulting to "grid". */
 export const getAboutValuesVariant = () => {
   const raw = about.values?.variant?.trim?.().toLowerCase?.() || 'grid';
