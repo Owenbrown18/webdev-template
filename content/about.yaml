@@ -43,8 +43,8 @@ cta:
 values:
   variant: "grid" # Options: grid, list, none
   background:
-    tone: "none" # Options: none, gradient, aurora
-    color: null
+    tone: "aurora" # Options: none, gradient, aurora
+    color: "#103529"
   animation: true # Toggle values animation on/off
   eyebrow: "Our values"
   title: "Values that guide every project"
@@ -63,7 +63,7 @@ values:
 process:
   variant: "steps" # Options: steps, none
   background:
-    tone: "aurora" # Options: none, gradient, solid, aurora
+    tone: "none" # Options: none, gradient, solid, aurora
     color: "#103529"
   animation: true # Toggle reveal animation on/off
   eyebrow: "How we work"
@@ -81,7 +81,7 @@ process:
     - title: "Wrap-up & support"
       description: "We handle final punch lists, share care tips, and stay available for follow-up questions after project close."
 timeline:
-  variant: "steps" # Options: steps, vertical, none
+  variant: "none" # Options: steps, vertical, none
   background:
     tone: "none" # Options: none, gradient, solid, aurora
     color: null
