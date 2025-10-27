@@ -26,6 +26,7 @@ hero:
 overview:
   background:
     tone: "none" # Options: none, gradient, aurora
+    color: null
   animation: true
   eyebrow: "Why partner with us"
   title: "Expert support at every stage"
@@ -35,7 +36,7 @@ catalog:
   variant: "spotlight" # Options: grid, list, spotlight, none
   background:
     tone: "gradient" # Options: none, gradient, aurora
-    color: "#0002"
+    color: "#103529"
   animation: true
   eyebrow: "Service catalog"
   title: "Comprehensive support, one trusted team"
@@ -44,7 +45,7 @@ highlights:
   variant: "columns" # Options: columns, none
   background:
     tone: "none" # Options: none, gradient, aurora
-    color: "#0b3c74"
+    color: null
   animation: true
   eyebrow: "Featured capabilities"
   title: "Tailored service packages"
@@ -71,8 +72,8 @@ highlights:
 testimonials:
   variant: "grid" # Options: grid, stack, none
   background:
-    tone: "gradient" # Options: none, gradient, aurora
-    color: "#0002"
+    tone: "aurora" # Options: none, gradient, aurora
+    color: "#103529"
   animation: true
   eyebrow: "Testimonials"
   title: "Trusted by homeowners and facility teams"
@@ -100,13 +101,11 @@ faq:
       answer: "Yes. We can collaborate with existing partners or recommend specialists from our vetted network."
 cta:
   background:
-    tone: "gradient" # Options: none, gradient, aurora
-    color: "#0002"
+    tone: "aurora" # Options: none, gradient, aurora
+    color: "#103529"
   animation: true
   eyebrow: "Next steps"
   title: "Build your tailored service plan"
   intro: "Share your project priorities and we’ll quickly outline the mix of services, timeline considerations, and budget guardrails that fit. Prefer to talk it through? Call us and we’ll walk you through options live."
-  primaryCtaLabel: "Request details"
-  primaryCtaHref: "/contact"
-  secondaryCtaLabel: "Call (555) 123-4567"
-  secondaryCtaHref: "tel:5551234567"
+  ctaLabel: "Request details"
+  ctaHref: "/contact"

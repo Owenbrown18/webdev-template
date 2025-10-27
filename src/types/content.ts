@@ -360,10 +360,8 @@ export type ServicesPageContent = {
     eyebrow?: string | null;
     title?: string | null;
     intro?: string | null;
-    primaryCtaLabel?: string | null;
-    primaryCtaHref?: string | null;
-    secondaryCtaLabel?: string | null;
-    secondaryCtaHref?: string | null;
+    ctaLabel?: string | null;
+    ctaHref?: string | null;
   };
 };
 
