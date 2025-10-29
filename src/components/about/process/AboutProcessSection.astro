@@ -27,6 +27,8 @@ const base = about.process ?? {};
 const title = props.title ?? base.title ?? 'How we work';
 const intro = props.intro ?? base.intro ?? 'A simple, dependable process keeps every project on track.';
 const eyebrow = props.eyebrow ?? base.eyebrow;
+const sectionId =
+  typeof props.id === 'string' && props.id.trim().length > 0 ? props.id.trim() : 'process';
 const rawSteps = Array.isArray(props.steps) ? props.steps : base.steps;
 const steps = Array.isArray(rawSteps) ? rawSteps.filter(Boolean) : [];
 const fallbackTone = getAboutProcessBackgroundTone();
@@ -45,6 +47,7 @@ const animationEnabled = animationSetting ?? isAboutProcessAnimationEnabled();
     title={title}
     intro={intro}
     eyebrow={eyebrow ?? undefined}
+    id={sectionId}
     steps={steps}
     backgroundClass={backgroundClass}
     backgroundTone={backgroundToneAttr}

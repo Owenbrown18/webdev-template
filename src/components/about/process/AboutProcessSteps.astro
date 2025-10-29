@@ -9,6 +9,7 @@ interface Props {
   intro?: string;
   eyebrow?: string;
   steps: StepItem[];
+  id?: string;
   backgroundClass?: string;
   animationEnabled?: boolean;
   backgroundTone?: string;
@@ -20,6 +21,7 @@ const {
   intro,
   eyebrow,
   steps,
+  id,
   backgroundClass,
   animationEnabled = true,
   backgroundTone,
@@ -39,6 +41,7 @@ const cardClasses = [
   .join(' ');
 ---
 <section
+  id={id ?? undefined}
   class={sectionClasses}
   data-background-tone={backgroundTone ?? undefined}
   style={backgroundStyle}

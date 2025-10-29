@@ -1,9 +1,5 @@
 ---
-import {
-  home,
-  getFeaturedProjectBackgroundTone,
-  isFeaturedProjectAnimationEnabled,
-} from '../../../config/content';
+import { home, getFeaturedProjectBackgroundTone, isFeaturedProjectAnimationEnabled } from '../../../config/content';
 import {
   normalizeBackgroundTone,
   normalizeBackgroundColor,
@@ -12,17 +8,21 @@ import {
   createBackgroundStyle,
 } from '../../../utils/background';
 
-type ProjectSlide = {
-  src?: string | null;
-  alt?: string | null;
+type ModalContent = {
+  title?: string | null;
+  body?: string | null;
 };
 
-type ProjectSlideDisplay = {
-  src: string;
-  alt?: string | null;
+const settings = (home.featuredProject ?? {}) as {
+  variant?: string | null;
+  background?: { tone?: string | null; color?: string | null };
+  animation?: boolean | null;
+  eyebrow?: string | null;
+  title?: string | null;
+  intro?: string | null;
+  image?: { src?: string | null; alt?: string | null } | null;
+  modal?: ModalContent | null;
 };
-
-const settings = home.featuredProject ?? {};
 const props = (Astro.props ?? {}) as Record<string, any>;
 const {
   backgroundTone: overrideTone,
@@ -32,11 +32,16 @@ const {
   eyebrow: eyebrowOverride,
   title: titleOverride,
   intro: introOverride,
-  slides: slidesOverride,
+  image: imageOverride,
   modal: modalOverride,
   variant: variantOverride,
   ...restProps
 } = props;
+
+const variant =
+  typeof variantOverride === 'string'
+    ? variantOverride.trim().toLowerCase()
+    : settings.variant?.trim?.().toLowerCase?.() ?? 'project';
 
 const fallbackTone = getFeaturedProjectBackgroundTone();
 const backgroundTone = normalizeBackgroundTone(overrideTone ?? settings.background?.tone ?? fallbackTone);
@@ -53,36 +58,26 @@ const eyebrow = (eyebrowOverride ?? settings.eyebrow ?? undefined) as string | u
 const title = (titleOverride ?? settings.title ?? undefined) as string | undefined;
 const intro = (introOverride ?? settings.intro ?? undefined) as string | undefined;
 
-const slidesSource = Array.isArray(slidesOverride) ? slidesOverride : settings.slides;
-const slidesInput = Array.isArray(slidesSource) ? (slidesSource as ProjectSlide[]) : [];
-const slides: ProjectSlideDisplay[] = slidesInput.reduce(
-  (acc, item) => {
-    if (typeof item?.src === 'string') {
-      const trimmed = item.src.trim();
-      if (trimmed.length > 0) {
-        acc.push({
-          src: trimmed,
-          alt: typeof item.alt === 'string' ? item.alt : item.alt ?? null,
-        });
-      }
-    }
-    return acc;
-  },
-  [] as ProjectSlideDisplay[],
-);
-const firstSlide = slides.length > 0 ? slides[0] : null;
-const rawVariant =
-  typeof variantOverride === 'string'
-    ? variantOverride.trim().toLowerCase()
-    : settings.variant?.trim?.().toLowerCase?.();
-const variant = rawVariant ?? 'project';
+const imageConfig =
+  imageOverride && typeof imageOverride === 'object'
+    ? (imageOverride as { src?: string | null; alt?: string | null })
+    : settings.image ?? {};
+const imageSrc =
+  typeof imageConfig?.src === 'string' && imageConfig.src.trim().length > 0
+    ? imageConfig.src.trim()
+    : undefined;
+const imageAlt = typeof imageConfig?.alt === 'string' ? imageConfig.alt : '';
 
-const modalConfig = (modalOverride ?? settings.modal ?? {}) as Record<string, any>;
-const modalTitle = (modalConfig.title ?? undefined) as string | undefined;
-const rawModalBody = typeof modalConfig.body === 'string' ? modalConfig.body.trim() : '';
-const modalParagraphs = rawModalBody.length > 0 ? rawModalBody.split(/\n\s*\n/) : [];
+const modalConfig = (modalOverride ?? settings.modal ?? {}) as ModalContent;
+const modalTitle = typeof modalConfig.title === 'string' ? modalConfig.title.trim() : '';
+const modalBodyRaw = typeof modalConfig.body === 'string' ? modalConfig.body.trim() : '';
+const modalParagraphs = modalBodyRaw.length > 0 ? modalBodyRaw.split(/\n\s*\n/) : [];
 const hasModal = Boolean(modalTitle || modalParagraphs.length > 0);
-const shouldRender = variant !== 'none' && slides.length > 0;
+
+const shouldRender =
+  variant !== 'none' &&
+  Boolean(imageSrc) &&
+  Boolean(eyebrow || title || intro);
 
 const sectionClasses = [backgroundClass, 'section-shell'].filter(Boolean).join(' ');
 const containerClasses = [
@@ -93,18 +88,17 @@ const containerClasses = [
 ]
   .filter(Boolean)
   .join(' ');
-const imageWrapperClasses = [
-  'relative mx-auto w-full max-w-4xl overflow-hidden rounded-[1.75rem] border border-slate-200/70 bg-white shadow-card',
-  'aspect-[16/9]',
-];
+const imageWrapperClasses =
+  'relative mx-auto w-full max-w-4xl overflow-hidden rounded-[1.75rem] border border-slate-200/70 bg-white shadow-card';
+const imageClasses = 'aspect-[16/9] w-full object-cover';
+const animationAttr = shouldAnimate ? 'true' : 'false';
 ---
 {shouldRender ? (
   <section
     class={sectionClasses}
     data-background-tone={backgroundToneAttr ?? undefined}
     style={backgroundStyle}
-    data-featured-project-root="true"
-    data-featured-project-slides={JSON.stringify(slides)}
+    data-featured-project-root={animationAttr}
     {...restProps}
   >
     <div class={containerClasses} data-featured-project-content>
@@ -115,16 +109,9 @@ const imageWrapperClasses = [
           {intro && <p class="section-subtitle mx-auto max-w-3xl">{intro}</p>}
         </div>
       )}
-      <div class={imageWrapperClasses.join(' ')}>
-        <img
-          data-featured-project-image
-          src={firstSlide?.src ?? ''}
-          alt={firstSlide?.alt ?? ''}
-          class="h-full w-full object-cover transition-opacity duration-700 ease-out"
-          loading="lazy"
-          decoding="async"
-        />
-      </div>
+      <figure class={imageWrapperClasses}>
+        <img src={imageSrc} alt={imageAlt ?? ''} class={imageClasses} loading="lazy" decoding="async" />
+      </figure>
       {hasModal ? (
         <div>
           <button
@@ -162,31 +149,24 @@ const imageWrapperClasses = [
             ×
           </button>
           <div class="featured-project-modal__header">
-            <p class="featured-project-modal__eyebrow">{eyebrow ?? 'Featured project'}</p>
+            {eyebrow && <p class="featured-project-modal__eyebrow">{eyebrow}</p>}
             <h3 class="featured-project-modal__title" id="featured-project-modal-title">
-              {modalTitle ?? title ?? 'Featured project'}
+              {modalTitle || title || 'Featured project'}
             </h3>
           </div>
           <div class="featured-project-modal__body">
-            {modalParagraphs.length > 0
-              ? modalParagraphs.map((paragraph) => <p>{paragraph}</p>)
-              : intro
-                ? [<p>{intro}</p>]
-                : null}
+            {modalParagraphs.length > 0 ? (
+              modalParagraphs.map((paragraph) => <p>{paragraph}</p>)
+            ) : intro ? (
+              <p>{intro}</p>
+            ) : null}
           </div>
         </div>
       </div>
     ) : null}
-    {shouldAnimate || slides.length > 1 || hasModal ? (
+    {shouldAnimate || hasModal ? (
       <script>
-        type ProjectSlideData = {
-          src?: string | null;
-          alt?: string | null;
-        };
-
-        const isHTMLElement = (node: Element): node is HTMLElement => node instanceof HTMLElement;
-
-        const roots = Array.from(document.querySelectorAll('[data-featured-project-root]')).filter(isHTMLElement);
+        const roots = Array.from(document.querySelectorAll('[data-featured-project-root]'));
         const focusableSelector =
           'a[href], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])';
         const supportMatchMedia = typeof window !== 'undefined' && typeof window.matchMedia === 'function';
@@ -195,53 +175,12 @@ const imageWrapperClasses = [
           : false;
 
         roots.forEach((root) => {
-          const slidesDataString = root.getAttribute('data-featured-project-slides') ?? '[]';
-          let slidesData: ProjectSlideData[] = [];
-          try {
-            const parsed = JSON.parse(slidesDataString);
-            slidesData = Array.isArray(parsed)
-              ? parsed.filter((slide): slide is ProjectSlideData => slide && typeof slide.src === 'string')
-              : [];
-          } catch {
-            slidesData = [];
-          }
+          if (!(root instanceof HTMLElement)) return;
 
-          const imageElement = root.querySelector('[data-featured-project-image]');
-          if (imageElement instanceof HTMLImageElement && slidesData.length > 1) {
-            let activeIndex = 0;
-            const updateImage = (index: number) => {
-              const slide = slidesData[index];
-              if (!slide) return;
-              imageElement.style.opacity = '0';
-              window.setTimeout(() => {
-                imageElement.src = typeof slide.src === 'string' ? slide.src : '';
-                imageElement.alt = typeof slide.alt === 'string' ? slide.alt : '';
-                imageElement.style.opacity = '1';
-              }, 180);
-            };
-
-            let timerId: number | undefined;
-            const start = () => {
-              if (prefersReducedMotion || slidesData.length <= 1) return;
-              stop();
-              timerId = window.setInterval(() => {
-                activeIndex = (activeIndex + 1) % slidesData.length;
-                updateImage(activeIndex);
-              }, 6500);
-            };
-            const stop = () => {
-              if (timerId !== undefined) {
-                window.clearInterval(timerId);
-                timerId = undefined;
-              }
-            };
-
-            start();
-            root.addEventListener('mouseenter', stop);
-            root.addEventListener('focusin', stop);
-            root.addEventListener('mouseleave', start);
-            root.addEventListener('focusout', start);
-            root.addEventListener('astro:before-remove', stop);
+          const shouldAnimate = root.dataset.featuredProjectRoot === 'true';
+          const content = root.querySelector('[data-featured-project-content]');
+          if (shouldAnimate && content instanceof HTMLElement) {
+            content.dataset.visible = 'true';
           }
 
           const modal = root.querySelector('[data-featured-project-modal]');
@@ -249,16 +188,16 @@ const imageWrapperClasses = [
           if (!(modal instanceof HTMLElement) || !(trigger instanceof HTMLElement)) {
             return;
           }
+
           const overlay = modal.querySelector('[data-featured-project-overlay]');
           const closeButton = modal.querySelector('[data-featured-project-close]');
-          const initialFocusTarget = modal.querySelector('[data-featured-project-content]');
+          const focusTarget = modal.querySelector('[data-featured-project-content]');
           let activeModal = false;
-          let previousFocus: HTMLElement | null = null;
+          let previousFocus: Element | null = null;
 
           const getFocusable = (): HTMLElement[] =>
             Array.from(modal.querySelectorAll(focusableSelector)).filter(
-              (candidate): candidate is HTMLElement =>
-                candidate instanceof HTMLElement && !candidate.hasAttribute('disabled'),
+              (el): el is HTMLElement => el instanceof HTMLElement && !el.hasAttribute('disabled'),
             );
 
           const closeModal = () => {
@@ -276,13 +215,13 @@ const imageWrapperClasses = [
 
             if (!prefersReducedMotion && modal.dataset.state === 'open') {
               modal.dataset.state = 'closing';
-              const content = modal.querySelector('[data-featured-project-content]');
-              if (content instanceof HTMLElement) {
-                const onTransitionEnd = () => {
-                  content.removeEventListener('transitionend', onTransitionEnd);
+              const contentEl = modal.querySelector('[data-featured-project-content]');
+              if (contentEl instanceof HTMLElement) {
+                const listener = () => {
+                  contentEl.removeEventListener('transitionend', listener);
                   finish();
                 };
-                content.addEventListener('transitionend', onTransitionEnd);
+                contentEl.addEventListener('transitionend', listener);
               } else {
                 finish();
               }
@@ -314,7 +253,7 @@ const imageWrapperClasses = [
           const openModal = () => {
             if (activeModal) return;
             activeModal = true;
-            previousFocus = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+            previousFocus = document.activeElement;
             modal.hidden = false;
             modal.dataset.state = prefersReducedMotion ? 'open' : 'opening';
             modal.setAttribute('aria-hidden', 'false');
@@ -324,19 +263,19 @@ const imageWrapperClasses = [
               if (!prefersReducedMotion) {
                 modal.dataset.state = 'open';
               }
-              const focusTarget = initialFocusTarget instanceof HTMLElement ? initialFocusTarget : modal;
-              focusTarget.focus();
+              const target =
+                (focusTarget instanceof HTMLElement && focusTarget) || modal;
+              if (target instanceof HTMLElement) {
+                target.focus();
+              }
             });
           };
 
           trigger.addEventListener('click', openModal);
-          if (overlay instanceof HTMLElement) {
-            overlay.addEventListener('click', closeModal);
-          }
-          if (closeButton instanceof HTMLElement) {
-            closeButton.addEventListener('click', closeModal);
-          }
-          modal.addEventListener('keydown', (event: KeyboardEvent) => {
+          overlay?.addEventListener('click', closeModal);
+          closeButton?.addEventListener('click', closeModal);
+
+          modal.addEventListener('keydown', (event) => {
             if (event.key === 'Escape') {
               event.preventDefault();
               closeModal();
@@ -373,7 +312,7 @@ const imageWrapperClasses = [
         inset: 0;
         background: rgba(15, 23, 42, 0.45);
         opacity: 0;
-        transition: opacity 240ms ease;
+        transition: opacity 220ms ease;
       }
 
       .featured-project-modal__content {
@@ -388,7 +327,7 @@ const imageWrapperClasses = [
         opacity: 0;
         transform: translateY(18px);
         outline: none;
-        transition: opacity 260ms ease, transform 260ms ease;
+        transition: opacity 240ms ease, transform 240ms ease;
       }
 
       .featured-project-modal[data-state='open'] .featured-project-modal__overlay {
@@ -423,7 +362,7 @@ const imageWrapperClasses = [
         color: rgba(15, 23, 42, 0.65);
         font-size: 1.25rem;
         line-height: 1;
-        transition: background 150ms ease, color 150ms ease;
+        transition: background 180ms ease, color 180ms ease;
       }
 
       .featured-project-modal__close:hover,

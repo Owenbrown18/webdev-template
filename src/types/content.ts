@@ -138,12 +138,32 @@ export type HomeContent = {
     } | null;
   };
   featuredPhotos?: {
+    variant?: string | null;
     background?: {
       tone?: string | null; // Options: none, gradient, solid, aurora
       color?: string | null;
     };
     animation?: boolean | null;
     items?: Array<{
+      src?: string | null;
+      alt?: string | null;
+    }>;
+  };
+  featuredProject?: {
+    variant?: string | null;
+    background?: {
+      tone?: string | null; // Options: none, gradient, solid, aurora
+      color?: string | null;
+    };
+    animation?: boolean | null;
+    eyebrow?: string | null;
+    title?: string | null;
+    intro?: string | null;
+    modal?: {
+      title?: string | null;
+      body?: string | null;
+    };
+    slides?: Array<{
       src?: string | null;
       alt?: string | null;
     }>;
@@ -182,6 +202,21 @@ export type HomeContent = {
     eyebrow?: string | null;
     title?: string | null;
     intro?: string | null;
+  };
+  expectations?: {
+    background?: {
+      tone?: string | null; // Options: none, gradient, solid, aurora
+      color?: string | null;
+    };
+    animation?: boolean | null;
+    eyebrow?: string | null;
+    title?: string | null;
+    intro?: string | null;
+    items?: Array<{
+      title?: string | null;
+      description?: string | null;
+      icon?: string | null;
+    }>;
   };
   video?: {
     variant?: string;

@@ -29,8 +29,9 @@ services:
   animation: true # Toggle reveal animation on/off
   eyebrow: "What we do"
   title: "Our Services"
-  intro: "Support tailored to your needs."
+  intro: "OBdesign builds fast, mobile-friendly websites, refreshes outdated sites, and boosts visibility through SEO and Google Business optimization."
 featuredPhotos:
+  variant: "none" # Options: grid, none
   background:
     tone: "none" # Options: none, gradient, solid, aurora
     color: null
@@ -42,16 +43,34 @@ featuredPhotos:
       alt: "Roofing services website"
     - src: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1200&q=80"
       alt: "Community services portal"
+featuredProject:
+  variant: "project" # Options: project, none
+  background:
+    tone: "none"
+    color: "#103529"
+  animation: true
+  eyebrow: "Featured project"
+  title: "Showcasing a modern home services brand"
+  intro: "We partnered with the Uptown Electrical team to redesign their online presence, streamline lead capture, and highlight their customer-first approach."
+  image:
+    src: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=1600&q=80"
+    alt: "Featured project hero screen"
+  modal:
+    title: "Project details"
+    body: |
+      We rebuilt the UX around homeowner questions, layered in seasonal promotions, and integrated a scheduling workflow that syncs with the team’s dispatch tools.
+
+      Results included a 46% lift in organic enquiries within six weeks, a faster quoting process, and clearer service differentiation across neighborhoods.
 portfolioStatement:
   background:
     tone: "aurora" # Options: none, gradient, solid, aurora
     color: "#103529"
   animation: true
-  eyebrow: "Portfolio"
-  title: "Beautiful, fast, mobile-responsive websites"
-  intro: "From landing pages to full eCommerce builds, we craft modern web experiences that load fast and convert customers on every device."
-  ctaLabel: "Browse our Portfolio"
-  ctaHref: "/portfolio"
+  eyebrow: "Our Work"
+  title: "Websites built for real results"
+  intro: "We design and develop clean, high-performing websites tailored to each business we work with. While our full portfolio is coming soon, you can explore the services and process that power every project we build."
+  ctaLabel: "View our Process"
+  ctaHref: "/about#process"
 cta:
   background:
     tone: "aurora" # Options: none, gradient, solid, aurora
@@ -62,6 +81,33 @@ cta:
   intro: "Share your goals and we’ll build a tailored plan—from first concept to launch day and beyond."
   ctaLabel: "Book a call"
   ctaHref: "/contact"
+expectations:
+  background:
+    tone: "none"
+    color: null
+  animation: true
+  eyebrow: "What to expect"
+  title: "Dependable collaboration from kickoff to launch"
+  intro: "We keep the process transparent, proactive, and personal so you always know what’s happening next—and why."
+  items:
+    - title: "Clear communication"
+      description: "Weekly check-ins, shared milestones, and quick responses keep everyone aligned and confident."
+      icon: "💬"
+    - title: "Thoughtful planning"
+      description: "Each project begins with discovery and a roadmap that balances design, performance, and budget."
+      icon: "🧭"
+    - title: "Modern design"
+      description: "Clean layouts, intuitive navigation, and responsive structure ensure every visitor has a smooth experience."
+      icon: "💻"
+    - title: "Quality execution"
+      description: "Built with precision, tested for speed, and optimized for long-term reliability across all devices."
+      icon: "⚙️"
+    - title: "SEO & visibility"
+      description: "Technical SEO, analytics setup, and Google Business alignment help your website get found by the right audience."
+      icon: "📈"
+    - title: "Ongoing partnership"
+      description: "We remain available for updates, enhancements, and growth discussions well beyond launch day."
+      icon: "🤝"
 video:
   variant: "none" # Options: half, full, none
   background:
@@ -76,7 +122,7 @@ video:
   posterUrl: ""
   caption: "A quick look at how we support neighbors every step of the way."
 testimonials:
-  variant: "grid" # Options: grid, stack, none
+  variant: "none" # Options: grid, stack, none
   background:
     tone: "none" # Options: none, gradient, aurora
     color: null

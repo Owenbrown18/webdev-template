@@ -209,6 +209,8 @@ export const getServicesBackgroundTone = () => getBackgroundTone(home.services?.
 export const getVideoBackgroundTone = () => getBackgroundTone(home.video?.background?.tone);
 export const getTestimonialsBackgroundTone = () => getBackgroundTone(home.testimonials?.background?.tone);
 export const getBookingBackgroundTone = () => getBackgroundTone(home.booking?.background?.tone);
+export const getExpectationsBackgroundTone = () => getBackgroundTone(home.expectations?.background?.tone);
+export const getFeaturedProjectBackgroundTone = () => getBackgroundTone(home.featuredProject?.background?.tone);
 export const isHeroAnimationEnabled = () => isAnimationEnabled(home.hero?.animation);
 export const isStatementAnimationEnabled = () => isAnimationEnabled(home.statement?.animation);
 export const isFeaturedPhotosAnimationEnabled = () => isAnimationEnabled(home.featuredPhotos?.animation);
@@ -218,6 +220,14 @@ export const isCtaAnimationEnabled = () => isAnimationEnabled(home.cta?.animatio
 export const isVideoAnimationEnabled = () => isAnimationEnabled(home.video?.animation);
 export const isTestimonialsAnimationEnabled = () => isAnimationEnabled(home.testimonials?.animation);
 export const isBookingAnimationEnabled = () => isAnimationEnabled(home.booking?.animation);
+export const isExpectationsAnimationEnabled = () => isAnimationEnabled(home.expectations?.animation);
+export const isFeaturedProjectAnimationEnabled = () => isAnimationEnabled(home.featuredProject?.animation);
+
+export const getFeaturedPhotosVariant = () => {
+  const raw = home.featuredPhotos?.variant?.trim?.().toLowerCase?.();
+  if (!raw) return 'grid';
+  return raw === 'none' ? 'none' : raw;
+};
 
 export const getAboutHeroBackgroundTone = () => getBackgroundTone(about.hero?.background?.tone);
 export const getAboutValuesBackgroundTone = () => getBackgroundTone(about.values?.background?.tone);

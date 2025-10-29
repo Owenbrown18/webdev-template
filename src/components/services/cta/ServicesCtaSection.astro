@@ -42,9 +42,9 @@ const ctaLabel = (ctaLabelOverride ?? settings.ctaLabel ?? 'Request a consultati
 const ctaHref = (ctaHrefOverride ?? settings.ctaHref ?? '/contact') as string | undefined;
 const hasContent = Boolean(eyebrow || title || intro || ctaLabel);
 const shouldAnimate = animationEnabled !== false;
-const sectionClasses = [backgroundClass, 'section-shell pt-12 pb-14'].filter(Boolean).join(' ');
+const sectionClasses = [backgroundClass, 'section-shell'].filter(Boolean).join(' ');
 const containerClasses = [
-  'section-container max-w-4xl space-y-6 text-center',
+  'section-container max-w-4xl space-y-8 text-center',
   shouldAnimate
     ? 'motion-safe:opacity-0 motion-safe:translate-y-6 motion-safe:transition-all motion-safe:duration-[900ms] motion-safe:ease-out data-[visible=true]:motion-safe:translate-y-0 data-[visible=true]:motion-safe:opacity-100'
     : '',

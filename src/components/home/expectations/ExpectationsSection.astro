@@ -1,0 +1,169 @@
+---
+import { home, getExpectationsBackgroundTone, isExpectationsAnimationEnabled } from '../../../config/content';
+import {
+  normalizeBackgroundTone,
+  normalizeBackgroundColor,
+  sectionBackgroundClass,
+  sectionBackgroundToneAttr,
+  createBackgroundStyle,
+} from '../../../utils/background';
+
+type ExpectationsItem = {
+  title?: string | null;
+  description?: string | null;
+  icon?: string | null;
+};
+
+const settings = home.expectations ?? {};
+const props = (Astro.props ?? {}) as Record<string, any>;
+const {
+  backgroundTone: overrideTone,
+  backgroundColor: overrideColor,
+  backgroundClass: overrideClass,
+  animation: animationOverride,
+  eyebrow: eyebrowOverride,
+  title: titleOverride,
+  intro: introOverride,
+  items: itemsOverride,
+  ...restProps
+} = props;
+
+const fallbackTone = getExpectationsBackgroundTone();
+const backgroundTone = normalizeBackgroundTone(overrideTone ?? settings.background?.tone ?? fallbackTone);
+const backgroundClass = overrideClass ?? sectionBackgroundClass(backgroundTone);
+const backgroundToneAttr = sectionBackgroundToneAttr(backgroundTone);
+const backgroundColor = normalizeBackgroundColor(overrideColor ?? settings.background?.color);
+const backgroundStyle = createBackgroundStyle(backgroundColor, backgroundTone);
+const animationSetting = animationOverride ?? settings.animation;
+const animationEnabled = animationSetting ?? isExpectationsAnimationEnabled();
+
+const eyebrow = (eyebrowOverride ?? settings.eyebrow ?? undefined) as string | undefined;
+const title = (titleOverride ?? settings.title ?? undefined) as string | undefined;
+const intro = (introOverride ?? settings.intro ?? undefined) as string | undefined;
+const itemsSource = Array.isArray(itemsOverride) ? itemsOverride : settings.items;
+const items = (Array.isArray(itemsSource) ? itemsSource : [])
+  .map((item) => item as ExpectationsItem)
+  .filter((item) => Boolean(item?.title?.trim() || item?.description?.trim()));
+
+const hasContent = Boolean(eyebrow || title || intro || items.length > 0);
+const shouldAnimate = animationEnabled !== false;
+const sectionClasses = [backgroundClass, 'section-shell'].filter(Boolean).join(' ');
+const containerClasses = [
+  'section-container max-w-5xl space-y-10 text-center',
+  shouldAnimate
+    ? 'motion-safe:opacity-0 motion-safe:translate-y-6 motion-safe:transition-all motion-safe:duration-[900ms] motion-safe:ease-out data-[visible=true]:motion-safe:translate-y-0 data-[visible=true]:motion-safe:opacity-100'
+    : '',
+]
+  .filter(Boolean)
+  .join(' ');
+const gridClasses = [
+  'grid',
+  'gap-6',
+  'justify-center',
+  'justify-items-center',
+  'sm:[grid-template-columns:repeat(auto-fit,minmax(18rem,1fr))]',
+].join(' ');
+const cardBaseClasses = [
+  'surface-card',
+  'surface-card-static',
+  'relative',
+  'flex',
+  'h-full',
+  'w-full',
+  'max-w-[20rem]',
+  'flex-col',
+  'items-center',
+  'gap-4',
+  'p-6',
+  'text-center',
+  'sm:p-7',
+];
+const cardIconClasses = 'flex h-12 w-12 items-center justify-center rounded-full bg-brand-primary/10 text-xl text-brand-primary';
+const cardAnimationClasses = shouldAnimate
+  ? 'motion-safe:opacity-0 motion-safe:translate-y-4 motion-safe:transition-all motion-safe:duration-[1000ms] motion-safe:ease-out data-[visible=true]:motion-safe:translate-y-0 data-[visible=true]:motion-safe:opacity-100'
+  : '';
+---
+{hasContent ? (
+  <section
+    class={sectionClasses}
+    data-background-tone={backgroundToneAttr ?? undefined}
+    style={backgroundStyle}
+    data-expectations-root={shouldAnimate ? 'true' : undefined}
+    {...restProps}
+  >
+    <div class={containerClasses} data-expectations-content>
+      {(eyebrow || title || intro) && (
+        <div class="space-y-4">
+          {eyebrow && <p class="section-eyebrow">{eyebrow}</p>}
+          {title && <h2 class="section-heading">{title}</h2>}
+          {intro && <p class="section-subtitle mx-auto max-w-4xl">{intro}</p>}
+        </div>
+      )}
+      {items.length > 0 ? (
+        <div class={gridClasses}>
+          {items.map(({ title, description, icon }, index) => (
+            <article
+              class={[...cardBaseClasses, cardAnimationClasses].filter(Boolean).join(' ')}
+              style={shouldAnimate ? `transition-delay: ${index * 120}ms;` : undefined}
+              data-expectations-card
+            >
+              <span class={cardIconClasses}>{icon ?? '✦'}</span>
+              {title && <h3 class="text-lg font-semibold text-slate-900">{title}</h3>}
+              {description && <p class="text-sm leading-6 text-slate-600">{description}</p>}
+            </article>
+          ))}
+        </div>
+      ) : null}
+    </div>
+    {shouldAnimate ? (
+      <script>
+        const roots = Array.from(document.querySelectorAll('[data-expectations-root="true"]'));
+        const supportMatchMedia = typeof window !== 'undefined' && typeof window.matchMedia === 'function';
+        const prefersReducedMotion = supportMatchMedia
+          ? window.matchMedia('(prefers-reduced-motion: reduce)').matches
+          : false;
+        const reveal = (el: Element | null) => {
+          if (el instanceof HTMLElement) {
+            el.dataset.visible = 'true';
+          }
+        };
+
+        roots.forEach((root) => {
+          if (!(root instanceof HTMLElement)) return;
+          if (root.dataset.expectationsAnimated === 'true') return;
+
+          const content = root.querySelector('[data-expectations-content]');
+          const cards = Array.from(root.querySelectorAll('[data-expectations-card]'));
+          const targets = [content, ...cards];
+          root.dataset.expectationsAnimated = 'true';
+
+          if (prefersReducedMotion || !('IntersectionObserver' in window)) {
+            targets.forEach((target) => reveal(target));
+            return;
+          }
+
+          const observer = new IntersectionObserver(
+            (entries, obs) => {
+              entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                  reveal(entry.target);
+                  obs.unobserve(entry.target);
+                }
+              });
+            },
+            {
+              rootMargin: '0px 0px -10% 0px',
+              threshold: 0.15,
+            },
+          );
+
+          targets.forEach((target) => {
+            if (target instanceof HTMLElement) {
+              observer.observe(target);
+            }
+          });
+        });
+      </script>
+    ) : null}
+  </section>
+) : null}
