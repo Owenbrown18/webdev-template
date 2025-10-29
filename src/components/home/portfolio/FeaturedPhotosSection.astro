@@ -1,5 +1,5 @@
 ---
-import { home, getFeaturedPhotosBackgroundTone, isFeaturedPhotosAnimationEnabled } from '../../../config/content';
+import { home, getFeaturedPhotosBackgroundTone, isFeaturedPhotosAnimationEnabled, getFeaturedPhotosVariant } from '../../../config/content';
 import {
   normalizeBackgroundTone,
   normalizeBackgroundColor,
@@ -7,6 +7,16 @@ import {
   sectionBackgroundToneAttr,
   createBackgroundStyle,
 } from '../../../utils/background';
+
+type FeaturedPhotoItem = {
+  src?: string | null;
+  alt?: string | null;
+};
+
+type FeaturedPhotoDisplayItem = {
+  src: string;
+  alt?: string | null;
+};
 
 const settings = home.featuredPhotos ?? {};
 const props = (Astro.props ?? {}) as Record<string, any>;
@@ -16,8 +26,15 @@ const {
   backgroundClass: overrideClass,
   animation: animationOverride,
   items: itemsOverride,
+  variant: variantOverride,
   ...restProps
 } = props;
+
+const rawVariant =
+  typeof variantOverride === 'string'
+    ? variantOverride.trim().toLowerCase()
+    : settings.variant?.trim?.().toLowerCase?.();
+const variant = rawVariant ?? getFeaturedPhotosVariant();
 
 const fallbackTone = getFeaturedPhotosBackgroundTone();
 const backgroundTone = normalizeBackgroundTone(overrideTone ?? settings.background?.tone ?? fallbackTone);
@@ -27,9 +44,26 @@ const backgroundColor = normalizeBackgroundColor(overrideColor ?? settings.backg
 const backgroundStyle = createBackgroundStyle(backgroundColor, backgroundTone);
 const animationSetting = animationOverride ?? settings.animation;
 const animationEnabled = animationSetting ?? isFeaturedPhotosAnimationEnabled();
-const items = Array.isArray(itemsOverride ?? settings.items) ? (itemsOverride ?? settings.items) : [];
-const filteredItems = items.filter((item) => Boolean(item?.src));
-const shouldRender = filteredItems.length > 0;
+
+const itemsSource = Array.isArray(itemsOverride) ? itemsOverride : settings.items;
+const items = Array.isArray(itemsSource) ? (itemsSource as FeaturedPhotoItem[]) : [];
+const filteredItems: FeaturedPhotoDisplayItem[] = items.reduce(
+  (acc, item) => {
+    if (typeof item?.src === 'string') {
+      const trimmed = item.src.trim();
+      if (trimmed.length > 0) {
+        acc.push({
+          src: trimmed,
+          alt: typeof item.alt === 'string' ? item.alt : item.alt ?? null,
+        });
+      }
+    }
+    return acc;
+  },
+  [] as FeaturedPhotoDisplayItem[],
+);
+
+const shouldRender = variant !== 'none' && filteredItems.length > 0;
 const shouldAnimate = animationEnabled !== false;
 const sectionClasses = [backgroundClass, 'section-shell pt-10 pb-10 sm:pt-14 sm:pb-14'].filter(Boolean).join(' ');
 const containerClasses = [
@@ -59,57 +93,65 @@ const gridClass = (() => {
   >
     <div class={containerClasses} data-featured-photos-container>
       <div class={`${gridClass}`}>
-        {filteredItems.map(({ src, alt }, index) => (
-          <figure
-            class="surface-card surface-card-static overflow-hidden rounded-xl border border-slate-200/60 bg-white shadow-card-soft"
-            style={shouldAnimate ? `transition-delay: ${index * 80}ms;` : undefined}
-            data-featured-photo
-          >
-            <div class="aspect-[16/9] w-full">
-              <img
-                src={src ?? ''}
-                alt={alt ?? ''}
-                class="h-full w-full object-cover"
-                loading="lazy"
-                decoding="async"
-              />
-            </div>
-          </figure>
-        ))}
+        {filteredItems.map((item: FeaturedPhotoDisplayItem, index: number) => {
+          const altText = typeof item.alt === 'string' ? item.alt : item.alt ?? '';
+          return (
+            <figure
+              class="surface-card surface-card-static overflow-hidden rounded-xl border border-slate-200/60 bg-white shadow-card-soft"
+              style={shouldAnimate ? `transition-delay: ${index * 80}ms;` : undefined}
+              data-featured-photo
+            >
+              <div class="aspect-[16/9] w-full">
+                <img src={item.src} alt={altText} class="h-full w-full object-cover" loading="lazy" decoding="async" />
+              </div>
+            </figure>
+          );
+        })}
       </div>
     </div>
     {shouldAnimate ? (
       <script>
-        const roots = Array.from(document.querySelectorAll('[data-featured-photos-root="true"]'));
+        const isHTMLElement = (node: Element): node is HTMLElement => node instanceof HTMLElement;
+
+        const roots = Array.from(document.querySelectorAll('[data-featured-photos-root="true"]')).filter(
+          isHTMLElement,
+        );
         const supportMatchMedia = typeof window !== 'undefined' && typeof window.matchMedia === 'function';
         const prefersReducedMotion = supportMatchMedia
           ? window.matchMedia('(prefers-reduced-motion: reduce)').matches
           : false;
-        const reveal = (el) => {
-          if (el instanceof HTMLElement) {
-            el.dataset.visible = 'true';
-          }
+        const reveal = (element: HTMLElement) => {
+          element.dataset.visible = 'true';
         };
 
         roots.forEach((root) => {
-          if (!(root instanceof HTMLElement)) return;
           if (root.dataset.featuredPhotosAnimated === 'true') return;
 
-          const container = root.querySelector('[data-featured-photos-container]');
-          const photos = Array.from(root.querySelectorAll('[data-featured-photo]'));
+          const containerNode = root.querySelector('[data-featured-photos-container]');
+          const container = containerNode instanceof HTMLElement ? containerNode : null;
+          const photoNodeList = root.querySelectorAll('[data-featured-photo]');
+          const photos = Array.from(photoNodeList).filter(isHTMLElement);
+
           root.dataset.featuredPhotosAnimated = 'true';
 
-          const targets = [container, ...photos];
+          const targets: HTMLElement[] = [];
+          if (container) {
+            targets.push(container);
+          }
+          targets.push(...photos);
+
           if (prefersReducedMotion || !('IntersectionObserver' in window)) {
             targets.forEach(reveal);
             return;
           }
 
           const observer = new IntersectionObserver(
-            (entries, obs) => {
+            (entries, obs): void => {
               entries.forEach((entry) => {
                 if (entry.isIntersecting) {
-                  reveal(entry.target);
+                  if (entry.target instanceof HTMLElement) {
+                    reveal(entry.target);
+                  }
                   obs.unobserve(entry.target);
                 }
               });
@@ -121,9 +163,7 @@ const gridClass = (() => {
           );
 
           targets.forEach((target) => {
-            if (target instanceof HTMLElement) {
-              observer.observe(target);
-            }
+            observer.observe(target);
           });
         });
       </script>

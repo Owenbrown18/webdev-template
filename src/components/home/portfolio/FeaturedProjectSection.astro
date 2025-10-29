@@ -1,0 +1,477 @@
+---
+import {
+  home,
+  getFeaturedProjectBackgroundTone,
+  isFeaturedProjectAnimationEnabled,
+} from '../../../config/content';
+import {
+  normalizeBackgroundTone,
+  normalizeBackgroundColor,
+  sectionBackgroundClass,
+  sectionBackgroundToneAttr,
+  createBackgroundStyle,
+} from '../../../utils/background';
+
+type ProjectSlide = {
+  src?: string | null;
+  alt?: string | null;
+};
+
+type ProjectSlideDisplay = {
+  src: string;
+  alt?: string | null;
+};
+
+const settings = home.featuredProject ?? {};
+const props = (Astro.props ?? {}) as Record<string, any>;
+const {
+  backgroundTone: overrideTone,
+  backgroundColor: overrideColor,
+  backgroundClass: overrideClass,
+  animation: animationOverride,
+  eyebrow: eyebrowOverride,
+  title: titleOverride,
+  intro: introOverride,
+  slides: slidesOverride,
+  modal: modalOverride,
+  variant: variantOverride,
+  ...restProps
+} = props;
+
+const fallbackTone = getFeaturedProjectBackgroundTone();
+const backgroundTone = normalizeBackgroundTone(overrideTone ?? settings.background?.tone ?? fallbackTone);
+const backgroundClass = overrideClass ?? sectionBackgroundClass(backgroundTone);
+const backgroundToneAttr = sectionBackgroundToneAttr(backgroundTone);
+const backgroundColor = normalizeBackgroundColor(overrideColor ?? settings.background?.color);
+const backgroundStyle = createBackgroundStyle(backgroundColor, backgroundTone);
+
+const animationSetting = animationOverride ?? settings.animation;
+const animationEnabled = animationSetting ?? isFeaturedProjectAnimationEnabled();
+const shouldAnimate = animationEnabled !== false;
+
+const eyebrow = (eyebrowOverride ?? settings.eyebrow ?? undefined) as string | undefined;
+const title = (titleOverride ?? settings.title ?? undefined) as string | undefined;
+const intro = (introOverride ?? settings.intro ?? undefined) as string | undefined;
+
+const slidesSource = Array.isArray(slidesOverride) ? slidesOverride : settings.slides;
+const slidesInput = Array.isArray(slidesSource) ? (slidesSource as ProjectSlide[]) : [];
+const slides: ProjectSlideDisplay[] = slidesInput.reduce(
+  (acc, item) => {
+    if (typeof item?.src === 'string') {
+      const trimmed = item.src.trim();
+      if (trimmed.length > 0) {
+        acc.push({
+          src: trimmed,
+          alt: typeof item.alt === 'string' ? item.alt : item.alt ?? null,
+        });
+      }
+    }
+    return acc;
+  },
+  [] as ProjectSlideDisplay[],
+);
+const firstSlide = slides.length > 0 ? slides[0] : null;
+const rawVariant =
+  typeof variantOverride === 'string'
+    ? variantOverride.trim().toLowerCase()
+    : settings.variant?.trim?.().toLowerCase?.();
+const variant = rawVariant ?? 'project';
+
+const modalConfig = (modalOverride ?? settings.modal ?? {}) as Record<string, any>;
+const modalTitle = (modalConfig.title ?? undefined) as string | undefined;
+const rawModalBody = typeof modalConfig.body === 'string' ? modalConfig.body.trim() : '';
+const modalParagraphs = rawModalBody.length > 0 ? rawModalBody.split(/\n\s*\n/) : [];
+const hasModal = Boolean(modalTitle || modalParagraphs.length > 0);
+const shouldRender = variant !== 'none' && slides.length > 0;
+
+const sectionClasses = [backgroundClass, 'section-shell'].filter(Boolean).join(' ');
+const containerClasses = [
+  'section-container max-w-5xl space-y-10 text-center',
+  shouldAnimate
+    ? 'motion-safe:opacity-0 motion-safe:translate-y-6 motion-safe:transition-all motion-safe:duration-[900ms] motion-safe:ease-out data-[visible=true]:motion-safe:translate-y-0 data-[visible=true]:motion-safe:opacity-100'
+    : '',
+]
+  .filter(Boolean)
+  .join(' ');
+const imageWrapperClasses = [
+  'relative mx-auto w-full max-w-4xl overflow-hidden rounded-[1.75rem] border border-slate-200/70 bg-white shadow-card',
+  'aspect-[16/9]',
+];
+---
+{shouldRender ? (
+  <section
+    class={sectionClasses}
+    data-background-tone={backgroundToneAttr ?? undefined}
+    style={backgroundStyle}
+    data-featured-project-root="true"
+    data-featured-project-slides={JSON.stringify(slides)}
+    {...restProps}
+  >
+    <div class={containerClasses} data-featured-project-content>
+      {(eyebrow || title || intro) && (
+        <div class="space-y-4">
+          {eyebrow && <p class="section-eyebrow">{eyebrow}</p>}
+          {title && <h2 class="section-heading">{title}</h2>}
+          {intro && <p class="section-subtitle mx-auto max-w-3xl">{intro}</p>}
+        </div>
+      )}
+      <div class={imageWrapperClasses.join(' ')}>
+        <img
+          data-featured-project-image
+          src={firstSlide?.src ?? ''}
+          alt={firstSlide?.alt ?? ''}
+          class="h-full w-full object-cover transition-opacity duration-700 ease-out"
+          loading="lazy"
+          decoding="async"
+        />
+      </div>
+      {hasModal ? (
+        <div>
+          <button
+            type="button"
+            class="inline-flex items-center justify-center rounded-full bg-brand-primary px-6 py-3 text-base font-semibold text-white shadow-brand-glow transition hover:bg-brand-primary/90 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary/60 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
+            data-featured-project-trigger
+            aria-haspopup="dialog"
+            aria-controls="featured-project-modal"
+          >
+            Read more
+          </button>
+        </div>
+      ) : null}
+    </div>
+    {hasModal ? (
+      <div
+        class="featured-project-modal"
+        data-featured-project-modal
+        data-state=""
+        id="featured-project-modal"
+        role="dialog"
+        aria-modal="true"
+        aria-hidden="true"
+        aria-labelledby="featured-project-modal-title"
+        hidden
+      >
+        <div class="featured-project-modal__overlay" data-featured-project-overlay></div>
+        <div class="featured-project-modal__content" data-featured-project-content tabindex="-1">
+          <button
+            type="button"
+            class="featured-project-modal__close"
+            data-featured-project-close
+            aria-label="Close featured project details"
+          >
+            ×
+          </button>
+          <div class="featured-project-modal__header">
+            <p class="featured-project-modal__eyebrow">{eyebrow ?? 'Featured project'}</p>
+            <h3 class="featured-project-modal__title" id="featured-project-modal-title">
+              {modalTitle ?? title ?? 'Featured project'}
+            </h3>
+          </div>
+          <div class="featured-project-modal__body">
+            {modalParagraphs.length > 0
+              ? modalParagraphs.map((paragraph) => <p>{paragraph}</p>)
+              : intro
+                ? [<p>{intro}</p>]
+                : null}
+          </div>
+        </div>
+      </div>
+    ) : null}
+    {shouldAnimate || slides.length > 1 || hasModal ? (
+      <script>
+        type ProjectSlideData = {
+          src?: string | null;
+          alt?: string | null;
+        };
+
+        const isHTMLElement = (node: Element): node is HTMLElement => node instanceof HTMLElement;
+
+        const roots = Array.from(document.querySelectorAll('[data-featured-project-root]')).filter(isHTMLElement);
+        const focusableSelector =
+          'a[href], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])';
+        const supportMatchMedia = typeof window !== 'undefined' && typeof window.matchMedia === 'function';
+        const prefersReducedMotion = supportMatchMedia
+          ? window.matchMedia('(prefers-reduced-motion: reduce)').matches
+          : false;
+
+        roots.forEach((root) => {
+          const slidesDataString = root.getAttribute('data-featured-project-slides') ?? '[]';
+          let slidesData: ProjectSlideData[] = [];
+          try {
+            const parsed = JSON.parse(slidesDataString);
+            slidesData = Array.isArray(parsed)
+              ? parsed.filter((slide): slide is ProjectSlideData => slide && typeof slide.src === 'string')
+              : [];
+          } catch {
+            slidesData = [];
+          }
+
+          const imageElement = root.querySelector('[data-featured-project-image]');
+          if (imageElement instanceof HTMLImageElement && slidesData.length > 1) {
+            let activeIndex = 0;
+            const updateImage = (index: number) => {
+              const slide = slidesData[index];
+              if (!slide) return;
+              imageElement.style.opacity = '0';
+              window.setTimeout(() => {
+                imageElement.src = typeof slide.src === 'string' ? slide.src : '';
+                imageElement.alt = typeof slide.alt === 'string' ? slide.alt : '';
+                imageElement.style.opacity = '1';
+              }, 180);
+            };
+
+            let timerId: number | undefined;
+            const start = () => {
+              if (prefersReducedMotion || slidesData.length <= 1) return;
+              stop();
+              timerId = window.setInterval(() => {
+                activeIndex = (activeIndex + 1) % slidesData.length;
+                updateImage(activeIndex);
+              }, 6500);
+            };
+            const stop = () => {
+              if (timerId !== undefined) {
+                window.clearInterval(timerId);
+                timerId = undefined;
+              }
+            };
+
+            start();
+            root.addEventListener('mouseenter', stop);
+            root.addEventListener('focusin', stop);
+            root.addEventListener('mouseleave', start);
+            root.addEventListener('focusout', start);
+            root.addEventListener('astro:before-remove', stop);
+          }
+
+          const modal = root.querySelector('[data-featured-project-modal]');
+          const trigger = root.querySelector('[data-featured-project-trigger]');
+          if (!(modal instanceof HTMLElement) || !(trigger instanceof HTMLElement)) {
+            return;
+          }
+          const overlay = modal.querySelector('[data-featured-project-overlay]');
+          const closeButton = modal.querySelector('[data-featured-project-close]');
+          const initialFocusTarget = modal.querySelector('[data-featured-project-content]');
+          let activeModal = false;
+          let previousFocus: HTMLElement | null = null;
+
+          const getFocusable = (): HTMLElement[] =>
+            Array.from(modal.querySelectorAll(focusableSelector)).filter(
+              (candidate): candidate is HTMLElement =>
+                candidate instanceof HTMLElement && !candidate.hasAttribute('disabled'),
+            );
+
+          const closeModal = () => {
+            if (!activeModal) return;
+            activeModal = false;
+
+            const finish = () => {
+              modal.hidden = true;
+              modal.dataset.state = '';
+              modal.setAttribute('aria-hidden', 'true');
+              if (previousFocus instanceof HTMLElement) {
+                previousFocus.focus();
+              }
+            };
+
+            if (!prefersReducedMotion && modal.dataset.state === 'open') {
+              modal.dataset.state = 'closing';
+              const content = modal.querySelector('[data-featured-project-content]');
+              if (content instanceof HTMLElement) {
+                const onTransitionEnd = () => {
+                  content.removeEventListener('transitionend', onTransitionEnd);
+                  finish();
+                };
+                content.addEventListener('transitionend', onTransitionEnd);
+              } else {
+                finish();
+              }
+            } else {
+              finish();
+            }
+          };
+
+          const trapFocus = (event: KeyboardEvent) => {
+            if (!activeModal || event.key !== 'Tab') return;
+            const focusable = getFocusable();
+            if (focusable.length === 0) {
+              event.preventDefault();
+              return;
+            }
+            const first = focusable[0];
+            const last = focusable[focusable.length - 1];
+            if (event.shiftKey) {
+              if (document.activeElement === first) {
+                event.preventDefault();
+                last.focus();
+              }
+            } else if (document.activeElement === last) {
+              event.preventDefault();
+              first.focus();
+            }
+          };
+
+          const openModal = () => {
+            if (activeModal) return;
+            activeModal = true;
+            previousFocus = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+            modal.hidden = false;
+            modal.dataset.state = prefersReducedMotion ? 'open' : 'opening';
+            modal.setAttribute('aria-hidden', 'false');
+
+            window.requestAnimationFrame(() => {
+              if (!modal.isConnected) return;
+              if (!prefersReducedMotion) {
+                modal.dataset.state = 'open';
+              }
+              const focusTarget = initialFocusTarget instanceof HTMLElement ? initialFocusTarget : modal;
+              focusTarget.focus();
+            });
+          };
+
+          trigger.addEventListener('click', openModal);
+          if (overlay instanceof HTMLElement) {
+            overlay.addEventListener('click', closeModal);
+          }
+          if (closeButton instanceof HTMLElement) {
+            closeButton.addEventListener('click', closeModal);
+          }
+          modal.addEventListener('keydown', (event: KeyboardEvent) => {
+            if (event.key === 'Escape') {
+              event.preventDefault();
+              closeModal();
+            } else {
+              trapFocus(event);
+            }
+          });
+
+          modal.addEventListener('astro:before-remove', () => {
+            if (activeModal) {
+              closeModal();
+            }
+          });
+        });
+      </script>
+    ) : null}
+    <style>
+      .featured-project-modal {
+        position: fixed;
+        inset: 0;
+        z-index: 80;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+      }
+
+      .featured-project-modal[hidden] {
+        display: none;
+      }
+
+      .featured-project-modal__overlay {
+        position: absolute;
+        inset: 0;
+        background: rgba(15, 23, 42, 0.45);
+        opacity: 0;
+        transition: opacity 240ms ease;
+      }
+
+      .featured-project-modal__content {
+        position: relative;
+        z-index: 1;
+        max-width: min(580px, 90vw);
+        width: 100%;
+        border-radius: 1.75rem;
+        background: white;
+        padding: 2.5rem 2.25rem;
+        box-shadow: 0 24px 60px -28px rgba(15, 23, 42, 0.35);
+        opacity: 0;
+        transform: translateY(18px);
+        outline: none;
+        transition: opacity 260ms ease, transform 260ms ease;
+      }
+
+      .featured-project-modal[data-state='open'] .featured-project-modal__overlay {
+        opacity: 1;
+      }
+
+      .featured-project-modal[data-state='open'] .featured-project-modal__content {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .featured-project-modal[data-state='closing'] .featured-project-modal__overlay {
+        opacity: 0;
+      }
+
+      .featured-project-modal[data-state='closing'] .featured-project-modal__content {
+        opacity: 0;
+        transform: translateY(18px);
+      }
+
+      .featured-project-modal__close {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 2.25rem;
+        height: 2.25rem;
+        border-radius: 999px;
+        background: rgba(15, 23, 42, 0.06);
+        color: rgba(15, 23, 42, 0.65);
+        font-size: 1.25rem;
+        line-height: 1;
+        transition: background 150ms ease, color 150ms ease;
+      }
+
+      .featured-project-modal__close:hover,
+      .featured-project-modal__close:focus-visible {
+        background: rgba(16, 53, 41, 0.12);
+        color: rgb(16, 53, 41);
+      }
+
+      .featured-project-modal__header {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        text-align: left;
+      }
+
+      .featured-project-modal__eyebrow {
+        font-size: 0.75rem;
+        font-weight: 600;
+        letter-spacing: 0.28em;
+        text-transform: uppercase;
+        color: rgba(var(--color-primary-rgb), 0.65);
+      }
+
+      .featured-project-modal__title {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: rgb(15, 23, 42);
+      }
+
+      .featured-project-modal__body {
+        margin-top: 1.5rem;
+        display: grid;
+        gap: 1rem;
+        text-align: left;
+        color: rgb(71, 85, 105);
+        line-height: 1.7;
+        font-size: 0.95rem;
+      }
+
+      @media (max-width: 640px) {
+        .featured-project-modal {
+          padding: 1.5rem;
+        }
+
+        .featured-project-modal__content {
+          padding: 2rem 1.75rem;
+        }
+      }
+    </style>
+  </section>
+) : null}
