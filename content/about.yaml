@@ -176,14 +176,6 @@ founders:
       story: |
         Avery grew up tinkering alongside their grandfather, a carpenter who taught the value of doing things right the first time.
         Today, that ethos shows up in every site walkthrough, punch list, and the way crews clean up before heading home.
-    - name: "Rowan Ellis"
-      role: "Co-founder & Client Experience"
-      highlight: "Client partner"
-      image: null
-      bio: "Champions transparent communication, design alignment, and the client experience start to finish."
-      story: |
-        Rowan brings a background in architectural drafting and neighborhood organizing, blending design sensibility with people-first service.
-        They make sure every homeowner knows the plan, feels heard, and ends the project excited to show off the results.
 team:
   variant: "none" # Options: grid, list, carousel, none
   background:

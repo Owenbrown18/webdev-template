@@ -1,5 +1,5 @@
-name: "Local Business Co."
-tagline: "Friendly neighborhood experts delivering reliable services with a personal touch."
+name: "OB Design"
+tagline: "Simple. Beautiful. Effective."
 brand:
   logo: "/images/loading-logo.png" # Optional: swap with a client logo (SVG/PNG recommended)
   logoAlt: "Local Business Co. mark"
@@ -9,14 +9,14 @@ header:
 footer:
   showLogo: true
   showBusinessName: true
-phone: "(555) 123-4567"
-email: "hello@localbusiness.co"
+phone: "250-222-6053"
+email: "owenjosephbrown@gmail.com"
 address:
-  line1: "123 Main Street"
-  line2: "Suite 200"
-  city: "Hometown"
-  state: "CA"
-  postalCode: "90210"
+  line1: "1245 Effingham St."
+  line2: 
+  city: "Victoria"
+  state: "BC"
+  postalCode: "V9A 4Y1"
 hours:
   - label: "Weekdays"
     open: "9:00 AM"

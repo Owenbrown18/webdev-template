@@ -1,114 +1,57 @@
 items:
-  - title: "Priority Consultations"
-    slug: "priority-consultations"
+  - title: "Website Design & Development"
+    slug: "website-design-development"
     summary: |
-      Start with a dedicated strategy session tailored to your property. We walk every room, document your wish list, and surface hidden risks before you commit resources.
+      We build modern, responsive websites that help local businesses stand out online. Every site is custom-built for performance, usability, and mobile friendliness.
 
-      You leave with a prioritized action plan, budget guardrails, and a written recap within 24 hours so every stakeholder can move fast.
+      From first concept to launch, we make the process simple and transparent so you get a website that looks great and works for your goals.
     features:
-      - "Comprehensive walk-through"
-      - "Actionable recommendations"
-      - "Follow-up recap within 24 hours"
-    icon: "🧭"
-    duration: "60–90 minutes"
-    startingPrice: "$175"
+      - "Custom design and layout"
+      - "Responsive on all devices"
+      - "Fast and secure performance"
+    icon: "💻"
+    duration: "2–4 weeks"
+    startingPrice: "From $950"
     link:
       label: "Request details"
       href: "/contact"
     image:
-      src: "https://images.unsplash.com/photo-1568605114967-8130f3a36994?auto=format&fit=crop&w=1600&q=80"
-  - title: "Complete Project Support"
-    slug: "complete-project-support"
-    summary: |
-      Partner with a team that handles scheduling, crews, and quality control from kickoff through punch list. We manage permits, vendors, and material lead times so the build stays moving.
+      src: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1600&q=80"
 
-      Weekly checkpoints, shared dashboards, and on-site supervision keep you informed while we execute the plan with zero guesswork.
+  - title: "Website Redesign & Updates"
+    slug: "website-redesign"
+    summary: |
+      Have an existing site that feels outdated? We refresh your design, improve structure, and optimize performance while keeping your brand intact.
+
+      Whether it’s small updates or a full rebuild, we make your website cleaner, faster, and easier for customers to use.
     features:
-      - "Dedicated project lead"
-      - "Trusted partner network"
-      - "Progress updates at every milestone"
-    icon: "🛠"
-    duration: "Multi-week"
-    startingPrice: "Custom quote"
+      - "Visual and UX refresh"
+      - "Speed and security improvements"
+      - "Mobile optimization"
+    icon: "🔄"
+    duration: "1–3 weeks"
+    startingPrice: "From $700"
     link:
       label: "Request details"
       href: "/contact"
     image:
-      src: "https://images.unsplash.com/photo-1568605114967-8130f3a36994?auto=format&fit=crop&w=1600&q=80"
-      alt: ""
-  - title: "Ongoing Maintenance"
-    slug: "ongoing-maintenance"
-    summary: |
-      Build a maintenance rhythm that protects warranties and budgets. Our technicians rotate through seasonal checklists, tighten mechanical systems, and document every visit for future reference.
+      src: "https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&w=1600&q=80"
 
-      You get alerts about emerging issues early, complete with recommendations and cost ranges before anything escalates.
+  - title: "SEO & Google Business Enhancement"
+    slug: "seo-google-business"
+    summary: |
+      Improve your online visibility with SEO and a professional Google Business setup. We handle technical fixes, local keyword targeting, and optimized listings to help you show up where customers are searching.
+
+      Your business deserves to be seen—this service helps make that happen.
     features:
-      - "Seasonal inspections"
-      - "Preventative care plan"
-      - "Priority scheduling for repairs"
-    icon: "♻️"
-    duration: "Monthly or quarterly"
-    startingPrice: "$95/mo"
+      - "On-site SEO optimization"
+      - "Google Business setup and polish"
+      - "Performance and analytics tracking"
+    icon: "📈"
+    duration: "1 week"
+    startingPrice: "From $350"
     link:
       label: "Request details"
       href: "/contact"
     image:
-      src: "https://images.unsplash.com/photo-1568605114967-8130f3a36994?auto=format&fit=crop&w=1600&q=80"
-      alt: "Technician performing maintenance on building equipment"
-  - title: "Emergency Callouts"
-    slug: "emergency-callouts"
-    summary: |
-      When the unexpected happens, our rapid-response crew mobilizes immediately. We stabilize the site, implement temporary fixes, and coordinate follow-up trades so you can focus on the bigger picture.
-
-      Real-time text updates keep you in the loop from dispatch to resolution, with documentation ready for insurance or internal reporting.
-    features:
-      - "24/7 availability"
-      - "On-site within hours"
-      - "Stabilize & resolve urgent issues"
-    icon: "⚡"
-    duration: "As needed"
-    startingPrice: "From $225"
-    link:
-      label: "Request details"
-      href: "/contact"
-    image:
-      src: "https://images.unsplash.com/photo-1568605114967-8130f3a36994?auto=format&fit=crop&w=1600&q=80"
-      alt: "Emergency technician working quickly in a dimly lit mechanical room"
-  - title: "Seasonal Checkups"
-    slug: "seasonal-checkups"
-    summary: |
-      Prepare your property for every seasonal shift. We inspect critical systems, test safety devices, and fine-tune performance so heating, cooling, and irrigation switchover days go smoothly.
-
-      Detailed reports highlight preventative tasks and easy wins that keep energy use low and comfort high all year long.
-    features:
-      - "Pre-season inspections"
-      - "Performance optimization"
-      - "Detailed service reports"
-    icon: "🍂"
-    duration: "Twice per year"
-    startingPrice: "$160"
-    link:
-      label: "Request details"
-      href: "/contact"
-    image:
-      src: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1600&q=80"
-      alt: "Home exterior checklist being reviewed during a fall inspection"
-  - title: "Custom Projects"
-    slug: "custom-projects"
-    summary: |
-      Have an unconventional scope? We thrive on adaptive reuse, specialized upgrades, and distinctive builds. Discovery workshops surface constraints early, then we assemble a vetted team tailored to the challenge.
-
-      Expect collaborative design reviews, transparent pricing models, and white-glove execution from planning through final punch list.
-    features:
-      - "Solution-first discovery"
-      - "Specialized vendor sourcing"
-      - "White-glove delivery"
-    icon: "✨"
-    duration: "Varies"
-    startingPrice: "Custom quote"
-    link:
-      label: "Request details"
-      href: "/contact"
-    image:
-      src: "https://images.unsplash.com/photo-1568605114967-8130f3a36994?auto=format&fit=crop&w=1600&q=80"
-      alt: "Collaborative design session reviewing custom project concepts"
+      src: "https://images.unsplash.com/photo-1581090464736-62f2fa8e534a?auto=format&fit=crop&w=1600&q=80"
