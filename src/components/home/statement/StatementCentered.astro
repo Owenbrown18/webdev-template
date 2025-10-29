@@ -20,7 +20,14 @@ const {
   ...restProps
 } = Astro.props as Props & Record<string, any>;
 
-const hasContent = Boolean(eyebrow || title || intro);
+const hasIntro = typeof intro === 'string' && intro.trim().length > 0;
+const introParagraphs = hasIntro
+  ? intro
+      .split(/\n\s*\n/)
+      .map((paragraph) => paragraph.trim())
+      .filter(Boolean)
+  : [];
+const hasContent = Boolean(eyebrow || title || hasIntro);
 const extraClass = typeof restProps.class === 'string' ? restProps.class : undefined;
 if (extraClass) {
   delete restProps.class;
@@ -60,7 +67,10 @@ const innerClasses = 'mx-auto max-w-5xl space-y-6 text-center';
       <div class={innerClasses}>
         {eyebrow && <p class="section-eyebrow">{eyebrow}</p>}
         {title && <h2 class="section-heading">{title}</h2>}
-        {intro && <p class="section-subtitle mx-auto max-w-5xl">{intro}</p>}
+        {hasIntro &&
+          introParagraphs.map((paragraph) => (
+            <p class="section-subtitle mx-auto max-w-5xl">{paragraph}</p>
+          ))}
       </div>
     </div>
     {shouldAnimate ? (

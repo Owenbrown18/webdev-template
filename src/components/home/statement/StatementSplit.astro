@@ -25,6 +25,12 @@ const {
 }: Props = Astro.props as Props;
 
 const hasIntro = typeof intro === 'string' && intro.trim().length > 0;
+const introParagraphs = hasIntro
+  ? intro
+      .split(/\n\s*\n/)
+      .map((paragraph) => paragraph.trim())
+      .filter(Boolean)
+  : [];
 const imageSrc =
   typeof image === 'object' && image
     ? image.src ?? undefined
@@ -65,7 +71,9 @@ const bodyClasses = [
       <div class={bodyClasses}>
         {hasIntro && (
           <div class="space-y-4 text-left">
-            <p class="section-subtitle text-left">{intro}</p>
+            {introParagraphs.map((paragraph) => (
+              <p class="section-subtitle text-left">{paragraph}</p>
+            ))}
           </div>
         )}
         {imageSrc ? (
