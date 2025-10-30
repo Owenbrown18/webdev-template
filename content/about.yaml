@@ -5,19 +5,14 @@ hero:
     color: "#103529"
   animation: true
   title: "Built in Victoria, for local businesses"
-  subtitle: "OBdesign is a small web-development studio based in Victoria, BC. We focus on creating fast, clean, and reliable websites with personal attention at every stage."
+  subtitle: "OBdesign is a small web-development business based in Victoria, BC. We focus on creating fast, clean, and reliable websites with personal attention at every stage."
   ctaLabel: "View our services"
   ctaHref: "/services"
   image: "/images/about-hero.jpg"
   location: "Victoria, BC"
   founded: "2024"
   stats:
-    - label: "Websites launched"
-      value: "10+"
-    - label: "Active local clients"
-      value: "5"
-    - label: "Client satisfaction"
-      value: "100%"
+
 statement:
   variant: "split"
   background:
@@ -152,24 +147,25 @@ community:
       details: |
         Giving back is part of the plan from the beginning. Once OBdesign is sustainable, we’ll contribute to community-driven causes by offering free or discounted design work for organizations doing meaningful local work.
 founders:
-  variant: "spotlight" # Options: spotlight, none
+  variant: "spotlight"
   background:
-    tone: "none" # Options: none, gradient, solid, aurora
+    tone: "none"
     color: null
-  animation: true # Toggle reveal animation on/off
-  eyebrow: "Founders spotlight"
-  title: "Neighbors who started it all"
-  intro: "Two lifelong locals who turned weekend repair calls into a trusted, full-service renovation crew."
-  supporting: "Their roots in the community mean every project gets the same care they originally gave to friends and family."
+  animation: true
+  eyebrow: "Founder spotlight"
+  title: "The person behind OBdesign"
+  intro: "OBdesign started as a small side project while I was learning web development — just me experimenting with code and realizing how much I enjoyed building websites that look good and work smoothly."
+  supporting: "What began as curiosity quickly grew into a passion and a way to support myself through school while building real-world experience that connects to my software engineering career."
   profiles:
-    - name: "Avery Bennett"
-      role: "Co-founder & General Contractor"
-      highlight: "Field leadership"
+    - name: "Owen Brown"
+      role: "Founder & Web Developer"
+      highlight: "Software Engineering Student at UVic"
       image: null
-      bio: "Leads onsite teams, oversees scopes, and keeps the build moving with a detail-first eye."
+      bio: "I am a third-year software engineering student who enjoys building creative solutions that balance design and functionality. OBdesign allows me to apply my technical skills in a practical way while helping local businesses establish a strong online presence."
       story: |
-        Avery grew up tinkering alongside their grandfather, a carpenter who taught the value of doing things right the first time.
-        Today, that ethos shows up in every site walkthrough, punch list, and the way crews clean up before heading home.
+        I started OBdesign after discovering how much I enjoyed creating websites while learning HTML, CSS, and Tailwind. What began as small personal projects became a way to help local businesses bring their ideas online.
+        
+        My approach is simple: build sites that are fast, minimal, and reliable — but never afraid to get creative when it fits the client. OBdesign is just me for now, but every project gets my full attention from first idea to final launch.
 team:
   variant: "none" # Options: grid, list, carousel, none
   background:
