@@ -1,48 +1,48 @@
-name: "OB Design"
-tagline: "Simple. Beautiful. Effective."
+name: OB Design
+tagline: Simple. Beautiful. Effective.
 brand:
-  logo: "/images/loading-logo.png" # Optional: swap with a client logo (SVG/PNG recommended)
-  logoAlt: "Local Business Co. mark"
+  logo: /images/loading-logo.png
+  logoAlt: Local Business Co. mark
 header:
   showLogo: true
   showBusinessName: false
 footer:
   showLogo: true
   showBusinessName: true
-phone: "250-222-6053"
-email: "owenjosephbrown@gmail.com"
+phone: 250-222-6053
+email: owenjosephbrown@gmail.com
 address:
-  line1: "1245 Effingham St."
-  line2: 
-  city: "Victoria"
-  state: "BC"
-  postalCode: "V9A 4Y1"
+  line1: 1245 Effingham St.
+  line2: null
+  city: Victoria
+  state: BC
+  postalCode: V9A 4Y1
 hours:
-  - label: "Weekdays"
-    open: "9:00 AM"
-    close: "5:00 PM"
-  - label: "Saturday"
-    open: "10:00 AM"
-    close: "2:00 PM"
-  - label: "Sunday"
-    open: "Closed"
+  - label: Weekdays
+    open: 9:00 AM
+    close: 5:00 PM
+  - label: Saturday
+    open: 10:00 AM
+    close: 2:00 PM
+  - label: Sunday
+    open: Closed
     close: ""
 socials:
-  facebook: "https://facebook.com/yourbusiness"
-  instagram: "https://instagram.com/yourbusiness"
-  linkedin: "https://linkedin.com/company/yourbusiness"
+  facebook: https://facebook.com/yourbusiness
+  instagram: https://instagram.com/yourbusiness
+  linkedin: https://linkedin.com/company/yourbusiness
 booking:
-  provider: "Calendly"
-  embedUrl: "https://calendly.com/your-business/consultation"
+  provider: Calendly
+  embedUrl: https://calendly.com/your-business/consultation
 colors:
   primary: "#103529"
   secondary: "#0f172a"
   accent: "#f59e0b"
 footerCredit:
-  label: "Website by OB Design"
-  href: "https://obdesign.example"
+  label: Website by OB Design
+  href: https://obdesign.example
 preloader:
   enabled: true
   backgroundColor: null
-  logo: "/images/loading-logo.png"
+  logo: /images/loading-logo.png
   minimumDurationMs: 2000
