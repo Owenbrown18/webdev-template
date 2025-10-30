@@ -50,7 +50,7 @@ const cardClasses = [
       <h2 class="section-heading">{title}</h2>
       {intro && <p class="section-subtitle leading-7">{intro}</p>}
     </div>
-    <div class="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+    <div class="mt-12 grid gap-8 mx-auto max-w-xl lg:mx-0 lg:max-w-none lg:grid-cols-3">
       {items.map(({ title, description, icon }, index) => {
         const delayStyle = shouldAnimate ? `transition-delay: ${index * 120}ms;` : undefined;
         return (

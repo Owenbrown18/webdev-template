@@ -137,6 +137,21 @@ export type HomeContent = {
       alt?: string | null;
     } | null;
   };
+  aboutSection?: {
+    variant?: string;
+    background?: {
+      tone?: string | null; // Options: none, gradient, solid, aurora
+      color?: string | null;
+    };
+    animation?: boolean | null;
+    eyebrow?: string | null;
+    title?: string | null;
+    intro?: string | null;
+    image?: {
+      src?: string | null;
+      alt?: string | null;
+    } | null;
+  };
   featuredPhotos?: {
     variant?: string | null;
     background?: {

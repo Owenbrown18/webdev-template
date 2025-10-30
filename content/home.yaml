@@ -30,6 +30,21 @@ services:
   eyebrow: "What we do"
   title: "Our Services"
   intro: "OBdesign builds fast, mobile-friendly websites, refreshes outdated sites, and boosts visibility through SEO and Google Business optimization."
+aboutSection:
+  variant: "split"
+  background:
+    tone: "none"
+    color: null
+  animation: true
+  eyebrow: "About OBdesign"
+  title: "A one-person business built on engineering and creativity"
+  intro: |
+    I’m Owen Brown — a software engineering student at the University of Victoria and the person behind OBdesign. I started this business to combine my technical background with a passion for clean, reliable design that helps small businesses make a strong impression online.
+
+    Every website I build is fast, modern, and easy to maintain, created with the same attention to detail I bring to my software engineering work. I focus on clarity, structure, and long-term reliability so each project feels like an investment that lasts. OBdesign is small by design—personal, transparent, and focused on real results.
+  image:
+    src: "/images/about-hero.jpg"
+    alt: "Owen Brown, founder of OBdesign"
 featuredPhotos:
   variant: "none" # Options: grid, none
   background:

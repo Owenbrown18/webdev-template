@@ -44,45 +44,45 @@ cta:
   ctaLabel: "Plan a consultation"
   ctaHref: "/contact"
 values:
-  variant: "grid" # Options: grid, list, none
+  variant: "grid"
   background:
-    tone: "aurora" # Options: none, gradient, aurora
+    tone: "aurora"
     color: "#103529"
-  animation: true # Toggle values animation on/off
+  animation: true
   eyebrow: "Our values"
-  title: "Values that guide every project"
-  intro: "Our team brings the same dependable care to every job, whether it's a quick tune-up or a full-scale renovation."
+  title: "Principles that guide every project"
+  intro: "We believe good web design comes from care, consistency, and communication. These values shape how we work with every client and build every website."
   supporting: ""
   items:
-    - title: "Hands-on partnership"
-      description: "We collaborate with homeowners at each milestone so there are no surprises, just steady progress."
-      icon: "HP"
-    - title: "Craft with intention"
-      description: "Materials, methods, and finishes are chosen with long-term performance and everyday livability in mind."
-      icon: "CI"
-    - title: "See it through"
-      description: "From prep to clean-up, we finish strong and leave every space better than we found it."
-      icon: "ST"
+    - title: "Collaborative process"
+      description: "We keep clients involved at every step—from first concept to final launch—so the result always reflects your goals."
+      icon: "CP"
+    - title: "Clarity first"
+      description: "Simple navigation, clear structure, and purposeful design make every website easy to use and maintain."
+      icon: "CF"
+    - title: "Built to last"
+      description: "We use reliable tools and clean code to create sites that perform smoothly and stay secure long after launch."
+      icon: "BL"
 process:
-  variant: "steps" # Options: steps, none
+  variant: "steps"
   background:
-    tone: "none" # Options: none, gradient, solid, aurora
+    tone: "none"
     color: "#103529"
-  animation: true # Toggle reveal animation on/off
+  animation: true
   eyebrow: "How we work"
-  title: "A clear path from hello to handoff"
-  intro: "Every engagement follows the same dependable checkpoints so you always know what's next."
+  title: "A clear path from idea to launch"
+  intro: "Our process keeps projects simple, transparent, and on schedule—from first conversation to final handoff."
   steps:
-    - title: "Listen & scope"
-      description: "We start with a walkthrough to understand goals, constraints, and timelines so the plan feels right-sized."
-    - title: "Plan & align"
-      description: "You’ll receive a tailored proposal outlining scope, milestones, and budget before any work begins."
-    - title: "Build & communicate"
-      description: "Crews stay on schedule and keep you updated—no surprises, just steady progress toward the final result."
-    - title: "Wrap-up & support"
-      description: "We handle final punch lists, share care tips, and stay available for follow-up questions after project close."
-    - title: "Wrap-up & support"
-      description: "We handle final punch lists, share care tips, and stay available for follow-up questions after project close."
+    - title: "1. Discover & define"
+      description: "We start by learning about your business, goals, and audience. This helps us define project scope and identify the best structure for your website."
+    - title: "2. Plan & design"
+      description: "We create a visual layout and design concept that aligns with your brand and user needs, ensuring clarity and ease of navigation on every device."
+    - title: "3. Build & test"
+      description: "Your site is developed using clean, responsive code optimized for speed, accessibility, and SEO. We test thoroughly before launch to ensure reliability."
+    - title: "4. Launch & review"
+      description: "Once approved, we deploy your site to a live server and monitor its performance. You’ll receive training or documentation to manage updates confidently."
+    - title: "5. Support & grow"
+      description: "We stay available for ongoing maintenance, SEO updates, and enhancements as your business evolves—keeping your website performing at its best."
 timeline:
   variant: "none" # Options: steps, vertical, none
   background:
@@ -110,56 +110,47 @@ timeline:
       description: "Launched an annual volunteer week supporting local nonprofits with repairs, upgrades, and maintenance."
       image: null
 community:
-  variant: "cards" # Options: cards, none
+  variant: "cards"
   background:
-    tone: "aurora" # Options: none, gradient, aurora
+    tone: "aurora"
     color: "#103529"
-  animation: true # Toggle reveal animation on/off
-  eyebrow: "Community impact"
-  title: "Investing time and skill back into Hometown"
-  intro: "We partner with local nonprofits and trade programs to keep essential spaces safe, accessible, and welcoming."
-  supporting: "Every initiative is staffed by volunteers from our crew and apprentices from regional trade schools."
+  animation: true
+  eyebrow: "Our commitment"
+  title: "Building a business that supports local business"
+  intro: "OBdesign is founded on a simple idea — when local businesses grow, our community grows with them. We're focused on creating affordable, high-quality websites that help small teams and startups in Victoria get online with confidence."
+  supporting: "While we're just getting started, our mission is rooted in long-term community impact and accessible design for everyone."
   stats:
-    - label: "Volunteer hours donated"
-      value: "750+"
-    - label: "Spaces restored"
-      value: "32"
-    - label: "Youth apprentices mentored"
-      value: "18"
+    - label: "Local partnerships in progress"
+      value: "0 → Growing"
+    - label: "Goal for 2025"
+      value: "10+ local businesses launched online"
+    - label: "Goal for 2026"
+      value: "Pro-bono project for a local nonprofit"
   items:
-    - title: "Neighborhood Fix-It Week"
-      description: "Annual volunteer blitz supporting seniors and community centers with repairs, weatherproofing, and safety upgrades."
-      icon: "NF"
-      highlight: "Since 2017"
-      ctaLabel: "See more"
+    - title: "Supporting small business"
+      description: "We aim to make professional web design accessible to local entrepreneurs who need a strong online foundation to compete and grow."
+      icon: "SB"
+      highlight: "Starting 2025"
+      ctaLabel: "Learn more"
       details: |
-        Our crew dedicates a full week every spring to tackling accessibility upgrades, weatherproofing, and critical repairs for neighbors who need a hand.
+        Our priority this year is to partner with small business owners in Victoria who want modern, high-performing websites without high agency costs.  
+        Every project will help refine our process and strengthen our connection to the local business community.
 
-        Partner organizations nominate the homes and facilities, and we supply tools, materials, and licensed supervision so every upgrade passes inspection.
-
-        Volunteers join in daily shifts, receive safety briefings, and leave with a checklist for ongoing maintenance the residents can manage.
-    - title: "Skilled Trades Mentorship"
-      description: "Hands-on training for local students including jobsite shadowing, tool stipends, and pathways into licensed apprenticeships."
-      icon: "TM"
-      highlight: "Quarterly cohorts"
-      ctaLabel: "See more"
+    - title: "Community-driven design"
+      description: "We plan to collaborate with local creators and students to share skills, promote accessibility, and bring more digital projects to life."
+      icon: "CD"
+      highlight: "Planned initiative"
+      ctaLabel: "Learn more"
       details: |
-        We partner with the regional trade school to pair mentors from our crew with juniors and seniors exploring construction careers.
+        OBdesign will open opportunities for small collaborations, student involvement, and accessibility-focused projects — helping build a more inclusive web community.
 
-        Each cohort includes four on-site shadow days, two deep-dive workshops in our fabrication shop, and stipends that cover starter tools.
-
-        Graduates receive references, OSHA-10 certification support, and introductions to apprenticeship sponsors across multiple trades.
-    - title: "Community Project Fund"
-      description: "A rotating micro-grant that covers materials for urgent repairs nominated by neighborhood organizations."
-      icon: "PF"
-      highlight: "$10K annual fund"
-      ctaLabel: "See more"
+    - title: "Future pro-bono work"
+      description: "As we grow, we’ll dedicate time each year to a free or reduced-cost website for a nonprofit organization in Victoria."
+      icon: "FP"
+      highlight: "Coming soon"
+      ctaLabel: "Learn more"
       details: |
-        The fund accepts quarterly nominations from civic groups, schools, and nonprofits that need help funding a targeted scope of repair work.
-
-        We prioritize safety upgrades and accessibility improvements, sourcing materials at cost and coordinating volunteer labor whenever possible.
-
-        Awarded projects are completed within 60 days, with transparent receipts and a wrap-up report shared with the sponsoring organization.
+        Giving back is part of the plan from the beginning. Once OBdesign is sustainable, we’ll contribute to community-driven causes by offering free or discounted design work for organizations doing meaningful local work.
 founders:
   variant: "spotlight" # Options: spotlight, none
   background:
