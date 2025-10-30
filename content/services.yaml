@@ -11,10 +11,10 @@ hero:
   tagLabel: "Services"
   title: "Reliable, end-to-end care for every project"
   subtitle: "Whether you need a one-off consult or an ongoing partner, our team brings seasoned expertise and attentive service to every engagement."
-  primaryCtaLabel: "Book a consultation"
+  primaryCtaLabel: "Book a meeting"
   primaryCtaHref: "/contact"
-  secondaryCtaLabel: "Download pricing guide"
-  secondaryCtaHref: "/contact"
+  #secondaryCtaLabel: "Download pricing guide"
+  #secondaryCtaHref: "/contact"
   image: "/images/about-hero.jpg"
   details: [] # Removed stat cards for now to avoid repetition
 overview:
