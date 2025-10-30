@@ -1,8 +1,22 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import ContactHeroSection from '../components/contact/hero/ContactHeroSection.astro';
 import InfoFormSection from '../components/contact/info-form/InfoFormSection.astro';
-import { site } from '../config/content';
+import ContactFormSection from '../components/contact/form/ContactFormSection.astro';
+import { site, getContactHeroVariant } from '../config/content';
+
+const contactHeroVariant = getContactHeroVariant();
+const contactHeroIsFullscreen = contactHeroVariant === 'fullscreen';
 ---
-<BaseLayout title="Contact" description={`Plan your next project with ${site.name}`} showTagline={false}>
-  <InfoFormSection />
+<BaseLayout
+  title="Contact"
+  description={`Plan your next project with ${site.name}`}
+  showTagline={false}
+  heroIsFullscreen={contactHeroIsFullscreen}
+>
+  <div class="space-y-16 sm:space-y-20">
+    <ContactHeroSection />
+    <InfoFormSection />
+    <ContactFormSection />
+  </div>
 </BaseLayout>

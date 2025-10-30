@@ -1,6 +1,33 @@
+hero:
+  variant: "fullscreen" # Options: classic, split, fullscreen, none
+  background:
+    tone: "aurora"
+    color: "#103529"
+  animation: true # Toggle hero animation on/off
+  eyebrow: "Contact"
+  title: "Let’s bring your project to life"
+  subtitle: "Share a few project details and we’ll respond within one business day with the next steps."
+  primaryCtaLabel: "Contact form"
+  primaryCtaHref: "#contact-form"
+  secondaryCtaLabel: "Call us"
+  secondaryCtaHref: "tel:+1-250-555-1234"
+  image: "/images/about-hero.jpg"
 info:
+  background:
+    tone: "none"
+    color: "#103529"
+  animation: false # Toggle reveal animation on/off
+  eyebrow: "Connect with OBdesign"
   variant: "stacked" # Options: standard, stacked, none
   title: "Let's work together"
   intro: "Reach us by phone or email, or send details through the form. We're quick to respond."
   phoneLabel: null # Optional override for phone link text
   emailLabel: null # Optional override for email link text
+contactForm:
+  background:
+    tone: "aurora"
+    color: "#103529"
+  animation: true
+  eyebrow: "Send a message"
+  title: "Share your project details"
+  intro: "Meet with us in Victoria or send details anytime—either way, you’ll hear back quickly with a clear next step."

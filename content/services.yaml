@@ -16,13 +16,7 @@ hero:
   secondaryCtaLabel: "Download pricing guide"
   secondaryCtaHref: "/contact"
   image: "/images/about-hero.jpg"
-  details:
-    - label: "Average response"
-      value: "< 24 hrs"
-    - label: "Projects delivered"
-      value: "450+"
-    - label: "Average rating"
-      value: "4.9/5"
+  details: [] # Removed stat cards for now to avoid repetition
 overview:
   background:
     tone: "none" # Options: none, gradient, aurora

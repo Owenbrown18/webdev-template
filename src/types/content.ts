@@ -272,12 +272,48 @@ export type HomeContent = {
 };
 
 export type ContactContent = {
+  hero?: {
+    variant?: string;
+    background?: {
+      tone?: string | null; // Options: none, gradient, solid, aurora
+      color?: string | null;
+    };
+    animation?: boolean | null;
+    eyebrow?: string | null;
+    title?: string | null;
+    subtitle?: string | null;
+    primaryCtaLabel?: string | null;
+    primaryCtaHref?: string | null;
+    secondaryCtaLabel?: string | null;
+    secondaryCtaHref?: string | null;
+    image?: string | null;
+    stats?: Array<{
+      label?: string;
+      value?: string;
+    }>;
+  };
   info?: {
     variant?: string;
+    background?: {
+      tone?: string | null; // Options: none, gradient, solid, aurora
+      color?: string | null;
+    };
+    animation?: boolean | null;
+    eyebrow?: string | null;
     title?: string | null;
     intro?: string | null;
     phoneLabel?: string | null;
     emailLabel?: string | null;
+  };
+  contactForm?: {
+    background?: {
+      tone?: string | null; // Options: none, gradient, solid, aurora
+      color?: string | null;
+    };
+    animation?: boolean | null;
+    eyebrow?: string | null;
+    title?: string | null;
+    intro?: string | null;
   };
 };
 

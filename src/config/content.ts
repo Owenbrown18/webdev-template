@@ -137,11 +137,23 @@ export const getBookingVariant = () => {
   return raw === 'none' ? 'none' : raw;
 };
 
+/** Returns the contact hero layout key, defaulting to "split". */
+export const getContactHeroVariant = () => {
+  const raw = contact.hero?.variant?.trim?.().toLowerCase?.() || 'split';
+  return raw === 'none' ? 'none' : raw;
+};
+export const getContactHeroBackgroundTone = () => getBackgroundTone(contact.hero?.background?.tone);
+export const isContactHeroAnimationEnabled = () => isAnimationEnabled(contact.hero?.animation);
+
 /** Returns the contact info/form layout key, defaulting to "standard". */
 export const getContactInfoVariant = () => {
   const raw = contact.info?.variant?.trim?.().toLowerCase?.() || 'standard';
   return raw === 'none' ? 'none' : raw;
 };
+export const getContactInfoBackgroundTone = () => getBackgroundTone(contact.info?.background?.tone);
+export const isContactInfoAnimationEnabled = () => isAnimationEnabled(contact.info?.animation);
+export const getContactFormBackgroundTone = () => getBackgroundTone(contact.contactForm?.background?.tone);
+export const isContactFormAnimationEnabled = () => isAnimationEnabled(contact.contactForm?.animation);
 
 /** Returns the about hero layout key, defaulting to "classic". */
 export const getAboutHeroVariant = () => {

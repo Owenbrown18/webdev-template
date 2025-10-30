@@ -1,26 +1,86 @@
 ---
-import { site, contact, getContactInfoVariant } from '../../../config/content';
+import {
+  site,
+  contact,
+  getContactInfoVariant,
+  getContactInfoBackgroundTone,
+  isContactInfoAnimationEnabled,
+} from '../../../config/content';
 import type { SiteContent } from '../../../types/content';
 import InfoFormStandard from './InfoFormStandard.astro';
 import InfoFormStacked from './InfoFormStacked.astro';
+import {
+  normalizeBackgroundTone,
+  normalizeBackgroundColor,
+  sectionBackgroundClass,
+  sectionBackgroundToneAttr,
+  createBackgroundStyle,
+} from '../../../utils/background';
 
 const variants: Record<string, any> = {
   standard: InfoFormStandard,
   stacked: InfoFormStacked,
 };
 
-const variantKey = getContactInfoVariant();
-const Component = variantKey === 'none' ? null : variants[variantKey] ?? variants.standard;
 const settings = contact.info ?? {};
-const props = Astro.props;
+const props = (Astro.props ?? {}) as Record<string, any>;
+const variantValue = props.variant;
+const variantOverride =
+  typeof variantValue === 'string' ? variantValue.trim().toLowerCase() : undefined;
+const {
+  backgroundTone: overrideTone,
+  backgroundColor: overrideColor,
+  backgroundClass: overrideClass,
+  animation: animationOverride,
+  eyebrow: eyebrowOverride,
+  title: titleOverride,
+  intro: introOverride,
+  phoneLabel: phoneLabelOverride,
+  emailLabel: emailLabelOverride,
+  ...restProps
+} = props;
+if ('variant' in restProps) {
+  delete restProps.variant;
+}
+
+const variantKeyEffective = variantOverride ?? getContactInfoVariant();
+const SelectedComponent =
+  variantKeyEffective === 'none' ? null : variants[variantKeyEffective] ?? variants.standard;
+const eyebrow = (eyebrowOverride ?? settings.eyebrow ?? undefined) as string | undefined;
+const title = (titleOverride ?? settings.title ?? "Let's work together") as string | undefined;
+const intro =
+  (introOverride ?? settings.intro ?? "Reach us by phone or email, or send details through the form. We're quick to respond.") as
+    | string
+    | undefined;
+const phoneLabel =
+  phoneLabelOverride !== undefined ? phoneLabelOverride : settings.phoneLabel ?? undefined;
+const emailLabel =
+  emailLabelOverride !== undefined ? emailLabelOverride : settings.emailLabel ?? undefined;
+const fallbackTone = getContactInfoBackgroundTone();
+const backgroundTone = normalizeBackgroundTone(
+  overrideTone ?? settings.background?.tone ?? fallbackTone,
+);
+const backgroundClass = overrideClass ?? sectionBackgroundClass(backgroundTone);
+const backgroundToneAttr = sectionBackgroundToneAttr(backgroundTone);
+const backgroundColor = normalizeBackgroundColor(overrideColor ?? settings.background?.color);
+const backgroundStyle = createBackgroundStyle(backgroundColor, backgroundTone);
+const animationSetting =
+  animationOverride !== undefined ? animationOverride : settings.animation;
+const animationEnabled =
+  animationSetting ?? isContactInfoAnimationEnabled();
 ---
-{Component ? (
-  <Component
+{SelectedComponent ? (
+  <SelectedComponent
     site={site as SiteContent}
-    title={settings.title ?? "Let's work together"}
-    intro={settings.intro ?? "Reach us by phone or email, or send details through the form. We're quick to respond."}
-    phoneLabel={settings.phoneLabel ?? undefined}
-    emailLabel={settings.emailLabel ?? undefined}
-    {...props}
+    eyebrow={eyebrow}
+    title={title}
+    intro={intro}
+    phoneLabel={phoneLabel}
+    emailLabel={emailLabel}
+    backgroundClass={backgroundClass}
+    backgroundTone={backgroundToneAttr}
+    backgroundStyle={backgroundStyle}
+    animationEnabled={animationEnabled !== false}
+    {...restProps}
   />
 ) : null}
