@@ -161,8 +161,8 @@ const statValueClass = isAuroraBackground
       )}
     </div>
   </div>
-  {shouldAnimate ? (
-    <script>
+{shouldAnimate ? (
+  <script>
       const roots = Array.from(document.querySelectorAll('[data-hero-root][data-animate="true"]'));
       const supportMatchMedia = typeof window !== 'undefined' && typeof window.matchMedia === 'function';
       const prefersReducedMotion = supportMatchMedia
@@ -200,6 +200,6 @@ const statValueClass = isAuroraBackground
           });
         });
       });
-    </script>
-  ) : null}
+  </script>
+) : null}
 </section>

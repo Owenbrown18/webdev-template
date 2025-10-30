@@ -70,9 +70,9 @@ const animationEnabled =
     />
     <button
       type="button"
-      class="contact-hero__scroll-button"
+      class="fullscreen-hero__scroll-button"
       data-contact-scroll
-      aria-label="Scroll to contact details"
+      aria-label="Scroll to contact form"
     >
       <svg viewBox="0 0 20 20" fill="none" aria-hidden="true" class="h-5 w-5">
         <path
@@ -108,35 +108,3 @@ const animationEnabled =
     </script>
   </div>
 ) : null}
-
-<style is:global>
-  .contact-hero__scroll-button {
-    position: absolute;
-    left: 50%;
-    bottom: 3.5rem;
-    transform: translate(-50%, 0);
-    display: inline-flex;
-    height: 3rem;
-    width: 3rem;
-    align-items: center;
-    justify-content: center;
-    border-radius: 9999px;
-    border: 1px solid rgba(15, 23, 42, 0.08);
-    background: rgba(255, 255, 255, 0.92);
-    color: rgb(15 23 42);
-    box-shadow: 0 18px 32px -20px rgba(15, 23, 42, 0.35);
-    transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
-  }
-
-  .contact-hero__scroll-button:hover,
-  .contact-hero__scroll-button:focus-visible {
-    transform: translate(-50%, -4px);
-    box-shadow: 0 22px 36px -18px rgba(15, 23, 42, 0.4);
-    background: rgba(255, 255, 255, 0.98);
-  }
-
-  .contact-hero__scroll-button:focus-visible {
-    outline: 2px solid rgba(16, 53, 41, 0.6);
-    outline-offset: 3px;
-  }
-</style>

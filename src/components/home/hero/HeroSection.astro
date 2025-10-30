@@ -25,7 +25,8 @@ const variants: Record<string, any> = {
 };
 
 const variantKey = getHeroVariant();
-const HeroComponent = variantKey === 'none' ? null : variants[variantKey] ?? variants.classic;
+const SelectedComponent = variants[variantKey] ?? variants.classic;
+const HeroComponent = variantKey === 'none' ? null : SelectedComponent;
 const hero = home.hero ?? {};
 const props = (Astro.props ?? {}) as Record<string, any>;
 const {
@@ -43,15 +44,35 @@ const backgroundColor = normalizeBackgroundColor(overrideColor ?? hero.backgroun
 const backgroundStyle = createBackgroundStyle(backgroundColor, normalizedTone);
 const animationSetting = animationOverride ?? hero.animation;
 const animationEnabled = animationSetting ?? isHeroAnimationEnabled();
+const isFullscreenVariant = variantKey === 'fullscreen';
+const heroProps = {
+  site: site as SiteContent,
+  hero,
+  backgroundClass,
+  backgroundTone: backgroundToneAttr,
+  backgroundStyle,
+  animationEnabled: animationEnabled !== false,
+  ...restProps,
+};
 ---
-{HeroComponent ? (
-  <HeroComponent
-    site={site as SiteContent}
-    hero={hero}
-    backgroundClass={backgroundClass}
-    backgroundTone={backgroundToneAttr}
-    backgroundStyle={backgroundStyle}
-    animationEnabled={animationEnabled !== false}
-    {...restProps}
-  />
-) : null}
+{isFullscreenVariant && HeroComponent ? (
+  <div class="relative" data-home-hero>
+    <HeroComponent {...heroProps} />
+    <button
+      type="button"
+      class="fullscreen-hero__scroll-button"
+      data-home-hero-scroll
+      aria-label="Scroll down"
+    >
+      <svg viewBox="0 0 20 20" fill="none" aria-hidden="true" class="h-5 w-5">
+        <path
+          d="M4.5 7.5L10 13l5.5-5.5"
+          stroke="currentColor"
+          stroke-width="1.8"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+      </svg>
+    </button>
+  </div>
+) : HeroComponent ? <HeroComponent {...heroProps} /> : null}

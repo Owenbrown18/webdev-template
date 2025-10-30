@@ -44,14 +44,34 @@ const backgroundColor = normalizeBackgroundColor(overrideColor ?? heroContent.ba
 const backgroundStyle = createBackgroundStyle(backgroundColor, normalizedTone);
 const animationEnabled =
   animationOverride !== undefined ? animationOverride : isAboutHeroAnimationEnabled();
+const isFullscreenVariant = variantKey === 'fullscreen';
+const heroProps = {
+  site,
+  backgroundClass,
+  backgroundTone: backgroundToneAttr,
+  backgroundStyle,
+  animationEnabled: animationEnabled !== false,
+  ...restProps,
+};
 ---
-{Component ? (
-  <Component
-    site={site}
-    backgroundClass={backgroundClass}
-    backgroundTone={backgroundToneAttr}
-    backgroundStyle={backgroundStyle}
-    animationEnabled={animationEnabled !== false}
-    {...restProps}
-  />
-) : null}
+{isFullscreenVariant && Component ? (
+  <div class="relative" data-about-hero>
+    <Component {...heroProps} />
+    <button
+      type="button"
+      class="fullscreen-hero__scroll-button"
+      data-about-hero-scroll
+      aria-label="Scroll down"
+    >
+      <svg viewBox="0 0 20 20" fill="none" aria-hidden="true" class="h-5 w-5">
+        <path
+          d="M4.5 7.5L10 13l5.5-5.5"
+          stroke="currentColor"
+          stroke-width="1.8"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+      </svg>
+    </button>
+  </div>
+) : Component ? <Component {...heroProps} /> : null}

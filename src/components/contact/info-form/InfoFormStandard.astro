@@ -14,7 +14,7 @@ interface Props {
   animationEnabled?: boolean;
 }
 
-const props = Astro.props as Props;
+const props = Astro.props as Props & Record<string, any>;
 const {
   site,
   title = "Let's work together",
@@ -26,6 +26,7 @@ const {
   backgroundTone,
   backgroundStyle,
   animationEnabled = true,
+  ...restProps
 } = props;
 
 const hours = Array.isArray(site.hours) ? site.hours : [];
@@ -61,6 +62,7 @@ const hasIntro = typeof intro === 'string' && intro.trim().length > 0;
   data-background-tone={backgroundTone ?? undefined}
   style={backgroundStyle}
   data-contact-info-root={shouldAnimate ? 'true' : undefined}
+  {...restProps}
 >
   {(hasEyebrow || hasTitle || hasIntro) && (
     <div class="section-intro mx-auto max-w-3xl text-center">
