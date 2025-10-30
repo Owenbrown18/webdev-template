@@ -17,7 +17,7 @@ const heroIsFullscreen = heroVariant === 'fullscreen';
 <BaseLayout title="About" description={`Learn more about ${site.name}`} heroIsFullscreen={heroIsFullscreen}>
   <div class="space-y-16 sm:space-y-20">
     <AboutHeroSection />
-    <AboutStatementSection />
+    <AboutStatementSection id="about-scroll-target" tabindex="-1" />
     <AboutValuesSection />
     <AboutProcessSection />
     <AboutTimelineSection />

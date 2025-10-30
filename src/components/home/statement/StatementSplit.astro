@@ -13,6 +13,7 @@ interface Props {
   animationEnabled?: boolean;
 }
 
+const props = Astro.props as Props & Record<string, any>;
 const {
   eyebrow,
   title,
@@ -21,8 +22,10 @@ const {
   backgroundClass,
   backgroundTone,
   backgroundStyle,
-  animationEnabled = true,
-}: Props = Astro.props as Props;
+  animationEnabled: animationEnabledProp,
+  ...restProps
+} = props;
+const animationEnabled = animationEnabledProp !== false;
 
 const hasIntro = typeof intro === 'string' && intro.trim().length > 0;
 const introParagraphs = hasIntro
@@ -62,6 +65,7 @@ const bodyClasses = [
     data-background-tone={backgroundTone ?? undefined}
     style={backgroundStyle}
     data-statement-root={shouldAnimate ? 'true' : undefined}
+    {...restProps}
   >
     <div class={containerClasses} data-statement>
       <div class="space-y-3">

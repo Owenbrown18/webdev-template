@@ -73,6 +73,7 @@ const animationEnabled =
       class="fullscreen-hero__scroll-button"
       data-contact-scroll
       aria-label="Scroll to contact form"
+      data-visible="false"
     >
       <svg viewBox="0 0 20 20" fill="none" aria-hidden="true" class="h-5 w-5">
         <path
@@ -86,7 +87,8 @@ const animationEnabled =
     </button>
     <script>
       const init = () => {
-        const button = document.querySelector('[data-contact-scroll]');
+        const root = document.querySelector('[data-contact-hero]');
+        const button = root?.querySelector('[data-contact-scroll]');
         if (!(button instanceof HTMLElement)) return;
         button.addEventListener('click', () => {
           const target = document.querySelector('[data-contact-form-root]');
@@ -96,7 +98,10 @@ const animationEnabled =
           const centerPosition = offset - window.innerHeight / 2 + rect.height / 2;
           const adjustedPosition = centerPosition - 40;
           window.scrollTo({ top: adjustedPosition, behavior: 'smooth' });
-          target.focus?.({ preventScroll: true });
+        });
+
+        requestAnimationFrame(() => {
+          button.dataset.visible = 'true';
         });
       };
 

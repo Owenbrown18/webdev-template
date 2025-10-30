@@ -20,7 +20,7 @@ const heroIsFullscreen = heroVariant === 'fullscreen';
 <BaseLayout description={site.tagline} heroIsFullscreen={heroIsFullscreen}>
   <div class="space-y-16 sm:space-y-20">
     <Hero />
-    <StatementSection />
+    <StatementSection id="home-scroll-target" tabindex="-1" />
     <ServicesSection />
     <HomeAboutSection />
     <FeaturedPhotosSection />

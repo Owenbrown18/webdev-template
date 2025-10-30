@@ -62,6 +62,7 @@ const heroProps = {
       class="fullscreen-hero__scroll-button"
       data-about-hero-scroll
       aria-label="Scroll down"
+      data-visible="false"
     >
       <svg viewBox="0 0 20 20" fill="none" aria-hidden="true" class="h-5 w-5">
         <path
@@ -75,3 +76,31 @@ const heroProps = {
     </button>
   </div>
 ) : Component ? <Component {...heroProps} /> : null}
+
+{isFullscreenVariant ? (
+  <script>
+    const init = () => {
+      const root = document.querySelector('[data-about-hero]');
+      const button = root?.querySelector('[data-about-hero-scroll]');
+      if (!(button instanceof HTMLElement)) return;
+      button.addEventListener('click', () => {
+        const target = document.getElementById('about-scroll-target');
+        if (!(target instanceof HTMLElement)) return;
+        const rect = target.getBoundingClientRect();
+        const offset = rect.top + window.scrollY;
+        const adjust = offset - 32;
+        window.scrollTo({ top: adjust, behavior: 'smooth' });
+      });
+
+      requestAnimationFrame(() => {
+        button.dataset.visible = 'true';
+      });
+    };
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init, { once: true });
+    } else {
+      init();
+    }
+  </script>
+) : null}
