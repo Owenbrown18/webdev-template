@@ -101,6 +101,64 @@ See `docs/ui-guidelines.md` for detailed design guidance.
 3. Update YAML content, choose `variant` values, or set `none` to hide sections.
 4. Add new variants/sections by creating components under `src/components/<page>/<section>/`, updating types, and wiring the data in YAML.
 
+## Decap CMS Workflow
+
+This starter ships with [Decap CMS](https://decapcms.org/) preconfigured so non-technical editors can update the YAML content through a friendly UI.
+
+### Prerequisites
+
+- Source code hosted in Git (GitHub assumed below).
+- A Netlify account for builds, Identity, and DNS.
+- Node 20+ locally (match the `.nvmrc` value if present).
+
+### Previewing the CMS locally
+
+1. Install dependencies and build once: `npm install`.
+2. Start the CMS proxy in one terminal: `npx decap-server`.
+3. In a second terminal run the dev server: `npm run dev`.
+4. Open `http://localhost:4321/admin/index.html?local_backend=true`.
+5. Use any email/password to log in (local backend bypasses auth).
+6. Publish changes to see them written directly into the YAML files.
+
+Stop both processes with `Ctrl+C` when finished.
+
+### Deploying to Netlify with CMS access
+
+1. Push the project to a GitHub repo.
+2. In Netlify, **Import from Git** and select the repo.
+3. Build command: `npm run build`; publish directory: `dist`. Leave base directory blank.
+4. If Netlify’s default Node version causes build errors, add an `.nvmrc` (e.g., `20`) or `engines.node` field and redeploy.
+5. Once the first deploy succeeds, go to **Site settings → Identity**:
+   - Enable Identity.
+   - Set registration to “Invite only”.
+   - Enable **Git Gateway** under Identity → Services.
+6. Update `public/admin/config.yml` for production:
+   - Remove `local_backend`.
+   - Set `site_url` and `display_url` to the deployed domain.
+   - Commit and push so the changes deploy.
+7. Invite editors via Identity → Users → Invite. They’ll receive an email to set a password.
+
+### Day-to-day editing
+
+- Editors visit `/admin`, log in with Netlify Identity, and use the Decap UI to edit the collections defined in `config.yml`.
+- Media uploads are stored in `public/images/uploads`, which get committed to Git.
+- Clicking **Publish** creates a commit on the repo, which triggers a fresh Netlify build. Deploys typically complete within a couple of minutes.
+
+### Onboarding a new client site
+
+1. Duplicate this repo (or create a new repo from your template).
+2. Customize YAML content and assets locally.
+3. Connect the new repo to Netlify with the steps above.
+4. Purchase or point the client’s domain to Netlify (Domains → “Add custom domain” and follow DNS instructions).
+5. Invite the client via Netlify Identity and share CMS instructions.
+
+### Troubleshooting
+
+- **404 at `/admin` locally**: use the full URL `http://localhost:4321/admin/index.html?local_backend=true`.
+- **Login fails in production**: confirm Netlify Identity is enabled and the user has accepted the invite; ensure Git Gateway is on.
+- **Build fails with Rollup optional dependency errors**: regenerate `package-lock.json` (`rm -rf node_modules package-lock.json && npm install`) and push, or pin Node to the version used locally.
+- **Changes not visible**: check the Netlify Deploys tab—if the build failed, fix the error and redeploy.
+
 ## Placeholder Assets
 
 - Replace demo imagery under `public/images/` before shipping.
