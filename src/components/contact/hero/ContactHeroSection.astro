@@ -91,8 +91,38 @@ const animationEnabled =
         const button = root?.querySelector('[data-contact-scroll]');
         if (!(button instanceof HTMLElement)) return;
         button.addEventListener('click', () => {
-          const target = document.querySelector('[data-contact-form-root]');
+          const formRoot = document.querySelector('[data-contact-form-root]');
+          const container =
+            formRoot instanceof HTMLElement
+              ? formRoot.querySelector('[data-contact-form-container]')
+              : null;
+          const card =
+            formRoot instanceof HTMLElement
+              ? formRoot.querySelector('[data-contact-form-card]')
+              : null;
+          const fallbackContainer = document.querySelector('[data-contact-form-container]');
+          const fallbackCard = document.querySelector('[data-contact-form-card]');
+          const fallbackForm = document.getElementById('contact-form');
+
+          if (formRoot instanceof HTMLElement) {
+            [container, card].forEach((node) => {
+              if (node instanceof HTMLElement) {
+                node.dataset.visible = 'true';
+              }
+            });
+          }
+
+          const targetCandidates = [
+            container,
+            card,
+            formRoot,
+            fallbackForm,
+            fallbackContainer,
+            fallbackCard,
+          ];
+          const target = targetCandidates.find((node) => node instanceof HTMLElement);
           if (!(target instanceof HTMLElement)) return;
+
           const rect = target.getBoundingClientRect();
           const offset = rect.top + window.scrollY;
           const centerPosition = offset - window.innerHeight / 2 + rect.height / 2;
