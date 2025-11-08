@@ -90,11 +90,12 @@ const buildTypographyVarBlock = (tokenKey: string, config?: DesignTypographyScal
   return lines.join('\n');
 };
 
-const { title, description, showTagline, heroIsFullscreen = false } = Astro.props as {
+const { title, description, showTagline, heroIsFullscreen = false, contentPadding } = Astro.props as {
   title?: string;
   description?: string;
   showTagline?: boolean;
   heroIsFullscreen?: boolean;
+  contentPadding?: 'default' | 'compact' | 'flush';
 };
 const headerSettings = site.header ?? {};
 const footerSettings = site.footer ?? {};
@@ -182,8 +183,11 @@ const typographyVarStrings = [
   buildTypographyVarBlock('eyebrow', typographyScale.eyebrow),
   buildTypographyVarBlock('finePrint', typographyScale.finePrint),
 ].filter(Boolean);
+const contentPaddingMode =
+  contentPadding === 'compact' || contentPadding === 'flush' ? contentPadding : 'default';
 const showTaglineSetting = showTagline ?? true;
-const shouldRenderTagline = !heroIsFullscreen && Boolean(showTaglineSetting && site.tagline?.trim());
+const shouldRenderTagline =
+  contentPaddingMode !== 'flush' && !heroIsFullscreen && Boolean(showTaglineSetting && site.tagline?.trim());
 const preloaderConfig = site.preloader ?? {};
 const isPreloaderEnabled = preloaderConfig.enabled === true;
 const preloaderBackgroundColor =
@@ -267,12 +271,18 @@ const bodyStyleLines = [
 const bodyStyle = `${[...bodyStyleLines, ...typographyVarStrings].join('\n')}\n`;
 const headerClasses =
   'site-header sticky top-0 left-0 right-0 z-40 w-full bg-white/90 backdrop-blur supports-[backdrop-filter]:bg-white/80 border-b border-slate-200/80 shadow-sm';
+let mainPaddingClass = 'pt-12';
+if (heroIsFullscreen || contentPaddingMode === 'flush') {
+  mainPaddingClass = 'pt-0';
+} else if (shouldRenderTagline) {
+  mainPaddingClass = contentPaddingMode === 'compact' ? 'pt-4' : 'pt-6';
+} else {
+  mainPaddingClass = contentPaddingMode === 'compact' ? 'pt-6' : 'pt-12';
+}
 const mainClassList = {
   'flex-1': true,
   'pb-16': true,
-  'pt-0': heroIsFullscreen,
-  'pt-6': !heroIsFullscreen && shouldRenderTagline,
-  'pt-12': !heroIsFullscreen && !shouldRenderTagline,
+  [mainPaddingClass]: true,
 };
 ---
 <!DOCTYPE html>

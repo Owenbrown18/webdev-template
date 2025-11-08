@@ -1,0 +1,177 @@
+---
+interface Props {
+  backgroundClass?: string;
+  backgroundTone?: string;
+  backgroundStyle?: string;
+  animationEnabled?: boolean;
+}
+
+const {
+  backgroundClass,
+  backgroundTone,
+  backgroundStyle,
+  animationEnabled = true,
+}: Props = Astro.props as Props;
+
+const sectionClasses = [
+  backgroundClass,
+  'full-bleed relative isolate overflow-hidden text-white h-[calc(100vh-var(--header-height,5rem))]',
+]
+  .filter(Boolean)
+  .join(' ');
+
+const letterStyleBase = 'font-semibold leading-none';
+const letterBaseClasses = `${letterStyleBase} text-white`;
+const letterSizeClasses = 'text-[20vw] sm:text-[10rem] lg:text-[12rem] xl:text-[13.5rem]';
+const shouldAnimate = animationEnabled !== false;
+const baseBandClasses = 'relative flex flex-1';
+const animationClasses = shouldAnimate
+  ? 'opacity-0 translate-y-6 transition duration-[1500ms] ease-out data-[visible=true]:opacity-100 data-[visible=true]:translate-y-0'
+  : '';
+const bandClassName = [baseBandClasses, animationClasses].filter(Boolean).join(' ');
+const tailBaseClasses = `${letterStyleBase} text-white/90 text-[clamp(4.2rem,8.8vw,6rem)] uppercase`;
+const tailAnimationClasses = shouldAnimate
+  ? 'opacity-0 -translate-x-full transition duration-[1600ms] ease-[cubic-bezier(0.15,0.9,0.25,1)] data-[visible=true]:opacity-100 data-[visible=true]:translate-x-0'
+  : '';
+const tailClassName = [tailBaseClasses, tailAnimationClasses].filter(Boolean).join(' ');
+---
+<section
+  class={sectionClasses}
+  data-hero-root
+  data-background-tone={backgroundTone ?? undefined}
+  style={backgroundStyle}
+  data-animate={shouldAnimate ? 'true' : undefined}
+>
+  <div class="section-container h-full">
+    <div class="flex h-full flex-col justify-between gap-4 py-[clamp(2rem,8vh,4rem)] text-left">
+      <div class={`${bandClassName} items-start justify-start`} data-letter="o">
+        <div class="pointer-events-none absolute inset-0">
+          <div class="absolute left-0 top-0 h-36 w-36 rounded-full bg-white/18 blur-[120px] sm:h-48 sm:w-48"></div>
+        </div>
+        <div class="flex items-end gap-6 -translate-x-[1vw] sm:-translate-x-[1rem]">
+          <span class={`${letterBaseClasses} ${letterSizeClasses}`} aria-hidden="true">O</span>
+          <span class="tail-offset -ml-10 pl-10 -translate-y-6">
+            <span class={tailClassName} data-tail="wen">WEN</span>
+          </span>
+        </div>
+      </div>
+      <div class={`${bandClassName} items-center justify-start`} data-letter="b">
+        <div class="pointer-events-none absolute inset-0">
+          <div class="absolute left-1/2 top-1/2 h-44 w-44 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/12 blur-[140px] sm:h-60 sm:w-60"></div>
+        </div>
+        <div class="flex items-end gap-6">
+          <span class={`${letterBaseClasses} ${letterSizeClasses}`} aria-hidden="true">B</span>
+          <span class="tail-offset -ml-10 pl-10 -translate-y-6">
+            <span class={tailClassName} data-tail="rown">ROWN</span>
+          </span>
+        </div>
+      </div>
+      <div class={`${bandClassName} items-end justify-start`} data-letter="d">
+        <div class="pointer-events-none absolute inset-0">
+          <div class="absolute -bottom-4 -right-6 h-44 w-44 rounded-full bg-white/18 blur-[130px] sm:h-64 sm:w-64"></div>
+        </div>
+        <div class="flex items-end gap-6">
+          <span class={`${letterBaseClasses} ${letterSizeClasses}`} aria-hidden="true">D</span>
+          <span class="tail-offset -ml-10 pl-10 -translate-y-6">
+            <span class={tailClassName} data-tail="esign">ESIGN</span>
+          </span>
+        </div>
+      </div>
+    </div>
+    <p class="sr-only">OBD</p>
+  </div>
+</section>
+
+{shouldAnimate ? (
+  <script>
+    const init = () => {
+      const root = document.querySelector('[data-hero-root][data-animate="true"]');
+      if (!(root instanceof HTMLElement)) return;
+      if (root.dataset.heroAnimated === 'true') return;
+      root.dataset.heroAnimated = 'true';
+
+      const prefersReducedMotion =
+        typeof window !== 'undefined' &&
+        typeof window.matchMedia === 'function' &&
+        window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const bands = Array.from(root.querySelectorAll('[data-letter]'));
+      const tails = Array.from(root.querySelectorAll('[data-tail]'));
+      const tailVisibleDuration = 5000;
+      const tailHiddenDuration = 5000;
+      const initialTailDelay = prefersReducedMotion ? 0 : 800;
+      let tailLoopTimer = null;
+      let tailLoopRunning = false;
+
+      const revealBands = () => {
+        bands.forEach((band, index) => {
+          if (!(band instanceof HTMLElement)) return;
+          const delay = prefersReducedMotion ? 0 : index * 260;
+          setTimeout(() => {
+            band.dataset.visible = 'true';
+          }, delay);
+        });
+      };
+
+      const setTailVisibility = (visible) => {
+        tails.forEach((tail) => {
+          if (!(tail instanceof HTMLElement)) return;
+          if (visible) {
+            tail.dataset.visible = 'true';
+          } else {
+            delete tail.dataset.visible;
+          }
+        });
+      };
+
+      const stopTailLoop = () => {
+        tailLoopRunning = false;
+        if (tailLoopTimer !== null) {
+          clearTimeout(tailLoopTimer);
+          tailLoopTimer = null;
+        }
+        setTailVisibility(false);
+      };
+
+      const queueTailToggle = (visible, delay) => {
+        tailLoopTimer = window.setTimeout(() => {
+          if (!tailLoopRunning) return;
+          setTailVisibility(visible);
+          const nextDelay = visible ? tailVisibleDuration : tailHiddenDuration;
+          queueTailToggle(!visible, nextDelay);
+        }, delay);
+      };
+
+      const startTailLoop = () => {
+        if (tailLoopRunning) return;
+        if (prefersReducedMotion) {
+          setTailVisibility(true);
+          return;
+        }
+        tailLoopRunning = true;
+        queueTailToggle(true, initialTailDelay);
+      };
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              revealBands();
+              startTailLoop();
+            } else {
+              stopTailLoop();
+            }
+          });
+        },
+        { threshold: 0.4 },
+      );
+
+      observer.observe(root);
+    };
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init, { once: true });
+    } else {
+      init();
+    }
+  </script>
+) : null}

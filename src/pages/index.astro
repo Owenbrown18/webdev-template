@@ -17,7 +17,12 @@ import { site, getHeroVariant } from '../config/content';
 const heroVariant = getHeroVariant();
 const heroIsFullscreen = heroVariant === 'fullscreen';
 ---
-<BaseLayout description={site.tagline} heroIsFullscreen={heroIsFullscreen}>
+<BaseLayout
+  description={site.tagline}
+  heroIsFullscreen={heroIsFullscreen}
+  showTagline={false}
+  contentPadding="flush"
+>
   <div class="space-y-16 sm:space-y-20">
     <Hero />
     <StatementSection id="home-scroll-target" tabindex="-1" />

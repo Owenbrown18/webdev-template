@@ -453,4 +453,10 @@ body {
     position: relative;
     z-index: 3;
   }
+
+  .tail-offset {
+    display: inline-flex;
+    overflow: hidden;
+  }
+
 }

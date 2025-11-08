@@ -1,17 +1,9 @@
 hero:
-  variant: "fullscreen" # Options: classic, split, fullscreen, none
+  variant: "obd" # Options: classic, split, fullscreen, obd, none
   background:
     tone: "aurora" # Options: none, gradient, solid, aurora
     color: "#103529" # Optional CSS color (hex, rgb, etc.)
   animation: true # Toggle hero animation on/off
-  eyebrow: "Welcome"
-  title: null
-  subtitle: null
-  primaryCtaLabel: "Contact Us"
-  primaryCtaHref: "/contact"
-  secondaryCtaLabel: "Our Services"
-  secondaryCtaHref: "/services"
-  image: "" #"/images/home-hero.jpg"
 statement:
   variant: "centered" # Options: centered, none
   background:
