@@ -19,6 +19,7 @@ const settings = (home.featuredProject ?? {}) as {
   animation?: boolean | null;
   eyebrow?: string | null;
   title?: string | null;
+  projectTitle?: string | null;
   intro?: string | null;
   image?: { src?: string | null; alt?: string | null } | null;
   modal?: ModalContent | null;
@@ -31,6 +32,7 @@ const {
   animation: animationOverride,
   eyebrow: eyebrowOverride,
   title: titleOverride,
+  projectTitle: projectTitleOverride,
   intro: introOverride,
   image: imageOverride,
   modal: modalOverride,
@@ -56,6 +58,7 @@ const shouldAnimate = animationEnabled !== false;
 
 const eyebrow = (eyebrowOverride ?? settings.eyebrow ?? undefined) as string | undefined;
 const title = (titleOverride ?? settings.title ?? undefined) as string | undefined;
+const projectTitle = (projectTitleOverride ?? settings.projectTitle ?? undefined) as string | undefined;
 const intro = (introOverride ?? settings.intro ?? undefined) as string | undefined;
 
 const imageConfig =
@@ -77,7 +80,7 @@ const hasModal = Boolean(modalTitle || modalParagraphs.length > 0);
 const shouldRender =
   variant !== 'none' &&
   Boolean(imageSrc) &&
-  Boolean(eyebrow || title || intro);
+  Boolean(eyebrow || projectTitle || intro);
 
 const sectionClasses = [backgroundClass, 'section-shell'].filter(Boolean).join(' ');
 const containerClasses = [
@@ -102,29 +105,35 @@ const animationAttr = shouldAnimate ? 'true' : 'false';
     {...restProps}
   >
     <div class={containerClasses} data-featured-project-content>
-      {(eyebrow || title || intro) && (
-        <div class="space-y-4">
-          {eyebrow && <p class="section-eyebrow">{eyebrow}</p>}
-          {title && <h2 class="section-heading">{title}</h2>}
-          {intro && <p class="section-subtitle mx-auto max-w-3xl">{intro}</p>}
-        </div>
-      )}
-      <figure class={imageWrapperClasses}>
-        <img src={imageSrc} alt={imageAlt ?? ''} class={imageClasses} loading="lazy" decoding="async" />
-      </figure>
-      {hasModal ? (
-        <div>
-          <button
-            type="button"
-            class="inline-flex items-center justify-center rounded-full bg-brand-primary px-6 py-3 text-base font-semibold text-white shadow-brand-glow transition hover:bg-brand-primary/90 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary/60 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
-            data-featured-project-trigger
-            aria-haspopup="dialog"
-            aria-controls="featured-project-modal"
-          >
-            Read more
-          </button>
+      {eyebrow ? (
+        <div class="eyebrow-banner-wrapper text-center">
+          <p class="eyebrow-banner">{eyebrow}</p>
         </div>
       ) : null}
+      <div class="featured-project-grid">
+        <div class="featured-project-media">
+          <figure class={imageWrapperClasses}>
+            <img src={imageSrc} alt={imageAlt ?? ''} class={imageClasses} loading="lazy" decoding="async" />
+          </figure>
+          {projectTitle ? <p class="project-title-label">{projectTitle}</p> : null}
+        </div>
+        <div class="featured-project-details">
+          {intro && <p class="rich-intro text-left">{intro}</p>}
+          {hasModal ? (
+            <div class="featured-project-cta-wrapper">
+              <button
+                type="button"
+                class="services-brief__cta featured-project-cta"
+                data-featured-project-trigger
+                aria-haspopup="dialog"
+                aria-controls="featured-project-modal"
+              >
+                Read more
+              </button>
+            </div>
+          ) : null}
+        </div>
+      </div>
     </div>
     {hasModal ? (
       <div

@@ -14,13 +14,9 @@ import {
   createBackgroundStyle,
 } from '../../../utils/background';
 import type { SiteContent } from '../../../types/content';
-import HeroClassic from '../../home/hero/HeroClassic.astro';
-import HeroSplit from '../../home/hero/HeroSplit.astro';
 import HeroFullscreen from '../../home/hero/HeroFullscreen.astro';
 
 const variants: Record<string, any> = {
-  classic: HeroClassic,
-  split: HeroSplit,
   fullscreen: HeroFullscreen,
 };
 
@@ -44,7 +40,7 @@ if ('variant' in restProps) {
 }
 
 const variantKey = variantOverride ?? getContactHeroVariant();
-const HeroComponent = variantKey === 'none' ? null : variants[variantKey] ?? variants.classic;
+const HeroComponent = variantKey === 'none' ? null : variants[variantKey] ?? variants.fullscreen;
 const hero = (heroOverride ?? settings) as typeof settings;
 const fallbackTone = getContactHeroBackgroundTone();
 const normalizedTone = normalizeBackgroundTone(overrideTone ?? hero?.background?.tone ?? fallbackTone);

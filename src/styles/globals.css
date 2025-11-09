@@ -646,7 +646,7 @@ body {
   }
 
   .featured-project-cta {
-    align-self: flex-start;
+    align-self: flex-end;
     background: #103529;
     border: none;
     color: #fff;
@@ -657,6 +657,12 @@ body {
   .featured-project-cta:focus-visible {
     background: #0a241b;
     border: none;
+  }
+
+  .featured-project-cta-wrapper {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
   }
 
   .tail-offset {

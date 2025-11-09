@@ -14,20 +14,16 @@ import {
   createBackgroundStyle,
 } from '../../../utils/background';
 import type { SiteContent } from '../../../types/content';
-import HeroClassic from './HeroClassic.astro';
-import HeroSplit from './HeroSplit.astro';
 import HeroFullscreen from './HeroFullscreen.astro';
 import HeroObd from './HeroObd.astro';
 
 const variants: Record<string, any> = {
-  classic: HeroClassic,
-  split: HeroSplit,
   fullscreen: HeroFullscreen,
   obd: HeroObd,
 };
 
 const variantKey = getHeroVariant();
-const SelectedComponent = variants[variantKey] ?? variants.classic;
+const SelectedComponent = variants[variantKey] ?? variants.obd ?? variants.fullscreen;
 const HeroComponent = variantKey === 'none' ? null : SelectedComponent;
 const hero = home.hero ?? {};
 const props = (Astro.props ?? {}) as Record<string, any>;

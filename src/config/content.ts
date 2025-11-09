@@ -95,8 +95,8 @@ export const isServicesFaqAnimationEnabled = () => isAnimationEnabled(servicesPa
 export const getServicesCtaBackgroundTone = () => getBackgroundTone(servicesPage.cta?.background?.tone);
 export const isServicesCtaAnimationEnabled = () => isAnimationEnabled(servicesPage.cta?.animation);
 
-/** Returns the hero layout key specified in home content, defaulting to "classic". */
-export const getHeroVariant = () => home.hero?.variant?.trim?.().toLowerCase?.() || 'classic';
+/** Returns the hero layout key specified in home content, defaulting to "obd". */
+export const getHeroVariant = () => home.hero?.variant?.trim?.().toLowerCase?.() || 'obd';
 
 /** Returns the statement layout key specified in home content, defaulting to "centered". */
 export const getStatementVariant = () => {
@@ -137,9 +137,9 @@ export const getBookingVariant = () => {
   return raw === 'none' ? 'none' : raw;
 };
 
-/** Returns the contact hero layout key, defaulting to "split". */
+/** Returns the contact hero layout key, defaulting to "fullscreen". */
 export const getContactHeroVariant = () => {
-  const raw = contact.hero?.variant?.trim?.().toLowerCase?.() || 'split';
+  const raw = contact.hero?.variant?.trim?.().toLowerCase?.() || 'fullscreen';
   return raw === 'none' ? 'none' : raw;
 };
 export const getContactHeroBackgroundTone = () => getBackgroundTone(contact.hero?.background?.tone);

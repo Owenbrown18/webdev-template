@@ -78,7 +78,7 @@ booking:
   variant: classic   # Options: classic, none
 ```
 
-Variant implementations live under `src/components/home/<section>/`. Each folder contains a dispatcher (e.g., `HeroSection.astro`) plus one component per variant (`HeroClassic.astro`, `HeroSplit.astro`, etc.). Register new variants in the dispatcher map so YAML can opt into them.
+Variant implementations live under `src/components/home/<section>/`. Each folder contains a dispatcher (e.g., `HeroSection.astro`) plus one component per active variant (currently `HeroObd.astro` and `HeroFullscreen.astro`). Register new variants in the dispatcher map if more layouts are introduced in the future.
 
 ### Services Page (`content/services.yaml`)
 
