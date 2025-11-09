@@ -26,47 +26,21 @@ const {
 } = Astro.props as Props;
 
 const items = Array.isArray(services.items) ? services.items.filter(Boolean) : [];
-const sectionClasses = [backgroundClass, 'section-shell'].filter(Boolean).join(' ');
+const sectionClasses = [backgroundClass, 'section-shell', 'services-brief-section'].filter(Boolean).join(' ');
 const shouldAnimate = animationEnabled !== false;
+const backgroundImageStyle = `--services-brief-bg: url('/images/services-brief-bg.jpg')`;
+const inlineStyle = [backgroundStyle, backgroundImageStyle].filter(Boolean).join('; ') || undefined;
 const containerClasses = [
-  'section-container max-w-5xl text-center space-y-10',
+  'mx-auto w-full max-w-5xl space-y-10 text-center relative z-[2]',
   shouldAnimate
     ? 'motion-safe:opacity-0 motion-safe:translate-y-6 motion-safe:transition-all motion-safe:duration-[900ms] motion-safe:ease-out data-[visible=true]:motion-safe:opacity-100 data-[visible=true]:motion-safe:translate-y-0'
     : '',
-]
-  .filter(Boolean)
-  .join(' ');
+].filter(Boolean).join(' ');
 
 const cardAnimationClasses = shouldAnimate
   ? 'motion-safe:opacity-0 motion-safe:translate-y-4 motion-safe:transition-all motion-safe:duration-[1000ms] motion-safe:ease-out data-[visible=true]:motion-safe:translate-y-0 data-[visible=true]:motion-safe:opacity-100'
   : '';
-const baseCardClasses = [
-  'surface-card',
-  'surface-card-interactive',
-  'group',
-  'transition-all',
-  'duration-300',
-  'ease-[cubic-bezier(.16,1,.3,1)]',
-  'hover:-translate-y-3',
-  'hover:shadow-brand-glow',
-  'hover:border-brand-primary/45',
-  'focus-visible:border-brand-primary/45',
-  'focus-visible:shadow-brand-glow',
-  'w-full',
-  'max-w-[18rem]',
-  'flex',
-  'h-full',
-  'flex-col',
-  'items-center',
-  'justify-center',
-  'gap-3',
-  'p-6',
-  'sm:p-7',
-  'text-center',
-  'text-slate-700',
-  'transition',
-  'focus-visible:outline-none',
-];
+const cardBaseClasses = ['services-brief__card', cardAnimationClasses].filter(Boolean).join(' ');
 
 const safeHref = (item: ServicesListItem) => {
   const slug = typeof item.slug === 'string' ? item.slug.trim() : '';
@@ -82,64 +56,55 @@ const safeHref = (item: ServicesListItem) => {
 const resolveLabel = (item: ServicesListItem) => item.link?.label?.trim();
 
 const animationAttr = shouldAnimate ? 'true' : 'false';
-const gridClasses = [
-  'grid',
-  'grid-cols-1',
-  'gap-6',
-  'justify-center',
-  'justify-items-center',
-  'sm:[grid-template-columns:repeat(auto-fit,minmax(15rem,1fr))]',
-].join(' ');
+const gridClasses = 'services-brief__grid';
+const eyebrowWrapperClasses = 'eyebrow-banner-wrapper text-center';
+const eyebrowClasses = 'eyebrow-banner eyebrow-banner--inverse justify-center';
 ---
 {items.length > 0 ? (
   <section
     class={sectionClasses}
     data-background-tone={backgroundTone ?? undefined}
-    style={backgroundStyle}
+    style={inlineStyle}
     data-services-brief-root={animationAttr}
   >
-    <div class={containerClasses} data-services-brief-container>
-      {(eyebrow || title || intro) && (
-        <div class="space-y-4">
-          {eyebrow && <p class="section-eyebrow">{eyebrow}</p>}
-          {title && <h2 class="section-heading">{title}</h2>}
-          {intro && <p class="section-subtitle mx-auto max-w-4xl">{intro}</p>}
+    <div class="section-container">
+      <div class={containerClasses} data-services-brief-container>
+        {(eyebrow || intro) && (
+          <div class="eyebrow-stack text-center">
+            {eyebrow ? (
+              <div class={eyebrowWrapperClasses}>
+                <p class={eyebrowClasses}>{eyebrow}</p>
+              </div>
+            ) : null}
+            {intro && <p class="rich-intro rich-intro--inverse text-center">{intro}</p>}
+          </div>
+        )}
+        <div class={gridClasses}>
+          {items.map((item, index) => {
+            const href = safeHref(item);
+            const label = item.title ?? resolveLabel(item) ?? 'View service';
+            const delayStyle = shouldAnimate ? `transition-delay: ${index * 80}ms;` : undefined;
+            return (
+              <a
+                href={href}
+                class={cardBaseClasses}
+                data-services-brief-item
+                style={delayStyle}
+              >
+                <span class="services-brief__card-icon">{item.icon ?? '•'}</span>
+                <span class="services-brief__card-label">{label}</span>
+              </a>
+            );
+          })}
         </div>
-      )}
-      <div class={gridClasses}>
-        {items.map((item, index) => {
-          const href = safeHref(item);
-          const label = item.title ?? resolveLabel(item) ?? 'View service';
-          const delayStyle = shouldAnimate ? `transition-delay: ${index * 80}ms;` : undefined;
-          const cardClasses = [...baseCardClasses, cardAnimationClasses].filter(Boolean).join(' ');
-          return (
-            <a
-              href={href}
-              class={cardClasses}
-              data-services-brief-item
-              style={delayStyle}
-            >
-              <span class="relative flex h-12 w-12 items-center justify-center overflow-hidden rounded-full bg-brand-primary/10 text-2xl text-brand-primary transition-colors duration-500 ease-[cubic-bezier(.16,1,.3,1)] group-hover:text-white">
-                <span
-                  class="absolute inset-0 rounded-full bg-brand-primary opacity-0 transition-opacity duration-500 ease-[cubic-bezier(.16,1,.3,1)] group-hover:opacity-100"
-                  aria-hidden="true"
-                ></span>
-                <span class="relative z-[1]">{item.icon ?? '•'}</span>
-              </span>
-              <span class="text-sm font-semibold leading-5 text-current text-center transition-colors duration-300 ease-[cubic-bezier(.16,1,.3,1)] group-hover:text-slate-900">
-                {label}
-              </span>
-            </a>
-          );
-        })}
-      </div>
-      <div>
-        <a
-          href="/services"
-          class="inline-flex items-center justify-center rounded-full bg-brand-primary px-6 py-3 text-base font-semibold text-white shadow-brand-glow transition hover:bg-brand-primary/90 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary/60 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
-        >
-          Browse our Services
-        </a>
+        <div>
+          <a
+            href="/services"
+            class="services-brief__cta"
+          >
+            Browse our Services
+          </a>
+        </div>
       </div>
     </div>
     {shouldAnimate ? (

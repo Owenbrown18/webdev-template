@@ -10,7 +10,7 @@ statement:
     tone: "none" # Options: none, gradient, solid, aurora
     color: null
   animation: true # Toggle reveal animation on/off
-  eyebrow: "What We Offer"
+  eyebrow: "Overview"
   title: "Driven by clarity, care, and craftsmanship"
   intro: "OBdesign is a small, dedicated web-development business based in Victoria, BC. We focus on creating modern, fast, and functional websites for local businesses that want to a clean online presense. Every project is approached with a balance of design precision and technical skill to ensure your site looks great and performs even better. Collaboration is central to our process—we work closely with each client to understand their goals, audience, and vision. OBdesign provides full end-to-end service, from planning and design to development, launch, and ongoing support. This personal, hands-on approach allows us to deliver high-quality websites built to last and evolve with your business."
 services:
@@ -19,7 +19,7 @@ services:
     tone: "aurora" # Options: none, gradient, solid, aurora
     color: "#103529"
   animation: true # Toggle reveal animation on/off
-  eyebrow: "What we do"
+  eyebrow: "Services"
   title: "Our Services"
   intro: "OBdesign builds fast, mobile-friendly websites, refreshes outdated sites, and boosts visibility through SEO and Google Business optimization."
 aboutSection:

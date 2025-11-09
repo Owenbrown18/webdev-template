@@ -53,11 +53,11 @@ const contentClasses = [
     : '',
 ].filter(Boolean);
 const combinedContentClasses = contentClasses.join(' ');
-const innerClasses = 'mx-auto max-w-4xl space-y-6 text-center';
-const eyebrowClasses =
-  'text-[clamp(2.1rem,4.5vw,3.25rem)] font-semibold uppercase tracking-[0.35em] text-[#103529] leading-tight inline-flex items-center justify-center w-full border-b-[2.5px] border-black pb-4';
+const eyebrowStackClasses = 'eyebrow-stack text-center mx-auto max-w-4xl';
+const eyebrowWrapperClasses = 'eyebrow-banner-wrapper text-center';
+const eyebrowClasses = 'eyebrow-banner justify-center';
 const titleClasses = undefined;
-const introClasses = 'text-[clamp(1rem,1.6vw,1.35rem)] text-black leading-[1.9]';
+const introClasses = 'rich-intro';
 ---
 {hasContent ? (
   <section
@@ -68,13 +68,19 @@ const introClasses = 'text-[clamp(1rem,1.6vw,1.35rem)] text-black leading-[1.9]'
     {...restProps}
   >
     <div class={combinedContentClasses} data-statement-content>
-      <div class={innerClasses}>
-        {eyebrow && <p class={eyebrowClasses}>{eyebrow}</p>}
-        {hasIntro &&
-          introParagraphs.map((paragraph) => (
-            <p class={`${introClasses} mx-auto max-w-5xl`}>{paragraph}</p>
-          ))}
-      </div>
+      {(eyebrow || hasIntro) ? (
+        <div class={eyebrowStackClasses}>
+          {eyebrow ? (
+            <div class={eyebrowWrapperClasses}>
+              <p class={eyebrowClasses}>{eyebrow}</p>
+            </div>
+          ) : null}
+          {hasIntro &&
+            introParagraphs.map((paragraph) => (
+              <p class={`${introClasses} mx-auto max-w-5xl`}>{paragraph}</p>
+            ))}
+        </div>
+      ) : null}
     </div>
     {shouldAnimate ? (
       <script>
