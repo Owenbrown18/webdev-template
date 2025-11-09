@@ -47,13 +47,13 @@ const inlineStyle = (() => {
 const sectionClasses = ['section-shell', backgroundClass, extraClass].filter(Boolean).join(' ');
 const shouldAnimate = animationEnabled !== false;
 const contentClasses = [
-  'section-container max-w-5xl',
+  'section-container',
   shouldAnimate
     ? 'motion-safe:translate-y-6 motion-safe:opacity-0 motion-safe:transition-all motion-safe:duration-[900ms] motion-safe:ease-out data-[visible=true]:motion-safe:translate-y-0 data-[visible=true]:motion-safe:opacity-100'
     : '',
 ].filter(Boolean);
 const combinedContentClasses = contentClasses.join(' ');
-const eyebrowStackClasses = 'eyebrow-stack text-center mx-auto max-w-4xl';
+const eyebrowStackClasses = 'eyebrow-stack text-center w-full';
 const eyebrowWrapperClasses = 'eyebrow-banner-wrapper text-center';
 const eyebrowClasses = 'eyebrow-banner justify-center';
 const titleClasses = undefined;
@@ -77,7 +77,7 @@ const introClasses = 'rich-intro';
           ) : null}
           {hasIntro &&
             introParagraphs.map((paragraph) => (
-              <p class={`${introClasses} mx-auto max-w-5xl`}>{paragraph}</p>
+            <p class={`${introClasses} w-full`}>{paragraph}</p>
             ))}
         </div>
       ) : null}

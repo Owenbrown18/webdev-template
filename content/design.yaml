@@ -28,46 +28,46 @@ typography:
   scale:
     display:
       size:
-        mobile: "2.75rem"
-        tablet: "3.25rem"
-        desktop: "3.75rem"
-      lineHeight: "1.05"
+        mobile: "clamp(2.5rem, 4vw, 3.75rem)"
+        tablet: "clamp(2.5rem, 4vw, 3.75rem)"
+        desktop: "clamp(2.5rem, 4vw, 3.75rem)"
+      lineHeight: "1.08"
       weight: 600
     heading:
       size:
-        mobile: "2.1rem"
-        tablet: "2.4rem"
-        desktop: "2.85rem"
+        mobile: "clamp(2rem, 3vw, 2.85rem)"
+        tablet: "clamp(2rem, 3vw, 2.85rem)"
+        desktop: "clamp(2rem, 3vw, 2.85rem)"
       lineHeight: "1.15"
       weight: 600
     subheading:
       size:
-        mobile: "1.25rem"
-        tablet: "1.4rem"
-        desktop: "1.55rem"
+        mobile: "clamp(1.25rem, 2.2vw, 1.55rem)"
+        tablet: "clamp(1.25rem, 2.2vw, 1.55rem)"
+        desktop: "clamp(1.25rem, 2.2vw, 1.55rem)"
       lineHeight: "1.6"
       weight: 500
     body:
       size:
-        mobile: "1.05rem"
-        tablet: "1.1rem"
-        desktop: "1.15rem"
+        mobile: "clamp(1rem, 1.6vw, 1.2rem)"
+        tablet: "clamp(1rem, 1.6vw, 1.2rem)"
+        desktop: "clamp(1rem, 1.6vw, 1.2rem)"
       lineHeight: "1.9"
       weight: 400
     eyebrow:
       size:
-        mobile: "2rem"
-        tablet: "2.5rem"
-        desktop: "3.25rem"
+        mobile: "clamp(1.35rem, 3vw, 2.75rem)"
+        tablet: "clamp(1.35rem, 3vw, 2.75rem)"
+        desktop: "clamp(1.35rem, 3vw, 2.75rem)"
       lineHeight: "1.2"
       weight: 600
       letterSpacing: "0.35em"
       uppercase: true
     finePrint:
       size:
-        mobile: "0.95rem"
-        tablet: "0.95rem"
-        desktop: "0.95rem"
+        mobile: "clamp(0.85rem, 1.2vw, 0.95rem)"
+        tablet: "clamp(0.85rem, 1.2vw, 0.95rem)"
+        desktop: "clamp(0.85rem, 1.2vw, 0.95rem)"
       lineHeight: "1.55"
       weight: 500
       letterSpacing: "0.06em"

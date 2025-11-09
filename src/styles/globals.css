@@ -1,3 +1,7 @@
+/* -------------------------------------------------------------------------- */
+/*  Global Font Imports                                                       */
+/* -------------------------------------------------------------------------- */
+
 @font-face {
   font-family: 'Satoshi';
   src: url('/fonts/satoshi/Satoshi-Variable.woff2') format('woff2 supports variations'),
@@ -12,8 +16,14 @@
 @tailwind components;
 @tailwind utilities;
 
+/* -------------------------------------------------------------------------- */
+/*  Base Layer: Resets, Scrollbars, Typography Defaults                       */
+/* -------------------------------------------------------------------------- */
+
 html {
   scroll-behavior: smooth;
+  /* Fluid root type scale so rem-based values track viewport width */
+  font-size: clamp(15px, 1.15vw, 18px);
 }
 
 body {
@@ -25,6 +35,8 @@ body {
   :root {
     color-scheme: light;
     --header-height: 5rem;
+    --content-max-width: 72rem;
+    --content-padding-x: 1.5rem;
   }
 
   html,
@@ -62,23 +74,36 @@ body {
 }
 
 @layer components {
+  /* ------------------------------------------------------------------------ */
+  /*  Section Scaffolding                                                     */
+  /* ------------------------------------------------------------------------ */
   .section-shell {
     @apply py-section sm:py-[5.5rem];
   }
 
   .section-container {
-    @apply mx-auto w-full max-w-5xl px-6;
+    width: 100%;
+    max-width: var(--content-max-width, 64rem);
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: var(--content-padding-x, 1.5rem);
+    padding-right: var(--content-padding-x, 1.5rem);
   }
 
   .section-intro {
     @apply mx-auto max-w-3xl text-center;
   }
 
+  /* ------------------------------------------------------------------------ */
+  /*  Shared Typography Utilities                                             */
+  /* ------------------------------------------------------------------------ */
   .eyebrow-banner-wrapper {
     width: 100%;
-    max-width: 70rem;
+    max-width: var(--content-max-width, 72rem);
     margin: 0 auto;
     padding-bottom: var(--eyebrow-gap, 1.5rem);
+    padding-left: var(--content-padding-x, 1.5rem);
+    padding-right: var(--content-padding-x, 1.5rem);
   }
 
   .eyebrow-stack {
@@ -124,7 +149,8 @@ body {
     margin-bottom: 1.3rem;
   }
 
- .type-display {
+  /* Built-in typography scales pulling from design tokens */
+  .type-display {
     font-family: var(--font-family-heading, var(--font-family-body, 'Satoshi', 'Inter', system-ui, sans-serif));
     font-size: var(--font-display-size-mobile, 2.75rem);
     line-height: var(--font-display-line-height, 1.1);
@@ -248,6 +274,7 @@ body {
   }
 
   .fullscreen-hero__scroll-button {
+    /* Shared scroll cue used by fullscreen hero variants */
     position: absolute;
     left: 50%;
     bottom: 3.5rem;
@@ -514,6 +541,9 @@ body {
     z-index: 3;
   }
 
+  /* ------------------------------------------------------------------------ */
+  /*  Home Services Brief Section                                             */
+  /* ------------------------------------------------------------------------ */
   .services-brief-section {
     position: relative;
     isolation: isolate;
@@ -615,6 +645,9 @@ body {
     box-shadow: 0 32px 60px -30px rgba(0, 0, 0, 0.85);
   }
 
+  /* ------------------------------------------------------------------------ */
+  /*  Home Featured Project Section                                           */
+  /* ------------------------------------------------------------------------ */
   .featured-project-grid {
     display: grid;
     gap: 2rem;
@@ -666,6 +699,7 @@ body {
   }
 
   .tail-offset {
+    /* Home hero (OBD) word reveal wrapper */
     display: inline-flex;
     overflow: hidden;
   }

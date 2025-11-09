@@ -22,7 +22,7 @@ const sectionClasses = [
 
 const letterStyleBase = 'font-semibold leading-none';
 const letterBaseClasses = `${letterStyleBase} text-white`;
-const letterSizeClasses = 'text-[clamp(5.5rem,18vh,15rem)]';
+const letterSizeClasses = 'text-[clamp(6.5rem,20vh,17rem)]';
 const shouldAnimate = animationEnabled !== false;
 const baseBandClasses = 'relative flex flex-1';
 const animationClasses = shouldAnimate
@@ -48,7 +48,7 @@ const tailClassName = [tailBaseClasses, tailAnimationClasses].filter(Boolean).jo
         <div class="pointer-events-none absolute inset-0">
           <div class="absolute left-0 top-0 h-36 w-36 rounded-full bg-white/18 blur-[120px] sm:h-48 sm:w-48"></div>
         </div>
-        <div class="flex items-end gap-4 sm:gap-6 -translate-x-[0.5rem] sm:-translate-x-[1rem]">
+        <div class="flex items-end gap-4 sm:gap-6">
           <span class={`${letterBaseClasses} ${letterSizeClasses}`} aria-hidden="true">O</span>
           <span class="tail-offset -ml-4 sm:-ml-8 lg:-ml-10 pl-6 sm:pl-10 -translate-y-4 sm:-translate-y-6">
             <span class={tailClassName} data-tail="wen">WEN</span>
