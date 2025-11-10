@@ -94,7 +94,7 @@ expectations:
     tone: "aurora"
     color: "#103529"
   animation: true
-  eyebrow: "What to expect"
+  eyebrow: "expectations"
   title: "Dependable collaboration from kickoff to launch"
   intro: "We keep the process transparent, proactive, and personal so you always know what’s happening next—and why."
   items:

@@ -668,6 +668,28 @@ body {
     color: #fff;
   }
 
+  .section-overlay-dark {
+    position: relative;
+    isolation: isolate;
+  }
+
+  .section-overlay-dark::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background:
+      radial-gradient(circle at 20% 15%, rgba(46, 104, 82, 0.25), transparent 55%),
+      radial-gradient(circle at 80% 0%, rgba(20, 60, 45, 0.2), transparent 60%),
+      linear-gradient(180deg, rgba(6, 16, 12, 0.5), rgba(5, 8, 7, 0.78));
+  }
+
+  .section-overlay-dark > * {
+    position: relative;
+    z-index: 2;
+  }
+
   .services-brief__cta {
     display: inline-flex;
     align-items: center;

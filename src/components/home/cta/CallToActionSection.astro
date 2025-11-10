@@ -42,9 +42,9 @@ const ctaLabel = (ctaLabelOverride ?? settings.ctaLabel ?? 'Start your next proj
 const ctaHref = (ctaHrefOverride ?? settings.ctaHref ?? '/contact') as string | undefined;
 const hasContent = Boolean(eyebrow || title || intro || ctaLabel);
 const shouldAnimate = animationEnabled !== false;
-const sectionClasses = [backgroundClass, 'section-shell'].filter(Boolean).join(' ');
+const sectionClasses = [backgroundClass, 'section-shell section-overlay-dark'].filter(Boolean).join(' ');
 const containerClasses = [
-  'section-container max-w-4xl space-y-8 text-center',
+  'section-container space-y-6',
   shouldAnimate
     ? 'motion-safe:opacity-0 motion-safe:translate-y-6 motion-safe:transition-all motion-safe:duration-[900ms] motion-safe:ease-out data-[visible=true]:motion-safe:translate-y-0 data-[visible=true]:motion-safe:opacity-100'
     : '',
@@ -61,15 +61,20 @@ const containerClasses = [
     {...restProps}
   >
     <div class={containerClasses} data-home-cta-content>
-      {eyebrow && <p class="section-eyebrow">{eyebrow}</p>}
-      {title && <h2 class="section-heading">{title}</h2>}
-      {intro && <p class="section-subtitle mx-auto max-w-3xl">{intro}</p>}
+      {eyebrow ? (
+        <div class="eyebrow-stack eyebrow-stack--inverse w-full text-left" data-align="left">
+          <div class="eyebrow-banner-wrapper text-left">
+            <p class="eyebrow-banner eyebrow-banner--inverse" data-align="left">
+              <span class="eyebrow-banner__label">{eyebrow}</span>
+            </p>
+          </div>
+        </div>
+      ) : null}
+      {title && <p class="rich-subheading text-left text-white">{title}</p>}
+      {intro && <p class="rich-intro text-left text-white/85">{intro}</p>}
       {ctaLabel && ctaHref && (
-        <div class="pt-2">
-          <a
-            href={ctaHref}
-            class="inline-flex items-center justify-center rounded-full bg-brand-primary px-6 py-3 text-base font-semibold text-white shadow-brand-glow transition hover:bg-brand-primary/90 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary/60 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
-          >
+        <div class="pt-4 text-left">
+          <a href={ctaHref} class="services-brief__cta">
             {ctaLabel}
           </a>
         </div>
