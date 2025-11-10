@@ -326,7 +326,7 @@ const mainClassList = {
       Skip to content
     </a>
     <header class={headerClasses} style="--header-height: 5rem;">
-      <div class="mx-auto flex h-20 w-full max-w-[var(--content-max-width,72rem)] items-center justify-between border-b border-slate-200/80 px-[var(--content-padding-x,1.5rem)]">
+      <div class="safe-area flex h-20 w-full items-center justify-between border-b border-slate-200/80">
         <a href="/" class={headerBrandLinkClasses}>
           {headerHasLogo && (
             <img
@@ -362,17 +362,19 @@ const mainClassList = {
         </nav>
       </div>
     </header>
-    <div class="mx-auto flex min-h-screen w-full max-w-[var(--content-max-width,72rem)] flex-col px-[var(--content-padding-x,1.5rem)]">
+    <div class="flex min-h-screen w-full flex-col">
       {shouldRenderTagline && (
-        <p class="pt-6 text-sm font-medium uppercase tracking-[0.2em] text-slate-500">
-          {site.tagline}
-        </p>
+        <div class="safe-area">
+          <p class="pt-6 text-sm font-medium uppercase tracking-[0.2em] text-slate-500">
+            {site.tagline}
+          </p>
+        </div>
       )}
       <main id="main" class:list={mainClassList}>
         <slot />
       </main>
       <footer class="border-t border-slate-200 py-8 text-sm text-slate-500">
-        <div class="flex flex-col gap-6">
+        <div class="safe-area flex flex-col gap-6">
           <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             {footerHasLogo && (
               <a

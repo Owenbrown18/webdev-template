@@ -13,12 +13,6 @@ import {
   createBackgroundStyle,
 } from '../../../utils/background';
 import StatementCentered from './StatementCentered.astro';
-import StatementSplit from './StatementSplit.astro';
-
-const variants: Record<string, any> = {
-  centered: StatementCentered,
-  split: StatementSplit,
-};
 
 const settings = home.statement ?? {};
 const props = (Astro.props ?? {}) as Record<string, any>;
@@ -41,7 +35,7 @@ if ('variant' in restProps) {
 }
 
 const variantKey = variantOverride ?? getStatementVariant();
-const Component = variantKey === 'none' ? null : variants[variantKey] ?? variants.centered;
+const shouldRenderComponent = variantKey !== 'none';
 const eyebrow = (eyebrowOverride ?? settings.eyebrow ?? undefined) as string | undefined;
 const title = (titleOverride ?? settings.title ?? undefined) as string | undefined;
 const intro = (introOverride ?? settings.intro ?? undefined) as string | undefined;
@@ -58,12 +52,13 @@ const backgroundStyle = createBackgroundStyle(backgroundColor, backgroundTone);
 const animationSetting = animationOverride ?? settings.animation;
 const animationEnabled = animationSetting ?? isStatementAnimationEnabled();
 ---
-{Component ? (
-  <Component
+{shouldRenderComponent ? (
+  <StatementCentered
     eyebrow={eyebrow}
     title={title}
     intro={intro}
     image={image}
+    sectionNumber="01"
     backgroundClass={backgroundClass}
     backgroundTone={backgroundToneAttr}
     backgroundStyle={backgroundStyle}

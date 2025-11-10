@@ -67,7 +67,7 @@ const shouldRender = variant !== 'none' && filteredItems.length > 0;
 const shouldAnimate = animationEnabled !== false;
 const sectionClasses = [backgroundClass, 'section-shell pt-10 pb-10 sm:pt-14 sm:pb-14'].filter(Boolean).join(' ');
 const containerClasses = [
-  'section-container max-w-7xl',
+  'section-container',
   shouldAnimate
     ? 'motion-safe:opacity-0 motion-safe:-translate-y-4 motion-safe:transition-all motion-safe:duration-[900ms] motion-safe:ease-out data-[visible=true]:motion-safe:translate-y-0 data-[visible=true]:motion-safe:opacity-100'
     : '',

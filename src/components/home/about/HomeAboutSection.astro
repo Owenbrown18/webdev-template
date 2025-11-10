@@ -8,7 +8,6 @@ import {
   createBackgroundStyle,
 } from '../../../utils/background';
 import StatementCentered from '../statement/StatementCentered.astro';
-import StatementSplit from '../statement/StatementSplit.astro';
 
 const settings = home.aboutSection ?? {};
 const props = (Astro.props ?? {}) as Record<string, any>;
@@ -21,7 +20,6 @@ const {
   backgroundClass: overrideClass,
   animation: animationOverride,
   eyebrow: eyebrowOverride,
-  title: titleOverride,
   intro: introOverride,
   image: imageOverride,
   ...restProps
@@ -31,19 +29,23 @@ if ('variant' in restProps) {
   delete restProps.variant;
 }
 
-const variant = variantKey && variantKey !== '' ? variantKey : 'split';
-const Component =
-  variant === 'none'
-    ? null
-    : variant === 'centered'
-    ? StatementCentered
-    : StatementSplit;
+const variant = variantKey && variantKey !== '' ? variantKey : 'centered';
+const shouldRenderComponent = variant !== 'none';
 
 const eyebrow = (eyebrowOverride ?? settings.eyebrow ?? undefined) as string | undefined;
-const title = (titleOverride ?? settings.title ?? undefined) as string | undefined;
 const intro = (introOverride ?? settings.intro ?? undefined) as string | undefined;
 const image =
   (imageOverride ?? settings.image ?? undefined) as { src?: string | null; alt?: string | null } | undefined;
+const imageSrc = typeof image?.src === 'string' ? image.src.trim() : '';
+const hasImage = imageSrc.length > 0;
+const imageAlt = typeof image?.alt === 'string' ? image.alt : '';
+const introParagraphs =
+  typeof intro === 'string'
+    ? intro
+        .split(/\n\s*\n/)
+        .map((paragraph) => paragraph.trim())
+        .filter(Boolean)
+    : [];
 
 const backgroundTone = normalizeBackgroundTone(
   overrideTone ?? settings.background?.tone ?? 'none',
@@ -56,16 +58,126 @@ const animationSetting =
   animationOverride !== undefined ? animationOverride : settings.animation;
 const animationEnabled = animationSetting !== false;
 ---
-{Component ? (
-  <Component
-    eyebrow={eyebrow}
-    title={title}
-    intro={intro}
-    image={image}
-    backgroundClass={backgroundClass}
-    backgroundTone={backgroundToneAttr}
-    backgroundStyle={backgroundStyle}
-    animationEnabled={animationEnabled}
-    {...restProps}
-  />
+{shouldRenderComponent ? (
+  variant === 'split' ? (
+    <section
+      class={['section-shell', backgroundClass].filter(Boolean).join(' ')}
+      data-background-tone={backgroundToneAttr ?? undefined}
+      style={backgroundStyle}
+      data-about-root={animationEnabled ? 'true' : undefined}
+      {...restProps}
+    >
+      <div class="section-container" data-about-container>
+        {(eyebrow || introParagraphs.length > 0 || hasImage) && (
+          <div
+            class={[
+              'space-y-6 text-left',
+              animationEnabled
+                ? 'motion-safe:opacity-0 motion-safe:-translate-y-4 motion-safe:transition-all motion-safe:duration-[900ms] motion-safe:ease-out data-[visible=true]:motion-safe:translate-y-0 data-[visible=true]:motion-safe:opacity-100'
+                : '',
+            ]
+              .filter(Boolean)
+              .join(' ')}
+            data-about-text
+          >
+            {eyebrow ? (
+              <div class="eyebrow-stack w-full text-left" data-align="left">
+                <div class="eyebrow-banner-wrapper text-left">
+                  <p class="eyebrow-banner" data-align="left">
+                    {eyebrow}
+                  </p>
+                </div>
+              </div>
+            ) : null}
+              <div class="grid gap-10 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:items-start">
+                <div class="space-y-6">
+                  {introParagraphs.map((paragraph) => (
+                    <p class="rich-intro text-left">{paragraph}</p>
+                  ))}
+                  <div class="flex">
+                    <a href="/about#about-scroll-target" class="services-brief__cta featured-project-cta">
+                      Read more
+                    </a>
+                  </div>
+                </div>
+                {hasImage ? (
+                  <figure
+                    class={[
+                      'relative flex h-full w-full overflow-hidden rounded-[1.5rem] border border-slate-200/70 bg-white shadow-card lg:self-start',
+                    animationEnabled
+                      ? 'motion-safe:opacity-0 motion-safe:translate-y-4 motion-safe:transition-all motion-safe:duration-[900ms] motion-safe:ease-out data-[visible=true]:motion-safe:translate-y-0 data-[visible=true]:motion-safe:opacity-100'
+                      : '',
+                  ]
+                    .filter(Boolean)
+                    .join(' ')}
+                  data-about-media
+                >
+                  <img
+                    src={imageSrc}
+                    alt={imageAlt}
+                    class="h-full w-full object-cover"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </figure>
+              ) : null}
+            </div>
+          </div>
+        )}
+      </div>
+      {animationEnabled ? (
+        <script>
+          const roots = Array.from(document.querySelectorAll('[data-about-root=\"true\"]'));
+          const supportMatchMedia = typeof window !== 'undefined' && typeof window.matchMedia === 'function';
+          const prefersReducedMotion = supportMatchMedia
+            ? window.matchMedia('(prefers-reduced-motion: reduce)').matches
+            : false;
+          const reveal = (el) => {
+            if (el instanceof HTMLElement) {
+              el.dataset.visible = 'true';
+            }
+          };
+
+          roots.forEach((root) => {
+            if (!(root instanceof HTMLElement)) return;
+            const targets = Array.from(root.querySelectorAll('[data-about-text], [data-about-media]'));
+            if (targets.length === 0) return;
+
+            if (prefersReducedMotion || !('IntersectionObserver' in window)) {
+              targets.forEach((target) => reveal(target));
+              return;
+            }
+
+            const observer = new IntersectionObserver(
+              (entries, obs) => {
+                entries.forEach((entry) => {
+                  if (entry.isIntersecting) {
+                    reveal(entry.target);
+                    obs.unobserve(entry.target);
+                  }
+                });
+              },
+              {
+                rootMargin: '0px 0px -10% 0px',
+                threshold: 0.15,
+              },
+            );
+
+            targets.forEach((target) => observer.observe(target));
+          });
+        </script>
+      ) : null}
+    </section>
+  ) : (
+    <StatementCentered
+      eyebrow={eyebrow}
+      intro={intro}
+      image={image}
+      backgroundClass={backgroundClass}
+      backgroundTone={backgroundToneAttr}
+      backgroundStyle={backgroundStyle}
+      animationEnabled={animationEnabled}
+      {...restProps}
+    />
+  )
 ) : null}

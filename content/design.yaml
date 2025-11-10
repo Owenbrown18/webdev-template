@@ -56,9 +56,9 @@ typography:
       weight: 400
     eyebrow:
       size:
-        mobile: "clamp(1.35rem, 3vw, 2.75rem)"
-        tablet: "clamp(1.35rem, 3vw, 2.75rem)"
-        desktop: "clamp(1.35rem, 3vw, 2.75rem)"
+        mobile: "clamp(2.45rem, 5.5vw, 5.25rem)"
+        tablet: "clamp(2.45rem, 5.5vw, 5.25rem)"
+        desktop: "clamp(2.45rem, 5.5vw, 5.25rem)"
       lineHeight: "1.2"
       weight: 600
       letterSpacing: "0.35em"

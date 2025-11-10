@@ -19,7 +19,6 @@ const settings = (home.featuredProject ?? {}) as {
   animation?: boolean | null;
   eyebrow?: string | null;
   title?: string | null;
-  projectTitle?: string | null;
   intro?: string | null;
   image?: { src?: string | null; alt?: string | null } | null;
   modal?: ModalContent | null;
@@ -32,7 +31,6 @@ const {
   animation: animationOverride,
   eyebrow: eyebrowOverride,
   title: titleOverride,
-  projectTitle: projectTitleOverride,
   intro: introOverride,
   image: imageOverride,
   modal: modalOverride,
@@ -58,7 +56,6 @@ const shouldAnimate = animationEnabled !== false;
 
 const eyebrow = (eyebrowOverride ?? settings.eyebrow ?? undefined) as string | undefined;
 const title = (titleOverride ?? settings.title ?? undefined) as string | undefined;
-const projectTitle = (projectTitleOverride ?? settings.projectTitle ?? undefined) as string | undefined;
 const intro = (introOverride ?? settings.intro ?? undefined) as string | undefined;
 
 const imageConfig =
@@ -76,15 +73,16 @@ const modalTitle = typeof modalConfig.title === 'string' ? modalConfig.title.tri
 const modalBodyRaw = typeof modalConfig.body === 'string' ? modalConfig.body.trim() : '';
 const modalParagraphs = modalBodyRaw.length > 0 ? modalBodyRaw.split(/\n\s*\n/) : [];
 const hasModal = Boolean(modalTitle || modalParagraphs.length > 0);
+const sectionNumber = '03';
 
 const shouldRender =
   variant !== 'none' &&
   Boolean(imageSrc) &&
-  Boolean(eyebrow || projectTitle || intro);
+  Boolean(eyebrow || intro);
 
 const sectionClasses = [backgroundClass, 'section-shell'].filter(Boolean).join(' ');
 const containerClasses = [
-  'section-container max-w-5xl space-y-10 text-center',
+  'section-container space-y-10',
   shouldAnimate
     ? 'motion-safe:opacity-0 motion-safe:translate-y-6 motion-safe:transition-all motion-safe:duration-[900ms] motion-safe:ease-out data-[visible=true]:motion-safe:translate-y-0 data-[visible=true]:motion-safe:opacity-100'
     : '',
@@ -95,6 +93,9 @@ const imageWrapperClasses =
   'relative mx-auto w-full max-w-4xl overflow-hidden rounded-[1.75rem] border border-slate-200/70 bg-white shadow-card';
 const imageClasses = 'aspect-[16/9] w-full object-cover';
 const animationAttr = shouldAnimate ? 'true' : 'false';
+const eyebrowStackClasses = 'eyebrow-stack w-full text-left';
+const eyebrowWrapperClasses = 'eyebrow-banner-wrapper text-left';
+const eyebrowClasses = 'eyebrow-banner';
 ---
 {shouldRender ? (
   <section
@@ -106,8 +107,21 @@ const animationAttr = shouldAnimate ? 'true' : 'false';
   >
     <div class={containerClasses} data-featured-project-content>
       {eyebrow ? (
-        <div class="eyebrow-banner-wrapper text-center">
-          <p class="eyebrow-banner">{eyebrow}</p>
+        <div class={eyebrowStackClasses} data-align="left">
+          <div class={eyebrowWrapperClasses}>
+            <p
+              class={eyebrowClasses}
+              data-align="left"
+              data-has-number={sectionNumber ? 'true' : undefined}
+            >
+              <span class="eyebrow-banner__label">{eyebrow}</span>
+              {sectionNumber ? (
+                <span class="section-number-label" aria-label={`Section ${sectionNumber}`}>
+                  {sectionNumber}
+                </span>
+              ) : null}
+            </p>
+          </div>
         </div>
       ) : null}
       <div class="featured-project-grid">
@@ -115,7 +129,6 @@ const animationAttr = shouldAnimate ? 'true' : 'false';
           <figure class={imageWrapperClasses}>
             <img src={imageSrc} alt={imageAlt ?? ''} class={imageClasses} loading="lazy" decoding="async" />
           </figure>
-          {projectTitle ? <p class="project-title-label">{projectTitle}</p> : null}
         </div>
         <div class="featured-project-details">
           {intro && <p class="rich-intro text-left">{intro}</p>}
@@ -183,13 +196,37 @@ const animationAttr = shouldAnimate ? 'true' : 'false';
           ? window.matchMedia('(prefers-reduced-motion: reduce)').matches
           : false;
 
+        const reveal = (el) => {
+          if (el instanceof HTMLElement) {
+            el.dataset.visible = 'true';
+          }
+        };
+
         roots.forEach((root) => {
           if (!(root instanceof HTMLElement)) return;
 
-          const shouldAnimate = root.dataset.featuredProjectRoot === 'true';
+          const shouldAnimateSection = root.dataset.featuredProjectRoot === 'true';
           const content = root.querySelector('[data-featured-project-content]');
-          if (shouldAnimate && content instanceof HTMLElement) {
-            content.dataset.visible = 'true';
+          if (shouldAnimateSection && content instanceof HTMLElement) {
+            if (prefersReducedMotion || !('IntersectionObserver' in window)) {
+              reveal(content);
+            } else {
+              const observer = new IntersectionObserver(
+                (entries, obs) => {
+                  entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                      reveal(entry.target);
+                      obs.unobserve(entry.target);
+                    }
+                  });
+                },
+                {
+                  rootMargin: '0px 0px -10% 0px',
+                  threshold: 0.15,
+                },
+              );
+              observer.observe(content);
+            }
           }
 
           const modal = root.querySelector('[data-featured-project-modal]');
