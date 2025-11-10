@@ -31,7 +31,7 @@ const shouldAnimate = animationEnabled !== false;
 const backgroundImageStyle = `--services-brief-bg: url('/images/services-brief-bg.jpg')`;
 const inlineStyle = [backgroundStyle, backgroundImageStyle].filter(Boolean).join('; ') || undefined;
 const containerClasses = [
-  'mx-auto w-full max-w-[var(--content-max-width,72rem)] space-y-10 text-center relative z-[2]',
+  'w-full space-y-10 text-center relative z-[2]',
   shouldAnimate
     ? 'motion-safe:opacity-0 motion-safe:translate-y-6 motion-safe:transition-all motion-safe:duration-[900ms] motion-safe:ease-out data-[visible=true]:motion-safe:opacity-100 data-[visible=true]:motion-safe:translate-y-0'
     : '',
@@ -68,12 +68,13 @@ const eyebrowClasses = 'eyebrow-banner eyebrow-banner--inverse justify-center';
     data-services-brief-root={animationAttr}
   >
     <div class="section-container">
-      <div class={containerClasses} data-services-brief-container>
-        {(eyebrow || intro) && (
-          <div class="eyebrow-stack text-center">
-            {eyebrow ? (
-              <div class={eyebrowWrapperClasses}>
-                <p class={eyebrowClasses}>{eyebrow}</p>
+      <div class="services-brief__panel">
+        <div class={containerClasses} data-services-brief-container>
+          {(eyebrow || intro) && (
+            <div class="eyebrow-stack text-center">
+              {eyebrow ? (
+                <div class={eyebrowWrapperClasses}>
+                  <p class={eyebrowClasses}>{eyebrow}</p>
               </div>
             ) : null}
             {intro && <p class="rich-intro rich-intro--inverse text-center">{intro}</p>}
@@ -106,6 +107,7 @@ const eyebrowClasses = 'eyebrow-banner eyebrow-banner--inverse justify-center';
           </a>
         </div>
       </div>
+    </div>
     </div>
     {shouldAnimate ? (
       <script>

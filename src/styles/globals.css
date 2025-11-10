@@ -83,7 +83,7 @@ body {
 
   .section-container {
     width: 100%;
-    max-width: var(--content-max-width, 64rem);
+    max-width: var(--content-max-width, 72rem);
     margin-left: auto;
     margin-right: auto;
     padding-left: var(--content-padding-x, 1.5rem);
@@ -102,8 +102,6 @@ body {
     max-width: var(--content-max-width, 72rem);
     margin: 0 auto;
     padding-bottom: var(--eyebrow-gap, 1.5rem);
-    padding-left: var(--content-padding-x, 1.5rem);
-    padding-right: var(--content-padding-x, 1.5rem);
   }
 
   .eyebrow-stack {
