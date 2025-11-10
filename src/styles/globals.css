@@ -698,6 +698,16 @@ body {
 
   .featured-project-cta {
     min-width: 0;
+    background: #103529;
+    border: none;
+    color: #fff;
+    box-shadow: none;
+  }
+
+  .featured-project-cta:hover,
+  .featured-project-cta:focus-visible {
+    background: #0a241b;
+    border: none;
   }
 
   .featured-project-cta-wrapper {
@@ -713,3 +723,10 @@ body {
   }
 
 }
+  .featured-project-grid--inverse {
+    direction: rtl;
+  }
+
+  .featured-project-grid--inverse > * {
+    direction: ltr;
+  }

@@ -214,8 +214,6 @@ export const getAboutTeamVariant = () => {
 export const getHeroBackgroundTone = () => getBackgroundTone(home.hero?.background?.tone);
 export const getStatementBackgroundTone = () => getBackgroundTone(home.statement?.background?.tone);
 export const getFeaturedPhotosBackgroundTone = () => getBackgroundTone(home.featuredPhotos?.background?.tone);
-export const getPortfolioStatementBackgroundTone = () =>
-  getBackgroundTone(home.portfolioStatement?.background?.tone);
 export const getCtaBackgroundTone = () => getBackgroundTone(home.cta?.background?.tone);
 export const getServicesBackgroundTone = () => getBackgroundTone(home.services?.background?.tone);
 export const getVideoBackgroundTone = () => getBackgroundTone(home.video?.background?.tone);
@@ -226,8 +224,6 @@ export const getFeaturedProjectBackgroundTone = () => getBackgroundTone(home.fea
 export const isHeroAnimationEnabled = () => isAnimationEnabled(home.hero?.animation);
 export const isStatementAnimationEnabled = () => isAnimationEnabled(home.statement?.animation);
 export const isFeaturedPhotosAnimationEnabled = () => isAnimationEnabled(home.featuredPhotos?.animation);
-export const isPortfolioStatementAnimationEnabled = () =>
-  isAnimationEnabled(home.portfolioStatement?.animation);
 export const isCtaAnimationEnabled = () => isAnimationEnabled(home.cta?.animation);
 export const isVideoAnimationEnabled = () => isAnimationEnabled(home.video?.animation);
 export const isTestimonialsAnimationEnabled = () => isAnimationEnabled(home.testimonials?.animation);

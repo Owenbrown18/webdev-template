@@ -71,7 +71,7 @@ featuredProject:
       Results included a 46% lift in organic enquiries within six weeks, a faster quoting process, and clearer service differentiation across neighborhoods.
 portfolioStatement:
   background:
-    tone: "aurora" # Options: none, gradient, solid, aurora
+    tone: "none" # Options: none, gradient, solid, aurora
     color: "#103529"
   animation: true
   eyebrow: "Our Work"

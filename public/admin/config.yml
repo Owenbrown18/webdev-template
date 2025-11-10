@@ -1,15 +1,11 @@
 backend:
   name: git-gateway
   branch: main
-
 local_backend: true
-
 site_url: https://example.com
 display_url: https://example.com
-
 media_folder: public/images/uploads
 public_folder: /images/uploads
-
 collections:
   - name: general
     label: General Settings
@@ -20,95 +16,196 @@ collections:
         editor:
           preview: false
         fields:
-          - { label: Business Name, name: name, widget: string }
-          - { label: Tagline, name: tagline, widget: string, required: false }
+          - label: Business Name
+            name: name
+            widget: string
+          - label: Tagline
+            name: tagline
+            widget: string
+            required: false
           - label: Brand
             name: brand
             widget: object
             collapsed: true
             fields:
-              - { label: Logo, name: logo, widget: image, required: false, choose_url: true }
-              - { label: Logo Alt Text, name: logoAlt, widget: string, required: false }
+              - label: Logo
+                name: logo
+                widget: image
+                required: false
+                choose_url: true
+              - label: Logo Alt Text
+                name: logoAlt
+                widget: string
+                required: false
           - label: Header Options
             name: header
             widget: object
             collapsed: true
             fields:
-              - { label: Show Logo, name: showLogo, widget: boolean, required: false, default: true }
-              - { label: Show Business Name, name: showBusinessName, widget: boolean, required: false, default: true }
+              - label: Show Logo
+                name: showLogo
+                widget: boolean
+                required: false
+                default: true
+              - label: Show Business Name
+                name: showBusinessName
+                widget: boolean
+                required: false
+                default: true
           - label: Footer Options
             name: footer
             widget: object
             collapsed: true
             fields:
-              - { label: Show Logo, name: showLogo, widget: boolean, required: false, default: true }
-              - { label: Show Business Name, name: showBusinessName, widget: boolean, required: false, default: true }
-          - { label: Phone, name: phone, widget: string, required: false }
-          - { label: Email, name: email, widget: string, required: false }
+              - label: Show Logo
+                name: showLogo
+                widget: boolean
+                required: false
+                default: true
+              - label: Show Business Name
+                name: showBusinessName
+                widget: boolean
+                required: false
+                default: true
+          - label: Phone
+            name: phone
+            widget: string
+            required: false
+          - label: Email
+            name: email
+            widget: string
+            required: false
           - label: Address
             name: address
             widget: object
             collapsed: true
             required: false
             fields:
-              - { label: Line 1, name: line1, widget: string, required: false }
-              - { label: Line 2, name: line2, widget: string, required: false }
-              - { label: City, name: city, widget: string, required: false }
-              - { label: State / Province, name: state, widget: string, required: false }
-              - { label: Postal Code, name: postalCode, widget: string, required: false }
+              - label: Line 1
+                name: line1
+                widget: string
+                required: false
+              - label: Line 2
+                name: line2
+                widget: string
+                required: false
+              - label: City
+                name: city
+                widget: string
+                required: false
+              - label: State / Province
+                name: state
+                widget: string
+                required: false
+              - label: Postal Code
+                name: postalCode
+                widget: string
+                required: false
           - label: Business Hours
             name: hours
             widget: list
             required: false
             fields:
-              - { label: Label, name: label, widget: string }
-              - { label: Opens, name: open, widget: string, required: false }
-              - { label: Closes, name: close, widget: string, required: false }
+              - label: Label
+                name: label
+                widget: string
+              - label: Opens
+                name: open
+                widget: string
+                required: false
+              - label: Closes
+                name: close
+                widget: string
+                required: false
           - label: Social Links
             name: socials
             widget: object
             collapsed: true
             required: false
             fields:
-              - { label: Facebook, name: facebook, widget: string, required: false }
-              - { label: Instagram, name: instagram, widget: string, required: false }
-              - { label: LinkedIn, name: linkedin, widget: string, required: false }
+              - label: Facebook
+                name: facebook
+                widget: string
+                required: false
+              - label: Instagram
+                name: instagram
+                widget: string
+                required: false
+              - label: LinkedIn
+                name: linkedin
+                widget: string
+                required: false
           - label: Booking
             name: booking
             widget: object
             collapsed: true
             required: false
             fields:
-              - { label: Provider Name, name: provider, widget: string, required: false }
-              - { label: Embed URL, name: embedUrl, widget: string, required: false }
+              - label: Provider Name
+                name: provider
+                widget: string
+                required: false
+              - label: Embed URL
+                name: embedUrl
+                widget: string
+                required: false
           - label: Brand Colors
             name: colors
             widget: object
             collapsed: true
             required: false
             fields:
-              - { label: Primary, name: primary, widget: string, required: false }
-              - { label: Secondary, name: secondary, widget: string, required: false }
-              - { label: Accent, name: accent, widget: string, required: false }
+              - label: Primary
+                name: primary
+                widget: string
+                required: false
+              - label: Secondary
+                name: secondary
+                widget: string
+                required: false
+              - label: Accent
+                name: accent
+                widget: string
+                required: false
           - label: Footer Credit
             name: footerCredit
             widget: object
             collapsed: true
             required: false
             fields:
-              - { label: Label, name: label, widget: string, required: false }
-              - { label: Link, name: href, widget: string, required: false }
+              - label: Label
+                name: label
+                widget: string
+                required: false
+              - label: Link
+                name: href
+                widget: string
+                required: false
           - label: Preloader
             name: preloader
             widget: object
             collapsed: true
             required: false
             fields:
-              - { label: Enabled, name: enabled, widget: boolean, required: false, default: false }
-              - { label: Background Color, name: backgroundColor, widget: string, required: false }
-              - { label: Logo, name: logo, widget: image, required: false, choose_url: true }
-              - { label: Minimum Duration (ms), name: minimumDurationMs, widget: number, required: false, min: 0 }
-
+              - label: Enabled
+                name: enabled
+                widget: boolean
+                required: false
+                default: false
+              - label: Background Color
+                name: backgroundColor
+                widget: string
+                required: false
+              - label: Logo
+                name: logo
+                widget: image
+                required: false
+                choose_url: true
+              - label: Minimum Duration (ms)
+                name: minimumDurationMs
+                widget: number
+                required: false
+                min: 0
   - name: home
     label: Home Page
     files:
@@ -127,170 +224,378 @@ collections:
                 widget: select
                 required: false
                 options:
-                  - { label: Classic, value: classic }
-                  - { label: Split, value: split }
-                  - { label: Fullscreen, value: fullscreen }
-                  - { label: Hidden, value: none }
+                  - label: Classic
+                    value: classic
+                  - label: Split
+                    value: split
+                  - label: Fullscreen
+                    value: fullscreen
+                  - label: Hidden
+                    value: none
               - label: Background
                 name: background
                 widget: object
                 collapsed: true
                 required: false
                 fields:
-                  - { label: Tone, name: tone, widget: select, options: [none, gradient, solid, aurora], required: false }
-                  - { label: Color, name: color, widget: string, required: false }
-              - { label: Animate on Load, name: animation, widget: boolean, required: false, default: true }
-              - { label: Eyebrow, name: eyebrow, widget: string, required: false }
-              - { label: Title, name: title, widget: string, required: false }
-              - { label: Subtitle, name: subtitle, widget: text, required: false }
-              - { label: Primary CTA Label, name: primaryCtaLabel, widget: string, required: false }
-              - { label: Primary CTA Link, name: primaryCtaHref, widget: string, required: false }
-              - { label: Secondary CTA Label, name: secondaryCtaLabel, widget: string, required: false }
-              - { label: Secondary CTA Link, name: secondaryCtaHref, widget: string, required: false }
-              - { label: Hero Image, name: image, widget: image, required: false, choose_url: true }
+                  - label: Tone
+                    name: tone
+                    widget: select
+                    options:
+                      - none
+                      - gradient
+                      - solid
+                      - aurora
+                    required: false
+                  - label: Color
+                    name: color
+                    widget: string
+                    required: false
+              - label: Animate on Load
+                name: animation
+                widget: boolean
+                required: false
+                default: true
+              - label: Eyebrow
+                name: eyebrow
+                widget: string
+                required: false
+              - label: Title
+                name: title
+                widget: string
+                required: false
+              - label: Subtitle
+                name: subtitle
+                widget: text
+                required: false
+              - label: Primary CTA Label
+                name: primaryCtaLabel
+                widget: string
+                required: false
+              - label: Primary CTA Link
+                name: primaryCtaHref
+                widget: string
+                required: false
+              - label: Secondary CTA Label
+                name: secondaryCtaLabel
+                widget: string
+                required: false
+              - label: Secondary CTA Link
+                name: secondaryCtaHref
+                widget: string
+                required: false
+              - label: Hero Image
+                name: image
+                widget: image
+                required: false
+                choose_url: true
               - label: Stats
                 name: stats
                 widget: list
                 required: false
                 fields:
-                  - { label: Label, name: label, widget: string }
-                  - { label: Value, name: value, widget: string }
+                  - label: Label
+                    name: label
+                    widget: string
+                  - label: Value
+                    name: value
+                    widget: string
           - label: Statement Section
             name: statement
             widget: object
             fields:
-              - { label: Variant, name: variant, widget: select, options: [centered, none], required: false }
+              - label: Variant
+                name: variant
+                widget: select
+                options:
+                  - centered
+                  - none
+                required: false
               - label: Background
                 name: background
                 widget: object
                 collapsed: true
                 required: false
                 fields:
-                  - { label: Tone, name: tone, widget: select, options: [none, gradient, solid, aurora], required: false }
-                  - { label: Color, name: color, widget: string, required: false }
-              - { label: Animate on Load, name: animation, widget: boolean, required: false, default: true }
-              - { label: Eyebrow, name: eyebrow, widget: string, required: false }
-              - { label: Title, name: title, widget: string, required: false }
-              - { label: Intro Copy, name: intro, widget: markdown, required: false }
+                  - label: Tone
+                    name: tone
+                    widget: select
+                    options:
+                      - none
+                      - gradient
+                      - solid
+                      - aurora
+                    required: false
+                  - label: Color
+                    name: color
+                    widget: string
+                    required: false
+              - label: Animate on Load
+                name: animation
+                widget: boolean
+                required: false
+                default: true
+              - label: Eyebrow
+                name: eyebrow
+                widget: string
+                required: false
+              - label: Title
+                name: title
+                widget: string
+                required: false
+              - label: Intro Copy
+                name: intro
+                widget: markdown
+                required: false
               - label: Image
                 name: image
                 widget: object
                 required: false
                 fields:
-                  - { label: Source, name: src, widget: image, required: false, choose_url: true }
-                  - { label: Alt Text, name: alt, widget: string, required: false }
+                  - label: Source
+                    name: src
+                    widget: image
+                    required: false
+                    choose_url: true
+                  - label: Alt Text
+                    name: alt
+                    widget: string
+                    required: false
           - label: Services Overview
             name: services
             widget: object
             fields:
-              - { label: Variant, name: variant, widget: select, options: [grid, list, spotlight, brief, none], required: false }
+              - label: Variant
+                name: variant
+                widget: select
+                options:
+                  - grid
+                  - list
+                  - spotlight
+                  - brief
+                  - none
+                required: false
               - label: Background
                 name: background
                 widget: object
                 collapsed: true
                 required: false
                 fields:
-                  - { label: Tone, name: tone, widget: select, options: [none, gradient, solid, aurora], required: false }
-                  - { label: Color, name: color, widget: string, required: false }
-              - { label: Animate on Load, name: animation, widget: boolean, required: false, default: true }
-              - { label: Eyebrow, name: eyebrow, widget: string, required: false }
-              - { label: Title, name: title, widget: string, required: false }
-              - { label: Intro Copy, name: intro, widget: markdown, required: false }
+                  - label: Tone
+                    name: tone
+                    widget: select
+                    options:
+                      - none
+                      - gradient
+                      - solid
+                      - aurora
+                    required: false
+                  - label: Color
+                    name: color
+                    widget: string
+                    required: false
+              - label: Animate on Load
+                name: animation
+                widget: boolean
+                required: false
+                default: true
+              - label: Eyebrow
+                name: eyebrow
+                widget: string
+                required: false
+              - label: Title
+                name: title
+                widget: string
+                required: false
+              - label: Intro Copy
+                name: intro
+                widget: markdown
+                required: false
           - label: About Section
             name: aboutSection
             widget: object
             fields:
-              - { label: Variant, name: variant, widget: select, options: [centered, split, none], required: false }
+              - label: Variant
+                name: variant
+                widget: select
+                options:
+                  - centered
+                  - split
+                  - none
+                required: false
               - label: Background
                 name: background
                 widget: object
                 collapsed: true
                 required: false
                 fields:
-                  - { label: Tone, name: tone, widget: select, options: [none, gradient, solid, aurora], required: false }
-                  - { label: Color, name: color, widget: string, required: false }
-              - { label: Animate on Load, name: animation, widget: boolean, required: false, default: true }
-              - { label: Eyebrow, name: eyebrow, widget: string, required: false }
-              - { label: Title, name: title, widget: string, required: false }
-              - { label: Intro Copy, name: intro, widget: markdown, required: false }
+                  - label: Tone
+                    name: tone
+                    widget: select
+                    options:
+                      - none
+                      - gradient
+                      - solid
+                      - aurora
+                    required: false
+                  - label: Color
+                    name: color
+                    widget: string
+                    required: false
+              - label: Animate on Load
+                name: animation
+                widget: boolean
+                required: false
+                default: true
+              - label: Eyebrow
+                name: eyebrow
+                widget: string
+                required: false
+              - label: Title
+                name: title
+                widget: string
+                required: false
+              - label: Intro Copy
+                name: intro
+                widget: markdown
+                required: false
               - label: Image
                 name: image
                 widget: object
                 required: false
                 fields:
-                  - { label: Source, name: src, widget: image, required: false, choose_url: true }
-                  - { label: Alt Text, name: alt, widget: string, required: false }
+                  - label: Source
+                    name: src
+                    widget: image
+                    required: false
+                    choose_url: true
+                  - label: Alt Text
+                    name: alt
+                    widget: string
+                    required: false
           - label: Featured Photos
             name: featuredPhotos
             widget: object
             fields:
-              - { label: Variant, name: variant, widget: select, options: [grid, none], required: false }
+              - label: Variant
+                name: variant
+                widget: select
+                options:
+                  - grid
+                  - none
+                required: false
               - label: Background
                 name: background
                 widget: object
                 collapsed: true
                 required: false
                 fields:
-                  - { label: Tone, name: tone, widget: select, options: [none, gradient, solid, aurora], required: false }
-                  - { label: Color, name: color, widget: string, required: false }
-              - { label: Animate on Load, name: animation, widget: boolean, required: false, default: true }
+                  - label: Tone
+                    name: tone
+                    widget: select
+                    options:
+                      - none
+                      - gradient
+                      - solid
+                      - aurora
+                    required: false
+                  - label: Color
+                    name: color
+                    widget: string
+                    required: false
+              - label: Animate on Load
+                name: animation
+                widget: boolean
+                required: false
+                default: true
               - label: Photos
                 name: items
                 widget: list
                 required: false
                 fields:
-                  - { label: Source, name: src, widget: image, choose_url: true }
-                  - { label: Alt Text, name: alt, widget: string, required: false }
+                  - label: Source
+                    name: src
+                    widget: image
+                    choose_url: true
+                  - label: Alt Text
+                    name: alt
+                    widget: string
+                    required: false
           - label: Featured Project
             name: featuredProject
             widget: object
             fields:
-              - { label: Variant, name: variant, widget: select, options: [project, none], required: false }
+              - label: Variant
+                name: variant
+                widget: select
+                options:
+                  - project
+                  - none
+                required: false
               - label: Background
                 name: background
                 widget: object
                 collapsed: true
                 required: false
                 fields:
-                  - { label: Tone, name: tone, widget: select, options: [none, gradient, solid, aurora], required: false }
-                  - { label: Color, name: color, widget: string, required: false }
-              - { label: Animate on Load, name: animation, widget: boolean, required: false, default: true }
-              - { label: Eyebrow, name: eyebrow, widget: string, required: false }
-              - { label: Title, name: title, widget: string, required: false }
-              - { label: Intro, name: intro, widget: markdown, required: false }
+                  - label: Tone
+                    name: tone
+                    widget: select
+                    options:
+                      - none
+                      - gradient
+                      - solid
+                      - aurora
+                    required: false
+                  - label: Color
+                    name: color
+                    widget: string
+                    required: false
+              - label: Animate on Load
+                name: animation
+                widget: boolean
+                required: false
+                default: true
+              - label: Eyebrow
+                name: eyebrow
+                widget: string
+                required: false
+              - label: Title
+                name: title
+                widget: string
+                required: false
+              - label: Intro
+                name: intro
+                widget: markdown
+                required: false
               - label: Image
                 name: image
                 widget: object
                 required: false
                 fields:
-                  - { label: Source, name: src, widget: image, required: false, choose_url: true }
-                  - { label: Alt Text, name: alt, widget: string, required: false }
+                  - label: Source
+                    name: src
+                    widget: image
+                    required: false
+                    choose_url: true
+                  - label: Alt Text
+                    name: alt
+                    widget: string
+                    required: false
               - label: Modal
                 name: modal
                 widget: object
                 collapsed: true
                 required: false
                 fields:
-                  - { label: Title, name: title, widget: string, required: false }
-                  - { label: Body, name: body, widget: markdown, required: false }
-          - label: Portfolio Statement
-            name: portfolioStatement
-            widget: object
-            fields:
-              - label: Background
-                name: background
-                widget: object
-                collapsed: true
-                required: false
-                fields:
-                  - { label: Tone, name: tone, widget: select, options: [none, gradient, solid, aurora], required: false }
-                  - { label: Color, name: color, widget: string, required: false }
-              - { label: Animate on Load, name: animation, widget: boolean, required: false, default: true }
-              - { label: Eyebrow, name: eyebrow, widget: string, required: false }
-              - { label: Title, name: title, widget: string, required: false }
-              - { label: Intro, name: intro, widget: markdown, required: false }
-              - { label: CTA Label, name: ctaLabel, widget: string, required: false }
-              - { label: CTA Link, name: ctaHref, widget: string, required: false }
+                  - label: Title
+                    name: title
+                    widget: string
+                    required: false
+                  - label: Body
+                    name: body
+                    widget: markdown
+                    required: false
           - label: Primary CTA Section
             name: cta
             widget: object
@@ -301,14 +606,44 @@ collections:
                 collapsed: true
                 required: false
                 fields:
-                  - { label: Tone, name: tone, widget: select, options: [none, gradient, solid, aurora], required: false }
-                  - { label: Color, name: color, widget: string, required: false }
-              - { label: Animate on Load, name: animation, widget: boolean, required: false, default: true }
-              - { label: Eyebrow, name: eyebrow, widget: string, required: false }
-              - { label: Title, name: title, widget: string, required: false }
-              - { label: Intro, name: intro, widget: markdown, required: false }
-              - { label: CTA Label, name: ctaLabel, widget: string, required: false }
-              - { label: CTA Link, name: ctaHref, widget: string, required: false }
+                  - label: Tone
+                    name: tone
+                    widget: select
+                    options:
+                      - none
+                      - gradient
+                      - solid
+                      - aurora
+                    required: false
+                  - label: Color
+                    name: color
+                    widget: string
+                    required: false
+              - label: Animate on Load
+                name: animation
+                widget: boolean
+                required: false
+                default: true
+              - label: Eyebrow
+                name: eyebrow
+                widget: string
+                required: false
+              - label: Title
+                name: title
+                widget: string
+                required: false
+              - label: Intro
+                name: intro
+                widget: markdown
+                required: false
+              - label: CTA Label
+                name: ctaLabel
+                widget: string
+                required: false
+              - label: CTA Link
+                name: ctaHref
+                widget: string
+                required: false
           - label: Expectations
             name: expectations
             widget: object
@@ -319,75 +654,208 @@ collections:
                 collapsed: true
                 required: false
                 fields:
-                  - { label: Tone, name: tone, widget: select, options: [none, gradient, solid, aurora], required: false }
-                  - { label: Color, name: color, widget: string, required: false }
-              - { label: Animate on Load, name: animation, widget: boolean, required: false, default: true }
-              - { label: Eyebrow, name: eyebrow, widget: string, required: false }
-              - { label: Title, name: title, widget: string, required: false }
-              - { label: Intro, name: intro, widget: markdown, required: false }
+                  - label: Tone
+                    name: tone
+                    widget: select
+                    options:
+                      - none
+                      - gradient
+                      - solid
+                      - aurora
+                    required: false
+                  - label: Color
+                    name: color
+                    widget: string
+                    required: false
+              - label: Animate on Load
+                name: animation
+                widget: boolean
+                required: false
+                default: true
+              - label: Eyebrow
+                name: eyebrow
+                widget: string
+                required: false
+              - label: Title
+                name: title
+                widget: string
+                required: false
+              - label: Intro
+                name: intro
+                widget: markdown
+                required: false
               - label: Items
                 name: items
                 widget: list
                 required: false
                 fields:
-                  - { label: Title, name: title, widget: string }
-                  - { label: Description, name: description, widget: text, required: false }
-                  - { label: Icon, name: icon, widget: string, required: false }
+                  - label: Title
+                    name: title
+                    widget: string
+                  - label: Description
+                    name: description
+                    widget: text
+                    required: false
+                  - label: Icon
+                    name: icon
+                    widget: string
+                    required: false
           - label: Video Section
             name: video
             widget: object
             fields:
-              - { label: Variant, name: variant, widget: select, options: [half, full, none], required: false }
+              - label: Variant
+                name: variant
+                widget: select
+                options:
+                  - half
+                  - full
+                  - none
+                required: false
               - label: Background
                 name: background
                 widget: object
                 collapsed: true
                 required: false
                 fields:
-                  - { label: Tone, name: tone, widget: select, options: [none, gradient, solid, aurora], required: false }
-                  - { label: Color, name: color, widget: string, required: false }
-              - { label: Animate on Load, name: animation, widget: boolean, required: false, default: true }
-              - { label: Eyebrow, name: eyebrow, widget: string, required: false }
-              - { label: Title, name: title, widget: string, required: false }
-              - { label: Intro, name: intro, widget: markdown, required: false }
-              - { label: External Video URL, name: videoUrl, widget: string, required: false }
-              - { label: Local Video, name: localVideo, widget: file, required: false, media_library: { allow_multiple: false } }
-              - { label: Poster Image, name: posterUrl, widget: image, required: false, choose_url: true }
-              - { label: Caption, name: caption, widget: string, required: false }
+                  - label: Tone
+                    name: tone
+                    widget: select
+                    options:
+                      - none
+                      - gradient
+                      - solid
+                      - aurora
+                    required: false
+                  - label: Color
+                    name: color
+                    widget: string
+                    required: false
+              - label: Animate on Load
+                name: animation
+                widget: boolean
+                required: false
+                default: true
+              - label: Eyebrow
+                name: eyebrow
+                widget: string
+                required: false
+              - label: Title
+                name: title
+                widget: string
+                required: false
+              - label: Intro
+                name: intro
+                widget: markdown
+                required: false
+              - label: External Video URL
+                name: videoUrl
+                widget: string
+                required: false
+              - label: Local Video
+                name: localVideo
+                widget: file
+                required: false
+                media_library:
+                  allow_multiple: false
+              - label: Poster Image
+                name: posterUrl
+                widget: image
+                required: false
+                choose_url: true
+              - label: Caption
+                name: caption
+                widget: string
+                required: false
           - label: Testimonials Section
             name: testimonials
             widget: object
             fields:
-              - { label: Variant, name: variant, widget: select, options: [grid, stack, none], required: false }
+              - label: Variant
+                name: variant
+                widget: select
+                options:
+                  - grid
+                  - stack
+                  - none
+                required: false
               - label: Background
                 name: background
                 widget: object
                 collapsed: true
                 required: false
                 fields:
-                  - { label: Tone, name: tone, widget: select, options: [none, gradient, aurora], required: false }
-                  - { label: Color, name: color, widget: string, required: false }
-              - { label: Animate on Load, name: animation, widget: boolean, required: false, default: true }
-              - { label: Eyebrow, name: eyebrow, widget: string, required: false }
-              - { label: Title, name: title, widget: string, required: false }
-              - { label: Intro, name: intro, widget: markdown, required: false }
+                  - label: Tone
+                    name: tone
+                    widget: select
+                    options:
+                      - none
+                      - gradient
+                      - aurora
+                    required: false
+                  - label: Color
+                    name: color
+                    widget: string
+                    required: false
+              - label: Animate on Load
+                name: animation
+                widget: boolean
+                required: false
+                default: true
+              - label: Eyebrow
+                name: eyebrow
+                widget: string
+                required: false
+              - label: Title
+                name: title
+                widget: string
+                required: false
+              - label: Intro
+                name: intro
+                widget: markdown
+                required: false
           - label: Booking Section
             name: booking
             widget: object
             fields:
-              - { label: Variant, name: variant, widget: select, options: [classic, none], required: false }
+              - label: Variant
+                name: variant
+                widget: select
+                options:
+                  - classic
+                  - none
+                required: false
               - label: Background
                 name: background
                 widget: object
                 collapsed: true
                 required: false
                 fields:
-                  - { label: Tone, name: tone, widget: select, options: [none, gradient, aurora], required: false }
-                  - { label: Color, name: color, widget: string, required: false }
-              - { label: Animate on Load, name: animation, widget: boolean, required: false, default: true }
-              - { label: Heading, name: heading, widget: string, required: false }
-              - { label: Description, name: description, widget: markdown, required: false }
-
+                  - label: Tone
+                    name: tone
+                    widget: select
+                    options:
+                      - none
+                      - gradient
+                      - aurora
+                    required: false
+                  - label: Color
+                    name: color
+                    widget: string
+                    required: false
+              - label: Animate on Load
+                name: animation
+                widget: boolean
+                required: false
+                default: true
+              - label: Heading
+                name: heading
+                widget: string
+                required: false
+              - label: Description
+                name: description
+                widget: markdown
+                required: false
   - name: servicesPage
     label: Services Page
     files:
@@ -402,38 +870,98 @@ collections:
             widget: object
             collapsed: true
             fields:
-              - { label: Page Title, name: title, widget: string, required: false }
-              - { label: Meta Description, name: description, widget: text, required: false }
-              - { label: Hero Image Alt Text, name: heroImageAlt, widget: string, required: false }
+              - label: Page Title
+                name: title
+                widget: string
+                required: false
+              - label: Meta Description
+                name: description
+                widget: text
+                required: false
+              - label: Hero Image Alt Text
+                name: heroImageAlt
+                widget: string
+                required: false
           - label: Hero Section
             name: hero
             widget: object
             fields:
-              - { label: Variant, name: variant, widget: select, options: [showcase, fullscreen, none], required: false }
+              - label: Variant
+                name: variant
+                widget: select
+                options:
+                  - showcase
+                  - fullscreen
+                  - none
+                required: false
               - label: Background
                 name: background
                 widget: object
                 collapsed: true
                 required: false
                 fields:
-                  - { label: Tone, name: tone, widget: select, options: [none, gradient, solid, aurora], required: false }
-                  - { label: Color, name: color, widget: string, required: false }
-              - { label: Animate on Load, name: animation, widget: boolean, required: false, default: true }
-              - { label: Tag Label, name: tagLabel, widget: string, required: false }
-              - { label: Title, name: title, widget: string, required: false }
-              - { label: Subtitle, name: subtitle, widget: markdown, required: false }
-              - { label: Primary CTA Label, name: primaryCtaLabel, widget: string, required: false }
-              - { label: Primary CTA Link, name: primaryCtaHref, widget: string, required: false }
-              - { label: Secondary CTA Label, name: secondaryCtaLabel, widget: string, required: false }
-              - { label: Secondary CTA Link, name: secondaryCtaHref, widget: string, required: false }
-              - { label: Hero Image, name: image, widget: image, required: false, choose_url: true }
+                  - label: Tone
+                    name: tone
+                    widget: select
+                    options:
+                      - none
+                      - gradient
+                      - solid
+                      - aurora
+                    required: false
+                  - label: Color
+                    name: color
+                    widget: string
+                    required: false
+              - label: Animate on Load
+                name: animation
+                widget: boolean
+                required: false
+                default: true
+              - label: Tag Label
+                name: tagLabel
+                widget: string
+                required: false
+              - label: Title
+                name: title
+                widget: string
+                required: false
+              - label: Subtitle
+                name: subtitle
+                widget: markdown
+                required: false
+              - label: Primary CTA Label
+                name: primaryCtaLabel
+                widget: string
+                required: false
+              - label: Primary CTA Link
+                name: primaryCtaHref
+                widget: string
+                required: false
+              - label: Secondary CTA Label
+                name: secondaryCtaLabel
+                widget: string
+                required: false
+              - label: Secondary CTA Link
+                name: secondaryCtaHref
+                widget: string
+                required: false
+              - label: Hero Image
+                name: image
+                widget: image
+                required: false
+                choose_url: true
               - label: Detail Cards
                 name: details
                 widget: list
                 required: false
                 fields:
-                  - { label: Label, name: label, widget: string }
-                  - { label: Value, name: value, widget: string }
+                  - label: Label
+                    name: label
+                    widget: string
+                  - label: Value
+                    name: value
+                    widget: string
           - label: Overview Section
             name: overview
             widget: object
@@ -444,54 +972,145 @@ collections:
                 collapsed: true
                 required: false
                 fields:
-                  - { label: Tone, name: tone, widget: select, options: [none, gradient, aurora], required: false }
-                  - { label: Color, name: color, widget: string, required: false }
-              - { label: Animate on Load, name: animation, widget: boolean, required: false, default: true }
-              - { label: Eyebrow, name: eyebrow, widget: string, required: false }
-              - { label: Title, name: title, widget: string, required: false }
-              - { label: Intro, name: intro, widget: markdown, required: false }
-              - { label: Supporting Copy, name: supporting, widget: markdown, required: false }
+                  - label: Tone
+                    name: tone
+                    widget: select
+                    options:
+                      - none
+                      - gradient
+                      - aurora
+                    required: false
+                  - label: Color
+                    name: color
+                    widget: string
+                    required: false
+              - label: Animate on Load
+                name: animation
+                widget: boolean
+                required: false
+                default: true
+              - label: Eyebrow
+                name: eyebrow
+                widget: string
+                required: false
+              - label: Title
+                name: title
+                widget: string
+                required: false
+              - label: Intro
+                name: intro
+                widget: markdown
+                required: false
+              - label: Supporting Copy
+                name: supporting
+                widget: markdown
+                required: false
           - label: Catalog Section
             name: catalog
             widget: object
             fields:
-              - { label: Variant, name: variant, widget: select, options: [grid, list, spotlight, none], required: false }
+              - label: Variant
+                name: variant
+                widget: select
+                options:
+                  - grid
+                  - list
+                  - spotlight
+                  - none
+                required: false
               - label: Background
                 name: background
                 widget: object
                 collapsed: true
                 required: false
                 fields:
-                  - { label: Tone, name: tone, widget: select, options: [none, gradient, aurora], required: false }
-                  - { label: Color, name: color, widget: string, required: false }
-              - { label: Animate on Load, name: animation, widget: boolean, required: false, default: true }
-              - { label: Eyebrow, name: eyebrow, widget: string, required: false }
-              - { label: Title, name: title, widget: string, required: false }
-              - { label: Intro, name: intro, widget: markdown, required: false }
+                  - label: Tone
+                    name: tone
+                    widget: select
+                    options:
+                      - none
+                      - gradient
+                      - aurora
+                    required: false
+                  - label: Color
+                    name: color
+                    widget: string
+                    required: false
+              - label: Animate on Load
+                name: animation
+                widget: boolean
+                required: false
+                default: true
+              - label: Eyebrow
+                name: eyebrow
+                widget: string
+                required: false
+              - label: Title
+                name: title
+                widget: string
+                required: false
+              - label: Intro
+                name: intro
+                widget: markdown
+                required: false
           - label: Highlights Section
             name: highlights
             widget: object
             fields:
-              - { label: Variant, name: variant, widget: select, options: [columns, none], required: false }
+              - label: Variant
+                name: variant
+                widget: select
+                options:
+                  - columns
+                  - none
+                required: false
               - label: Background
                 name: background
                 widget: object
                 collapsed: true
                 required: false
                 fields:
-                  - { label: Tone, name: tone, widget: select, options: [none, gradient, aurora], required: false }
-                  - { label: Color, name: color, widget: string, required: false }
-              - { label: Animate on Load, name: animation, widget: boolean, required: false, default: true }
-              - { label: Eyebrow, name: eyebrow, widget: string, required: false }
-              - { label: Title, name: title, widget: string, required: false }
-              - { label: Intro, name: intro, widget: markdown, required: false }
+                  - label: Tone
+                    name: tone
+                    widget: select
+                    options:
+                      - none
+                      - gradient
+                      - aurora
+                    required: false
+                  - label: Color
+                    name: color
+                    widget: string
+                    required: false
+              - label: Animate on Load
+                name: animation
+                widget: boolean
+                required: false
+                default: true
+              - label: Eyebrow
+                name: eyebrow
+                widget: string
+                required: false
+              - label: Title
+                name: title
+                widget: string
+                required: false
+              - label: Intro
+                name: intro
+                widget: markdown
+                required: false
               - label: Highlight Columns
                 name: items
                 widget: list
                 required: false
                 fields:
-                  - { label: Title, name: title, widget: string }
-                  - { label: Description, name: description, widget: markdown, required: false }
+                  - label: Title
+                    name: title
+                    widget: string
+                  - label: Description
+                    name: description
+                    widget: markdown
+                    required: false
                   - label: Features
                     name: features
                     widget: list
@@ -504,26 +1123,61 @@ collections:
             name: testimonials
             widget: object
             fields:
-              - { label: Variant, name: variant, widget: select, options: [grid, stack, none], required: false }
+              - label: Variant
+                name: variant
+                widget: select
+                options:
+                  - grid
+                  - stack
+                  - none
+                required: false
               - label: Background
                 name: background
                 widget: object
                 collapsed: true
                 required: false
                 fields:
-                  - { label: Tone, name: tone, widget: select, options: [none, gradient, aurora], required: false }
-                  - { label: Color, name: color, widget: string, required: false }
-              - { label: Animate on Load, name: animation, widget: boolean, required: false, default: true }
-              - { label: Eyebrow, name: eyebrow, widget: string, required: false }
-              - { label: Title, name: title, widget: string, required: false }
-              - { label: Intro, name: intro, widget: markdown, required: false }
+                  - label: Tone
+                    name: tone
+                    widget: select
+                    options:
+                      - none
+                      - gradient
+                      - aurora
+                    required: false
+                  - label: Color
+                    name: color
+                    widget: string
+                    required: false
+              - label: Animate on Load
+                name: animation
+                widget: boolean
+                required: false
+                default: true
+              - label: Eyebrow
+                name: eyebrow
+                widget: string
+                required: false
+              - label: Title
+                name: title
+                widget: string
+                required: false
+              - label: Intro
+                name: intro
+                widget: markdown
+                required: false
               - label: Testimonials
                 name: items
                 widget: list
                 required: false
                 fields:
-                  - { label: Quote, name: quote, widget: text }
-                  - { label: Author, name: author, widget: string, required: false }
+                  - label: Quote
+                    name: quote
+                    widget: text
+                  - label: Author
+                    name: author
+                    widget: string
+                    required: false
           - label: FAQ Section
             name: faq
             widget: object
@@ -534,19 +1188,47 @@ collections:
                 collapsed: true
                 required: false
                 fields:
-                  - { label: Tone, name: tone, widget: select, options: [none, gradient, aurora], required: false }
-                  - { label: Color, name: color, widget: string, required: false }
-              - { label: Animate on Load, name: animation, widget: boolean, required: false, default: true }
-              - { label: Eyebrow, name: eyebrow, widget: string, required: false }
-              - { label: Title, name: title, widget: string, required: false }
-              - { label: Intro, name: intro, widget: markdown, required: false }
+                  - label: Tone
+                    name: tone
+                    widget: select
+                    options:
+                      - none
+                      - gradient
+                      - aurora
+                    required: false
+                  - label: Color
+                    name: color
+                    widget: string
+                    required: false
+              - label: Animate on Load
+                name: animation
+                widget: boolean
+                required: false
+                default: true
+              - label: Eyebrow
+                name: eyebrow
+                widget: string
+                required: false
+              - label: Title
+                name: title
+                widget: string
+                required: false
+              - label: Intro
+                name: intro
+                widget: markdown
+                required: false
               - label: Questions
                 name: items
                 widget: list
                 required: false
                 fields:
-                  - { label: Question, name: question, widget: string }
-                  - { label: Answer, name: answer, widget: markdown, required: false }
+                  - label: Question
+                    name: question
+                    widget: string
+                  - label: Answer
+                    name: answer
+                    widget: markdown
+                    required: false
           - label: Final CTA Section
             name: cta
             widget: object
@@ -557,15 +1239,43 @@ collections:
                 collapsed: true
                 required: false
                 fields:
-                  - { label: Tone, name: tone, widget: select, options: [none, gradient, aurora], required: false }
-                  - { label: Color, name: color, widget: string, required: false }
-              - { label: Animate on Load, name: animation, widget: boolean, required: false, default: true }
-              - { label: Eyebrow, name: eyebrow, widget: string, required: false }
-              - { label: Title, name: title, widget: string, required: false }
-              - { label: Intro, name: intro, widget: markdown, required: false }
-              - { label: CTA Label, name: ctaLabel, widget: string, required: false }
-              - { label: CTA Link, name: ctaHref, widget: string, required: false }
-
+                  - label: Tone
+                    name: tone
+                    widget: select
+                    options:
+                      - none
+                      - gradient
+                      - aurora
+                    required: false
+                  - label: Color
+                    name: color
+                    widget: string
+                    required: false
+              - label: Animate on Load
+                name: animation
+                widget: boolean
+                required: false
+                default: true
+              - label: Eyebrow
+                name: eyebrow
+                widget: string
+                required: false
+              - label: Title
+                name: title
+                widget: string
+                required: false
+              - label: Intro
+                name: intro
+                widget: markdown
+                required: false
+              - label: CTA Label
+                name: ctaLabel
+                widget: string
+                required: false
+              - label: CTA Link
+                name: ctaHref
+                widget: string
+                required: false
   - name: servicesList
     label: Services Catalog Items
     files:
@@ -579,9 +1289,16 @@ collections:
             name: items
             widget: list
             fields:
-              - { label: Title, name: title, widget: string }
-              - { label: Slug, name: slug, widget: string }
-              - { label: Summary, name: summary, widget: markdown, required: false }
+              - label: Title
+                name: title
+                widget: string
+              - label: Slug
+                name: slug
+                widget: string
+              - label: Summary
+                name: summary
+                widget: markdown
+                required: false
               - label: Features
                 name: features
                 widget: list
@@ -590,24 +1307,45 @@ collections:
                   label: Feature
                   name: feature
                   widget: string
-              - { label: Icon, name: icon, widget: string, required: false }
-              - { label: Duration, name: duration, widget: string, required: false }
-              - { label: Starting Price, name: startingPrice, widget: string, required: false }
+              - label: Icon
+                name: icon
+                widget: string
+                required: false
+              - label: Duration
+                name: duration
+                widget: string
+                required: false
+              - label: Starting Price
+                name: startingPrice
+                widget: string
+                required: false
               - label: Link
                 name: link
                 widget: object
                 required: false
                 fields:
-                  - { label: Label, name: label, widget: string, required: false }
-                  - { label: URL, name: href, widget: string, required: false }
+                  - label: Label
+                    name: label
+                    widget: string
+                    required: false
+                  - label: URL
+                    name: href
+                    widget: string
+                    required: false
               - label: Image
                 name: image
                 widget: object
                 required: false
                 fields:
-                  - { label: Source, name: src, widget: image, required: false, choose_url: true }
-                  - { label: Alt Text, name: alt, widget: string, required: false }
-
+                  - label: Source
+                    name: src
+                    widget: image
+                    required: false
+                    choose_url: true
+                  - label: Alt Text
+                    name: alt
+                    widget: string
+                    required: false
   - name: contact
     label: Contact Page
     files:
@@ -621,24 +1359,72 @@ collections:
             name: hero
             widget: object
             fields:
-              - { label: Variant, name: variant, widget: select, options: [classic, split, fullscreen, none], required: false }
+              - label: Variant
+                name: variant
+                widget: select
+                options:
+                  - classic
+                  - split
+                  - fullscreen
+                  - none
+                required: false
               - label: Background
                 name: background
                 widget: object
                 collapsed: true
                 required: false
                 fields:
-                  - { label: Tone, name: tone, widget: select, options: [none, gradient, solid, aurora], required: false }
-                  - { label: Color, name: color, widget: string, required: false }
-              - { label: Animate on Load, name: animation, widget: boolean, required: false, default: true }
-              - { label: Eyebrow, name: eyebrow, widget: string, required: false }
-              - { label: Title, name: title, widget: string, required: false }
-              - { label: Subtitle, name: subtitle, widget: markdown, required: false }
-              - { label: Primary CTA Label, name: primaryCtaLabel, widget: string, required: false }
-              - { label: Primary CTA Link, name: primaryCtaHref, widget: string, required: false }
-              - { label: Secondary CTA Label, name: secondaryCtaLabel, widget: string, required: false }
-              - { label: Secondary CTA Link, name: secondaryCtaHref, widget: string, required: false }
-              - { label: Hero Image, name: image, widget: image, required: false, choose_url: true }
+                  - label: Tone
+                    name: tone
+                    widget: select
+                    options:
+                      - none
+                      - gradient
+                      - solid
+                      - aurora
+                    required: false
+                  - label: Color
+                    name: color
+                    widget: string
+                    required: false
+              - label: Animate on Load
+                name: animation
+                widget: boolean
+                required: false
+                default: true
+              - label: Eyebrow
+                name: eyebrow
+                widget: string
+                required: false
+              - label: Title
+                name: title
+                widget: string
+                required: false
+              - label: Subtitle
+                name: subtitle
+                widget: markdown
+                required: false
+              - label: Primary CTA Label
+                name: primaryCtaLabel
+                widget: string
+                required: false
+              - label: Primary CTA Link
+                name: primaryCtaHref
+                widget: string
+                required: false
+              - label: Secondary CTA Label
+                name: secondaryCtaLabel
+                widget: string
+                required: false
+              - label: Secondary CTA Link
+                name: secondaryCtaHref
+                widget: string
+                required: false
+              - label: Hero Image
+                name: image
+                widget: image
+                required: false
+                choose_url: true
           - label: Info Section
             name: info
             widget: object
@@ -649,15 +1435,52 @@ collections:
                 collapsed: true
                 required: false
                 fields:
-                  - { label: Tone, name: tone, widget: select, options: [none, gradient, solid, aurora], required: false }
-                  - { label: Color, name: color, widget: string, required: false }
-              - { label: Animate on Load, name: animation, widget: boolean, required: false, default: true }
-              - { label: Eyebrow, name: eyebrow, widget: string, required: false }
-              - { label: Variant, name: variant, widget: select, options: [standard, stacked, none], required: false }
-              - { label: Title, name: title, widget: string, required: false }
-              - { label: Intro, name: intro, widget: markdown, required: false }
-              - { label: Phone Label (override), name: phoneLabel, widget: string, required: false }
-              - { label: Email Label (override), name: emailLabel, widget: string, required: false }
+                  - label: Tone
+                    name: tone
+                    widget: select
+                    options:
+                      - none
+                      - gradient
+                      - solid
+                      - aurora
+                    required: false
+                  - label: Color
+                    name: color
+                    widget: string
+                    required: false
+              - label: Animate on Load
+                name: animation
+                widget: boolean
+                required: false
+                default: true
+              - label: Eyebrow
+                name: eyebrow
+                widget: string
+                required: false
+              - label: Variant
+                name: variant
+                widget: select
+                options:
+                  - standard
+                  - stacked
+                  - none
+                required: false
+              - label: Title
+                name: title
+                widget: string
+                required: false
+              - label: Intro
+                name: intro
+                widget: markdown
+                required: false
+              - label: Phone Label (override)
+                name: phoneLabel
+                widget: string
+                required: false
+              - label: Email Label (override)
+                name: emailLabel
+                widget: string
+                required: false
           - label: Contact Form Section
             name: contactForm
             widget: object
@@ -668,13 +1491,36 @@ collections:
                 collapsed: true
                 required: false
                 fields:
-                  - { label: Tone, name: tone, widget: select, options: [none, gradient, solid, aurora], required: false }
-                  - { label: Color, name: color, widget: string, required: false }
-              - { label: Animate on Load, name: animation, widget: boolean, required: false, default: true }
-              - { label: Eyebrow, name: eyebrow, widget: string, required: false }
-              - { label: Title, name: title, widget: string, required: false }
-              - { label: Intro, name: intro, widget: markdown, required: false }
-
+                  - label: Tone
+                    name: tone
+                    widget: select
+                    options:
+                      - none
+                      - gradient
+                      - solid
+                      - aurora
+                    required: false
+                  - label: Color
+                    name: color
+                    widget: string
+                    required: false
+              - label: Animate on Load
+                name: animation
+                widget: boolean
+                required: false
+                default: true
+              - label: Eyebrow
+                name: eyebrow
+                widget: string
+                required: false
+              - label: Title
+                name: title
+                widget: string
+                required: false
+              - label: Intro
+                name: intro
+                widget: markdown
+                required: false
   - name: about
     label: About Page
     files:
@@ -688,22 +1534,63 @@ collections:
             name: hero
             widget: object
             fields:
-              - { label: Variant, name: variant, widget: select, options: [classic, showcase, fullscreen, none], required: false }
+              - label: Variant
+                name: variant
+                widget: select
+                options:
+                  - classic
+                  - showcase
+                  - fullscreen
+                  - none
+                required: false
               - label: Background
                 name: background
                 widget: object
                 collapsed: true
                 required: false
                 fields:
-                  - { label: Tone, name: tone, widget: select, options: [none, gradient, solid, aurora], required: false }
-                  - { label: Color, name: color, widget: string, required: false }
-              - { label: Animate on Load, name: animation, widget: boolean, required: false, default: true }
-              - { label: Title, name: title, widget: string, required: false }
-              - { label: Subtitle, name: subtitle, widget: markdown, required: false }
-              - { label: CTA Label, name: ctaLabel, widget: string, required: false }
-              - { label: CTA Link, name: ctaHref, widget: string, required: false }
-              - { label: Location, name: location, widget: string, required: false }
-              - { label: Founded, name: founded, widget: string, required: false }
+                  - label: Tone
+                    name: tone
+                    widget: select
+                    options:
+                      - none
+                      - gradient
+                      - solid
+                      - aurora
+                    required: false
+                  - label: Color
+                    name: color
+                    widget: string
+                    required: false
+              - label: Animate on Load
+                name: animation
+                widget: boolean
+                required: false
+                default: true
+              - label: Title
+                name: title
+                widget: string
+                required: false
+              - label: Subtitle
+                name: subtitle
+                widget: markdown
+                required: false
+              - label: CTA Label
+                name: ctaLabel
+                widget: string
+                required: false
+              - label: CTA Link
+                name: ctaHref
+                widget: string
+                required: false
+              - label: Location
+                name: location
+                widget: string
+                required: false
+              - label: Founded
+                name: founded
+                widget: string
+                required: false
               - label: Stats
                 name: stats
                 widget: list
@@ -712,31 +1599,73 @@ collections:
                   label: Stat
                   name: stat
                   widget: string
-              - { label: Hero Image, name: image, widget: image, required: false, choose_url: true }
+              - label: Hero Image
+                name: image
+                widget: image
+                required: false
+                choose_url: true
           - label: Statement Section
             name: statement
             widget: object
             fields:
-              - { label: Variant, name: variant, widget: select, options: [centered, split, none], required: false }
+              - label: Variant
+                name: variant
+                widget: select
+                options:
+                  - centered
+                  - split
+                  - none
+                required: false
               - label: Background
                 name: background
                 widget: object
                 collapsed: true
                 required: false
                 fields:
-                  - { label: Tone, name: tone, widget: select, options: [none, gradient, solid, aurora], required: false }
-                  - { label: Color, name: color, widget: string, required: false }
-              - { label: Animate on Load, name: animation, widget: boolean, required: false, default: true }
-              - { label: Eyebrow, name: eyebrow, widget: string, required: false }
-              - { label: Title, name: title, widget: string, required: false }
-              - { label: Intro, name: intro, widget: markdown, required: false }
+                  - label: Tone
+                    name: tone
+                    widget: select
+                    options:
+                      - none
+                      - gradient
+                      - solid
+                      - aurora
+                    required: false
+                  - label: Color
+                    name: color
+                    widget: string
+                    required: false
+              - label: Animate on Load
+                name: animation
+                widget: boolean
+                required: false
+                default: true
+              - label: Eyebrow
+                name: eyebrow
+                widget: string
+                required: false
+              - label: Title
+                name: title
+                widget: string
+                required: false
+              - label: Intro
+                name: intro
+                widget: markdown
+                required: false
               - label: Image
                 name: image
                 widget: object
                 required: false
                 fields:
-                  - { label: Source, name: src, widget: image, required: false, choose_url: true }
-                  - { label: Alt Text, name: alt, widget: string, required: false }
+                  - label: Source
+                    name: src
+                    widget: image
+                    required: false
+                    choose_url: true
+                  - label: Alt Text
+                    name: alt
+                    widget: string
+                    required: false
           - label: CTA Section
             name: cta
             widget: object
@@ -747,182 +1676,476 @@ collections:
                 collapsed: true
                 required: false
                 fields:
-                  - { label: Tone, name: tone, widget: select, options: [none, gradient, solid, aurora], required: false }
-                  - { label: Color, name: color, widget: string, required: false }
-              - { label: Animate on Load, name: animation, widget: boolean, required: false, default: true }
-              - { label: Eyebrow, name: eyebrow, widget: string, required: false }
-              - { label: Title, name: title, widget: string, required: false }
-              - { label: Intro, name: intro, widget: markdown, required: false }
-              - { label: CTA Label, name: ctaLabel, widget: string, required: false }
-              - { label: CTA Link, name: ctaHref, widget: string, required: false }
+                  - label: Tone
+                    name: tone
+                    widget: select
+                    options:
+                      - none
+                      - gradient
+                      - solid
+                      - aurora
+                    required: false
+                  - label: Color
+                    name: color
+                    widget: string
+                    required: false
+              - label: Animate on Load
+                name: animation
+                widget: boolean
+                required: false
+                default: true
+              - label: Eyebrow
+                name: eyebrow
+                widget: string
+                required: false
+              - label: Title
+                name: title
+                widget: string
+                required: false
+              - label: Intro
+                name: intro
+                widget: markdown
+                required: false
+              - label: CTA Label
+                name: ctaLabel
+                widget: string
+                required: false
+              - label: CTA Link
+                name: ctaHref
+                widget: string
+                required: false
           - label: Values Section
             name: values
             widget: object
             fields:
-              - { label: Variant, name: variant, widget: select, options: [grid, list, none], required: false }
+              - label: Variant
+                name: variant
+                widget: select
+                options:
+                  - grid
+                  - list
+                  - none
+                required: false
               - label: Background
                 name: background
                 widget: object
                 collapsed: true
                 required: false
                 fields:
-                  - { label: Tone, name: tone, widget: select, options: [none, gradient, aurora], required: false }
-                  - { label: Color, name: color, widget: string, required: false }
-              - { label: Animate on Load, name: animation, widget: boolean, required: false, default: true }
-              - { label: Eyebrow, name: eyebrow, widget: string, required: false }
-              - { label: Title, name: title, widget: string, required: false }
-              - { label: Intro, name: intro, widget: markdown, required: false }
-              - { label: Supporting Copy, name: supporting, widget: markdown, required: false }
+                  - label: Tone
+                    name: tone
+                    widget: select
+                    options:
+                      - none
+                      - gradient
+                      - aurora
+                    required: false
+                  - label: Color
+                    name: color
+                    widget: string
+                    required: false
+              - label: Animate on Load
+                name: animation
+                widget: boolean
+                required: false
+                default: true
+              - label: Eyebrow
+                name: eyebrow
+                widget: string
+                required: false
+              - label: Title
+                name: title
+                widget: string
+                required: false
+              - label: Intro
+                name: intro
+                widget: markdown
+                required: false
+              - label: Supporting Copy
+                name: supporting
+                widget: markdown
+                required: false
               - label: Values
                 name: items
                 widget: list
                 required: false
                 fields:
-                  - { label: Title, name: title, widget: string }
-                  - { label: Description, name: description, widget: markdown, required: false }
-                  - { label: Icon, name: icon, widget: string, required: false }
+                  - label: Title
+                    name: title
+                    widget: string
+                  - label: Description
+                    name: description
+                    widget: markdown
+                    required: false
+                  - label: Icon
+                    name: icon
+                    widget: string
+                    required: false
           - label: Process Section
             name: process
             widget: object
             fields:
-              - { label: Variant, name: variant, widget: select, options: [steps, none], required: false }
+              - label: Variant
+                name: variant
+                widget: select
+                options:
+                  - steps
+                  - none
+                required: false
               - label: Background
                 name: background
                 widget: object
                 collapsed: true
                 required: false
                 fields:
-                  - { label: Tone, name: tone, widget: select, options: [none, gradient, aurora], required: false }
-                  - { label: Color, name: color, widget: string, required: false }
-              - { label: Animate on Load, name: animation, widget: boolean, required: false, default: true }
-              - { label: Eyebrow, name: eyebrow, widget: string, required: false }
-              - { label: Title, name: title, widget: string, required: false }
-              - { label: Intro, name: intro, widget: markdown, required: false }
+                  - label: Tone
+                    name: tone
+                    widget: select
+                    options:
+                      - none
+                      - gradient
+                      - aurora
+                    required: false
+                  - label: Color
+                    name: color
+                    widget: string
+                    required: false
+              - label: Animate on Load
+                name: animation
+                widget: boolean
+                required: false
+                default: true
+              - label: Eyebrow
+                name: eyebrow
+                widget: string
+                required: false
+              - label: Title
+                name: title
+                widget: string
+                required: false
+              - label: Intro
+                name: intro
+                widget: markdown
+                required: false
               - label: Steps
                 name: steps
                 widget: list
                 required: false
                 fields:
-                  - { label: Title, name: title, widget: string }
-                  - { label: Description, name: description, widget: markdown, required: false }
+                  - label: Title
+                    name: title
+                    widget: string
+                  - label: Description
+                    name: description
+                    widget: markdown
+                    required: false
           - label: Timeline Section
             name: timeline
             widget: object
             fields:
-              - { label: Variant, name: variant, widget: select, options: [steps, vertical, none], required: false }
+              - label: Variant
+                name: variant
+                widget: select
+                options:
+                  - steps
+                  - vertical
+                  - none
+                required: false
               - label: Background
                 name: background
                 widget: object
                 collapsed: true
                 required: false
                 fields:
-                  - { label: Tone, name: tone, widget: select, options: [none, gradient, solid, aurora], required: false }
-                  - { label: Color, name: color, widget: string, required: false }
-              - { label: Animate on Load, name: animation, widget: boolean, required: false, default: true }
-              - { label: Eyebrow, name: eyebrow, widget: string, required: false }
-              - { label: Title, name: title, widget: string, required: false }
-              - { label: Intro, name: intro, widget: markdown, required: false }
+                  - label: Tone
+                    name: tone
+                    widget: select
+                    options:
+                      - none
+                      - gradient
+                      - solid
+                      - aurora
+                    required: false
+                  - label: Color
+                    name: color
+                    widget: string
+                    required: false
+              - label: Animate on Load
+                name: animation
+                widget: boolean
+                required: false
+                default: true
+              - label: Eyebrow
+                name: eyebrow
+                widget: string
+                required: false
+              - label: Title
+                name: title
+                widget: string
+                required: false
+              - label: Intro
+                name: intro
+                widget: markdown
+                required: false
               - label: Milestones
                 name: milestones
                 widget: list
                 required: false
                 fields:
-                  - { label: Year, name: year, widget: string, required: false }
-                  - { label: Title, name: title, widget: string }
-                  - { label: Description, name: description, widget: markdown, required: false }
-                  - { label: Image, name: image, widget: image, required: false, choose_url: true }
+                  - label: Year
+                    name: year
+                    widget: string
+                    required: false
+                  - label: Title
+                    name: title
+                    widget: string
+                  - label: Description
+                    name: description
+                    widget: markdown
+                    required: false
+                  - label: Image
+                    name: image
+                    widget: image
+                    required: false
+                    choose_url: true
           - label: Community Section
             name: community
             widget: object
             fields:
-              - { label: Variant, name: variant, widget: select, options: [cards, none], required: false }
+              - label: Variant
+                name: variant
+                widget: select
+                options:
+                  - cards
+                  - none
+                required: false
               - label: Background
                 name: background
                 widget: object
                 collapsed: true
                 required: false
                 fields:
-                  - { label: Tone, name: tone, widget: select, options: [none, gradient, solid, aurora], required: false }
-                  - { label: Color, name: color, widget: string, required: false }
-              - { label: Animate on Load, name: animation, widget: boolean, required: false, default: true }
-              - { label: Eyebrow, name: eyebrow, widget: string, required: false }
-              - { label: Title, name: title, widget: string, required: false }
-              - { label: Intro, name: intro, widget: markdown, required: false }
-              - { label: Supporting Copy, name: supporting, widget: markdown, required: false }
+                  - label: Tone
+                    name: tone
+                    widget: select
+                    options:
+                      - none
+                      - gradient
+                      - solid
+                      - aurora
+                    required: false
+                  - label: Color
+                    name: color
+                    widget: string
+                    required: false
+              - label: Animate on Load
+                name: animation
+                widget: boolean
+                required: false
+                default: true
+              - label: Eyebrow
+                name: eyebrow
+                widget: string
+                required: false
+              - label: Title
+                name: title
+                widget: string
+                required: false
+              - label: Intro
+                name: intro
+                widget: markdown
+                required: false
+              - label: Supporting Copy
+                name: supporting
+                widget: markdown
+                required: false
               - label: Stats
                 name: stats
                 widget: list
                 required: false
                 fields:
-                  - { label: Label, name: label, widget: string }
-                  - { label: Value, name: value, widget: string }
+                  - label: Label
+                    name: label
+                    widget: string
+                  - label: Value
+                    name: value
+                    widget: string
               - label: Community Initiatives
                 name: items
                 widget: list
                 required: false
                 fields:
-                  - { label: Title, name: title, widget: string }
-                  - { label: Description, name: description, widget: markdown, required: false }
-                  - { label: Icon, name: icon, widget: string, required: false }
-                  - { label: Highlight, name: highlight, widget: string, required: false }
-                  - { label: CTA Label, name: ctaLabel, widget: string, required: false }
-                  - { label: Details, name: details, widget: markdown, required: false }
+                  - label: Title
+                    name: title
+                    widget: string
+                  - label: Description
+                    name: description
+                    widget: markdown
+                    required: false
+                  - label: Icon
+                    name: icon
+                    widget: string
+                    required: false
+                  - label: Highlight
+                    name: highlight
+                    widget: string
+                    required: false
+                  - label: CTA Label
+                    name: ctaLabel
+                    widget: string
+                    required: false
+                  - label: Details
+                    name: details
+                    widget: markdown
+                    required: false
           - label: Founders Section
             name: founders
             widget: object
             fields:
-              - { label: Variant, name: variant, widget: select, options: [spotlight, none], required: false }
+              - label: Variant
+                name: variant
+                widget: select
+                options:
+                  - spotlight
+                  - none
+                required: false
               - label: Background
                 name: background
                 widget: object
                 collapsed: true
                 required: false
                 fields:
-                  - { label: Tone, name: tone, widget: select, options: [none, gradient, solid, aurora], required: false }
-                  - { label: Color, name: color, widget: string, required: false }
-              - { label: Animate on Load, name: animation, widget: boolean, required: false, default: true }
-              - { label: Eyebrow, name: eyebrow, widget: string, required: false }
-              - { label: Title, name: title, widget: string, required: false }
-              - { label: Intro, name: intro, widget: markdown, required: false }
-              - { label: Supporting Copy, name: supporting, widget: markdown, required: false }
+                  - label: Tone
+                    name: tone
+                    widget: select
+                    options:
+                      - none
+                      - gradient
+                      - solid
+                      - aurora
+                    required: false
+                  - label: Color
+                    name: color
+                    widget: string
+                    required: false
+              - label: Animate on Load
+                name: animation
+                widget: boolean
+                required: false
+                default: true
+              - label: Eyebrow
+                name: eyebrow
+                widget: string
+                required: false
+              - label: Title
+                name: title
+                widget: string
+                required: false
+              - label: Intro
+                name: intro
+                widget: markdown
+                required: false
+              - label: Supporting Copy
+                name: supporting
+                widget: markdown
+                required: false
               - label: Profiles
                 name: profiles
                 widget: list
                 required: false
                 fields:
-                  - { label: Name, name: name, widget: string }
-                  - { label: Role, name: role, widget: string, required: false }
-                  - { label: Highlight, name: highlight, widget: string, required: false }
-                  - { label: Bio, name: bio, widget: markdown, required: false }
-                  - { label: Story, name: story, widget: markdown, required: false }
-                  - { label: Image, name: image, widget: image, required: false, choose_url: true }
+                  - label: Name
+                    name: name
+                    widget: string
+                  - label: Role
+                    name: role
+                    widget: string
+                    required: false
+                  - label: Highlight
+                    name: highlight
+                    widget: string
+                    required: false
+                  - label: Bio
+                    name: bio
+                    widget: markdown
+                    required: false
+                  - label: Story
+                    name: story
+                    widget: markdown
+                    required: false
+                  - label: Image
+                    name: image
+                    widget: image
+                    required: false
+                    choose_url: true
           - label: Team Section
             name: team
             widget: object
             fields:
-              - { label: Variant, name: variant, widget: select, options: [grid, list, carousel, none], required: false }
+              - label: Variant
+                name: variant
+                widget: select
+                options:
+                  - grid
+                  - list
+                  - carousel
+                  - none
+                required: false
               - label: Background
                 name: background
                 widget: object
                 collapsed: true
                 required: false
                 fields:
-                  - { label: Tone, name: tone, widget: select, options: [none, gradient, aurora], required: false }
-                  - { label: Color, name: color, widget: string, required: false }
-              - { label: Eyebrow, name: eyebrow, widget: string, required: false }
-              - { label: Title, name: title, widget: string, required: false }
-              - { label: Intro, name: intro, widget: markdown, required: false }
+                  - label: Tone
+                    name: tone
+                    widget: select
+                    options:
+                      - none
+                      - gradient
+                      - aurora
+                    required: false
+                  - label: Color
+                    name: color
+                    widget: string
+                    required: false
+              - label: Eyebrow
+                name: eyebrow
+                widget: string
+                required: false
+              - label: Title
+                name: title
+                widget: string
+                required: false
+              - label: Intro
+                name: intro
+                widget: markdown
+                required: false
               - label: Members
                 name: members
                 widget: list
                 required: false
                 fields:
-                  - { label: Name, name: name, widget: string }
-                  - { label: Role, name: role, widget: string, required: false }
-                  - { label: Bio, name: bio, widget: markdown, required: false }
-                  - { label: Highlight, name: highlight, widget: string, required: false }
-                  - { label: Image, name: image, widget: image, required: false, choose_url: true }
-
+                  - label: Name
+                    name: name
+                    widget: string
+                  - label: Role
+                    name: role
+                    widget: string
+                    required: false
+                  - label: Bio
+                    name: bio
+                    widget: markdown
+                    required: false
+                  - label: Highlight
+                    name: highlight
+                    widget: string
+                    required: false
+                  - label: Image
+                    name: image
+                    widget: image
+                    required: false
+                    choose_url: true
   - name: testimonials
     label: Testimonials
     files:
@@ -936,9 +2159,13 @@ collections:
             name: items
             widget: list
             fields:
-              - { label: Quote, name: quote, widget: text }
-              - { label: Author, name: author, widget: string, required: false }
-
+              - label: Quote
+                name: quote
+                widget: text
+              - label: Author
+                name: author
+                widget: string
+                required: false
   - name: design
     label: Design Tokens
     files:
@@ -956,39 +2183,90 @@ collections:
                 name: brand
                 widget: object
                 fields:
-                  - { label: Primary, name: primary, widget: string, required: false }
-                  - { label: Secondary, name: secondary, widget: string, required: false }
-                  - { label: Accent, name: accent, widget: string, required: false }
+                  - label: Primary
+                    name: primary
+                    widget: string
+                    required: false
+                  - label: Secondary
+                    name: secondary
+                    widget: string
+                    required: false
+                  - label: Accent
+                    name: accent
+                    widget: string
+                    required: false
               - label: Text Colors
                 name: text
                 widget: object
                 fields:
-                  - { label: Primary, name: primary, widget: string, required: false }
-                  - { label: Secondary, name: secondary, widget: string, required: false }
-                  - { label: Muted, name: muted, widget: string, required: false }
-                  - { label: Inverse, name: inverse, widget: string, required: false }
-                  - { label: Inverse Muted, name: inverseMuted, widget: string, required: false }
+                  - label: Primary
+                    name: primary
+                    widget: string
+                    required: false
+                  - label: Secondary
+                    name: secondary
+                    widget: string
+                    required: false
+                  - label: Muted
+                    name: muted
+                    widget: string
+                    required: false
+                  - label: Inverse
+                    name: inverse
+                    widget: string
+                    required: false
+                  - label: Inverse Muted
+                    name: inverseMuted
+                    widget: string
+                    required: false
               - label: Surface Colors
                 name: surface
                 widget: object
                 fields:
-                  - { label: Base, name: base, widget: string, required: false }
-                  - { label: Card, name: card, widget: string, required: false }
-                  - { label: Muted, name: muted, widget: string, required: false }
+                  - label: Base
+                    name: base
+                    widget: string
+                    required: false
+                  - label: Card
+                    name: card
+                    widget: string
+                    required: false
+                  - label: Muted
+                    name: muted
+                    widget: string
+                    required: false
               - label: Border Colors
                 name: border
                 widget: object
                 fields:
-                  - { label: Subtle, name: subtle, widget: string, required: false }
-                  - { label: Strong, name: strong, widget: string, required: false }
+                  - label: Subtle
+                    name: subtle
+                    widget: string
+                    required: false
+                  - label: Strong
+                    name: strong
+                    widget: string
+                    required: false
               - label: Navigation
                 name: navigation
                 widget: object
                 fields:
-                  - { label: Hover Background, name: hoverBg, widget: string, required: false }
-                  - { label: Active Background, name: activeBg, widget: string, required: false }
-                  - { label: Active Text, name: activeText, widget: string, required: false }
-                  - { label: Active Shadow, name: activeShadow, widget: string, required: false }
+                  - label: Hover Background
+                    name: hoverBg
+                    widget: string
+                    required: false
+                  - label: Active Background
+                    name: activeBg
+                    widget: string
+                    required: false
+                  - label: Active Text
+                    name: activeText
+                    widget: string
+                    required: false
+                  - label: Active Shadow
+                    name: activeShadow
+                    widget: string
+                    required: false
           - label: Typography
             name: typography
             widget: object
@@ -997,8 +2275,14 @@ collections:
                 name: fontFamily
                 widget: object
                 fields:
-                  - { label: Heading, name: heading, widget: string, required: false }
-                  - { label: Body, name: body, widget: string, required: false }
+                  - label: Heading
+                    name: heading
+                    widget: string
+                    required: false
+                  - label: Body
+                    name: body
+                    widget: string
+                    required: false
               - label: Scale
                 name: scale
                 widget: object
@@ -1012,13 +2296,34 @@ collections:
                         widget: object
                         required: false
                         fields:
-                          - { label: Mobile, name: mobile, widget: string, required: false }
-                          - { label: Tablet, name: tablet, widget: string, required: false }
-                          - { label: Desktop, name: desktop, widget: string, required: false }
-                      - { label: Line Height, name: lineHeight, widget: string, required: false }
-                      - { label: Weight, name: weight, widget: number, required: false }
-                      - { label: Letter Spacing, name: letterSpacing, widget: string, required: false }
-                      - { label: Uppercase, name: uppercase, widget: boolean, required: false }
+                          - label: Mobile
+                            name: mobile
+                            widget: string
+                            required: false
+                          - label: Tablet
+                            name: tablet
+                            widget: string
+                            required: false
+                          - label: Desktop
+                            name: desktop
+                            widget: string
+                            required: false
+                      - label: Line Height
+                        name: lineHeight
+                        widget: string
+                        required: false
+                      - label: Weight
+                        name: weight
+                        widget: number
+                        required: false
+                      - label: Letter Spacing
+                        name: letterSpacing
+                        widget: string
+                        required: false
+                      - label: Uppercase
+                        name: uppercase
+                        widget: boolean
+                        required: false
                   - label: Heading
                     name: heading
                     widget: object
@@ -1028,13 +2333,34 @@ collections:
                         widget: object
                         required: false
                         fields:
-                          - { label: Mobile, name: mobile, widget: string, required: false }
-                          - { label: Tablet, name: tablet, widget: string, required: false }
-                          - { label: Desktop, name: desktop, widget: string, required: false }
-                      - { label: Line Height, name: lineHeight, widget: string, required: false }
-                      - { label: Weight, name: weight, widget: number, required: false }
-                      - { label: Letter Spacing, name: letterSpacing, widget: string, required: false }
-                      - { label: Uppercase, name: uppercase, widget: boolean, required: false }
+                          - label: Mobile
+                            name: mobile
+                            widget: string
+                            required: false
+                          - label: Tablet
+                            name: tablet
+                            widget: string
+                            required: false
+                          - label: Desktop
+                            name: desktop
+                            widget: string
+                            required: false
+                      - label: Line Height
+                        name: lineHeight
+                        widget: string
+                        required: false
+                      - label: Weight
+                        name: weight
+                        widget: number
+                        required: false
+                      - label: Letter Spacing
+                        name: letterSpacing
+                        widget: string
+                        required: false
+                      - label: Uppercase
+                        name: uppercase
+                        widget: boolean
+                        required: false
                   - label: Subheading
                     name: subheading
                     widget: object
@@ -1044,13 +2370,34 @@ collections:
                         widget: object
                         required: false
                         fields:
-                          - { label: Mobile, name: mobile, widget: string, required: false }
-                          - { label: Tablet, name: tablet, widget: string, required: false }
-                          - { label: Desktop, name: desktop, widget: string, required: false }
-                      - { label: Line Height, name: lineHeight, widget: string, required: false }
-                      - { label: Weight, name: weight, widget: number, required: false }
-                      - { label: Letter Spacing, name: letterSpacing, widget: string, required: false }
-                      - { label: Uppercase, name: uppercase, widget: boolean, required: false }
+                          - label: Mobile
+                            name: mobile
+                            widget: string
+                            required: false
+                          - label: Tablet
+                            name: tablet
+                            widget: string
+                            required: false
+                          - label: Desktop
+                            name: desktop
+                            widget: string
+                            required: false
+                      - label: Line Height
+                        name: lineHeight
+                        widget: string
+                        required: false
+                      - label: Weight
+                        name: weight
+                        widget: number
+                        required: false
+                      - label: Letter Spacing
+                        name: letterSpacing
+                        widget: string
+                        required: false
+                      - label: Uppercase
+                        name: uppercase
+                        widget: boolean
+                        required: false
                   - label: Body
                     name: body
                     widget: object
@@ -1060,13 +2407,34 @@ collections:
                         widget: object
                         required: false
                         fields:
-                          - { label: Mobile, name: mobile, widget: string, required: false }
-                          - { label: Tablet, name: tablet, widget: string, required: false }
-                          - { label: Desktop, name: desktop, widget: string, required: false }
-                      - { label: Line Height, name: lineHeight, widget: string, required: false }
-                      - { label: Weight, name: weight, widget: number, required: false }
-                      - { label: Letter Spacing, name: letterSpacing, widget: string, required: false }
-                      - { label: Uppercase, name: uppercase, widget: boolean, required: false }
+                          - label: Mobile
+                            name: mobile
+                            widget: string
+                            required: false
+                          - label: Tablet
+                            name: tablet
+                            widget: string
+                            required: false
+                          - label: Desktop
+                            name: desktop
+                            widget: string
+                            required: false
+                      - label: Line Height
+                        name: lineHeight
+                        widget: string
+                        required: false
+                      - label: Weight
+                        name: weight
+                        widget: number
+                        required: false
+                      - label: Letter Spacing
+                        name: letterSpacing
+                        widget: string
+                        required: false
+                      - label: Uppercase
+                        name: uppercase
+                        widget: boolean
+                        required: false
                   - label: Eyebrow
                     name: eyebrow
                     widget: object
@@ -1076,13 +2444,34 @@ collections:
                         widget: object
                         required: false
                         fields:
-                          - { label: Mobile, name: mobile, widget: string, required: false }
-                          - { label: Tablet, name: tablet, widget: string, required: false }
-                          - { label: Desktop, name: desktop, widget: string, required: false }
-                      - { label: Line Height, name: lineHeight, widget: string, required: false }
-                      - { label: Weight, name: weight, widget: number, required: false }
-                      - { label: Letter Spacing, name: letterSpacing, widget: string, required: false }
-                      - { label: Uppercase, name: uppercase, widget: boolean, required: false }
+                          - label: Mobile
+                            name: mobile
+                            widget: string
+                            required: false
+                          - label: Tablet
+                            name: tablet
+                            widget: string
+                            required: false
+                          - label: Desktop
+                            name: desktop
+                            widget: string
+                            required: false
+                      - label: Line Height
+                        name: lineHeight
+                        widget: string
+                        required: false
+                      - label: Weight
+                        name: weight
+                        widget: number
+                        required: false
+                      - label: Letter Spacing
+                        name: letterSpacing
+                        widget: string
+                        required: false
+                      - label: Uppercase
+                        name: uppercase
+                        widget: boolean
+                        required: false
                   - label: Fine Print
                     name: finePrint
                     widget: object
@@ -1092,10 +2481,31 @@ collections:
                         widget: object
                         required: false
                         fields:
-                          - { label: Mobile, name: mobile, widget: string, required: false }
-                          - { label: Tablet, name: tablet, widget: string, required: false }
-                          - { label: Desktop, name: desktop, widget: string, required: false }
-                      - { label: Line Height, name: lineHeight, widget: string, required: false }
-                      - { label: Weight, name: weight, widget: number, required: false }
-                      - { label: Letter Spacing, name: letterSpacing, widget: string, required: false }
-                      - { label: Uppercase, name: uppercase, widget: boolean, required: false }
+                          - label: Mobile
+                            name: mobile
+                            widget: string
+                            required: false
+                          - label: Tablet
+                            name: tablet
+                            widget: string
+                            required: false
+                          - label: Desktop
+                            name: desktop
+                            widget: string
+                            required: false
+                      - label: Line Height
+                        name: lineHeight
+                        widget: string
+                        required: false
+                      - label: Weight
+                        name: weight
+                        widget: number
+                        required: false
+                      - label: Letter Spacing
+                        name: letterSpacing
+                        widget: string
+                        required: false
+                      - label: Uppercase
+                        name: uppercase
+                        widget: boolean
+                        required: false

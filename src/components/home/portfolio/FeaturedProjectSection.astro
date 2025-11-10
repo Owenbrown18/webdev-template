@@ -13,6 +13,8 @@ type ModalContent = {
   body?: string | null;
 };
 
+const portfolioStatement = home.portfolioStatement ?? {};
+
 const settings = (home.featuredProject ?? {}) as {
   variant?: string | null;
   background?: { tone?: string | null; color?: string | null };
@@ -74,6 +76,14 @@ const modalBodyRaw = typeof modalConfig.body === 'string' ? modalConfig.body.tri
 const modalParagraphs = modalBodyRaw.length > 0 ? modalBodyRaw.split(/\n\s*\n/) : [];
 const hasModal = Boolean(modalTitle || modalParagraphs.length > 0);
 const sectionNumber = '03';
+const secondaryIntro =
+  (props.secondaryIntro ?? portfolioStatement.intro ?? 'We design and develop clean, high-performing websites tailored to each business we work with. While our full portfolio is coming soon, you can explore the services and process that power every project we build.') as
+    | string
+    | undefined;
+const secondaryCta = {
+  label: (props.secondaryCtaLabel ?? portfolioStatement.ctaLabel ?? 'View our Process') as string,
+  href: (props.secondaryCtaHref ?? portfolioStatement.ctaHref ?? '/about#process') as string,
+};
 
 const shouldRender =
   variant !== 'none' &&
@@ -147,6 +157,27 @@ const eyebrowClasses = 'eyebrow-banner';
           ) : null}
         </div>
       </div>
+      {secondaryIntro ? (
+        <div class="featured-project-secondary">
+          <div class="featured-project-grid featured-project-grid--inverse">
+            <div class="featured-project-media">
+              <figure class={imageWrapperClasses}>
+                <img src={imageSrc} alt={imageAlt ?? ''} class={imageClasses} loading="lazy" decoding="async" />
+              </figure>
+            </div>
+            <div class="featured-project-details">
+              <p class="rich-intro text-left">{secondaryIntro}</p>
+              {secondaryCta.label && secondaryCta.href ? (
+                <div class="featured-project-cta-wrapper justify-start">
+                  <a href={secondaryCta.href} class="services-brief__cta featured-project-cta">
+                    {secondaryCta.label}
+                  </a>
+                </div>
+              ) : null}
+            </div>
+          </div>
+        </div>
+      ) : null}
     </div>
     {hasModal ? (
       <div

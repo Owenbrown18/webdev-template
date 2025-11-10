@@ -34,6 +34,7 @@ const shouldRenderComponent = variant !== 'none';
 
 const eyebrow = (eyebrowOverride ?? settings.eyebrow ?? undefined) as string | undefined;
 const intro = (introOverride ?? settings.intro ?? undefined) as string | undefined;
+const sectionNumber = '04';
 const image =
   (imageOverride ?? settings.image ?? undefined) as { src?: string | null; alt?: string | null } | undefined;
 const imageSrc = typeof image?.src === 'string' ? image.src.trim() : '';
@@ -83,8 +84,17 @@ const animationEnabled = animationSetting !== false;
             {eyebrow ? (
               <div class="eyebrow-stack w-full text-left" data-align="left">
                 <div class="eyebrow-banner-wrapper text-left">
-                  <p class="eyebrow-banner" data-align="left">
-                    {eyebrow}
+                  <p
+                    class="eyebrow-banner"
+                    data-align="left"
+                    data-has-number={sectionNumber ? 'true' : undefined}
+                  >
+                    <span class="eyebrow-banner__label">{eyebrow}</span>
+                    {sectionNumber ? (
+                      <span class="section-number-label" aria-label={`Section ${sectionNumber}`}>
+                        {sectionNumber}
+                      </span>
+                    ) : null}
                   </p>
                 </div>
               </div>
