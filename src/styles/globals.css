@@ -145,6 +145,11 @@ body {
     border-color: rgba(255, 255, 255, 0.8);
   }
 
+  .eyebrow-stack--inverse .eyebrow-banner {
+    color: #fff;
+    border-color: rgba(255, 255, 255, 0.8);
+  }
+
   .section-number-label {
     @apply type-eyebrow;
     letter-spacing: 0.35em;
@@ -164,6 +169,14 @@ body {
 
   .rich-intro--inverse {
     color: #f8fafc;
+  }
+
+  .rich-subheading {
+    font-size: clamp(1.35rem, 2vw, 1.75rem);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    margin: 0;
+    color: #0f172a;
   }
 
 
@@ -560,27 +573,30 @@ body {
   }
 
   /* ------------------------------------------------------------------------ */
-  /*  Home Services Brief Section                                             */
+  /*  Home Services Brief & Expectations Sections                             */
   /* ------------------------------------------------------------------------ */
-  .services-brief-section {
+  .services-brief-section,
+  .expectations-section {
     position: relative;
     isolation: isolate;
     overflow: hidden;
   }
 
-  .services-brief-section::before {
+  .services-brief-section::before,
+  .expectations-section::before {
     content: '';
     position: absolute;
     inset: 0;
     z-index: 0;
     background-image: var(--services-brief-bg, url('/images/services-brief-bg.jpg'));
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
+    background-size: 150% 150%;
+    background-position: 0% 50%;
     filter: saturate(0.25) brightness(0.45);
+    animation: services-brief-pan 45s linear infinite;
   }
 
-  .services-brief-section::after {
+  .services-brief-section::after,
+  .expectations-section::after {
     content: '';
     position: absolute;
     inset: 0;
@@ -620,6 +636,17 @@ body {
     border-color: rgba(255, 255, 255, 0.55);
     box-shadow: 0 35px 75px -35px rgba(0, 0, 0, 0.85);
     background: rgba(255, 255, 255, 0.08);
+  }
+
+  .expectations-card,
+  .expectations-card:hover,
+  .expectations-card:focus-visible {
+    transform: none;
+    border-color: rgba(255, 255, 255, 0.25);
+    box-shadow: 0 25px 65px -40px rgba(0, 0, 0, 0.7);
+    background: rgba(4, 10, 5, 0.35);
+    text-align: left;
+    align-items: flex-start;
   }
 
   .services-brief__card-icon {
@@ -720,6 +747,18 @@ body {
     /* Home hero (OBD) word reveal wrapper */
     display: inline-flex;
     overflow: hidden;
+  }
+
+  @keyframes services-brief-pan {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 60%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
   }
 
 }

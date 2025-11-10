@@ -28,7 +28,7 @@ aboutSection:
     tone: "none"
     color: null
   animation: true
-  eyebrow: "Who I am"
+  eyebrow: "About"
   title: "A one-person business built on engineering and creativity"
   intro: |
     I’m Owen Brown — a software engineering student at the University of Victoria and the person behind OBdesign. I started this business to combine my technical background with a passion for clean, reliable design that helps small businesses make a strong impression online.
@@ -91,8 +91,8 @@ cta:
   ctaHref: "/contact"
 expectations:
   background:
-    tone: "none"
-    color: null
+    tone: "aurora"
+    color: "#103529"
   animation: true
   eyebrow: "What to expect"
   title: "Dependable collaboration from kickoff to launch"

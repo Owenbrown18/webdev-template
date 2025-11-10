@@ -22,7 +22,6 @@ const {
   backgroundClass: overrideClass,
   animation: animationOverride,
   eyebrow: eyebrowOverride,
-  title: titleOverride,
   intro: introOverride,
   items: itemsOverride,
   ...restProps
@@ -38,49 +37,27 @@ const animationSetting = animationOverride ?? settings.animation;
 const animationEnabled = animationSetting ?? isExpectationsAnimationEnabled();
 
 const eyebrow = (eyebrowOverride ?? settings.eyebrow ?? undefined) as string | undefined;
-const title = (titleOverride ?? settings.title ?? undefined) as string | undefined;
 const intro = (introOverride ?? settings.intro ?? undefined) as string | undefined;
 const itemsSource = Array.isArray(itemsOverride) ? itemsOverride : settings.items;
 const items = (Array.isArray(itemsSource) ? itemsSource : [])
   .map((item) => item as ExpectationsItem)
   .filter((item) => Boolean(item?.title?.trim() || item?.description?.trim()));
 
-const hasContent = Boolean(eyebrow || title || intro || items.length > 0);
+const hasContent = Boolean(eyebrow || intro || items.length > 0);
 const shouldAnimate = animationEnabled !== false;
-const sectionClasses = [backgroundClass, 'section-shell'].filter(Boolean).join(' ');
+const sectionNumber = '05';
+const sectionClasses = [backgroundClass, 'section-shell expectations-section'].filter(Boolean).join(' ');
 const containerClasses = [
-  'section-container max-w-5xl space-y-10 text-center',
+  'section-container space-y-10',
   shouldAnimate
     ? 'motion-safe:opacity-0 motion-safe:translate-y-6 motion-safe:transition-all motion-safe:duration-[900ms] motion-safe:ease-out data-[visible=true]:motion-safe:translate-y-0 data-[visible=true]:motion-safe:opacity-100'
     : '',
 ]
   .filter(Boolean)
   .join(' ');
-const gridClasses = [
-  'grid',
-  'gap-6',
-  'justify-center',
-  'justify-items-center',
-  'sm:[grid-template-columns:repeat(auto-fit,minmax(18rem,1fr))]',
-].join(' ');
-const cardBaseClasses = [
-  'surface-card',
-  'surface-card-static',
-  'relative',
-  'flex',
-  'h-full',
-  'w-full',
-  'max-w-[20rem]',
-  'flex-col',
-  'items-center',
-  'gap-4',
-  'p-6',
-  'text-center',
-  'sm:p-7',
-];
-const cardIconClasses = 'flex h-12 w-12 items-center justify-center rounded-full bg-brand-primary/10 text-xl text-brand-primary';
+const stackClasses = 'space-y-8';
 const cardAnimationClasses = shouldAnimate
-  ? 'motion-safe:opacity-0 motion-safe:translate-y-4 motion-safe:transition-all motion-safe:duration-[1000ms] motion-safe:ease-out data-[visible=true]:motion-safe:translate-y-0 data-[visible=true]:motion-safe:opacity-100'
+  ? 'motion-safe:opacity-0 motion-safe:translate-y-4 motion-safe:transition-all motion-safe:duration-[900ms] motion-safe:ease-out data-[visible=true]:motion-safe:translate-y-0 data-[visible=true]:motion-safe:opacity-100'
   : '';
 ---
 {hasContent ? (
@@ -92,24 +69,41 @@ const cardAnimationClasses = shouldAnimate
     {...restProps}
   >
     <div class={containerClasses} data-expectations-content>
-      {(eyebrow || title || intro) && (
+      {(eyebrow || intro) && (
         <div class="space-y-4">
-          {eyebrow && <p class="section-eyebrow">{eyebrow}</p>}
-          {title && <h2 class="section-heading">{title}</h2>}
-          {intro && <p class="section-subtitle mx-auto max-w-4xl">{intro}</p>}
+          {eyebrow ? (
+            <div class="eyebrow-stack eyebrow-stack--inverse w-full text-left" data-align="left">
+              <div class="eyebrow-banner-wrapper text-left">
+                <p
+                  class="eyebrow-banner eyebrow-banner--inverse"
+                  data-align="left"
+                  data-has-number={sectionNumber ? 'true' : undefined}
+                >
+                  <span class="eyebrow-banner__label">{eyebrow}</span>
+                  {sectionNumber ? (
+                    <span class="section-number-label text-white" aria-label={`Section ${sectionNumber}`}>
+                      {sectionNumber}
+                    </span>
+                  ) : null}
+                </p>
+              </div>
+            </div>
+          ) : null}
+          {intro && <p class="rich-intro text-left text-white/90">{intro}</p>}
         </div>
       )}
       {items.length > 0 ? (
-        <div class={gridClasses}>
-          {items.map(({ title, description, icon }, index) => (
+        <div class={stackClasses}>
+          {items.map(({ title, description }, index) => (
             <article
-              class={[...cardBaseClasses, cardAnimationClasses].filter(Boolean).join(' ')}
+              class={['services-brief__card expectations-card w-full max-w-none text-left items-start gap-4', cardAnimationClasses]
+                .filter(Boolean)
+                .join(' ')}
               style={shouldAnimate ? `transition-delay: ${index * 120}ms;` : undefined}
               data-expectations-card
             >
-              <span class={cardIconClasses}>{icon ?? '✦'}</span>
-              {title && <h3 class="text-lg font-semibold text-slate-900">{title}</h3>}
-              {description && <p class="text-sm leading-6 text-slate-600">{description}</p>}
+              {title && <p class="rich-subheading text-white">{title}</p>}
+              {description && <p class="rich-intro text-white/80">{description}</p>}
             </article>
           ))}
         </div>
