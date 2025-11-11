@@ -607,8 +607,24 @@ body {
 
   .services-brief__grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
     gap: 1.5rem;
+    grid-template-columns: 1fr;
+  }
+
+  @media (min-width: 1024px) {
+    .services-brief__grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  .services-brief__cta-wrapper {
+    text-align: left;
+  }
+
+  @media (max-width: 1023px) {
+    .services-brief__cta-wrapper {
+      text-align: center;
+    }
   }
 
   .services-brief__card {
