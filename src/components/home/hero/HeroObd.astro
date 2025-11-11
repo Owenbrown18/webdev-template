@@ -51,56 +51,65 @@ const tailClassName = [tailBaseClasses, tailAnimationClasses].filter(Boolean).jo
   data-animate={shouldAnimate ? 'true' : undefined}
 >
   <div class="section-container h-full">
-    <div class="flex h-full flex-col gap-10 py-[clamp(2rem,8vh,4rem)] text-left lg:flex-row lg:items-start">
-      <div class="flex flex-1 flex-col justify-between gap-[clamp(0.75rem,3.5vh,2.25rem)]">
-      <div class={`${bandClassName} items-start justify-start`} data-letter="o">
-        <div class="pointer-events-none absolute inset-0">
-          <div class="absolute left-0 top-0 h-36 w-36 rounded-full bg-white/18 blur-[120px] sm:h-48 sm:w-48"></div>
+    <div class="flex h-full flex-col">
+      <div class="relative mt-auto mb-auto flex flex-col gap-10 py-[clamp(2rem,8vh,4rem)] text-left lg:flex-row lg:items-start">
+        <div class="flex flex-1 flex-col justify-between gap-[clamp(0.75rem,3.5vh,2.25rem)]">
+          <div class={`${bandClassName} items-start justify-start`} data-letter="o">
+            <div class="pointer-events-none absolute inset-0">
+              <div class="absolute left-0 top-0 h-36 w-36 rounded-full bg-white/18 blur-[120px] sm:h-48 sm:w-48"></div>
+            </div>
+            <div class="flex items-end gap-4 sm:gap-6">
+              <span class={`${letterBaseClasses} ${letterSizeClasses}`} aria-hidden="true">O</span>
+              <span class="tail-offset -ml-4 sm:-ml-8 lg:-ml-10 pl-6 sm:pl-10 -translate-y-4 sm:-translate-y-6">
+                <span class={tailClassName} data-tail="wen">WEN</span>
+              </span>
+            </div>
+          </div>
+          <div class={`${bandClassName} items-center justify-start`} data-letter="b">
+            <div class="pointer-events-none absolute inset-0">
+              <div class="absolute left-1/2 top-1/2 h-44 w-44 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/12 blur-[140px] sm:h-60 sm:w-60"></div>
+            </div>
+            <div class="flex items-end gap-4 sm:gap-6">
+              <span class={`${letterBaseClasses} ${letterSizeClasses}`} aria-hidden="true">B</span>
+              <span class="tail-offset -ml-4 sm:-ml-8 lg:-ml-10 pl-6 sm:pl-10 -translate-y-4 sm:-translate-y-6">
+                <span class={tailClassName} data-tail="rown">ROWN</span>
+              </span>
+            </div>
+          </div>
+          <div class={`${bandClassName} items-end justify-start`} data-letter="d">
+            <div class="pointer-events-none absolute inset-0">
+              <div class="absolute -bottom-4 -right-6 h-44 w-44 rounded-full bg-white/18 blur-[130px] sm:h-64 sm:w-64"></div>
+            </div>
+            <div class="flex items-end gap-4 sm:gap-6">
+              <span class={`${letterBaseClasses} ${letterSizeClasses}`} aria-hidden="true">D</span>
+              <span class="tail-offset -ml-4 sm:-ml-8 lg:-ml-10 pl-6 sm:pl-10 -translate-y-4 sm:-translate-y-6">
+                <span class={tailClassName} data-tail="esign">ESIGN</span>
+              </span>
+            </div>
+          </div>
         </div>
-        <div class="flex items-end gap-4 sm:gap-6">
-          <span class={`${letterBaseClasses} ${letterSizeClasses}`} aria-hidden="true">O</span>
-          <span class="tail-offset -ml-4 sm:-ml-8 lg:-ml-10 pl-6 sm:pl-10 -translate-y-4 sm:-translate-y-6">
-            <span class={tailClassName} data-tail="wen">WEN</span>
-          </span>
+        <div class="services-brief__card hero-toc-card w-full max-w-md lg:ml-12 lg:mt-6 lg:max-w-sm">
+          <div class="space-y-4">
+            <p class="text-sm font-semibold uppercase tracking-[0.35em] text-white/70">On this page</p>
+            <ul class="space-y-3">
+              {tocItems.map(({ label, number, href }) => (
+                <li>
+                  <a href={href} class="hero-toc__link">
+                    <span>{label}</span>
+                    <span class="hero-toc__number">{number}</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
-      </div>
-      <div class={`${bandClassName} items-center justify-start`} data-letter="b">
-        <div class="pointer-events-none absolute inset-0">
-          <div class="absolute left-1/2 top-1/2 h-44 w-44 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/12 blur-[140px] sm:h-60 sm:w-60"></div>
-        </div>
-        <div class="flex items-end gap-4 sm:gap-6">
-          <span class={`${letterBaseClasses} ${letterSizeClasses}`} aria-hidden="true">B</span>
-          <span class="tail-offset -ml-4 sm:-ml-8 lg:-ml-10 pl-6 sm:pl-10 -translate-y-4 sm:-translate-y-6">
-            <span class={tailClassName} data-tail="rown">ROWN</span>
-          </span>
-        </div>
-      </div>
-      <div class={`${bandClassName} items-end justify-start`} data-letter="d">
-        <div class="pointer-events-none absolute inset-0">
-          <div class="absolute -bottom-4 -right-6 h-44 w-44 rounded-full bg-white/18 blur-[130px] sm:h-64 sm:w-64"></div>
-        </div>
-        <div class="flex items-end gap-4 sm:gap-6">
-          <span class={`${letterBaseClasses} ${letterSizeClasses}`} aria-hidden="true">D</span>
-          <span class="tail-offset -ml-4 sm:-ml-8 lg:-ml-10 pl-6 sm:pl-10 -translate-y-4 sm:-translate-y-6">
-            <span class={tailClassName} data-tail="esign">ESIGN</span>
-          </span>
-        </div>
-      </div>
-    </div>
-      <div class="services-brief__card hero-toc-card w-full max-w-md lg:ml-12 lg:mt-6 lg:max-w-sm">
-        <div class="space-y-4">
-          <p class="text-sm font-semibold uppercase tracking-[0.35em] text-white/70">On this page</p>
-          <ul class="space-y-3">
-            {tocItems.map(({ label, number, href }) => (
-              <li>
-                <a href={href} class="hero-toc__link">
-                  <span>{label}</span>
-                  <span class="hero-toc__number">{number}</span>
-                </a>
-              </li>
-            ))}
-          </ul>
-        </div>
+        <a
+          href="#home-scroll-target"
+          class="hero-scroll-button hero-scroll-button--aligned"
+          aria-label="Scroll to overview"
+        >
+          <span aria-hidden="true">↓</span>
+        </a>
       </div>
     </div>
     <p class="sr-only">OBD</p>
