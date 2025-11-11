@@ -160,6 +160,33 @@ body {
     text-align: right;
   }
 
+  @media (max-width: 640px) {
+    .eyebrow-banner {
+      font-size: clamp(1.55rem, 5.8vw, 2.1rem);
+      letter-spacing: 0.32em;
+      flex-wrap: wrap;
+      gap: 0.5rem 0.75rem;
+    }
+
+    .eyebrow-banner__label {
+      flex: 1 1 100%;
+      min-width: 0;
+      text-align: left;
+    }
+
+    .eyebrow-banner[data-has-number="true"] {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .eyebrow-banner[data-has-number="true"] .section-number-label {
+      order: -1;
+      width: 100%;
+      margin-left: 0;
+      text-align: left;
+    }
+  }
+
   .rich-intro {
     font-size: clamp(1.05rem, 1.8vw, 1.4rem);
     color: #050505;
