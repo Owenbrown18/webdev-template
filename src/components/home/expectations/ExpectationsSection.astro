@@ -46,7 +46,7 @@ const items = (Array.isArray(itemsSource) ? itemsSource : [])
 const hasContent = Boolean(eyebrow || intro || items.length > 0);
 const shouldAnimate = animationEnabled !== false;
 const sectionNumber = '05';
-const sectionClasses = [backgroundClass, 'section-shell expectations-section'].filter(Boolean).join(' ');
+const sectionClasses = [backgroundClass, 'section-shell section-overlay-dark'].filter(Boolean).join(' ');
 const containerClasses = [
   'section-container space-y-10',
   shouldAnimate
