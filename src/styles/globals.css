@@ -162,7 +162,7 @@ body {
 
   @media (max-width: 640px) {
     .eyebrow-banner {
-      font-size: clamp(1.55rem, 5.8vw, 2.1rem);
+      font-size: clamp(2.04rem, 6vw, 2.4rem);
       letter-spacing: 0.32em;
       flex-wrap: wrap;
       gap: 0.5rem 0.75rem;
