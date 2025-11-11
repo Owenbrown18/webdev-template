@@ -206,9 +206,14 @@ const preloaderScript = `(() => {
   if (!preloader) return;
   const storageKey = 'site-preloader:shown';
   const hasShown = window.sessionStorage.getItem(storageKey) === 'true';
+  const markComplete = () => {
+    window.__sitePreloaderDone = true;
+    window.dispatchEvent(new CustomEvent('sitepreloader:done'));
+  };
 
   if (hasShown) {
     preloader.remove();
+    markComplete();
     return;
   }
 
@@ -225,6 +230,7 @@ const preloaderScript = `(() => {
       preloader.addEventListener('transitionend', () => {
         preloader.remove();
         window.sessionStorage.setItem(storageKey, 'true');
+        markComplete();
       }, { once: true });
     }, delay);
   };
