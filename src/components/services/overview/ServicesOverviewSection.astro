@@ -78,7 +78,7 @@ const contentClasses = [
   >
     <div class={contentClasses} data-overview-content>
       {(eyebrow || intro) && (
-        <div class="space-y-4">
+        <div class="space-y-4 text-left">
           {eyebrow ? (
             <div class="eyebrow-stack w-full text-left" data-align="left">
               <div class="eyebrow-banner-wrapper text-left">
@@ -103,36 +103,38 @@ const contentClasses = [
       {featuredService ? (
         <article class="services-brief__card services-overview__card services-overview__card--featured">
           <div class="space-y-5 text-left">
-            <div class="flex items-center gap-3 text-sm uppercase tracking-[0.3em] text-white/70">
-              {featuredService.icon ? <span aria-hidden="true">{featuredService.icon}</span> : null}
-              <span>{featuredService.title}</span>
+            <div class="services-overview__eyebrow hero-toc__label">
+              <span class="flex items-center gap-3">
+                {featuredService.icon ? <span aria-hidden="true">{featuredService.icon}</span> : null}
+                <span>{featuredService.title}</span>
+              </span>
             </div>
             {featuredSummary.length > 0 ? (
-              <div class="space-y-4 text-left text-white/90">
+              <div class="space-y-4 text-left">
                 {featuredSummary.map((paragraph) => (
-                  <p>{paragraph}</p>
+                  <p class="rich-intro rich-intro--inverse text-left">{paragraph}</p>
                 ))}
               </div>
             ) : null}
             <div class="services-overview__meta">
               {featuredService.duration ? (
-                <div>
-                  <span class="label">Timeline</span>
-                  <span class="value">{featuredService.duration}</span>
-                </div>
+                <p class="hero-toc__label services-overview__meta-line">
+                  <span>Timeline</span>
+                  <span class="services-overview__meta-value">{featuredService.duration}</span>
+                </p>
               ) : null}
               {featuredService.startingPrice ? (
-                <div>
-                  <span class="label">Starting at</span>
-                  <span class="value">{featuredService.startingPrice}</span>
-                </div>
+                <p class="hero-toc__label services-overview__meta-line">
+                  <span>Starting at</span>
+                  <span class="services-overview__meta-value">{featuredService.startingPrice}</span>
+                </p>
               ) : null}
             </div>
           </div>
           {featuredFeatures.length > 0 ? (
             <ul class="services-overview__feature-list">
               {featuredFeatures.map((feature) => (
-                <li>{feature}</li>
+                <li class="rich-intro rich-intro--inverse">{feature}</li>
               ))}
             </ul>
           ) : null}

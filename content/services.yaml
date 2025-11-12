@@ -22,12 +22,12 @@ overview:
     tone: "none" # Options: none, gradient, aurora
     color: null
   animation: true
-  eyebrow: "Why partner with us"
+  eyebrow: "Offerings"
   title: "Expert support at every stage"
   intro: "We combine technical know-how with a personable approach, making complex work feel effortless for homeowners, property managers, and business owners alike."
   supporting: "Each engagement starts with listening. From there we design a clear path forward, assemble the right team, and keep you informed through final delivery and beyond."
 catalog:
-  variant: "spotlight" # Options: grid, list, spotlight, none
+  variant: "none" # Options: grid, list, spotlight, none
   background:
     tone: "gradient" # Options: none, gradient, aurora
     color: "#103529"

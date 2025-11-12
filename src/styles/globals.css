@@ -684,7 +684,7 @@ body {
     transform: none;
     border-color: rgba(255, 255, 255, 0.25);
     box-shadow: 0 25px 65px -40px rgba(0, 0, 0, 0.7);
-    background: rgba(4, 10, 5, 0.5);
+    background: rgba(16, 53, 41, 0.85);
   }
 
   .expectations-card,
@@ -740,6 +740,22 @@ body {
     transform: scaleX(0);
     transform-origin: left;
     transition: transform 0.3s ease, background 0.3s ease;
+  }
+
+  .hero-toc__label {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  .hero-toc__label[data-has-number="true"] .section-number-label {
+    margin-left: auto;
+    color: currentColor;
   }
 
   .hero-toc__link:hover,
@@ -811,7 +827,7 @@ body {
     align-items: stretch;
     width: 100%;
     gap: clamp(1.25rem, 3vw, 2.5rem);
-    background: rgba(4, 10, 5, 0.5);
+    background: rgba(16, 53, 41, 0.85);
   }
 
   .services-overview__card--featured {
@@ -839,6 +855,8 @@ body {
     display: flex;
     align-items: center;
     gap: 0.5rem;
+    color: rgba(255, 255, 255, 0.95);
+    font-size: inherit;
   }
 
   .services-overview__feature-list li::before {
@@ -850,21 +868,25 @@ body {
   .services-overview__meta {
     display: flex;
     flex-wrap: wrap;
-    gap: 1.25rem;
+    gap: 0.75rem 2rem;
     color: #fff;
   }
 
-  .services-overview__meta .label {
-    display: block;
-    font-size: 0.75rem;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: rgba(255, 255, 255, 0.55);
+  .services-overview__meta-line {
+    width: 100%;
+    font-size: 0.85rem;
   }
 
-  .services-overview__meta .value {
-    font-size: 1.15rem;
-    font-weight: 600;
+  @media (min-width: 640px) {
+    .services-overview__meta-line {
+      width: auto;
+    }
+  }
+
+  .services-overview__meta-value {
+    font-size: 1.25rem;
+    letter-spacing: normal;
+    text-transform: none;
   }
 
   .section-overlay-dark {
