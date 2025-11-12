@@ -1,0 +1,170 @@
+---
+interface HeroContent {
+  tagLabel?: string | null;
+  title?: string | null;
+  subtitle?: string | null;
+}
+
+interface Props {
+  hero?: HeroContent;
+  backgroundClass?: string;
+  backgroundTone?: string;
+  backgroundStyle?: string;
+  animationEnabled?: boolean;
+}
+
+const {
+  hero: heroContent,
+  backgroundClass,
+  backgroundTone,
+  backgroundStyle,
+  animationEnabled = true,
+}: Props = Astro.props as Props;
+
+const heroData = heroContent ?? {};
+const heroEyebrow = heroData.tagLabel?.trim() || heroData.title?.trim() || 'Services';
+const heroIntro = heroData.subtitle?.trim() || '';
+
+const tocItems = [
+  { label: 'Overview', number: '01', href: '#services-scroll-target' },
+  { label: 'Catalog', number: '02', href: '#services-catalog' },
+  { label: 'Testimonials', number: '03', href: '#services-testimonials' },
+  { label: 'FAQ', number: '04', href: '#services-faq' },
+  { label: 'Contact', number: '05', href: '#services-cta' },
+];
+
+const sectionClasses = [
+  backgroundClass,
+  'full-bleed section-overlay-dark relative isolate overflow-hidden text-white h-[calc(100vh-var(--header-height,5rem))]',
+]
+  .filter(Boolean)
+  .join(' ');
+
+const shouldAnimate = animationEnabled !== false;
+const ancillaryAnimationClasses = shouldAnimate
+  ? 'opacity-0 translate-y-4 transition duration-[900ms] ease-out data-[visible=true]:opacity-100 data-[visible=true]:translate-y-0'
+  : '';
+---
+<section
+  class={sectionClasses}
+  data-hero-root
+  data-background-tone={backgroundTone ?? undefined}
+  style={backgroundStyle}
+  data-animate={shouldAnimate ? 'true' : undefined}
+>
+  <div class="section-container h-full py-[clamp(4rem,16vh,8rem)]">
+    <div class="flex h-full flex-col">
+      <div class="relative flex flex-col gap-10 text-left lg:flex-row lg:items-start lg:justify-between">
+        <div class="flex flex-col max-w-3xl">
+          <div
+            class={`space-y-6 text-left ${ancillaryAnimationClasses}`}
+            data-hero-ancillary
+          >
+            {heroEyebrow ? (
+              <div class="eyebrow-stack eyebrow-stack--inverse w-full text-left" data-align="left">
+                <div class="eyebrow-banner-wrapper text-left">
+                  <p class="eyebrow-banner eyebrow-banner--inverse" data-align="left">
+                    <span class="eyebrow-banner__label">{heroEyebrow}</span>
+                  </p>
+                </div>
+              </div>
+            ) : null}
+            {heroIntro ? <p class="rich-intro rich-intro--inverse text-left">{heroIntro}</p> : null}
+          </div>
+        </div>
+        <div
+          class={`services-brief__card hero-toc-card w-full max-w-md lg:ml-12 lg:mt-6 lg:max-w-sm hidden lg:block ${ancillaryAnimationClasses}`}
+          data-hero-ancillary
+        >
+          <div class="space-y-4">
+            <p class="text-sm font-semibold uppercase tracking-[0.35em] text-white/70">On this page</p>
+            <ul class="space-y-3">
+              {tocItems.map(({ label, number, href }) => (
+                <li>
+                  <a href={href} class="hero-toc__link">
+                    <span>{label}</span>
+                    <span class="hero-toc__number">{number}</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+        <a
+          href="#services-scroll-target"
+          class={`hero-scroll-button hero-scroll-button--services hidden lg:inline-flex ${ancillaryAnimationClasses}`}
+          aria-label="Scroll to overview"
+          data-hero-ancillary
+        >
+          <span aria-hidden="true">↓</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+{shouldAnimate ? (
+  <script>
+    const init = () => {
+      const root = document.querySelector('[data-hero-root][data-animate="true"]');
+      if (!(root instanceof HTMLElement)) return;
+      if (root.dataset.heroAnimated === 'true') return;
+      root.dataset.heroAnimated = 'true';
+
+      const prefersReducedMotion =
+        typeof window !== 'undefined' &&
+        typeof window.matchMedia === 'function' &&
+        window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const ancillaryItems = Array.from(root.querySelectorAll('[data-hero-ancillary]'));
+
+      const revealAncillary = () => {
+        ancillaryItems.forEach((item, index) => {
+          if (!(item instanceof HTMLElement)) return;
+          const delay = prefersReducedMotion ? 0 : 300 + index * 120;
+          window.setTimeout(() => {
+            item.dataset.visible = 'true';
+          }, delay);
+        });
+      };
+
+      if (prefersReducedMotion || ancillaryItems.length === 0 || !('IntersectionObserver' in window)) {
+        revealAncillary();
+        return;
+      }
+
+      const observer = new IntersectionObserver(
+        (entries, obs) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              revealAncillary();
+              obs.disconnect();
+            }
+          });
+        },
+        { threshold: 0.3 },
+      );
+
+      observer.observe(root);
+    };
+
+    const bootstrapHero = () => {
+      const preloaderEl = document.getElementById('site-preloader');
+      const preloaderDone = window.__sitePreloaderDone === true;
+      if (!preloaderEl || preloaderDone) {
+        init();
+        return;
+      }
+      const handlePreloaderDone = () => {
+        window.removeEventListener('sitepreloader:done', handlePreloaderDone);
+        init();
+      };
+      window.addEventListener('sitepreloader:done', handlePreloaderDone, { once: true });
+    };
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', bootstrapHero, { once: true });
+    } else {
+      bootstrapHero();
+    }
+  </script>
+) : null}
