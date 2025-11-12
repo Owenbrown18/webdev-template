@@ -3,14 +3,14 @@ metadata:
   description: "Explore our complete catalog of services, from discovery and planning to hands-on delivery and ongoing maintenance."
   heroImageAlt: "Technician reviewing plans with a homeowner"
 hero:
-  variant: "fullscreen" # Options: showcase, fullscreen, none
+  variant: "serviceshero" # Options: showcase, fullscreen, serviceshero, none
   background:
     tone: "aurora" # Options: none, gradient, solid, aurora
     color: "#103529" # Optional CSS color to tint gradient/aurora tones
   animation: true
   tagLabel: "Services"
   title: "Reliable, end-to-end care for every project"
-  subtitle: "Whether you need a one-off consult or an ongoing partner, our team brings seasoned expertise and attentive service to every engagement."
+  subtitle: "From full-scale website builds to ongoing updates and SEO tuning, I help small businesses establish a clean, modern online presence. Every project is built with performance, clarity, and long-term usability in mind—so your site not only looks great, it works for you."
   primaryCtaLabel: "Book a meeting"
   primaryCtaHref: "/contact"
   #secondaryCtaLabel: "Download pricing guide"
@@ -36,7 +36,7 @@ catalog:
   title: "Comprehensive support, one trusted team"
   intro: "Browse our most-requested services and assemble a plan that matches your project scope, timeline, and budget."
 highlights:
-  variant: "columns" # Options: columns, none
+  variant: "none" # Options: columns, none
   background:
     tone: "none" # Options: none, gradient, aurora
     color: null

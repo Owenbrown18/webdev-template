@@ -767,11 +767,11 @@ body {
     transition: transform 0.3s ease, border-color 0.3s ease, background 0.3s ease;
     position: absolute;
     right: 0;
-    bottom: 0;
+    bottom: clamp(3rem, 10vh, 6rem);
   }
 
-  .hero-scroll-button--aligned {
-    bottom: clamp(3rem, 10vh, 6rem);
+  .hero-scroll-button--services {
+    bottom: clamp(1rem, 4vh, 2rem);
   }
 
   .hero-scroll-button:hover,

@@ -15,6 +15,7 @@ import {
 } from '../../../utils/background';
 import ServicesHeroShowcase from './ServicesHeroShowcase.astro';
 import ServicesHeroFullscreen from './ServicesHeroFullscreen.astro';
+import ServicesHeroObd from './ServicesHeroObd.astro';
 
 const hero = servicesPage.hero ?? {};
 const metadata = getServicesPageMetadata();
@@ -38,6 +39,7 @@ delete restProps.animation;
 const variants: Record<string, any> = {
   showcase: ServicesHeroShowcase,
   fullscreen: ServicesHeroFullscreen,
+  serviceshero: ServicesHeroObd,
 };
 
 const variantKey = variantOverride ?? getServicesHeroVariant();

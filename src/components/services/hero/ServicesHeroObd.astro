@@ -54,8 +54,8 @@ const ancillaryAnimationClasses = shouldAnimate
 >
   <div class="section-container h-full py-[clamp(4rem,16vh,8rem)]">
     <div class="flex h-full flex-col">
-      <div class="relative flex flex-col gap-10 text-left lg:flex-row lg:items-start lg:justify-between">
-        <div class="flex flex-col max-w-3xl">
+      <div class="relative flex h-full flex-col gap-10 text-left lg:flex-row lg:items-stretch">
+        <div class="flex flex-1 flex-col justify-between max-w-3xl">
           <div
             class={`space-y-6 text-left ${ancillaryAnimationClasses}`}
             data-hero-ancillary
@@ -72,32 +72,34 @@ const ancillaryAnimationClasses = shouldAnimate
             {heroIntro ? <p class="rich-intro rich-intro--inverse text-left">{heroIntro}</p> : null}
           </div>
         </div>
-        <div
-          class={`services-brief__card hero-toc-card w-full max-w-md lg:ml-12 lg:mt-6 lg:max-w-sm hidden lg:block ${ancillaryAnimationClasses}`}
-          data-hero-ancillary
-        >
-          <div class="space-y-4">
-            <p class="text-sm font-semibold uppercase tracking-[0.35em] text-white/70">On this page</p>
-            <ul class="space-y-3">
-              {tocItems.map(({ label, number, href }) => (
-                <li>
-                  <a href={href} class="hero-toc__link">
-                    <span>{label}</span>
-                    <span class="hero-toc__number">{number}</span>
-                  </a>
-                </li>
-              ))}
-            </ul>
+        <div class="relative flex flex-1 flex-col items-end">
+          <div
+            class={`services-brief__card hero-toc-card w-full max-w-md lg:max-w-sm hidden lg:block self-end lg:ml-12 lg:mt-6 ${ancillaryAnimationClasses}`}
+            data-hero-ancillary
+          >
+            <div class="space-y-4">
+              <p class="text-sm font-semibold uppercase tracking-[0.35em] text-white/70">On this page</p>
+              <ul class="space-y-3">
+                {tocItems.map(({ label, number, href }) => (
+                  <li>
+                    <a href={href} class="hero-toc__link">
+                      <span>{label}</span>
+                      <span class="hero-toc__number">{number}</span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
+          <a
+            href="#services-scroll-target"
+            class={`hero-scroll-button hero-scroll-button--services hidden lg:inline-flex ${ancillaryAnimationClasses}`}
+            aria-label="Scroll to overview"
+            data-hero-ancillary
+          >
+            <span aria-hidden="true">↓</span>
+          </a>
         </div>
-        <a
-          href="#services-scroll-target"
-          class={`hero-scroll-button hero-scroll-button--services hidden lg:inline-flex ${ancillaryAnimationClasses}`}
-          aria-label="Scroll to overview"
-          data-hero-ancillary
-        >
-          <span aria-hidden="true">↓</span>
-        </a>
       </div>
     </div>
   </div>
