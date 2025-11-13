@@ -57,6 +57,9 @@ const contentClasses = [
 ]
   .filter(Boolean)
   .join(' ');
+const cardAnimationClass = shouldAnimate
+  ? 'motion-safe:translate-y-6 motion-safe:opacity-0 motion-safe:transition-all motion-safe:duration-[900ms] motion-safe:ease-out data-[visible=true]:motion-safe:translate-y-0 data-[visible=true]:motion-safe:opacity-100'
+  : '';
 ---
 {hasContent ? (
   <section
@@ -102,9 +105,11 @@ const contentClasses = [
         const serviceAnchor = service.slug ? `services-card-${service.slug}` : `services-card-${index}`;
         return (
           <article
-            class="services-brief__card services-overview__card services-overview__card--featured card-aurora"
+            class={`services-brief__card services-overview__card services-overview__card--featured card-aurora ${cardAnimationClass}`.trim()}
             key={service.slug ?? index}
             id={serviceAnchor}
+            data-overview-card
+            style={shouldAnimate ? `transition-delay: ${index * 120}ms;` : undefined}
           >
             <div class="space-y-5 text-left">
               <div class="services-overview__eyebrow services-subheading" data-has-number="true">
@@ -178,14 +183,16 @@ const contentClasses = [
           }
 
           const content = root.querySelector('[data-overview-content]');
-          if (!(content instanceof HTMLElement)) {
+          const cards = Array.from(root.querySelectorAll('[data-overview-card]'));
+          const targets = [content, ...cards];
+          if (!targets.length) {
             return;
           }
 
           root.dataset.overviewAnimated = 'true';
 
           if (prefersReducedMotion || !('IntersectionObserver' in window)) {
-            reveal(content);
+            targets.forEach((target) => target && reveal(target));
             return;
           }
 
@@ -204,7 +211,7 @@ const contentClasses = [
             },
           );
 
-          observer.observe(content);
+          targets.forEach((target) => target && observer.observe(target));
         });
       </script>
     ) : null}
