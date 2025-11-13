@@ -437,6 +437,20 @@ export type ServicesPageContent = {
     ctaLabel?: string | null;
     ctaHref?: string | null;
   };
+  process?: {
+    background?: {
+      tone?: string | null;
+      color?: string | null;
+    };
+    animation?: boolean | null;
+    eyebrow?: string | null;
+    title?: string | null;
+    intro?: string | null;
+    steps?: Array<{
+      title?: string | null;
+      description?: string | null;
+    }>;
+  };
 };
 
 export type TestimonialsContent = {

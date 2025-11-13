@@ -26,6 +26,25 @@ overview:
   title: "Expert support at every stage"
   intro: "We combine technical know-how with a personable approach, making complex work feel effortless for homeowners, property managers, and business owners alike."
   supporting: "Each engagement starts with listening. From there we design a clear path forward, assemble the right team, and keep you informed through final delivery and beyond."
+process:
+  background:
+    tone: "aurora" # Options: none, gradient, aurora
+    color: "#103529"
+  animation: true
+  eyebrow: "Our Process"
+  title: "A dependable process from kickoff to launch"
+  intro: "Every engagement flows through a transparent set of stages so you always know what we’re working on and what’s coming next."
+  steps:
+    - title: "Discover & define"
+      description: "We start by learning about your business, goals, and audience. This helps us define project scope and identify the best structure for your website."
+    - title: "Plan & design"
+      description: "We create a visual layout and design concept that aligns with your brand and user needs, ensuring clarity and ease of navigation on every device."
+    - title: "Build & test"
+      description: "Your site is developed using clean, responsive code optimized for speed, accessibility, and SEO. We test thoroughly before launch to ensure reliability."
+    - title: "Launch & review"
+      description: "Once approved, we deploy your site to a live server and monitor its performance. You’ll receive training or documentation to manage updates confidently."
+    - title: "Support & grow"
+      description: "We stay available for ongoing maintenance, SEO updates, and enhancements as your business evolves—keeping your website performing at its best."
 catalog:
   variant: "none" # Options: grid, list, spotlight, none
   background:

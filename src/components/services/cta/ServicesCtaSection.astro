@@ -42,7 +42,7 @@ const ctaLabel = (ctaLabelOverride ?? settings.ctaLabel ?? 'Request a consultati
 const ctaHref = (ctaHrefOverride ?? settings.ctaHref ?? '/contact') as string | undefined;
 const hasContent = Boolean(eyebrow || title || intro || ctaLabel);
 const shouldAnimate = animationEnabled !== false;
-const sectionClasses = [backgroundClass, 'section-shell expectations-section'].filter(Boolean).join(' ');
+const sectionClasses = [backgroundClass, 'section-shell expectations-section section-overlay-dark'].filter(Boolean).join(' ');
 const containerClasses = [
   'section-container space-y-6',
   shouldAnimate

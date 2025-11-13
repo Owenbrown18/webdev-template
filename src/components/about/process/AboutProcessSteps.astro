@@ -5,7 +5,7 @@ interface StepItem {
 }
 
 interface Props {
-  title: string;
+  title?: string;
   intro?: string;
   eyebrow?: string;
   steps: StepItem[];
@@ -28,13 +28,14 @@ const {
   backgroundStyle,
 }: Props = Astro.props as Props;
 
-const sectionClasses = [backgroundClass, 'section-shell'].filter(Boolean).join(' ');
+const sectionClasses = [backgroundClass, 'section-shell section-overlay-dark'].filter(Boolean).join(' ');
+const sectionNumber = '02';
 const shouldAnimate = animationEnabled !== false;
 const animationClasses = shouldAnimate
   ? 'motion-safe:translate-y-6 motion-safe:opacity-0 motion-safe:transition-all motion-safe:duration-[1400ms] motion-safe:ease-out data-[visible=true]:motion-safe:translate-y-0 data-[visible=true]:motion-safe:opacity-100'
   : '';
 const cardClasses = [
-  'surface-card surface-card-static flex-1 p-6',
+  'services-brief__card expectations-card w-full text-left items-start gap-4 p-6',
   animationClasses,
 ]
   .filter(Boolean)
@@ -47,29 +48,47 @@ const cardClasses = [
   style={backgroundStyle}
   data-process-root
 >
-  <div class="section-container max-w-5xl">
-    <div class="section-intro mx-auto max-w-5xl">
-      {eyebrow && <p class="section-eyebrow">{eyebrow}</p>}
-      <h2 class="section-heading">{title}</h2>
-      {intro && <p class="section-subtitle">{intro}</p>}
-    </div>
-    <ol class="mt-12 space-y-8">
+  <div class="section-container space-y-10">
+    {(eyebrow || intro) && (
+      <div class="space-y-4 text-left">
+        {eyebrow ? (
+          <div class="eyebrow-stack eyebrow-stack--inverse w-full text-left" data-align="left">
+            <div class="eyebrow-banner-wrapper text-left">
+              <p
+                class="eyebrow-banner eyebrow-banner--inverse"
+                data-align="left"
+                data-has-number={sectionNumber ? 'true' : undefined}
+              >
+                <span class="eyebrow-banner__label">{eyebrow}</span>
+                {sectionNumber ? (
+                  <span class="section-number-label text-white" aria-label={`Section ${sectionNumber}`}>
+                    {sectionNumber}
+                  </span>
+                ) : null}
+              </p>
+            </div>
+          </div>
+        ) : null}
+        {intro ? <p class="rich-intro rich-intro--inverse text-left">{intro}</p> : null}
+      </div>
+    )}
+    <ol class="space-y-8">
       {steps.map(({ title, description }, index) => (
         <li class="flex gap-6">
           <div class="relative flex w-12 flex-col items-center">
-            <span class="flex h-10 w-10 items-center justify-center rounded-full bg-white text-xs font-semibold uppercase tracking-[0.16em] text-brand-primary shadow-[0_0_0_4px_rgba(37,99,235,0.12)]">
+            <span class="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-xs font-semibold uppercase tracking-[0.16em] text-white border border-white/40 shadow-[0_0_25px_rgba(0,0,0,0.25)]">
               {String(index + 1).padStart(2, '0')}
             </span>
             {index < steps.length - 1 && (
-              <span class="mt-3 w-px flex-1 bg-gradient-to-b from-brand-primary/25 via-slate-200 to-slate-200" aria-hidden="true"></span>
+              <span class="mt-3 w-px flex-1 bg-gradient-to-b from-white/40 via-white/15 to-transparent" aria-hidden="true"></span>
             )}
           </div>
           <article
             data-process-card
             class={cardClasses}
           >
-            <h3 class="text-lg font-semibold text-slate-900">{title}</h3>
-            {description && <p class="mt-3 text-sm leading-6 text-slate-600">{description}</p>}
+            <h3 class="rich-subheading text-left text-white">{title}</h3>
+            {description && <p class="mt-3 rich-intro rich-intro--inverse text-left text-white/85">{description}</p>}
           </article>
         </li>
       ))}
