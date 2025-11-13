@@ -28,7 +28,7 @@ const {
 const sectionNumber = '02';
 
 const items = Array.isArray(services.items) ? services.items.filter(Boolean) : [];
-const sectionClasses = [backgroundClass, 'section-shell', 'full-bleed', 'services-brief-section']
+const sectionClasses = [backgroundClass, 'section-shell', 'full-bleed', 'services-brief-section', 'section-overlay-dark']
   .filter(Boolean)
   .join(' ');
 const shouldAnimate = animationEnabled !== false;
