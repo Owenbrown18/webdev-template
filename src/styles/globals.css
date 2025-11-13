@@ -795,6 +795,8 @@ body {
     color: rgba(255, 255, 255, 0.82);
     border-bottom: 1.5px solid rgba(255, 255, 255, 0.35);
     padding-bottom: 0.75rem;
+    padding-left: clamp(0.5rem, 2vw, 1rem);
+    padding-right: clamp(0.85rem, 3vw, 1.5rem);
   }
 
   .services-subheading .section-number-label {
