@@ -11,7 +11,7 @@ items:
       - "Fast and secure performance"
     icon: "💻"
     duration: "2–4 weeks"
-    startingPrice: "From $950"
+    startingPrice: "$950"
     link:
       label: "Request details"
       href: "/contact"

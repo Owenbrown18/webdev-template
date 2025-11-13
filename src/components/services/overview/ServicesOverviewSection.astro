@@ -41,17 +41,7 @@ delete sectionProps.eyebrow;
 delete sectionProps.intro;
 const sectionNumber = '01';
 const hasContent = Boolean(eyebrow || intro);
-const services = getServices();
-const featuredService = services[0];
-const featuredSummary = typeof featuredService?.summary === 'string'
-  ? featuredService.summary
-      .split(/\n\s*\n/)
-      .map((paragraph) => paragraph.trim())
-      .filter(Boolean)
-  : [];
-const featuredFeatures = Array.isArray(featuredService?.features)
-  ? featuredService.features.filter(Boolean)
-  : [];
+const services = getServices().filter(Boolean);
 const shouldAnimate = animationEnabled !== false;
 const cardClasses = [
   'section-shell',
@@ -100,46 +90,67 @@ const contentClasses = [
           {intro ? <p class="rich-intro text-left">{intro}</p> : null}
         </div>
       )}
-      {featuredService ? (
-        <article class="services-brief__card services-overview__card services-overview__card--featured">
-          <div class="space-y-5 text-left">
-            <div class="services-overview__eyebrow hero-toc__label">
-              <span class="flex items-center gap-3">
-                {featuredService.icon ? <span aria-hidden="true">{featuredService.icon}</span> : null}
-                <span>{featuredService.title}</span>
-              </span>
-            </div>
-            {featuredSummary.length > 0 ? (
-              <div class="space-y-4 text-left">
-                {featuredSummary.map((paragraph) => (
-                  <p class="rich-intro rich-intro--inverse text-left">{paragraph}</p>
-                ))}
+      {services.map((service, index) => {
+        const features = Array.isArray(service?.features) ? service.features.filter(Boolean) : [];
+        const summaryParagraphs = typeof service?.summary === 'string'
+          ? service.summary
+              .split(/\n\s*\n/)
+              .map((paragraph) => paragraph.trim())
+              .filter(Boolean)
+          : [];
+        const sectionSubNumber = `01.${index + 1}`;
+        return (
+          <article
+            class="services-brief__card services-overview__card services-overview__card--featured card-aurora"
+            key={service.slug ?? index}
+          >
+            <div class="space-y-5 text-left">
+              <div class="services-overview__eyebrow services-subheading" data-has-number="true">
+                <span>{service.title}</span>
+                <span class="section-number-label" aria-label={`Section ${sectionSubNumber}`}>
+                  {sectionSubNumber}
+                </span>
               </div>
-            ) : null}
-            <div class="services-overview__meta">
-              {featuredService.duration ? (
-                <p class="hero-toc__label services-overview__meta-line">
-                  <span>Timeline</span>
-                  <span class="services-overview__meta-value">{featuredService.duration}</span>
-                </p>
+              {summaryParagraphs.length > 0 ? (
+                <div class="space-y-4">
+                  {summaryParagraphs.map((paragraph) => (
+                    <p class="rich-intro rich-intro--inverse">{paragraph}</p>
+                  ))}
+                </div>
               ) : null}
-              {featuredService.startingPrice ? (
-                <p class="hero-toc__label services-overview__meta-line">
-                  <span>Starting at</span>
-                  <span class="services-overview__meta-value">{featuredService.startingPrice}</span>
-                </p>
-              ) : null}
+              <div class="services-overview__content-grid">
+                {features.length > 0 ? (
+                  <ul class="services-overview__feature-list">
+                    {features.map((feature) => (
+                      <li class="rich-intro rich-intro--inverse">{feature}</li>
+                    ))}
+                  </ul>
+                ) : null}
+                <div class="services-overview__meta">
+                  {service.duration ? (
+                    <p class="services-overview__meta-line">
+                      <span class="rich-subheading text-white/80">Timeline:</span>
+                      <span class="services-overview__meta-separator"></span>
+                      <span class="rich-intro rich-intro--inverse services-overview__meta-value">
+                        {service.duration}
+                      </span>
+                    </p>
+                  ) : null}
+                  {service.startingPrice ? (
+                    <p class="services-overview__meta-line">
+                      <span class="rich-subheading text-white/80">Starting at:</span>
+                      <span class="services-overview__meta-separator"></span>
+                      <span class="rich-intro rich-intro--inverse services-overview__meta-value">
+                        {service.startingPrice}
+                      </span>
+                    </p>
+                  ) : null}
+                </div>
+              </div>
             </div>
-          </div>
-          {featuredFeatures.length > 0 ? (
-            <ul class="services-overview__feature-list">
-              {featuredFeatures.map((feature) => (
-                <li class="rich-intro rich-intro--inverse">{feature}</li>
-              ))}
-            </ul>
-          ) : null}
-        </article>
-      ) : null}
+          </article>
+        );
+      })}
     </div>
     {shouldAnimate ? (
       <script>
