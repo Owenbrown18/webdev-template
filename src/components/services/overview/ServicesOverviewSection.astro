@@ -99,10 +99,12 @@ const contentClasses = [
               .filter(Boolean)
           : [];
         const sectionSubNumber = `01.${index + 1}`;
+        const serviceAnchor = service.slug ? `services-card-${service.slug}` : `services-card-${index}`;
         return (
           <article
             class="services-brief__card services-overview__card services-overview__card--featured card-aurora"
             key={service.slug ?? index}
+            id={serviceAnchor}
           >
             <div class="space-y-5 text-left">
               <div class="services-overview__eyebrow services-subheading" data-has-number="true">

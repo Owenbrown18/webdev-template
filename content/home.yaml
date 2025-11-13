@@ -78,7 +78,7 @@ portfolioStatement:
   title: "Websites built for real results"
   intro: "We design and develop clean, high-performing websites tailored to each business we work with. While our full portfolio is coming soon, you can explore the services and process that power every project we build."
   ctaLabel: "View our Process"
-  ctaHref: "/about#process"
+  ctaHref: "/services#process"
 cta:
   background:
     tone: "aurora" # Options: none, gradient, solid, aurora

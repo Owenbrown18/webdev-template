@@ -26,11 +26,12 @@ const heroEyebrow = heroData.tagLabel?.trim() || heroData.title?.trim() || 'Serv
 const heroIntro = heroData.subtitle?.trim() || '';
 
 const tocItems = [
-  { label: 'Overview', number: '01', href: '#services-scroll-target' },
-  { label: 'Catalog', number: '02', href: '#services-catalog' },
-  { label: 'Testimonials', number: '03', href: '#services-testimonials' },
-  { label: 'FAQ', number: '04', href: '#services-faq' },
-  { label: 'Contact', number: '05', href: '#services-cta' },
+  { label: 'Offerings', number: '01', href: '#services-scroll-target' },
+  { label: 'Website Design & Development', number: '01.1', href: '#services-card-website-design-development', variant: 'sub' },
+  { label: 'Website Redesign & Updates', number: '01.2', href: '#services-card-website-redesign', variant: 'sub' },
+  { label: 'SEO & Google Business Enhancement', number: '01.3', href: '#services-card-seo-google-business', variant: 'sub' },
+  { label: 'Our Process', number: '02', href: '#services-process' },
+  { label: 'FAQ', number: '03', href: '#services-faq' },
 ];
 
 const sectionClasses = [
@@ -80,9 +81,12 @@ const ancillaryAnimationClasses = shouldAnimate
             <div class="space-y-4">
               <p class="text-sm font-semibold uppercase tracking-[0.35em] text-white/70">On this page</p>
               <ul class="space-y-3">
-                {tocItems.map(({ label, number, href }) => (
+                {tocItems.map(({ label, number, href, variant }) => (
                   <li>
-                    <a href={href} class="hero-toc__link">
+                    <a
+                      href={href}
+                      class={`hero-toc__link ${variant === 'sub' ? 'hero-toc__link--sub' : ''}`.trim()}
+                    >
                       <span>{label}</span>
                       <span class="hero-toc__number">{number}</span>
                     </a>

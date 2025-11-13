@@ -83,7 +83,7 @@ highlights:
         - "Emergency on-call coverage"
         - "Performance reporting"
 testimonials:
-  variant: "grid" # Options: grid, stack, none
+  variant: "none" # Options: grid, stack, none
   background:
     tone: "aurora" # Options: none, gradient, aurora
     color: "#103529"

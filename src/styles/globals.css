@@ -821,6 +821,18 @@ body {
     color: rgba(255, 255, 255, 0.7);
   }
 
+  .hero-toc__link--sub {
+    font-size: 0.75rem;
+    letter-spacing: 0.25em;
+    padding-left: 1.5rem;
+    color: rgba(255, 255, 255, 0.75);
+  }
+
+  .hero-toc__link--sub .hero-toc__number {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.65);
+  }
+
   .hero-scroll-button {
     display: inline-flex;
     align-items: center;

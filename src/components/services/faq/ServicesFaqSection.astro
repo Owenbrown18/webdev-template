@@ -39,9 +39,10 @@ const items = Array.isArray(restProps.items ?? base.items)
   : [];
 const shouldRender = Boolean((eyebrow || title || intro) && items.length > 0);
 const shouldAnimate = animationEnabled !== false;
-const sectionClasses = [backgroundClass, 'section-shell'].filter(Boolean).join(' ');
+const sectionNumber = '03';
+const sectionClasses = [backgroundClass, 'section-shell section-overlay-dark'].filter(Boolean).join(' ');
 const introClasses = [
-  'section-intro mx-auto max-w-5xl',
+  'section-container space-y-4 text-left',
   shouldAnimate
     ? 'motion-safe:translate-y-6 motion-safe:opacity-0 motion-safe:transition-all motion-safe:duration-[900ms] motion-safe:ease-out data-[visible=true]:motion-safe:translate-y-0 data-[visible=true]:motion-safe:opacity-100'
     : '',
@@ -54,27 +55,44 @@ const itemAnimationClass = shouldAnimate
 ---
 {shouldRender ? (
   <section
+    id="services-faq"
     class={sectionClasses}
     data-background-tone={backgroundToneAttr ?? undefined}
     style={backgroundStyle}
     data-faq-root={shouldAnimate ? 'true' : undefined}
   >
-    <div class="section-container max-w-5xl space-y-10">
+    <div class="section-container space-y-10">
       <div class={introClasses} data-faq-intro>
-        {eyebrow && <p class="section-eyebrow">{eyebrow}</p>}
-        {title && <h2 class="section-heading">{title}</h2>}
-        {intro && <p class="section-subtitle">{intro}</p>}
+        {(eyebrow || sectionNumber) && (
+          <div class="eyebrow-stack w-full text-left" data-align="left">
+            <div class="eyebrow-banner-wrapper text-left">
+              <p
+                class="eyebrow-banner eyebrow-banner--inverse"
+                data-align="left"
+                data-has-number={sectionNumber ? 'true' : undefined}
+              >
+                <span class="eyebrow-banner__label">{eyebrow}</span>
+                {sectionNumber ? (
+                  <span class="section-number-label text-white" aria-label={`Section ${sectionNumber}`}>
+                    {sectionNumber}
+                  </span>
+                ) : null}
+              </p>
+            </div>
+          </div>
+        )}
+        {intro && <p class="rich-intro text-left text-white/85">{intro}</p>}
       </div>
       <dl class="space-y-6" data-faq-list>
         {items.map((item, index) => (
           <div
-            class={`surface-card surface-card-static p-6 sm:p-7 ${itemAnimationClass}`}
+            class={`services-brief__card expectations-card w-full items-start text-left gap-3 ${itemAnimationClass}`}
             data-faq-item
             data-index={index}
             style={shouldAnimate ? `transition-delay: ${index * 80}ms;` : undefined}
           >
-            {item.question && <dt class="text-lg font-semibold text-slate-900">{item.question}</dt>}
-            {item.answer && <dd class="mt-3 text-sm leading-relaxed text-slate-600">{item.answer}</dd>}
+            {item.question && <dt class="rich-subheading text-left text-white">{item.question}</dt>}
+            {item.answer && <dd class="rich-intro text-left text-white/85">{item.answer}</dd>}
           </div>
         ))}
       </dl>
