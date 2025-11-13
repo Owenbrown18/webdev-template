@@ -968,6 +968,7 @@ body {
   .section-overlay-dark {
     position: relative;
     isolation: isolate;
+    overflow: hidden;
   }
 
   .section-overlay-dark::after {
