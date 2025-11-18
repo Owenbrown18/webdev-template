@@ -787,7 +787,7 @@ body {
     width: 100%;
     justify-content: space-between;
     gap: 1rem;
-    align-items: baseline;
+    align-items: flex-start;
     font-weight: 600;
     letter-spacing: 0.28em;
     text-transform: uppercase;

@@ -101,6 +101,7 @@ testimonials:
 faq:
   background:
     tone: "none" # Options: none, gradient, aurora
+    color: "#103529"
   animation: true
   eyebrow: "FAQ"
   title: "Answers before we get started"
