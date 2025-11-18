@@ -30,6 +30,9 @@ const sectionClasses = [backgroundClass, 'section-shell'].filter(Boolean).join('
 const safeHref = typeof itemHrefFallback === 'string' && itemHrefFallback.length > 0 ? itemHrefFallback : undefined;
 const isDetailed = mode === 'detailed';
 const shouldAnimate = animationEnabled !== false;
+const introAnimationClass = shouldAnimate
+  ? 'motion-safe:translate-y-6 motion-safe:opacity-0 motion-safe:transition-all motion-safe:duration-[900ms] motion-safe:ease-out data-[visible=true]:motion-safe:translate-y-0 data-[visible=true]:motion-safe:opacity-100'
+  : '';
 const cardAnimationClasses = shouldAnimate
   ? 'motion-safe:translate-y-6 motion-safe:opacity-0 motion-safe:transition-all motion-safe:duration-[1000ms] motion-safe:ease-out data-[visible=true]:motion-safe:translate-y-0 data-[visible=true]:motion-safe:opacity-100'
   : '';
@@ -62,7 +65,7 @@ const resolveLinkLabel = (item: ServicesListItem) => item.link?.label?.trim();
   data-services-grid-root={shouldAnimate ? '' : undefined}
 >
   <div class="section-container">
-    <div class="section-intro">
+    <div class={`section-intro ${introAnimationClass}`} data-services-grid-intro>
       <h2 class="section-heading">{title}</h2>
       <p class="section-subtitle">{intro}</p>
     </div>

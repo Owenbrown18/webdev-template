@@ -50,6 +50,9 @@ const cardClasses = [
   .filter(Boolean)
   .join(' ');
 const contentClasses = 'section-container space-y-8 text-left';
+const introAnimationClass = shouldAnimate
+  ? 'motion-safe:translate-y-6 motion-safe:opacity-0 motion-safe:transition-all motion-safe:duration-[900ms] motion-safe:ease-out data-[visible=true]:motion-safe:translate-y-0 data-[visible=true]:motion-safe:opacity-100'
+  : '';
 const cardAnimationClass = shouldAnimate
   ? 'motion-safe:translate-y-6 motion-safe:opacity-0 motion-safe:transition-all motion-safe:duration-[900ms] motion-safe:ease-out data-[visible=true]:motion-safe:translate-y-0 data-[visible=true]:motion-safe:opacity-100'
   : '';
@@ -64,7 +67,7 @@ const cardAnimationClass = shouldAnimate
   >
     <div class={contentClasses} data-overview-content>
       {(eyebrow || intro) && (
-        <div class="space-y-4 text-left">
+        <div class={`space-y-4 text-left ${introAnimationClass}`} data-overview-intro>
           {eyebrow ? (
             <div class="eyebrow-stack w-full text-left" data-align="left">
               <div class="eyebrow-banner-wrapper text-left">
@@ -175,7 +178,7 @@ const cardAnimationClass = shouldAnimate
             return;
           }
 
-          const content = root.querySelector('[data-overview-content]');
+          const content = root.querySelector('[data-overview-intro]');
           const cards = Array.from(root.querySelectorAll('[data-overview-card]'));
           const targets = [content, ...cards];
           if (!targets.length) {

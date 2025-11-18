@@ -31,12 +31,15 @@ const {
 const sectionClasses = [backgroundClass, 'section-shell section-overlay-dark'].filter(Boolean).join(' ');
 const sectionNumber = '02';
 const shouldAnimate = animationEnabled !== false;
-const animationClasses = shouldAnimate
+const introAnimationClasses = shouldAnimate
+  ? 'motion-safe:translate-y-6 motion-safe:opacity-0 motion-safe:transition-all motion-safe:duration-[900ms] motion-safe:ease-out data-[visible=true]:motion-safe:translate-y-0 data-[visible=true]:motion-safe:opacity-100'
+  : '';
+const cardAnimationClasses = shouldAnimate
   ? 'motion-safe:translate-y-6 motion-safe:opacity-0 motion-safe:transition-all motion-safe:duration-[1400ms] motion-safe:ease-out data-[visible=true]:motion-safe:translate-y-0 data-[visible=true]:motion-safe:opacity-100'
   : '';
 const cardClasses = [
   'services-brief__card expectations-card w-full text-left items-start gap-4 p-6',
-  animationClasses,
+  cardAnimationClasses,
 ]
   .filter(Boolean)
   .join(' ');
@@ -50,7 +53,7 @@ const cardClasses = [
 >
   <div class="section-container space-y-10">
     {(eyebrow || intro) && (
-      <div class="space-y-4 text-left">
+      <div class={`space-y-4 text-left ${introAnimationClasses}`} data-process-intro>
         {eyebrow ? (
           <div class="eyebrow-stack eyebrow-stack--inverse w-full text-left" data-align="left">
             <div class="eyebrow-banner-wrapper text-left">
@@ -108,8 +111,10 @@ const cardClasses = [
       };
 
       roots.forEach((root) => {
+        const intro = root.querySelector('[data-process-intro]');
         const cards = Array.from(root.querySelectorAll('[data-process-card]'));
-        if (cards.length === 0) return;
+        const targets = [intro, ...cards].filter(Boolean);
+        if (targets.length === 0) return;
 
         if (!prefersReducedMotion && 'IntersectionObserver' in window) {
           const observer = new IntersectionObserver(
@@ -128,9 +133,9 @@ const cardClasses = [
             },
           );
 
-          cards.forEach((card) => observer.observe(card));
+          targets.forEach((target) => observer.observe(target));
         } else {
-          cards.forEach((card) => reveal(card));
+          targets.forEach((target) => reveal(target));
         }
       });
     </script>

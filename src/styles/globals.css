@@ -1032,6 +1032,13 @@ body {
     letter-spacing: 0.32em;
   }
 
+  @media (min-width: 1024px) {
+  .services-hero-title {
+      font-size: clamp(2.85rem, 5.5vw, 5.25rem);
+      letter-spacing: 0.3em;
+    }
+  }
+
   /* ------------------------------------------------------------------------ */
   /*  Home Featured Project Section                                           */
   /* ------------------------------------------------------------------------ */
