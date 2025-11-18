@@ -61,7 +61,7 @@ values:
 process:
   variant: "steps"
   background:
-    tone: "none"
+    tone: "aurora"
     color: "#103529"
   animation: true
   eyebrow: "How we work"
