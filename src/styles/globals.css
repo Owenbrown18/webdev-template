@@ -1027,6 +1027,11 @@ body {
     box-shadow: 0 32px 60px -30px rgba(0, 0, 0, 0.85);
   }
 
+  .services-hero-title {
+    font-size: clamp(3.25rem, 10vw, 6.5rem);
+    letter-spacing: 0.32em;
+  }
+
   /* ------------------------------------------------------------------------ */
   /*  Home Featured Project Section                                           */
   /* ------------------------------------------------------------------------ */

@@ -56,7 +56,7 @@ const ancillaryAnimationClasses = shouldAnimate
   <div class="section-container h-full py-[clamp(4rem,16vh,8rem)]">
     <div class="flex h-full flex-col">
       <div class="relative flex h-full flex-col gap-10 text-left lg:flex-row lg:items-stretch">
-        <div class="flex flex-1 flex-col justify-between max-w-3xl">
+        <div class="flex w-full flex-col justify-between lg:flex-1 lg:max-w-3xl">
           <div
             class={`space-y-6 text-left ${ancillaryAnimationClasses}`}
             data-hero-ancillary
@@ -64,7 +64,7 @@ const ancillaryAnimationClasses = shouldAnimate
             {heroEyebrow ? (
               <div class="eyebrow-stack eyebrow-stack--inverse w-full text-left" data-align="left">
                 <div class="eyebrow-banner-wrapper text-left">
-                  <p class="eyebrow-banner eyebrow-banner--inverse" data-align="left">
+                  <p class="eyebrow-banner eyebrow-banner--inverse services-hero-title" data-align="left">
                     <span class="eyebrow-banner__label">{heroEyebrow}</span>
                   </p>
                 </div>
@@ -73,9 +73,9 @@ const ancillaryAnimationClasses = shouldAnimate
             {heroIntro ? <p class="rich-intro rich-intro--inverse text-left">{heroIntro}</p> : null}
           </div>
         </div>
-        <div class="relative flex flex-1 flex-col items-end">
+        <div class="relative hidden lg:flex lg:flex-col lg:items-end lg:flex-none lg:ml-12 lg:mt-6">
           <div
-            class={`services-brief__card hero-toc-card w-full max-w-md lg:max-w-sm hidden lg:block self-end lg:ml-12 lg:mt-6 ${ancillaryAnimationClasses}`}
+            class={`services-brief__card hero-toc-card w-[22rem] xl:w-[24rem] ${ancillaryAnimationClasses}`}
             data-hero-ancillary
           >
             <div class="space-y-4">
