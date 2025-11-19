@@ -4,54 +4,72 @@ import { getServices } from '../../../config/content';
 const {
   class: className = '',
   action = 'https://formspree.io/f/YOUR_FORM_ID',
+  variant = 'default',
   ...rest
 } = Astro.props as Record<string, any>;
 
 const items = getServices();
+const isInverse = variant === 'inverse';
+const formBaseClasses = isInverse
+  ? 'grid gap-6 rounded-[1.75rem] bg-transparent p-0 text-white/90'
+  : 'grid gap-6 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm sm:p-12';
+const labelClasses = isInverse
+  ? 'flex flex-col gap-2 text-left text-sm font-medium text-white/85'
+  : 'flex flex-col gap-2 text-left text-sm font-medium text-slate-700';
+const fieldBaseClasses = isInverse
+  ? 'w-full rounded-xl border border-white/25 bg-white/5 px-4 py-3 text-base text-white placeholder:text-white/60 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] focus:border-white/55 focus:outline-none focus:ring-2 focus:ring-white/25 backdrop-blur'
+  : 'w-full rounded-lg border border-slate-200 bg-white px-4 py-3 text-base text-slate-900 shadow-sm focus:border-brand-primary focus:outline-none focus:ring focus:ring-brand-primary/20';
+const selectClasses = isInverse
+  ? `${fieldBaseClasses} pr-10 text-white`
+  : `${fieldBaseClasses}`;
+const textareaClasses = isInverse ? `${fieldBaseClasses} min-h-[7rem]` : `${fieldBaseClasses}`;
+const buttonClasses = isInverse
+  ? 'inline-flex w-full justify-center rounded-full border border-white/25 bg-brand-primary px-6 py-3 text-base font-semibold text-white shadow-brand-glow transition hover:brightness-110 focus-visible:outline-white/30 sm:w-auto'
+  : 'inline-flex w-full justify-center rounded-full bg-brand-primary px-6 py-3 text-base font-semibold text-white shadow-brand-glow transition hover:brightness-110 sm:w-auto';
 ---
 <form
   action={action}
   method="POST"
-  class={`grid gap-6 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm sm:p-12 ${className}`.trim()}
+  class={`${formBaseClasses} ${className}`.trim()}
   {...rest}
 >
   <div class="grid gap-6 sm:grid-cols-2">
-    <label class="flex flex-col gap-2 text-left text-sm font-medium text-slate-700">
+    <label class={labelClasses}>
       Name
       <input
         type="text"
         name="name"
         required
         placeholder="Your name"
-        class="w-full rounded-lg border border-slate-200 bg-white px-4 py-3 text-base text-slate-900 shadow-sm focus:border-brand-primary focus:outline-none focus:ring focus:ring-brand-primary/20"
+        class={fieldBaseClasses}
       />
     </label>
-    <label class="flex flex-col gap-2 text-left text-sm font-medium text-slate-700">
+    <label class={labelClasses}>
       Email
       <input
         type="email"
         name="email"
         required
         placeholder="you@example.com"
-        class="w-full rounded-lg border border-slate-200 bg-white px-4 py-3 text-base text-slate-900 shadow-sm focus:border-brand-primary focus:outline-none focus:ring focus:ring-brand-primary/20"
+        class={fieldBaseClasses}
       />
     </label>
   </div>
   <div class="grid gap-6 sm:grid-cols-2">
-    <label class="flex flex-col gap-2 text-left text-sm font-medium text-slate-700">
+    <label class={labelClasses}>
       Phone
       <input
         type="tel"
         name="phone"
         placeholder="(555) 123-4567"
-        class="w-full rounded-lg border border-slate-200 bg-white px-4 py-3 text-base text-slate-900 shadow-sm focus:border-brand-primary focus:outline-none focus:ring focus:ring-brand-primary/20"
+        class={fieldBaseClasses}
       />
     </label>
-    <label class="flex flex-col gap-2 text-left text-sm font-medium text-slate-700">
+    <label class={labelClasses}>
       Service of Interest
       <select
         name="service"
-        class="w-full rounded-lg border border-slate-200 bg-white px-4 py-3 text-base text-slate-900 shadow-sm focus:border-brand-primary focus:outline-none focus:ring focus:ring-brand-primary/20"
+        class={selectClasses}
       >
         <option value="">Select a service</option>
         {items.map(({ title }) => (
@@ -60,18 +78,18 @@ const items = getServices();
       </select>
     </label>
   </div>
-  <label class="flex flex-col gap-2 text-left text-sm font-medium text-slate-700">
+  <label class={labelClasses}>
     Message
     <textarea
       name="message"
       rows="5"
       placeholder="Tell us about your project."
-      class="w-full rounded-lg border border-slate-200 bg-white px-4 py-3 text-base text-slate-900 shadow-sm focus:border-brand-primary focus:outline-none focus:ring focus:ring-brand-primary/20"
+      class={textareaClasses}
     ></textarea>
   </label>
   <button
     type="submit"
-    class="inline-flex w-full justify-center rounded-full bg-brand-primary px-6 py-3 text-base font-semibold text-white shadow-brand-glow transition hover:brightness-110 sm:w-auto"
+    class={buttonClasses}
   >
     Send Message
   </button>
