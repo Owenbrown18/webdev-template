@@ -294,6 +294,7 @@ export type ContactContent = {
     emailLabel?: string | null;
   };
   contactForm?: {
+    variant?: string;
     background?: {
       tone?: string | null; // Options: none, gradient, solid, aurora
       color?: string | null;

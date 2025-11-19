@@ -1,11 +1,11 @@
 hero:
-  variant: "fullscreen" # Options: classic, split, fullscreen, none
+  variant: "contactheroobd" # Options: classic, split, fullscreen, none, contactheroobd
   background:
     tone: "aurora"
     color: "#103529"
   animation: true # Toggle hero animation on/off
   eyebrow: "Contact"
-  title: "Let’s bring your project to life"
+  title: "Contact"
   subtitle: "Share a few project details and we’ll respond within one business day with the next steps."
   primaryCtaLabel: "Contact form"
   primaryCtaHref: "#contact-form"
@@ -24,6 +24,7 @@ info:
   phoneLabel: null # Optional override for phone link text
   emailLabel: null # Optional override for email link text
 contactForm:
+  variant: "none"
   background:
     tone: "aurora"
     color: "#103529"

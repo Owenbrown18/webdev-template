@@ -15,9 +15,11 @@ import {
 } from '../../../utils/background';
 import type { SiteContent } from '../../../types/content';
 import HeroFullscreen from '../../home/hero/HeroFullscreen.astro';
+import ContactHeroObd from './ContactHeroObd.astro';
 
 const variants: Record<string, any> = {
   fullscreen: HeroFullscreen,
+  contactheroobd: ContactHeroObd,
 };
 
 const settings = contact.hero ?? {};
@@ -52,6 +54,7 @@ const animationSetting =
   animationOverride !== undefined ? animationOverride : hero?.animation;
 const animationEnabled =
   animationSetting ?? isContactHeroAnimationEnabled();
+const isFullscreenVariant = variantKey === 'fullscreen';
 ---
 {HeroComponent ? (
   <div class="relative" data-contact-hero>
@@ -64,78 +67,82 @@ const animationEnabled =
       animationEnabled={animationEnabled !== false}
       {...restProps}
     />
-    <button
-      type="button"
-      class="fullscreen-hero__scroll-button"
-      data-contact-scroll
-      aria-label="Scroll to contact form"
-      data-visible="false"
-    >
-      <svg viewBox="0 0 20 20" fill="none" aria-hidden="true" class="h-5 w-5">
-        <path
-          d="M4.5 7.5L10 13l5.5-5.5"
-          stroke="currentColor"
-          stroke-width="1.8"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        />
-      </svg>
-    </button>
-    <script>
-      const init = () => {
-        const root = document.querySelector('[data-contact-hero]');
-        const button = root?.querySelector('[data-contact-scroll]');
-        if (!(button instanceof HTMLElement)) return;
-        button.addEventListener('click', () => {
-          const formRoot = document.querySelector('[data-contact-form-root]');
-          const container =
-            formRoot instanceof HTMLElement
-              ? formRoot.querySelector('[data-contact-form-container]')
-              : null;
-          const card =
-            formRoot instanceof HTMLElement
-              ? formRoot.querySelector('[data-contact-form-card]')
-              : null;
-          const fallbackContainer = document.querySelector('[data-contact-form-container]');
-          const fallbackCard = document.querySelector('[data-contact-form-card]');
-          const fallbackForm = document.getElementById('contact-form');
+    {isFullscreenVariant ? (
+      <>
+        <button
+          type="button"
+          class="fullscreen-hero__scroll-button"
+          data-contact-scroll
+          aria-label="Scroll to contact form"
+          data-visible="false"
+        >
+          <svg viewBox="0 0 20 20" fill="none" aria-hidden="true" class="h-5 w-5">
+            <path
+              d="M4.5 7.5L10 13l5.5-5.5"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </button>
+        <script>
+          const init = () => {
+            const root = document.querySelector('[data-contact-hero]');
+            const button = root?.querySelector('[data-contact-scroll]');
+            if (!(button instanceof HTMLElement)) return;
+            button.addEventListener('click', () => {
+              const formRoot = document.querySelector('[data-contact-form-root]');
+              const container =
+                formRoot instanceof HTMLElement
+                  ? formRoot.querySelector('[data-contact-form-container]')
+                  : null;
+              const card =
+                formRoot instanceof HTMLElement
+                  ? formRoot.querySelector('[data-contact-form-card]')
+                  : null;
+              const fallbackContainer = document.querySelector('[data-contact-form-container]');
+              const fallbackCard = document.querySelector('[data-contact-form-card]');
+              const fallbackForm = document.getElementById('contact-form');
 
-          if (formRoot instanceof HTMLElement) {
-            [container, card].forEach((node) => {
-              if (node instanceof HTMLElement) {
-                node.dataset.visible = 'true';
+              if (formRoot instanceof HTMLElement) {
+                [container, card].forEach((node) => {
+                  if (node instanceof HTMLElement) {
+                    node.dataset.visible = 'true';
+                  }
+                });
               }
+
+              const targetCandidates = [
+                container,
+                card,
+                formRoot,
+                fallbackForm,
+                fallbackContainer,
+                fallbackCard,
+              ];
+              const target = targetCandidates.find((node) => node instanceof HTMLElement);
+              if (!(target instanceof HTMLElement)) return;
+
+              const rect = target.getBoundingClientRect();
+              const offset = rect.top + window.scrollY;
+              const centerPosition = offset - window.innerHeight / 2 + rect.height / 2;
+              const adjustedPosition = centerPosition - 40;
+              window.scrollTo({ top: adjustedPosition, behavior: 'smooth' });
             });
+
+            requestAnimationFrame(() => {
+              button.dataset.visible = 'true';
+            });
+          };
+
+          if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', init, { once: true });
+          } else {
+            init();
           }
-
-          const targetCandidates = [
-            container,
-            card,
-            formRoot,
-            fallbackForm,
-            fallbackContainer,
-            fallbackCard,
-          ];
-          const target = targetCandidates.find((node) => node instanceof HTMLElement);
-          if (!(target instanceof HTMLElement)) return;
-
-          const rect = target.getBoundingClientRect();
-          const offset = rect.top + window.scrollY;
-          const centerPosition = offset - window.innerHeight / 2 + rect.height / 2;
-          const adjustedPosition = centerPosition - 40;
-          window.scrollTo({ top: adjustedPosition, behavior: 'smooth' });
-        });
-
-        requestAnimationFrame(() => {
-          button.dataset.visible = 'true';
-        });
-      };
-
-      if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', init, { once: true });
-      } else {
-        init();
-      }
-    </script>
+        </script>
+      </>
+    ) : null}
   </div>
 ) : null}
