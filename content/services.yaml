@@ -24,7 +24,7 @@ overview:
   animation: true
   eyebrow: "Offerings"
   title: "Expert support at every stage"
-  intro: "We combine technical know-how with a personable approach, making complex work feel effortless for homeowners, property managers, and business owners alike."
+  intro: "I combine technical know-how with a personable approach, making complex work feel as effortless as possible. Now heres some information on what I have to offer: "
   supporting: "Each engagement starts with listening. From there we design a clear path forward, assemble the right team, and keep you informed through final delivery and beyond."
 process:
   background:
@@ -119,7 +119,7 @@ cta:
     color: "#103529"
   animation: true
   eyebrow: "Next steps"
-  title: "Build your tailored service plan"
+  title: "Build your tailored website plan"
   intro: "Share your project priorities and we’ll quickly outline the mix of services, timeline considerations, and budget guardrails that fit. Prefer to talk it through? Call us and we’ll walk you through options live."
   ctaLabel: "Request details"
   ctaHref: "/contact"

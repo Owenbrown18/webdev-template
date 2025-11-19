@@ -6,7 +6,7 @@ hero:
   animation: true # Toggle hero animation on/off
   eyebrow: "Contact"
   title: "Contact"
-  subtitle: "Share a few project details and we’ll respond within one business day with the next steps."
+  subtitle: "Share a few project details and I'll respond within one business day with the next steps."
   primaryCtaLabel: "Contact form"
   primaryCtaHref: "#contact-form"
   secondaryCtaLabel: "Call us"
@@ -17,10 +17,10 @@ info:
     tone: "none"
     color: "#103529"
   animation: false # Toggle reveal animation on/off
-  eyebrow: "Connect with OBdesign"
+  eyebrow: "Hours & Info"
   variant: "stacked" # Options: standard, stacked, none
   title: "Let's work together"
-  intro: "Reach us by phone or email, or send details through the form. We're quick to respond."
+  intro: "Reach me by phone or email, or send details through the form. I'm quick to respond."
   phoneLabel: null # Optional override for phone link text
   emailLabel: null # Optional override for email link text
 contactForm:
@@ -31,4 +31,4 @@ contactForm:
   animation: true
   eyebrow: "Send a message"
   title: "Share your project details"
-  intro: "Meet with us in Victoria or send details anytime—either way, you’ll hear back quickly with a clear next step."
+  intro: "Meet with me in Victoria or send details anytime—either way, you’ll hear back quickly with a clear next step."

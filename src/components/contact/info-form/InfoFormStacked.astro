@@ -33,25 +33,14 @@ const hours = Array.isArray(site.hours) ? site.hours : [];
 const phoneDigits = site.phone ? site.phone.replace(/[^\d+]/g, '') : '';
 const phoneHref = phoneDigits ? `tel:${phoneDigits}` : '';
 const emailHref = site.email ? `mailto:${site.email}` : '';
-const sectionClasses = [backgroundClass, 'section-shell'].filter(Boolean).join(' ');
+const sectionClasses = [backgroundClass ?? 'bg-surface-base', 'section-shell'].filter(Boolean).join(' ');
 const shouldAnimate = animationEnabled !== false;
-const containerClasses = [
-  'section-container space-y-10 sm:space-y-12',
-  shouldAnimate
-    ? 'motion-safe:opacity-0 motion-safe:translate-y-6 motion-safe:transition-all motion-safe:duration-[900ms] motion-safe:ease-out data-[visible=true]:motion-safe:opacity-100 data-[visible=true]:motion-safe:translate-y-0'
-    : '',
-]
-  .filter(Boolean)
-  .join(' ');
-const infoCardClasses = [
-  'surface-card surface-card-static p-8 sm:p-12 mx-auto',
-  shouldAnimate
-    ? 'motion-safe:opacity-0 motion-safe:translate-y-6 motion-safe:transition-all motion-safe:duration-[900ms] motion-safe:ease-out data-[visible=true]:motion-safe:opacity-100 data-[visible=true]:motion-safe:translate-y-0'
-    : '',
-]
-  .filter(Boolean)
-  .join(' ');
-const hoursPanelClasses = 'mt-8 grid gap-6 rounded-2xl bg-slate-50 p-6 text-sm text-slate-700 sm:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]';
+const introAnimationClasses = shouldAnimate
+  ? 'motion-safe:translate-y-6 motion-safe:opacity-0 motion-safe:transition-all motion-safe:duration-[900ms] motion-safe:ease-out data-[visible=true]:motion-safe:translate-y-0 data-[visible=true]:motion-safe:opacity-100'
+  : '';
+const cardAnimationClasses = shouldAnimate
+  ? 'motion-safe:translate-y-6 motion-safe:opacity-0 motion-safe:transition-all motion-safe:duration-[950ms] motion-safe:ease-out data-[visible=true]:motion-safe:translate-y-0 data-[visible=true]:motion-safe:opacity-100'
+  : '';
 const hasEyebrow = typeof eyebrow === 'string' && eyebrow.trim().length > 0;
 const hasTitle = typeof title === 'string' && title.trim().length > 0;
 const hasIntro = typeof intro === 'string' && intro.trim().length > 0;
@@ -63,32 +52,43 @@ const hasIntro = typeof intro === 'string' && intro.trim().length > 0;
   data-contact-info-root={shouldAnimate ? 'true' : undefined}
   {...restProps}
 >
-  <div class={containerClasses} data-contact-info-container>
+  <div class="section-container space-y-12" data-contact-info-container>
     {(hasEyebrow || hasTitle || hasIntro) && (
-      <div class="section-intro mx-auto max-w-3xl text-center" data-contact-info-card>
-        {hasEyebrow && <p class="section-eyebrow">{eyebrow}</p>}
-        {hasTitle && <h2 class="section-heading">{title}</h2>}
-        {hasIntro && <p class="section-subtitle">{intro}</p>}
+      <div class={`space-y-6 text-left ${introAnimationClasses}`} data-contact-info-card>
+        {hasEyebrow && (
+          <div class="eyebrow-stack w-full text-left" data-align="left">
+            <div class="eyebrow-banner-wrapper text-left">
+              <p class="eyebrow-banner" data-align="left">
+                <span class="eyebrow-banner__label">{eyebrow}</span>
+              </p>
+            </div>
+          </div>
+        )}
+        {hasTitle && <h2 class="section-heading mt-2 text-left">{title}</h2>}
+        {hasIntro && <p class="rich-intro text-left text-slate-700">{intro}</p>}
       </div>
     )}
-    <article class={infoCardClasses} data-contact-info-card>
+    <article
+      class={`services-brief__card services-overview__card services-overview__card--featured card-aurora section-container space-y-8 p-6 sm:p-8 lg:p-10 text-white ${cardAnimationClasses}`}
+      data-contact-info-card
+    >
       {(site.phone || site.email) && (
-        <div class="grid gap-4 text-sm text-slate-700 sm:grid-cols-2">
+        <div class="grid gap-6 text-left sm:grid-cols-2">
           {site.phone && (
-            <div>
-              <dt class="font-semibold text-slate-900">Phone</dt>
-              <dd class="mt-1 text-base text-slate-700">
-                <a href={phoneHref} class="text-brand-primary hover:underline">
+            <div class="space-y-1">
+              <dt class="text-sm font-semibold uppercase tracking-[0.25em] text-white/70">Phone</dt>
+              <dd class="text-lg font-semibold">
+                <a href={phoneHref} class="text-white transition hover:text-white/80">
                   {phoneLabel ?? site.phone}
                 </a>
               </dd>
             </div>
           )}
           {site.email && (
-            <div>
-              <dt class="font-semibold text-slate-900">Email</dt>
-              <dd class="mt-1 text-base text-slate-700">
-                <a href={emailHref} class="text-brand-primary hover:underline">
+            <div class="space-y-1">
+              <dt class="text-sm font-semibold uppercase tracking-[0.25em] text-white/70">Email</dt>
+              <dd class="text-lg font-semibold">
+                <a href={emailHref} class="text-white transition hover:text-white/80">
                   {emailLabel ?? site.email}
                 </a>
               </dd>
@@ -97,17 +97,16 @@ const hasIntro = typeof intro === 'string' && intro.trim().length > 0;
         </div>
       )}
       {hours.length > 0 && (
-        <div class={hoursPanelClasses}>
-          <div class="space-y-2">
-            {hours.map(({ label }) => (
-              <div>{label}</div>
-            ))}
-          </div>
-          <div class="space-y-2 text-right font-medium text-slate-900">
-            {hours.map(({ open, close }) => (
-              <div>
-                {open}
-                {close ? ` – ${close}` : ''}
+        <div class="space-y-4">
+          <h3 class="text-sm font-semibold uppercase tracking-[0.3em] text-white/70">Hours</h3>
+          <div class="space-y-2 text-base text-white/90">
+            {hours.map(({ label, open, close }) => (
+              <div class="flex items-center justify-between gap-4 border-b border-white/20 pb-2 last:border-none">
+                <span class="font-medium text-white">{label}</span>
+                <span class="text-white/80">
+                  {open}
+                  {close ? ` – ${close}` : ''}
+                </span>
               </div>
             ))}
           </div>
