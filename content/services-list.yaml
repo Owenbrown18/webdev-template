@@ -2,56 +2,58 @@ items:
   - title: "Website Design & Development"
     slug: "website-design-development"
     summary: |
-      We build modern, responsive websites that help local businesses stand out online. Every site is custom-built for performance, usability, and mobile friendliness.
+      I build modern, responsive websites tailed to your liking that help local businesses stand out online. Every site is custom-built for performance, usability, and mobile friendliness.
 
-      From first concept to launch, we make the process simple and transparent so you get a website that looks great and works for your goals.
+      From first concept to launch, the process is simple and transparent so you get a website that looks great and works for your goals.
+
+      I use HTML, CSS, and JavaScript to create my sites. All CSS (cascading style sheets) are written from scratch to perfectly meet your design expectations.
     features:
-      - "Custom design and layout"
       - "Responsive on all devices"
       - "Fast and secure performance"
+      - "SEO-optimized"
     icon: "💻"
-    duration: "2–4 weeks"
-    startingPrice: "$950"
+    duration: "Project Dependent"
+    startingPrice: "$800"
     link:
       label: "Request details"
       href: "/contact"
     image:
       src: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1600&q=80"
-
+ 
   - title: "Website Redesign & Updates"
     slug: "website-redesign"
     summary: |
-      Have an existing site that feels outdated? We refresh your design, improve structure, and optimize performance while keeping your brand intact.
+      Have an existing site that feels outdated? I can refresh your design, improve structure, and optimize performance while keeping your brand intact.
 
-      Whether it’s small updates or a full rebuild, we make your website cleaner, faster, and easier for customers to use.
+      Whether it’s small updates or a full rebuild, I'll make your website cleaner, faster, and easier for customers to use.
     features:
       - "Visual and UX refresh"
       - "Speed and security improvements"
       - "Mobile optimization"
     icon: "🔄"
     duration: "1–3 weeks"
-    startingPrice: "From $700"
+    startingPrice: "Quoted per project"
     link:
       label: "Request details"
       href: "/contact"
     image:
       src: "https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&w=1600&q=80"
 
-  - title: "SEO & Google Business Enhancement"
-    slug: "seo-google-business"
-    summary: |
-      Improve your online visibility with SEO and a professional Google Business setup. We handle technical fixes, local keyword targeting, and optimized listings to help you show up where customers are searching.
+  #- title: "SEO & Google Business Enhancement"
+   # slug: "seo-google-business"
+    #summary: |
+     # Improve your online visibility with SEO and a professional Google Business setup. We handle technical fixes, local keyword targeting, and optimized listings to help you show up where customers are searching.
 
-      Your business deserves to be seen—this service helps make that happen.
-    features:
-      - "On-site SEO optimization"
-      - "Google Business setup and polish"
-      - "Performance and analytics tracking"
-    icon: "📈"
-    duration: "1 week"
-    startingPrice: "From $350"
-    link:
-      label: "Request details"
-      href: "/contact"
-    image:
-      src: "https://images.unsplash.com/photo-1581090464736-62f2fa8e534a?auto=format&fit=crop&w=1600&q=80"
+      #Your business deserves to be seen—this service helps make that happen.
+    #features:
+     # - "On-site SEO optimization"
+      #- "Google Business setup and polish"
+      #- "Performance and analytics tracking"
+    #icon: "📈"
+    #duration: "1 week"
+    #startingPrice: "From $350"
+    #link:
+      #label: "Request details"
+      #href: "/contact"
+    #image:
+      #src: "https://images.unsplash.com/photo-1581090464736-62f2fa8e534a?auto=format&fit=crop&w=1600&q=80"

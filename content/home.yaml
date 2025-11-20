@@ -58,7 +58,7 @@ featuredProject:
   animation: true
   eyebrow: "Featured project"
   title: "Showcasing a modern home services brand"
-  intro: "We partnered with the Uptown Electrical team to redesign their online presence, streamline lead capture, and highlight their customer-first approach."
+  intro: "I recently partnered with Nicol Construction to implement their first ever website. This new online presence allowed their business to streamline lead capture, and highlight their customer-first approach."
   projectTitle: "Nicol Construction"
   image:
     src: "https://images.unsplash.com/photo-1614332287897-cdc485fa562d?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1170"
@@ -96,7 +96,7 @@ expectations:
   animation: true
   eyebrow: "expectations"
   title: "Dependable collaboration from kickoff to launch"
-  intro: "We keep the process transparent, proactive, and personal so you always know what’s happening next—and why."
+  intro: "I'll always keep the process transparent, proactive, and personal so you always know what’s happening next—and why."
   items:
     - title: "Clear communication"
       description: "Weekly check-ins, shared milestones, and quick responses keep everyone aligned and confident."
@@ -114,7 +114,7 @@ expectations:
       description: "Technical SEO, analytics setup, and Google Business alignment help your website get found by the right audience."
       icon: "📈"
     - title: "Ongoing partnership"
-      description: "We remain available for updates, enhancements, and growth discussions well beyond launch day."
+      description: "I remain available for updates, enhancements, and growth discussions well beyond launch day."
       icon: "🤝"
 video:
   variant: "none" # Options: half, full, none

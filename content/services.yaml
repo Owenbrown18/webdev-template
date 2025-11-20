@@ -36,15 +36,15 @@ process:
   intro: "Every engagement flows through a transparent set of stages so you always know what we’re working on and what’s coming next."
   steps:
     - title: "Discover & define"
-      description: "We start by learning about your business, goals, and audience. This helps us define project scope and identify the best structure for your website."
+      description: "I'll start by learning about your business, goals, and audience. This helps me define project scope and identify the best structure for your website."
     - title: "Plan & design"
-      description: "We create a visual layout and design concept that aligns with your brand and user needs, ensuring clarity and ease of navigation on every device."
+      description: "I'll then create a visual layout and design concept that aligns with your brand and user needs, ensuring clarity and ease of navigation on every device."
     - title: "Build & test"
-      description: "Your site is developed using clean, responsive code optimized for speed, accessibility, and SEO. We test thoroughly before launch to ensure reliability."
+      description: "Your site is developed using clean, responsive code optimized for speed, accessibility, and SEO. I test thoroughly before launch to ensure reliability."
     - title: "Launch & review"
-      description: "Once approved, we deploy your site to a live server and monitor its performance. You’ll receive training or documentation to manage updates confidently."
+      description: "Once approved, I'll deploy your site to a live server and monitor its performance. You’ll receive training or documentation to manage updates confidently."
     - title: "Support & grow"
-      description: "We stay available for ongoing maintenance, SEO updates, and enhancements as your business evolves—keeping your website performing at its best."
+      description: "I stay available for ongoing maintenance, SEO updates, and enhancements as your business evolves—keeping your website performing at its best."
 catalog:
   variant: "none" # Options: grid, list, spotlight, none
   background:
@@ -105,14 +105,16 @@ faq:
   animation: true
   eyebrow: "FAQ"
   title: "Answers before we get started"
-  intro: "Have another question? Reach out anytime and we’ll reply within one business day."
+  intro: "Have another question? Reach out anytime and I'll reply within one business day."
   items:
-    - question: "Do you offer custom bundles?"
-      answer: "Absolutely. Most clients mix and match deliverables across our catalog. We’ll collaborate on a scope that fits your budget and timeline."
-    - question: "How quickly can emergency work begin?"
-      answer: "Emergency callouts begin within hours. You’ll receive a confirmation text as soon as a technician is en route."
-    - question: "Can you work with our preferred vendors?"
-      answer: "Yes. We can collaborate with existing partners or recommend specialists from our vetted network."
+    - question: "How long does a website take to build?"
+      answer: "Most projects are completed in 1–3 weeks depending on revisions, content readiness, and complexity."
+    - question: "What do your websites typically cost?"
+      answer: "Pricing depends on scope, but most small business sites fall between $800–$2,000. You’ll get a clear quote before any work begins."
+    - question: "Can I edit the website myself after it’s done?"
+      answer: "Yes. All of my sites include a simple CMS (content management system) so you can update text and images without any coding required."
+    - question: "What do you need from me to get started?"
+      answer: "Usually a short call, your brand assets, and any specific content or images you want included. If you don’t have content, we can create it together."
 cta:
   background:
     tone: "aurora" # Options: none, gradient, aurora
@@ -120,6 +122,6 @@ cta:
   animation: true
   eyebrow: "Next steps"
   title: "Build your tailored website plan"
-  intro: "Share your project priorities and we’ll quickly outline the mix of services, timeline considerations, and budget guardrails that fit. Prefer to talk it through? Call us and we’ll walk you through options live."
+  intro: "Share your project priorities and we’ll quickly outline the mix of services, timeline considerations, and budget guardrails that fit. Prefer to talk it through? Call me and we can walk through options live."
   ctaLabel: "Request details"
   ctaHref: "/contact"

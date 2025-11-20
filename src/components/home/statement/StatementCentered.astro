@@ -8,12 +8,14 @@ type Props = {
   backgroundClass?: string;
   backgroundTone?: string;
   backgroundStyle?: string;
+  image?: { src?: string | null; alt?: string | null };
 };
 
 const {
   eyebrow,
   title,
   intro,
+  image: _image,
   animationEnabled = true,
   sectionNumber,
   backgroundClass,
@@ -21,6 +23,7 @@ const {
   backgroundStyle,
   ...restProps
 } = Astro.props as Props & Record<string, any>;
+void _image;
 
 const hasIntro = typeof intro === 'string' && intro.trim().length > 0;
 const introParagraphs = hasIntro
@@ -107,7 +110,7 @@ const introClasses = 'rich-intro text-left';
           ? window.matchMedia('(prefers-reduced-motion: reduce)').matches
           : false;
 
-        const reveal = (el) => {
+        const reveal = (el: Element) => {
           if (el instanceof HTMLElement) {
             el.dataset.visible = 'true';
           }
