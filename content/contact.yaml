@@ -8,7 +8,7 @@ hero:
   title: "Contact"
   subtitle: "Share a few project details and I'll respond within one business day with the next steps."
   primaryCtaLabel: "Contact form"
-  primaryCtaHref: "#contact-form"
+  primaryCtaHref: "#contact-hero-form"
   secondaryCtaLabel: "Call us"
   secondaryCtaHref: "tel:+1-250-555-1234"
   image: "/images/about-hero.jpg"

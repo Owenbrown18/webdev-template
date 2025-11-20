@@ -2,7 +2,6 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ContactHeroSection from '../components/contact/hero/ContactHeroSection.astro';
 import InfoFormSection from '../components/contact/info-form/InfoFormSection.astro';
-import ContactFormSection from '../components/contact/form/ContactFormSection.astro';
 import { site, getContactHeroVariant } from '../config/content';
 
 const contactHeroVariant = getContactHeroVariant();
@@ -17,6 +16,5 @@ const contactHeroIsFullscreen = true;
   <div class="space-y-16 sm:space-y-20">
     <ContactHeroSection />
     <InfoFormSection id="contact-details" tabindex="-1" />
-    <ContactFormSection />
   </div>
 </BaseLayout>

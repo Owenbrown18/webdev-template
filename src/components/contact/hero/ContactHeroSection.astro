@@ -104,6 +104,7 @@ const isFullscreenVariant = variantKey === 'fullscreen';
               const fallbackContainer = document.querySelector('[data-contact-form-container]');
               const fallbackCard = document.querySelector('[data-contact-form-card]');
               const fallbackForm = document.getElementById('contact-form');
+              const heroForm = document.getElementById('contact-hero-form');
 
               if (formRoot instanceof HTMLElement) {
                 [container, card].forEach((node) => {
@@ -120,6 +121,7 @@ const isFullscreenVariant = variantKey === 'fullscreen';
                 fallbackForm,
                 fallbackContainer,
                 fallbackCard,
+                heroForm,
               ];
               const target = targetCandidates.find((node) => node instanceof HTMLElement);
               if (!(target instanceof HTMLElement)) return;
