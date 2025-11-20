@@ -23,7 +23,7 @@ const shouldAnimate = animationEnabled !== false;
 const sectionNumber = '03';
 const sectionClasses = [overrideClass ?? 'bg-surface-base', 'section-shell'].filter(Boolean).join(' ');
 const introClasses = [
-  'section-container space-y-4 text-left',
+  'space-y-4 text-left',
   shouldAnimate
     ? 'motion-safe:translate-y-6 motion-safe:opacity-0 motion-safe:transition-all motion-safe:duration-[900ms] motion-safe:ease-out data-[visible=true]:motion-safe:translate-y-0 data-[visible=true]:motion-safe:opacity-100'
     : '',
