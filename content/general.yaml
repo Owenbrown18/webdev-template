@@ -28,9 +28,9 @@ hours:
     open: Closed
     close: ""
 socials:
-  facebook: https://facebook.com/yourbusiness
-  instagram: https://instagram.com/yourbusiness
-  linkedin: https://linkedin.com/company/yourbusiness
+  facebook: https://www.facebook.com/owen.brown.5437923/
+  instagram: https://www.instagram.com/owen.brown_/
+  linkedin: https://www.linkedin.com/in/owenbrown18/
 booking:
   provider: Calendly
   embedUrl: https://calendly.com/your-business/consultation
@@ -40,7 +40,7 @@ colors:
   accent: "#f59e0b"
 footerCredit:
   label: Website by OB Design
-  href: https://obdesign.example
+  href: https://obwebdesign.ca
 preloader:
   enabled: true
   backgroundColor: null
