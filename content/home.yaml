@@ -33,9 +33,9 @@ aboutSection:
   intro: |
     I’m Owen Brown — a software engineering student at the University of Victoria and the person behind OBdesign. I started this business to combine my technical background with a passion for clean, reliable design that helps small businesses make a strong impression online.
 
-    Every website I build is fast, modern, and easy to maintain, created with the same attention to detail I bring to all my software engineering work. I focus on clarity, structure, and long-term reliability so each project feels like an investment that lasts. OBdesign is small by design—personal, transparent, and focused on real results.
+    I've had a passion for front-end development ever since I found out how easily you can go from an idea to a fully responsive user interface. Every website I build is fast, designed to your liking, and easily adaptable for when the time comes you want to adjust yourself. I do my best to focus on clarity, structure, and long-term reliability so each project feels like an investment that lasts.
   image:
-    src: "/images/about-hero.jpg"
+    src: "/images/about-photo.png"
     alt: "Owen Brown, founder of OBdesign"
 featuredPhotos:
   variant: "none" # Options: grid, none
