@@ -59,7 +59,7 @@ const cardAnimationClass = shouldAnimate
 const accordionBaseClasses =
   'services-accordion services-brief__card services-overview__card services-overview__card--featured card-aurora text-left overflow-hidden';
 const accordionHeaderClasses =
-  'flex w-full items-start justify-between gap-4 px-5 py-4 text-left text-white transition-all duration-300';
+  'grid w-full grid-cols-[1fr_auto] items-start gap-4 px-5 py-4 text-left text-white transition-all duration-300';
 const accordionPanelClasses =
   'space-y-4 border-t border-white/15 bg-transparent px-5 pb-5 pt-4 text-white max-h-0 opacity-0 overflow-hidden transition-[max-height,opacity] duration-300 ease-out accordion-panel-collapsed';
 const featureListClasses = 'flex flex-wrap gap-2';
@@ -130,9 +130,6 @@ const metaLineClasses =
                 <div class="flex flex-col gap-2 text-left text-white">
                   <div class="services-overview__eyebrow services-subheading" data-has-number="true">
                     <span>{service.title}</span>
-                    <span class="section-number-label text-white" aria-label={`Section ${sectionSubNumber}`}>
-                      {sectionSubNumber}
-                    </span>
                   </div>
                   <div class="flex flex-wrap gap-3 text-sm font-semibold text-white/85">
                     {service.duration ? <span class="rich-intro rich-intro--inverse text-white/90">Timeline: {service.duration}</span> : null}
@@ -144,21 +141,26 @@ const metaLineClasses =
                     ) : null}
                   </div>
                 </div>
-                <svg
-                  class="h-5 w-5 shrink-0 text-white/80 transition-transform duration-300"
-                  viewBox="0 0 20 20"
-                  fill="none"
-                  aria-hidden="true"
-                  data-accordion-icon
-                >
-                  <path
-                    d="M6 8l4 4 4-4"
-                    stroke="currentColor"
-                    stroke-width="1.6"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  />
-                </svg>
+                <div class="flex flex-col items-end gap-2 text-white" data-accordion-aside>
+                  <span class="section-number-label text-white" data-accordion-number aria-label={`Section ${sectionSubNumber}`}>
+                    {sectionSubNumber}
+                  </span>
+                  <svg
+                    class="h-5 w-5 shrink-0 text-white/80 transition-transform duration-300"
+                    viewBox="0 0 20 20"
+                    fill="none"
+                    aria-hidden="true"
+                    data-accordion-icon
+                  >
+                    <path
+                      d="M6 8l4 4 4-4"
+                      stroke="currentColor"
+                      stroke-width="1.6"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                </div>
               </button>
               <div
                 id={panelId}
