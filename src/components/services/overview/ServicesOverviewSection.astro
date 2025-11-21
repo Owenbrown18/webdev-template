@@ -56,6 +56,17 @@ const introAnimationClass = shouldAnimate
 const cardAnimationClass = shouldAnimate
   ? 'motion-safe:translate-y-6 motion-safe:opacity-0 motion-safe:transition-all motion-safe:duration-[900ms] motion-safe:ease-out data-[visible=true]:motion-safe:translate-y-0 data-[visible=true]:motion-safe:opacity-100'
   : '';
+const accordionBaseClasses =
+  'services-accordion services-brief__card services-overview__card services-overview__card--featured card-aurora text-left overflow-hidden';
+const accordionHeaderClasses =
+  'flex w-full items-start justify-between gap-4 px-5 py-4 text-left text-white';
+const accordionPanelClasses =
+  'space-y-4 border-t border-white/15 bg-transparent px-5 pb-5 pt-4 text-white';
+const featureListClasses = 'flex flex-wrap gap-2';
+const featureChipClasses =
+  'rounded-full bg-white/10 px-3 py-1 text-sm font-medium text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.2)] border border-white/20';
+const metaLineClasses =
+  'flex items-center gap-2 rich-intro rich-intro--inverse text-left text-white/90';
 ---
 {hasContent ? (
   <section
@@ -89,71 +100,110 @@ const cardAnimationClass = shouldAnimate
           {intro ? <p class="rich-intro text-left">{intro}</p> : null}
         </div>
       )}
-      {services.map((service, index) => {
-        const features = Array.isArray(service?.features) ? service.features.filter(Boolean) : [];
-        const summaryParagraphs = typeof service?.summary === 'string'
-          ? service.summary
-              .split(/\n\s*\n/)
-              .map((paragraph) => paragraph.trim())
-              .filter(Boolean)
-          : [];
-        const sectionSubNumber = `01.${index + 1}`;
-        const serviceAnchor = service.slug ? `services-card-${service.slug}` : `services-card-${index}`;
-        return (
-          <article
-            class={`services-brief__card services-overview__card services-overview__card--featured card-aurora ${cardAnimationClass}`.trim()}
-            key={service.slug ?? index}
-            id={serviceAnchor}
-            data-overview-card
-            style={shouldAnimate ? `transition-delay: ${index * 120}ms;` : undefined}
-          >
-            <div class="space-y-5 text-left">
-              <div class="services-overview__eyebrow services-subheading" data-has-number="true">
-                <span>{service.title}</span>
-                <span class="section-number-label" aria-label={`Section ${sectionSubNumber}`}>
-                  {sectionSubNumber}
-                </span>
-              </div>
-              {summaryParagraphs.length > 0 ? (
-                <div class="space-y-4">
-                  {summaryParagraphs.map((paragraph) => (
-                    <p class="rich-intro rich-intro--inverse">{paragraph}</p>
-                  ))}
+      <div class="space-y-4">
+        {services.map((service, index) => {
+          const features = Array.isArray(service?.features) ? service.features.filter(Boolean) : [];
+          const summaryParagraphs = typeof service?.summary === 'string'
+            ? service.summary
+                .split(/\n\s*\n/)
+                .map((paragraph) => paragraph.trim())
+                .filter(Boolean)
+            : [];
+          const sectionSubNumber = `01.${index + 1}`;
+          const serviceAnchor = service.slug ? `services-card-${service.slug}` : `services-card-${index}`;
+          const panelId = `${serviceAnchor}-panel`;
+          return (
+            <article
+              class={`${accordionBaseClasses} ${cardAnimationClass}`.trim()}
+              key={service.slug ?? index}
+              id={serviceAnchor}
+              data-overview-card
+              style={shouldAnimate ? `transition-delay: ${index * 120}ms;` : undefined}
+            >
+              <button
+                type="button"
+                class={accordionHeaderClasses}
+                data-accordion-trigger
+                aria-expanded="false"
+                aria-controls={panelId}
+              >
+                <div class="flex flex-col gap-2 text-left text-white">
+                  <div class="services-overview__eyebrow services-subheading" data-has-number="true">
+                    <span>{service.title}</span>
+                    <span class="section-number-label text-white" aria-label={`Section ${sectionSubNumber}`}>
+                      {sectionSubNumber}
+                    </span>
+                  </div>
+                  <div class="flex flex-wrap gap-3 text-sm font-semibold text-white/85">
+                    {service.duration ? <span class="rich-intro rich-intro--inverse text-white/90">Timeline: {service.duration}</span> : null}
+                    {service.startingPrice ? (
+                      <span class="inline-flex items-center gap-2 rich-intro rich-intro--inverse text-white/90">
+                        <span class="h-1 w-1 rounded-full bg-white/50" aria-hidden="true"></span>
+                        <span>Starting at: {service.startingPrice}</span>
+                      </span>
+                    ) : null}
+                  </div>
                 </div>
-              ) : null}
-              <div class="services-overview__content-grid">
-                {features.length > 0 ? (
-                  <ul class="services-overview__feature-list">
-                    {features.map((feature) => (
-                      <li class="rich-intro rich-intro--inverse">{feature}</li>
+                <svg
+                  class="h-5 w-5 shrink-0 text-white/80 transition-transform duration-300"
+                  viewBox="0 0 20 20"
+                  fill="none"
+                  aria-hidden="true"
+                  data-accordion-icon
+                >
+                  <path
+                    d="M6 8l4 4 4-4"
+                    stroke="currentColor"
+                    stroke-width="1.6"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </button>
+              <div
+                id={panelId}
+                data-accordion-panel
+                class={accordionPanelClasses}
+                hidden
+              >
+                {summaryParagraphs.length > 0 ? (
+                  <div class="space-y-3 text-white">
+                    {summaryParagraphs.map((paragraph) => (
+                      <p class="rich-intro rich-intro--inverse text-left text-white/95">{paragraph}</p>
                     ))}
-                  </ul>
+                  </div>
                 ) : null}
-                <div class="services-overview__meta">
-                  {service.duration ? (
-                    <p class="services-overview__meta-line">
-                      <span class="rich-subheading text-white/80">Timeline:</span>
-                      <span class="services-overview__meta-separator"></span>
-                      <span class="rich-intro rich-intro--inverse services-overview__meta-value">
-                        {service.duration}
-                      </span>
-                    </p>
-                  ) : null}
-                  {service.startingPrice ? (
-                    <p class="services-overview__meta-line">
-                      <span class="rich-subheading text-white/80">Starting at:</span>
-                      <span class="services-overview__meta-separator"></span>
-                      <span class="rich-intro rich-intro--inverse services-overview__meta-value">
-                        {service.startingPrice}
-                      </span>
-                    </p>
-                  ) : null}
-                </div>
+                {features.length > 0 ? (
+                  <div class="space-y-2">
+                    <p class="text-sm font-semibold uppercase tracking-[0.12em] text-white/70">Included</p>
+                    <ul class={featureListClasses}>
+                      {features.map((feature) => (
+                        <li class={featureChipClasses}>{feature}</li>
+                      ))}
+                    </ul>
+                  </div>
+                ) : null}
+                {(service.duration || service.startingPrice) && summaryParagraphs.length === 0 ? (
+                  <div class="space-y-2">
+                    {service.duration ? (
+                      <p class={metaLineClasses}>
+                        <span class="inline-flex h-2 w-2 rounded-full bg-emerald-400/80" aria-hidden="true"></span>
+                        <span>Timeline: {service.duration}</span>
+                      </p>
+                    ) : null}
+                    {service.startingPrice ? (
+                      <p class={metaLineClasses}>
+                        <span class="inline-flex h-2 w-2 rounded-full bg-sky-400/80" aria-hidden="true"></span>
+                        <span>Starting at: {service.startingPrice}</span>
+                      </p>
+                    ) : null}
+                  </div>
+                ) : null}
               </div>
-            </div>
-          </article>
-        );
-      })}
+            </article>
+          );
+        })}
+      </div>
     </div>
     {shouldAnimate ? (
       <script>
@@ -178,6 +228,10 @@ const cardAnimationClass = shouldAnimate
             return;
           }
 
+          if (root.dataset.overviewAccordion === 'true') {
+            return;
+          }
+
           const content = root.querySelector('[data-overview-intro]');
           const cards = Array.from(root.querySelectorAll('[data-overview-card]'));
           const targets = [content, ...cards];
@@ -186,6 +240,35 @@ const cardAnimationClass = shouldAnimate
           }
 
           root.dataset.overviewAnimated = 'true';
+          root.dataset.overviewAccordion = 'true';
+
+          const triggers = Array.from(root.querySelectorAll('[data-accordion-trigger]')).filter(
+            (el) => el instanceof HTMLButtonElement,
+          );
+
+          triggers.forEach((trigger) => {
+            const button = trigger as HTMLButtonElement;
+            const panelId = button.getAttribute('aria-controls');
+            const panel = typeof panelId === 'string' ? document.getElementById(panelId) : null;
+            const icon = button.querySelector('[data-accordion-icon]');
+
+            const setExpanded = (expanded: boolean) => {
+              button.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+              if (panel instanceof HTMLElement) {
+                panel.hidden = !expanded;
+              }
+              if (icon instanceof HTMLElement) {
+                icon.classList.toggle('rotate-180', expanded);
+              }
+            };
+
+            setExpanded(false);
+
+            button.addEventListener('click', () => {
+              const expanded = button.getAttribute('aria-expanded') === 'true';
+              setExpanded(!expanded);
+            });
+          });
 
           if (prefersReducedMotion || !('IntersectionObserver' in window)) {
             targets.forEach((target) => target && reveal(target));
