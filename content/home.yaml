@@ -58,7 +58,7 @@ featuredProject:
   animation: true
   eyebrow: "Featured project"
   title: "Showcasing a modern home services brand"
-  intro: "I recently partnered with Nicol Construction to implement their first ever website. This new online presence allowed their business to streamline lead capture, and highlight their customer-first approach."
+  intro: "I am currently in the works of working with Nicol Construction to implement their first ever website. This new website is being created to allow their business to have an online presence, streamline lead capture, and highlight their customer-first approach."
   projectTitle: "Nicol Construction"
   image:
     src: "/images/NicolConstruction-photo.png"
@@ -66,9 +66,9 @@ featuredProject:
   modal:
     title: "Project details"
     body: |
-      We rebuilt the UX around homeowner questions, layered in seasonal promotions, and integrated a scheduling workflow that syncs with the team’s dispatch tools.
+      I am in the process of building Nicol Construction a brand new website from scratch. After a discovery meeting where we defined their goals, design concepts, and project scope, the development has officially begun.
 
-      Results included a 46% lift in organic enquiries within six weeks, a faster quoting process, and clearer service differentiation across neighborhoods.
+      On top of the website being built, I am in the works of optimizing their Google Business profile to ensure their business ranks.
 portfolioStatement:
   background:
     tone: "none" # Options: none, gradient, solid, aurora
@@ -76,7 +76,7 @@ portfolioStatement:
   animation: true
   eyebrow: "Our Work"
   title: "Websites built for real results"
-  intro: "We design and develop clean, high-performing websites tailored to each business we work with. While our full portfolio is coming soon, you can explore the services and process that power every project we build."
+  intro: "I ensure every website I build is tailored to the clients needs and goals in the hopes to bring their vision to life. While my full portfolio is coming soon, you can explore the services and process that power every project I build."
   ctaLabel: "View our Process"
   ctaHref: "/services#process"
 cta:
