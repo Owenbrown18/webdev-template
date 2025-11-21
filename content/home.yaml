@@ -61,7 +61,7 @@ featuredProject:
   intro: "I recently partnered with Nicol Construction to implement their first ever website. This new online presence allowed their business to streamline lead capture, and highlight their customer-first approach."
   projectTitle: "Nicol Construction"
   image:
-    src: "https://images.unsplash.com/photo-1614332287897-cdc485fa562d?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1170"
+    src: "/images/NicolConstruction-photo.png"
     alt: "Neon sign spelling out coming soon"
   modal:
     title: "Project details"
