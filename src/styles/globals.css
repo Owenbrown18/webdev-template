@@ -244,14 +244,14 @@ body {
     text-transform: var(--font-body-text-transform, none);
   }
 
- .type-eyebrow {
-    font-family: var(--font-family-heading, var(--font-family-body, 'Satoshi', 'Inter', system-ui, sans-serif));
-    font-size: var(--font-eyebrow-size-mobile, 1.7rem);
-    line-height: var(--font-eyebrow-line-height, 1.4);
-    font-weight: var(--font-eyebrow-weight, 600);
-    letter-spacing: var(--font-eyebrow-letter-spacing, 0.28em);
-    text-transform: var(--font-eyebrow-text-transform, uppercase);
-  }
+.type-eyebrow {
+  font-family: var(--font-family-heading, var(--font-family-body, 'Satoshi', 'Inter', system-ui, sans-serif));
+  font-size: var(--font-eyebrow-size-mobile, 2.55rem);
+  line-height: var(--font-eyebrow-line-height, 1.4);
+  font-weight: var(--font-eyebrow-weight, 600);
+  letter-spacing: var(--font-eyebrow-letter-spacing, 0.28em);
+  text-transform: var(--font-eyebrow-text-transform, uppercase);
+}
 
  .type-fine-print {
     font-family: var(--font-family-body, 'Satoshi', 'Inter', system-ui, sans-serif);
@@ -279,9 +279,9 @@ body {
       font-size: var(--font-body-size-tablet, var(--font-body-size-mobile, 1rem));
     }
 
-    .type-eyebrow {
-      font-size: var(--font-eyebrow-size-tablet, var(--font-eyebrow-size-mobile, 1.7rem));
-    }
+  .type-eyebrow {
+    font-size: var(--font-eyebrow-size-tablet, var(--font-eyebrow-size-mobile, 2.55rem));
+  }
 
     .type-fine-print {
       font-size: var(--font-fine-print-size-tablet, var(--font-fine-print-size-mobile, 0.875rem));
@@ -305,9 +305,9 @@ body {
       font-size: var(--font-body-size-desktop, var(--font-body-size-tablet, 1.0625rem));
     }
 
-    .type-eyebrow {
-      font-size: var(--font-eyebrow-size-desktop, var(--font-eyebrow-size-tablet, 1.7rem));
-    }
+  .type-eyebrow {
+    font-size: var(--font-eyebrow-size-desktop, var(--font-eyebrow-size-tablet, 2.55rem));
+  }
 
     .type-fine-print {
       font-size: var(--font-fine-print-size-desktop, var(--font-fine-print-size-tablet, 0.875rem));
@@ -680,11 +680,21 @@ body {
     box-shadow: 0 35px 75px -35px rgba(0, 0, 0, 0.85);
   }
 
-  .services-overview__card:hover {
-    transform: none;
-    border-color: rgba(255, 255, 255, 0.25);
-    box-shadow: 0 25px 65px -40px rgba(0, 0, 0, 0.7);
-    background: rgba(4, 10, 5, 0.35);
+  .services-overview__card:hover,
+  .services-overview__card:focus-visible {
+    transform: translateY(-4px);
+    border-color: rgba(255, 255, 255, 0.65);
+    box-shadow: 0 32px 60px -30px rgba(0, 0, 0, 0.9);
+    background: rgba(255, 255, 255, 0.08);
+    outline: none;
+  }
+
+  .services-overview__card.services-brief__cta--active {
+    transform: translateY(-8px);
+    border-color: rgba(255, 255, 255, 0.8);
+    box-shadow: 0 45px 90px -45px rgba(0, 0, 0, 0.9);
+    background: rgba(4, 10, 5, 0.48);
+    outline: none;
   }
 
   .card-aurora {
@@ -693,6 +703,7 @@ body {
     overflow: hidden;
     background: rgba(4, 10, 5, 0.35);
     border: 1px solid rgba(255, 255, 255, 0.22);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease, border-color 0.3s ease;
   }
 
   .card-aurora::before {
@@ -821,12 +832,12 @@ body {
     font-weight: 600;
     letter-spacing: 0.28em;
     text-transform: uppercase;
-    font-size: clamp(1.5rem, 3vw, 1.85rem);
+    font-size: clamp(1.9rem, 3.5vw, 2.4rem);
     color: rgba(255, 255, 255, 0.82);
     border-bottom: 1.5px solid rgba(255, 255, 255, 0.35);
     padding-bottom: 0.75rem;
-    padding-left: clamp(0.5rem, 2vw, 1rem);
-    padding-right: clamp(0.85rem, 3vw, 1.5rem);
+    padding-left: 0;
+    padding-right: 0;
   }
 
   .services-subheading .section-number-label {
