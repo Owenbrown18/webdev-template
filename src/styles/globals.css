@@ -832,8 +832,6 @@ body {
     text-transform: uppercase;
     font-size: clamp(1.45rem, 4vw, 1.85rem);
     color: rgba(255, 255, 255, 0.82);
-    border-bottom: 1.5px solid rgba(255, 255, 255, 0.35);
-    padding-bottom: 0.75rem;
     padding-left: 0;
     padding-right: 0;
   }
@@ -854,6 +852,17 @@ body {
     align-self: flex-start;
     padding-top: 0.5rem;
     gap: 0.35rem;
+  }
+
+  .services-overview__divider {
+    margin: 0.25rem 0 0.45rem;
+    height: 1.5px;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.35);
+  }
+
+  .services-overview__meta-inline {
+    margin-bottom: 0.25rem;
   }
 
   @media (min-width: 768px) {
