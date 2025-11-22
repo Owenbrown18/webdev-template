@@ -141,25 +141,28 @@ const metaLineClasses =
                     ) : null}
                   </div>
                 </div>
-                <div class="flex flex-col items-end gap-2 text-white justify-self-end min-w-[4.75rem]" data-accordion-aside>
+                <div class="flex flex-col items-end gap-1.5 text-white justify-self-end min-w-[5.25rem]" data-accordion-aside>
                   <span class="section-number-label text-white" data-accordion-number aria-label={`Section ${sectionSubNumber}`}>
                     {sectionSubNumber}
                   </span>
-                  <svg
-                    class="h-5 w-5 shrink-0 text-white/80 transition-transform duration-300"
-                    viewBox="0 0 20 20"
-                    fill="none"
-                    aria-hidden="true"
-                    data-accordion-icon
-                  >
-                    <path
-                      d="M6 8l4 4 4-4"
-                      stroke="currentColor"
-                      stroke-width="1.6"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    />
-                  </svg>
+                  <div class="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-white/80">
+                    <span data-accordion-label>Expand</span>
+                    <svg
+                      class="h-5 w-5 shrink-0 text-white/80 transition-transform duration-300"
+                      viewBox="0 0 20 20"
+                      fill="none"
+                      aria-hidden="true"
+                      data-accordion-icon
+                    >
+                      <path
+                        d="M6 8l4 4 4-4"
+                        stroke="currentColor"
+                        stroke-width="1.6"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </div>
                 </div>
               </button>
               <div
@@ -285,8 +288,9 @@ const metaLineClasses =
                   panel.addEventListener('transitionend', onCollapseEnd);
                 }
               }
-              if (icon instanceof HTMLElement) {
-                icon.classList.toggle('rotate-180', expanded);
+              const label = card?.querySelector?.('[data-accordion-label]');
+              if (label instanceof HTMLElement) {
+                label.textContent = expanded ? 'Collapse' : 'Expand';
               }
               if (card instanceof HTMLElement) {
                 card.classList.toggle('services-brief__cta--active', expanded);
@@ -341,5 +345,15 @@ const metaLineClasses =
     padding-top: 0 !important;
     padding-bottom: 0 !important;
     border-top-width: 0 !important;
+  }
+
+  .services-accordion [data-accordion-icon] {
+    transition: transform 0.3s ease;
+    transform: rotate(0deg);
+    transform-origin: center;
+  }
+
+  .services-accordion [data-accordion-trigger][aria-expanded="true"] [data-accordion-icon] {
+    transform: rotate(180deg);
   }
 </style>
