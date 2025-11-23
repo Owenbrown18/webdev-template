@@ -12,7 +12,7 @@ statement:
   animation: true # Toggle reveal animation on/off
   eyebrow: "Overview"
   title: "Driven by clarity, care, and craftsmanship"
-  intro: "OBdesign is a small, dedicated web-development business based in Victoria, ran by Owen Brown. It's focused on creating modern, fast, and functional websites for local businesses that want to a clean online presence. Every project is approached with a balance of design precision and technical skill to ensure your site looks great and performs even better. Collaboration is central to the process—I work closely with each client to understand their goals, audience, and vision. OBdesign provides full end-to-end service, from planning and design to development, launch, and ongoing support. This personal, hands-on approach allows me to deliver high-quality websites built to last and evolve with your business."
+  intro: "OBdesign is a small, dedicated web-development business based in Victoria, run by Owen Brown. It's focused on creating modern, fast, and functional websites for local businesses that want a clean online presence. Every project is approached with a balance of design precision and technical skill to ensure your site looks great and performs even better. Collaboration is central to the process—I work closely with each client to understand their goals, audience, and vision. OBdesign provides full end-to-end service, from planning and design to development, launch, and ongoing support. This personal, hands-on approach allows me to deliver high-quality websites built to last and evolve with your business."
 services:
   variant: "brief" # Options: grid, list, spotlight, brief, none
   background:
