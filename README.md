@@ -163,11 +163,3 @@ Stop both processes with `Ctrl+C` when finished.
 
 - Replace demo imagery under `public/images/` before shipping.
 - Update `content/home.yaml` if you swap out `/media/mainloop.mp4` or switch to an external video provider.
-
-## Suggested Next Steps
-
-- Expand the About page with additional sections (timeline, values, team) using the existing variant pattern.
-- Populate `services-list.yaml` with client-specific slugs, imagery, pricing, and CTA destinations.
-- Run the production build (`npm run build`) and Lighthouse/axe checks prior to launch for accessibility and performance validation.
-
-This template stays deliberately lean so you can move fast: edit YAML to control layout and messaging, introduce new variants when needed, and keep the codebase approachable for future projects.
